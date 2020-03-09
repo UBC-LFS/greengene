@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>GreenGene - Online Help</title>
+<style>
+body {
+	font-family : Arial, Helvetica, sans-serif;
+	font-size : smaller;
+}
+
+h1 {
+	font-size : 18pt;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-weight : normal;
+}
+</style>
+</head>
+<body>
+
+<h1>Professor &amp; TA Overview</h1>
+<p>All Professors in GreenGene are associated with one course, and they will have complete control over the management of that course. A Professor has all the same privileges as a TA. In addition, a Professor will also have the ability to modify the course description, create additional Professors and TAs to assist with course and student management, and manage problem templates.</p>
+
+<a name="viewproblemlist"></a>
+<h1>Managing &amp; Creating Problem Templates</h1>
+<h1>Managing Problem Templates</h1>
+<p>By selecting Manage Problems from the Problem Menu, the Professor is directed to the main page for managing the problems created for the course. On this page, the Professor will see the list of problem templates. Each row of the table displays Name, Description, and Last Modified. In addition, a set of 3 buttons (View, Modify, New Problem) is shown beside each problem corresponding to the actions that can be taken.</p>
+
+<p>Problem Templates create an easy path for Professors to quickly assign similar problems to many students without having to manually create them all.</p>
+
+<a name="modifyproblem"></a>
+<h1>Modifying a Problem</h1>
+<p>By clicking on Modify, the Professor is directed to a new page that shows the current problem parameters. On this page, the Professor will see the fields of Problem Name, Problem Description, Progeny Per Mating, Maximum Progeny, and Display Order of Genes. In addition, the Professor will also see the detailed information recorded on each of the 3 genes associated with the problem. The Professor has the ability to modify the current problem information by selecting the corresponding field and updating its values.
+If the current problem has already been assigned to a student, modifying the parameters will not have any effect on the student's problem. Each of the students receives their own copy of the problem during assignment, so any changes made to the original problem will not propagate to the student copies of the problem.</p>
+
+<p>When the Professor is ready to save the updated information, he/she can press the Modify button. If the change is successful, the Professor is redirected back to the main page for managing problems.</p>
+
+<a name="viewproblem"></a>
+<h1>Viewing a Problem</h1>
+<p>By clicking on View, the Professor is directed to a new page that shows the current information stored about the problem. On this page, the Professor will see the fields of Problem Name, Problem Description, Progeny Per Mating, Maximum Progeny, and Display Order of Genes. In addition, the Professor will also see the detailed information set for each of the 3 genes associated with the problem.</p>
+
+<p>Below the problem summary, the Professor will also see a table showing the list of students that have been assigned a problem from this template. The table has the columns of User Id, Problem Name, and Modified Version. Since a Professor has the ability to modify the problem parameters during assignment, and the Professor also has the ability to modify the original problem by itself after assignment, a situation may arise where the problem parameters from the original problem will differ from the ones found in the student problem. Hence, the field of Modified Version will tell the Professor whether or not such a scenario exist - the field will display Yes if the current problem parameters differ from the student problem parameters, and "No" if both sets of parameters are identical. The Professor can see the exact parameters of the student problem by clicking on the View button.</p>
+
+<h1>Deleting a Problem</h1>
+On the table showing the list of problems, a checkbox is displayed (in the first column) of each row. To delete one or more problems, the Professor may select the problems and then pressing the Delete Selected button located at the bottom of the table. Note: Deleting a problem is an irreversible action. Once a problem has been removed, it cannot be recovered from the system.</p>
+
+<a name="createproblem"></a>
+<h1>Creating a Problem</h1>
+The Professor can create a new problem by selecting Create Problem from the Problem Menu. Upon selection, the Professor is directed to a new page where fields are shown for Problem Name, Problem Description, Progeny Per Mating, Maximum Progeny, and Display Order of Genes. In addition, the Professor will see another list of fields for each of Gene 1, Gene 2, and Gene 3.</p>
+
+<p>Problem Name and Problem Description are the parameters which are shown to the student during the simulation. It is intended that the Problem Name would be a crop name.</p>
+
+<p>Progeny Per Mating should be an integer that specifies the amount of progeny that will be generated from each cross, and Maximum Progeny should be an integer that specifies the total amount of progeny that may be produced during a student's simulation. A Professor can also specify the ordering that he/she wants the genes to follow during the simulation. The Professor can select a gene (from the box beside Display Order of Genes) and press the Up or Down buttons to adjust its order accordingly.</p>
+
+<p>By default, the formation for Gene 1 and Gene 2 are set for specifying co-dominance (with 1 option to choose a trait, and 3 options to specify the 3 phenotypes). If the Professor wants to issue dominance, he/she can check the box beside Dominance and the formation will adjust accordingly (with 1 option to choose a trait, and 2 options to specify the 2 phenotypes).</p>
+
+<p>In either case, to fill out the information, the Professor will need to select a trait using the option beside Trait Name. After the selection is made, options for each of the phenotypes will be populated with all the phenotypes that are associated with the chosen trait. At this point, the Professor needs to choose the phenotypes (3 for co-dominance, and 2 for dominance) that he/she wants to use for the problem.</p>
+
+<p>If the Professor is filling out Gene 2, he/she also has the ability to specify the linkage distance between Gene 1 and Gene 2 (default is 50). To change the default value, the Professor can check the box beside Linkage and update it with the desired value.
+Gene 3 also has the same default formation as Gene 1 and Gene 2. However, with Gene 3, the Professor also has the ability to use epistasis by checking the box beside Epistasis. If the Professor chooses to use epistasis, the formation will change to show a box for selecting an epistatic ratio, and a set of options for choosing the phenotypes. By choosing a specific epistatic ratio (one of 9:3:3:1, 9:3:4, 9:7, 12:3:1, 15:1), the number of options for choosing phenotypes will adjust accordingly to match the chosen ratio. By choosing a specific trait, the options for each of the phenotypes will be populated with all the phenotypes that are associated with the chosen trait. At this point, the Professor needs to choose the phenotypes that he/she wants to use for the problem.</p>
+
+<p>If the Professor is using epistasis for Gene 3, he/she will not have the ability to specify the linkage distance between Gene 2 and Gene 3 (it will be defaulted to 50). Otherwise, if the Professor is using either dominance or co-dominance, he/she will be able to specify the linkage distance between Gene 2 and Gene 3. To change the default value, the Professor can check the box beside Linkage and update it with the desired value.</p>
+
+<p>When the Professor has filled out all the information of the problem and is ready to proceed, he/she can press the Create Problem button.</p>
+
+<h1>Creating Problems From Existing Problems</h1>
+By selecting Manage Problems from the Problem Menu, the Professor is directed to the main page for managing problem templates for the course. At this point, the Professor can press the New Problem button beside a corresponding problem, and the Professor will be directed to a new page showing all the current information of the selected problem. This page lets the Professor create a new problem based on the parameters of an existing problem. Hence, the Professor has the ability to select any field and change its values. When the Professor is ready to proceed, he/she can press the Create Problem button, and a new problem will be created. If the creation is successful, the Professor is directed to a page that shows a summary of the newly created problem.</p>
+
+<a name="createtrait"></a>
+<a name="modifytrait"></a>
+<a name="viewtraitlist"></a>
+<h1>Managing Traits &amp; Phenotypes</h1>
+<p>Problem traits and phenotypes are created to be re-used in different problems. Once a trait has been created, it can be found and referred to in the problem creation page.</p>
+
+<p>A trait may be created by selecting Create Trait from the Problem Menu. A list of existing traits can be viewed in the trait management page by selecting Manage Traits from the Problem Menu.</p>
+
+<p>Each trait may have indefinite number of phenotypes associated with it. To modify Phenotypes, select the Modify Trait button.</p>
+
+<a name="viewadminlist"></a>
+<h1>Managing &amp; Creating Administrative Users</h1>
+<h1>Managing Administrative Users</h1>
+<p>By selecting Manage Admins from the Course Menu, the Professor is directed to the main page for managing the Administrative users registered for the course. Each row of the table displays User Id, First Name, Last Name, and User Type. The User Type field will display either one of Professor or TA, and this information denotes the privilege level that the user has in this course. In addition, a Modify button is placed beside each user.</p>
+
+<a name="modifyadmin"></a>
+<h1>Modifying an Administrative User</h1>
+<p>By clicking on Modify, the Professor is directed to a new page that shows the current information stored about the Administrative user. On this page, the Professor will see the fields of User Id, First Name, Last Name, User Type, and Password (enter twice). The user’s User Id may not be modified once the user has been created. The Professor can also modify the account password by entering the new password two times. If the change is successful, the Professor is redirected back to the main page for managing Administrative users.</p>
+
+<h1>Creating Administrative Users</h1>
+<p>The Professor can create a new Administrator user for the course by selecting Create Admin from the Course Menu. Upon selection, the Professor is directed to a new page where fields will be shown for User Id, First Name, Last Name, User Type, and Password.
+UserId must be alphanumeric characters only, 10 characters maximum. The password entered may be any sequence of characters, 3-25 characters in length.</p>
+
+<a name="modifycourse"></a>
+<h1>Managing Course Preferences</h1>
+<p>The Professor can update the course information by selecting Modify Course from the Course Menu.</p>
+
+<a name="viewstudentlist"></a>
+<a name="viewstudent"></a>
+<h1>Managing Students</h1>
+<p>By selecting Manage Students from the Student Menu, the Prof/TA is directed to the main page for managing the students registered into the course. Each row of the table displays User Id, First Name, Last Name, and Assigned Problem. In addition, a set of 2 buttons (Modify and Assign Problem) is are shown beside each student corresponding to the actions that may be taken.</p>
+
+<a name="modifystudent"></a>
+<h1>Modifying a Student</h1>
+<p>By clicking on Modify, the Prof/TA is directed to a new page that shows the current information stored about the student. On this page, the Prof/TA will see the fields of User Id, First Name, Last Name, Progeny Per Mating, and Max Progeny. If the student has been assigned a problem, the Prof/TA will also see the current simulation setting for progeny per mating and maximum progeny. The Prof/TA has the ability to modify the current student information by selecting the corresponding field and updating its values. The User Id, however, may not be modified. Furthermore, the Prof/TA may also reset the student account password by selecting the checkbox beside Reset Student Password.</p>
+
+<h1>Deleting a Student</h1>
+<p>On the table showing the list of students, a checkbox is displayed (in the first column) of each row. To delete one or more students, the Prof/TA can select the students (by checking off the corresponding checkboxes) and then pressing the Delete Selected button located at the bottom of the table. Deleting a student is an irreversible action: once a student has been removed, she/he cannot be recovered.</p>
+
+<a name="createstudent"></a>
+<h1>Creating a Student</h1>
+<p>The Prof/TA may create a new student by selecting Create Student from the Student Menu.</p>
+
+<p>UserId must be alphanumeric characters only, up to 10 characters in length. After student creation, the Prof/TA can also request to assign a problem directly by selecting the checkbox Assign Problem Now.</p>
+
+<p>If the creation is successful, and Assign Problem Now was selected, the Prof/TA will be directed to another page where he/she can assign the student a problem. Otherwise, the Prof/TA is redirected back to the main page for managing students.</p>
+
+<p>Passwords are generated automatically for a student after account creation (or if the Prof/TA requests to reset the student account password). The generated password will consist of the student's last name (consisting of only its alphabetical characters, and in lower-case) appended to the first character of the student's first name.</p>
+
+<p>For example:
+<li>"Joe User" will have a generated password of "userj"
+<li>"Bob None123" will have a generated password of "noneb"</p>
+
+<a name="importstudents"></a>
+<h1>Importing Students</h1>
+<p>The Prof/TA may import a list of students to the course by selecting Import Students from the Student Menu. On this page, the Prof/TA will see two buttons, Browse and Load. By selecting Browse, the Prof/TA will be given a dialogue box where he/she can browse through the file system to locate the comma separated values file (CSV) to import.</p>
+
+<p>The input file format must be of a certain type: commas separate the 3 entries for UserId, First Name, and Last Name: one per line, and in this precise order.</p>
+
+<p>To import the selected file, the Prof/TA should press the Load button. Then, the Prof/TA will be shown a table displaying the list of student records that were parsed from the CSV file. All student records that were parsed successfully are shown at the top half of the table, while records with parse errors are displayed at the bottom half of the table.</p>
+
+<p>At this point, the Prof/TA can choose to manually update any student record currently displayed. The Prof/TA also has the option to assign a problem to a student by selecting a problem name from the problem option boxes. By default, only the student records without parse errors are selected for creation. When the Prof/TA is ready to proceed, he/she can press the Create Students button, and this will create the list of students that have been selected. If the account creations are successful, the Prof/TA is redirected back to the main page for managing students.</p>
+
+<a name="assignproblem"></a>
+<a name="selectproblem"></a>
+<h1>Assigning Problems to Students</h1>
+<p>By selecting Manage Students from the Student Menu, the Prof/TA is directed to the main page for managing the students registered into the course. At this point, the Prof/TA can assign a problem to a student by clicking the Assign Problem button. The Prof/TA will be directed to a new page that shows a list of problems. When the correct problem for assignment has been located, the Prof/TA should press the Assign button.</p>
+
+<p>Note that if a student has already been assigned a problem, assigning him/her a new problem will replace the previous problem, and the simulation will start over from the beginning. All previous problem data will be lost.</p>
+
+<p>Professors have the option of modifying the problem parameters during assignment. On the page that displays the list of problems, the Professor will see the Modify and Assign button. By clicking on Modify and Assign, the Professor is directed to a new page that shows the current parameters of the selected problem. At this point, the Professor can modify any fields of the problem, and then click Assign to proceed with the problem assignment. Note that the problem modifications performed on this page will not have an effect on the original problem (the changes are for the specific student only).</p>
+
+<a name="viewprogress"></a>
+<h1>Viewing Student Progress</h1>
+<p>The Prof/TA may view the progress of a student by selecting View Progress from the Student Menu. On this page, the Prof/TA will see the list of students displayed with their assigned problems. Click the View Progress button to view the student's simulation.</p>
+
+<p>The Prof/TA is then redirected to the student’s simulation page showing the latest cross results of the simulation. At this point, the Prof/TA may view the simulation from the perspective of the student. The Prof/TA has all the abilities of a student such as viewing the results of a cross, and exporting progeny data. However, the Prof/TA may not perform any new crosses.</p>
+
+<p>To return and exit the simulation, the Prof/TA should press the Back to Admin View button located in the toolbar.</p>
+
+</body>
+</html>

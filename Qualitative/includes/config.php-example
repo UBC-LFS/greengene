@@ -1,0 +1,10 @@
+<?php
+// GLOBAL CONFIGURATION FILE
+define('DBHOST', '127.0.0.1');
+define('DBUSER', 'DB-user');
+define('DBPWD', 'DB-password');
+define('DBNAME', 'replace-with-database-name');
+define('URLROOT', '');
+define('REALROOT', '/path/to/www');
+define('LOGPATH', REALROOT.'/logs/error.log');
+?>
