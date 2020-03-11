@@ -10,7 +10,7 @@ $g_db = new DB();
 $user = Security::getUser();
 
 // - get form variables
-$formaction = $_POST['formaction'];
+$formaction = isset($_POST['formaction'])? $_POST['formaction']: null;
 
 // PAGE CREATION LOGIC
 if(empty($_GET['userId']) && !empty($_GET['courseId']))
@@ -119,7 +119,7 @@ elseif($formaction == 'saveuserpwd')
 }
 elseif(empty($formaction))
 {
-	$userId = $_GET['userId'];
+	$userId = isset($_GET['userId'])? $_GET['userId']: null;
 	$courseId = $_GET['courseId'];
 
 	if(empty($userId))
@@ -127,6 +127,9 @@ elseif(empty($formaction))
 		// adding a user
 		$formaction = 'adduser';
 		$formType = 'add';
+		$FirstName = null ;
+		$LastName = null ;
+		$PrivilegeLvl = null ;
 	}
 	else
 	{
@@ -153,7 +156,7 @@ $page->handleErrors();
 
 if($formType == 'add')
 {
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"adduser\">");
 	echo("<input type=\"hidden\" name=\"CourseId\" value=\"$courseId\">");
 
@@ -186,7 +189,7 @@ if($formType == 'add')
 }
 else
 {
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"saveuser\">");
 	echo("<input type=\"hidden\" name=\"CourseId\" value=\"$courseId\">");
 
@@ -215,7 +218,7 @@ else
 	echo('</form>');
 
 	$table = new Table(2, false, true);
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"saveuserpwd\">");
 	echo("<input type=\"hidden\" name=\"CourseId\" value=\"$courseId\">");
 	echo("<input type=\"hidden\" name=\"UserId\" value=\"$userId\">");

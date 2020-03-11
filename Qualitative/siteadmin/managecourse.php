@@ -17,7 +17,7 @@ if(isset($_POST['formaction'])) {
 }
 
 $courseId = false;
-if(isset($_POST['courseId'])) {
+if(isset($_GET['courseId'])) {
 	$courseId = $_GET['courseId'];
 }
 
@@ -92,7 +92,8 @@ elseif($formaction == 'savecourse')
 elseif($formaction == 'deleteuser')
 {
 	$courseId = $_POST['CourseId'];
-	$delUser = $_POST['delUser'];
+	// $delUser = $_POST['delUser'];
+	$delUser = isset($_POST['delUser'])? $_POST['delUser'] : null;
 
 	if(isset($delUser) && count($delUser) > 0)
 		foreach($delUser as $userId)
@@ -153,7 +154,7 @@ if(!empty($courseId))
 			$row->FirstName,
 			$row->LastName,
 			$priv[$row->PrivilegeLvl],
-			"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifyadmin.php?userId=$row->UserId');\">");
+			"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifyadmin.php?userId=$row->UserId&courseId=$courseId');\">");
 	}
 	$table->flush();
 
