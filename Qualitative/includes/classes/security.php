@@ -58,6 +58,35 @@ class Security
 		}
 	}
 
+
+	/*
+	function login($p_userId, $p_pwd)
+	{
+		$ds = ldap_connect("eldapdccons.id.ubc.ca", 389);
+
+		if ($ds) 
+		{
+				$starttls = ldap_start_tls($ds);
+				$usr = "uid=".$p_userId.",ou=People,dc=landfood,dc=ubc,dc=ca";
+				$r = ldap_bind($ds, $usr, $p_pwd);
+				if ($r) 
+				{
+					$user = new MasterAdmin("a");
+					$_SESSION['userSession'] = $user;
+					return $user;
+				} 
+				else  
+				{
+					return false;
+				}
+		}
+		else 
+		{
+			return false;
+		}
+		ldap_close($ds);
+	}
+	*/
 	/**
 	 * getUser: Login method will take in user name and password check account existance and return user object.
 	 * PRE: a valid user session data
