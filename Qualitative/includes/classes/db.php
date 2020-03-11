@@ -17,17 +17,20 @@ class DB
 	 */
 	function DB()
 	{
-		$this->m_conn = mysql_connect(DBHOST, DBUSER, DBPWD);
+		$this->m_conn = mysqli_connect(DBHOST, DBUSER, DBPWD);
+		//$this->m_conn = mysql_connect(DBHOST, DBUSER, DBPWD);
 		if($this->m_conn == false)
 		{
-			Logger::writeLog('MySQL Error (' . mysql_errno() . '): ' . mysql_error());
+			//Logger::writeLog('MySQL Error (' . mysql_errno() . '): ' . mysql_error());
 			die("Could not connect to MySQL server.");
 		}
 
-		mysql_select_db(DBNAME, $this -> m_conn);
-		if(mysql_errno() != 0)
+		mysqli_select_db($this -> m_conn, DBNAME);
+		//mysql_select_db(DBNAME, $this -> m_conn);
+		if(mysqli_errno($this->m_conn))
+		//if(mysql_errno() != 0)
 		{
-			Logger::writeLog('MySQL Error (' . mysql_errno() . '): ' . mysql_error());
+			//Logger::writeLog('MySQL Error (' . mysql_errno() . '): ' . mysql_error());
 			die("Could not select MySQL database.");
 		}
 	}
@@ -41,8 +44,9 @@ class DB
 	 */
 	function querySelect($p_SQL)
 	{
-		$l_resource = mysql_query($p_SQL)
-			or Logger::writeLog('MySQL Query Error (' . mysql_errno() . '): ' . mysql_error() . "\n$p_SQL");
+		$l_resource = mysqli_query($this->m_conn,$p_SQL);
+		//$l_resource = mysql_query($p_SQL)
+			//or Logger::writeLog('MySQL Query Error (' . mysql_errno() . '): ' . mysql_error() . "\n$p_SQL");
 		return $l_resource;
 	}
 
@@ -55,9 +59,11 @@ class DB
 	 */
 	function queryCommit($p_SQL)
 	{
-		$l_resource = mysql_query($p_SQL, $this -> m_conn)
-			or Logger::writeLog('MySQL Commit Error (' . mysql_errno() . '): ' . mysql_error() . "\n$p_SQL");
-		if (mysql_errno() == 0)
+		$l_resource = mysqli_query($this -> m_conn, $p_SQL );
+		//$l_resource = mysql_query($p_SQL, $this -> m_conn)
+			//or Logger::writeLog('MySQL Commit Error (' . mysql_errno() . '): ' . mysql_error() . "\n$p_SQL");
+		if (mysqli_errno($this->m_conn) == 0)
+		//if (mysql_errno() == 0)
 		{
 			return true;
 		}
@@ -77,7 +83,8 @@ class DB
 	 */
 	function fetch($p_resource)
 	{
-		return mysql_fetch_object($p_resource);
+		return mysqli_fetch_object($p_resource);
+		//return mysql_fetch_object($p_resource);
 	}
 
 	 /**
@@ -89,7 +96,8 @@ class DB
 	 */
 	function getNumRows($p_resource)
 	{
-		return mysql_num_rows($p_resource);
+		return mysqli_num_rows($p_resource);
+		//return mysql_num_rows($p_resource);
 	}
 
 	 /**
@@ -100,7 +108,8 @@ class DB
 	 */
 	function getRowsAffected()
 	{
-		return mysql_affected_rows($this -> m_conn);
+		return mysqli_affected_rows($this -> m_conn);
+		//return mysql_affected_rows($this -> m_conn);
 	}
 
 	 /**
@@ -113,14 +122,17 @@ class DB
 	function sqlString($p_string)
 	{
 		if (get_magic_quotes_gpc())
-			return mysql_real_escape_string(stripslashes($p_string));
-		return mysql_real_escape_string($p_string);
+			return mysqli_real_escape_string($this->m_conn, stripslashes($p_string));
+			//return mysql_real_escape_string(stripslashes($p_string));
+		return mysqli_real_escape_string($this->m_conn,$p_string);
+		//return mysql_real_escape_string($p_string);
 	}
 
 
 	function getLastInsertId()
 	{
-		return mysql_insert_id();
+		return mysqli_insert_id($this -> m_conn);
+		//return mysql_insert_id();
 	}
 
 	 /**
@@ -130,7 +142,8 @@ class DB
 	 */
 	function disconnect()
 	{
-		mysql_close($this -> m_conn);
+		mysqli_close($this -> m_conn);
+		//mysql_close($this -> m_conn);
 	}
 }
 ?>

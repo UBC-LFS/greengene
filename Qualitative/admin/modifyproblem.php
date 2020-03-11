@@ -12,8 +12,8 @@ $userId = $user->m_userId;
 $ASSIGN_FLAG = false; //either assign problem or modify problem
 
 // OBTAIN PARAMETER FOR MODIFIED PROBLEM
-$studentId = $_GET['studentId']?$_GET['studentId']:$_POST['studentId'];
-$problemId = $_GET['problemId']?$_GET['problemId']:$_POST['problemId'];
+$studentId = isset($_GET['studentId'])?$_GET['studentId']: (isset($_POST['studentId'])? $_POST['studentId']: null);
+$problemId = isset($_GET['problemId'])?$_GET['problemId']: (isset($_POST['problemId'])? $_POST['problemId']: null);
 
 // if student Id is in the argument, we are assigning problem.
 if( $studentId )
@@ -43,8 +43,11 @@ $showProblemSummary = false;
 
 
 // FORM LOGIC
+$formaction = null;
+if (isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 
-$formaction = $_POST['formaction'];
 
 $inputProblemName;
 $inputProblemDesc;
@@ -71,12 +74,24 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	$V_problemdesc = $_POST['problemdesc'];
 	$V_progpermating = $_POST['progpermating'];
 	$V_totalprogeny = $_POST['totalprogeny'];
+	if (!isset($_POST['dom0'])) {
+		$_POST['dom0'] = null;
+	}
+	if (!isset($_POST['dom1'])) {
+		$_POST['dom1'] = null;
+	}
+	if (!isset($_POST['dom2'])) {
+		$_POST['dom2'] = null;
+	}
 	$V_dom = array($_POST['dom0']=='ON', $_POST['dom1']=='ON', $_POST['dom2']=='ON');
 	$V_ordering = $_POST['ordering'];
 	if ($V_ordering=='')
 		$V_ordering="012";
-	$V_pheno = array($_POST['pheno00'], $_POST['pheno01'], $_POST['pheno02'], $_POST['pheno10'], $_POST['pheno11'], $_POST['pheno12'], $_POST['pheno20'], $_POST['pheno21'], $_POST['pheno22'], $_POST['pheno23']);
-	$V_epistCheck = $_POST['epistCheck']=='ON';
+	$V_epistCheck = isset($_POST['epistCheck'])? ($_POST['epistCheck']=='ON'):null;
+	$V_pheno = (($V_epistCheck != null) ? array($_POST['pheno00'], $_POST['pheno01'], $_POST['pheno02'], $_POST['pheno10'], $_POST['pheno11'], $_POST['pheno12'], $_POST['pheno20'], $_POST['pheno21'], $_POST['pheno22'], $_POST['pheno23'])
+	: array($_POST['pheno00'], $_POST['pheno01'], $_POST['pheno02'], $_POST['pheno10'], $_POST['pheno11'], $_POST['pheno12'], $_POST['pheno20'], $_POST['pheno21'], $_POST['pheno22']) );
+	// $V_pheno = array($_POST['pheno00'], $_POST['pheno01'], $_POST['pheno02'], $_POST['pheno10'], $_POST['pheno11'], $_POST['pheno12'], $_POST['pheno20'], $_POST['pheno21'], $_POST['pheno22'], $_POST['pheno23']);
+	// $V_epistCheck = $_POST['epistCheck']=='ON';
 	$V_linkdist = array($_POST['linkdist01'], $_POST['linkdist12']);
 	$V_epistCode = $_POST['epist'];
 
@@ -112,17 +127,25 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	}
 
 	$arrPhenotypes = array();
-	determineDominance($_POST['dom0'] == 'ON',0,&$arrPhenotypes);
-	determineDominance($_POST['dom1'] == 'ON',1,&$arrPhenotypes);
+	// TODO: pass by reference - resolved might have problem with $_POST['dom0']
+	$arrPhenotypes[0] = determineDominance($_POST['dom0'] == 'ON', 0 , $arrPhenotypes);
+	$arrPhenotypes[1] = determineDominance($_POST['dom1'] == 'ON', 1 , $arrPhenotypes);
+	// determineDominance($_POST['dom0'] == 'ON',0,&$arrPhenotypes);
+	// determineDominance($_POST['dom1'] == 'ON',1,&$arrPhenotypes);
 
-	if ($_POST['epistCheck']=='ON')
+	// if ($_POST['epistCheck']=='ON')
+	if ($V_epistCheck)
 	{
-		determineEpistasis($inputEpistasis,2,&$arrPhenotypes);
+		// TODO: pass by reference - resolved
+		$arrPhenotypes[2] = determineEpistasis($inputEpistasis, 2, $arrPhenotypes);
+		// determineEpistasis($inputEpistasis,2,&$arrPhenotypes);
 	}
 	else
 	{
+		// TODO: pass by reference - resolved 
 		$inputEpistasis = -1;
-		determineDominance($_POST['dom2'] == 'ON',2,&$arrPhenotypes);
+		$arrPhenotypes[2] = determineDominance($_POST['dom2'] == 'ON', 2, $arrPhenotypes);
+		// determineDominance($_POST['dom2'] == 'ON',2,&$arrPhenotypes);
 	}
 
 	// get linkage distances
@@ -135,12 +158,17 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 
 	//echo $_POST['traitorder0'] . ":" . $_POST['traitorder1'] . ":" . $_POST['traitorder2'];
 	// get trait orders
-	$inputTraitOrder0 = $_POST['traitorder0']-1;
-	$inputTraitOrder1 = $_POST['traitorder1']-1;
-	$inputTraitOrder2 = $_POST['traitorder2']-1;
+	// TODO: variable not used
+	if (isset($_POST['traitorder0']) && isset($_POST['traitorder1']) && isset($_POST['traitorder2'])) {
+		$inputTraitOrder0 = $_POST['traitorder0']-1;
+		$inputTraitOrder1 = $_POST['traitorder1']-1;
+		$inputTraitOrder2 = $_POST['traitorder2']-1;
+	}
 	$inputTraitOrder = $V_ordering;
-	$arrFinalPhenotypes;
-	$user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes,&$arrFinalPhenotypes);
+	$arrFinalPhenotypes = [];
+	// TODO: pass by reference - resolved
+    $arrFinalPhenotypes = $user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes,$arrFinalPhenotypes);
+	// $user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes,&$arrFinalPhenotypes);
 
 	$masterRecordset = $user->viewProblem($problemId);
 	$problemEqual = areProblemsEqual($masterRecordset,
@@ -351,15 +379,20 @@ if ($showProblemForm == true)
 		$pheno2NameArray = array();
 
 		// load up the recordset into memory (in the from of arrays)
-		loadTraitsFromRecordset($traitRecordset,&$traitIdArray,&$traitNameArray);
-
+		// TODO: pass by reference - resolved accessing key that is not define?
+		// $result = loadTraitsFromRecordset($traitRecordset,&$traitIdArray,&$traitNameArray);
+		$result = loadTraitsFromRecordset($traitRecordset,$traitIdArray,$traitNameArray);
+		$traitIdArray = $result->TraitId;
+		$traitNameArray = $result->Name;
 	}
 	problemForm();
 }
 else if ($showProblemSummary == true)
 {
-	$arrFinalPhenotypes;
-	$user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes,&$arrFinalPhenotypes);
+	// TODO: pass by reference - resolved;
+	$arrFinalPhenotypes = [];
+	// $user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes,&$arrFinalPhenotypes);
+    $arrFinalPhenotypes = $user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes, $arrFinalPhenotypes);
 
 	echo "Problem Summary:<p>";
 	viewProblem();
@@ -409,7 +442,7 @@ function problemForm($type=''){
 	$formType = $type;	//create or any other for modify
 	//FORM START
 	setProblemList();
-	echo '<form name="problem" action="'.$PHP_SELF.'" method="post">';
+	echo '<form name="problem" action="'.htmlentities($_SERVER['PHP_SELF']).'" method="post">';
 	echo '<input type="hidden" name="formaction" value="createproblem">';
 	echo '<input type="hidden" name="problemId" value="'.$V_problemId.'">';
 	if( $ASSIGN_FLAG )
@@ -431,6 +464,8 @@ function problemForm($type=''){
 	$t -> writeDivider();
 
 	$p = 0;
+	$p_style = null;
+	$ld = null;
 	for ($i = 0; $i < 3; $i++)
 	{
 		$t -> writeHeaders('Gene '.($i+1),'');
@@ -468,8 +503,11 @@ function problemForm($type=''){
 		{
 			if ($formType=="create")
 				$t -> writeRow(phenoTip($i, 3).'&nbsp;</DIV>', $innerTable[0] . phenoData($i, 3, 'visibility: hidden;') . $innerTable[1] . epistTip($i, 3, 'visibility: hidden;') . $innerTable[2]);
-			else
-				$t -> writeRow(phenoTip($i, 3).'&nbsp;</DIV>', $innerTable[0] . '<DIV id="pheno'.$i.'3" name="pheno'.$i.'3"'.$p_style.'>'.textInput('pheno'.$i.'3', $V_pheno[$p]) .'</DIV>'. $innerTable[1] . epistTip($i, 3, 'visibility: hidden;') . $innerTable[2]);
+			else {
+				if (count($V_pheno) === 10) 
+					$t -> writeRow(phenoTip($i, 3).'&nbsp;</DIV>', $innerTable[0] . '<DIV id="pheno'.$i.'3" name="pheno'.$i.'3"'.$p_style.'>'.textInput('pheno'.$i.'3', $V_pheno[$p]) .'</DIV>'. $innerTable[1] . epistTip($i, 3, 'visibility: hidden;') . $innerTable[2]);
+				// $t -> writeRow(phenoTip($i, 3).'&nbsp;</DIV>', $innerTable[0] . '<DIV id="pheno'.$i.'3" name="pheno'.$i.'3"'.$p_style.'>'.textInput('pheno'.$i.'3', $V_pheno[$p]) .'</DIV>'. $innerTable[1] . epistTip($i, 3, 'visibility: hidden;') . $innerTable[2]);
+			}
 		}
 		if ($i == 1){
 			if ($V_linkdist[0]==''){$V_linkdist[0] = 50; $ckd = "checked"; $ld = ' disabled="true"';}
@@ -685,6 +723,7 @@ function loadTraitsFromRecordset($p_recordset,$p_traitIdArray, $p_traitNameArray
 		$p_traitIdArray[$i]= $currRow->TraitId;
 		$p_traitNameArray[$i] = $currRow->Name;
 	}
+	return $currRow;
 }
 
 function loadPhenotypesFromRecordset($p_recordset,$p_phenoIdArray, $p_phenoNameArray)
@@ -759,25 +798,19 @@ function determineDominance($p_isDominance,$p_traitNumber,$p_arrPhenotypes)
 		}
 		else
 		{
-			$p_arrPhenotypes[$p_traitNumber] = array($AATrait,$bbTrait);
+			return array($AATrait,$bbTrait);
 		}
 	}
-	else
+	$AATrait = $_POST['pheno'.$p_traitNumber.'0'];
+	$mixedTrait = $_POST['pheno'.$p_traitNumber.'1'];
+	$bbTrait = $_POST['pheno'.$p_traitNumber.'2'];
+	if (empty($AATrait) || empty($bbTrait) || empty($mixedTrait) )
 	{
-		$AATrait = $_POST['pheno'.$p_traitNumber.'0'];
-		$mixedTrait = $_POST['pheno'.$p_traitNumber.'1'];
-		$bbTrait = $_POST['pheno'.$p_traitNumber.'2'];
-		if (empty($AATrait) || empty($bbTrait) || empty($mixedTrait) )
-		{
-			UserError::addError(757);
-			return false;
-		}
-		else
-		{
-			$p_arrPhenotypes[$p_traitNumber] = array($AATrait,$bbTrait,$mixedTrait);
-		}
+		UserError::addError(757);
+		return false;
 	}
-	return true;
+	
+	return array($AATrait,$bbTrait,$mixedTrait);
 }
 
 function determineEpistasis($p_epistasisValue, $p_traitNumber, $p_arrPhenotypes)
@@ -799,8 +832,7 @@ function determineEpistasis($p_epistasisValue, $p_traitNumber, $p_arrPhenotypes)
 			$epistTraits[$i] = $_POST['pheno2'.$i];
 		}
 	}
-	$p_arrPhenotypes[$p_traitNumber] = $epistTraits;
-	return true;
+	return $epistTraits;
 }
 
 

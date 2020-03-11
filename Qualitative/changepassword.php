@@ -16,6 +16,7 @@ $g_db = new DB();
 // PAGE CREATION LOGIC
 $page = new Page($user, 'Change Password', 0);
 
+$success = false;
 
 //call the change password function on the user object if the submit button was clicked
 if(isset($_POST['oldPwd']))
@@ -40,7 +41,7 @@ if($success)
 	echo("<p>Password change successful.</p>");
 
 // Start the form
-echo("<form action=\"$PHP_SELF\" method=\"post\">");
+echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 
 $pwdTable = new Table(2, false, true);
 $pwdTable->writeRow('Current Password', "<input type=\"password\" size=\"10\" name=\"oldPwd\">");

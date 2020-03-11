@@ -16,11 +16,13 @@ $page = new Page($user, 'Manage Students', 2);
 $page->writeHeader();
 
 // check for previous page's deleted problems
+if(isset($_POST['del_student'])) {
 $delStudent = $_POST['del_student'];
-if(count($delStudent) > 0)
-{
-	for( $i = 0; $i < count($delStudent); $i++)
-		$user->deleteStudent($delStudent[$i]);
+	if(count($delStudent) > 0)
+	{
+		for( $i = 0; $i < count($delStudent); $i++)
+			$user->deleteStudent($delStudent[$i]);
+	}
 }
 
 // retrieve the list of problems associated with the user's courseId
@@ -29,7 +31,7 @@ $recordset = $user->getStudents();
 $page->handleErrors();
 
 // Start the form
-echo "<form action=\"$PHP_SELF\" method=\"post\">";
+echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
 
 $studentTable = new Table(6, true, true);
 

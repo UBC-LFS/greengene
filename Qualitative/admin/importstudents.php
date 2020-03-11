@@ -25,7 +25,9 @@ $numErrorRecords;
 
 // FORM LOGIC
 // - get form variables
-$formaction = $_POST['formaction'];
+$formaction = false;
+if (isset($_POST['formaction']))
+	$formaction = $_POST['formaction'];
 
 if ($formaction == "createstudents")
 {
@@ -64,7 +66,13 @@ if ($formaction == "createstudents")
 }
 else if ($formaction == "loadfile")
 {
-	$user->importStudents(uploaded(),&$studentListArray,&$studentErrorListArray);
+	// passbyreference - resolved
+	// $user->importStudents(uploaded(),&$studentListArray,&$studentErrorListArray);
+	$studentListArray = [];
+	$studentErrorListArray = [];
+	$result = $user->importStudents(uploaded(),$studentListArray,$studentErrorListArray);
+	$studentListArray = $result[0];
+	$studentErrorListArray = $result[1];
 	$numStudentRecords = count($studentListArray);
 	$numErrorRecords = count($studentErrorListArray);
 	$showStudentRecords = true;
@@ -111,6 +119,7 @@ function loadProblemsFromRecordset($p_recordset,$p_problemIdArray, $p_problemNam
 		$p_problemIdArray[$i]= $currRow->ProblemId;
 		$p_problemNameArray[$i] = $currRow->Name;
 	}
+	return [$p_problemIdArray, $p_problemNameArray];
 }
 
 function generateProblemSelectBox($p_name, $p_problemIdArray, $p_problemNameArray)
@@ -136,7 +145,7 @@ if ($showBrowseBox == true )
 {
 	echo "<p>Please browse for a CSV file that contain entries for User Id,
 		  First Name, and Last Name on each line (with each entry separated by commas).<p>";
-	echo "<form action=\"".$PHP_SELF."\" method=\"post\" enctype=\"multipart/form-data\">";
+	echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\" enctype=\"multipart/form-data\">";
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"loadfile\">");
 	//echo "<font size=-1 color=\"#E24A00\">File Upload Script</font><br>";
 	echo "<input type=\"file\" name=\"theFile\" size=\"50\" class=\"formtextfield\"><br>";
@@ -148,12 +157,16 @@ else if ($showStudentRecords == true)
 {
 	if ($numStudentRecords > 0)
 	{
-		$problemIdArray;
-		$problemNameArray;
+		$problemIdArray = [];
+		$problemNameArray = [];
 		$problemRecordset = $user->getProblems();
 		if (!empty($problemRecordset) )
 		{
-			loadProblemsFromRecordset($problemRecordset,&$problemIdArray,&$problemNameArray);
+			// passbyreference - resolved
+			// loadProblemsFromRecordset($problemRecordset,&$problemIdArray,&$problemNameArray);
+			 $result = loadProblemsFromRecordset($problemRecordset,$problemIdArray,$problemNameArray);
+			 $problemIdArray = $result[0];
+			 $problemNameArray = $result[1];
 		}
 
 		// now generate the content of the page
@@ -162,7 +175,7 @@ else if ($showStudentRecords == true)
 		echo "<p>" . $numErrorRecords . " student record(s) were parsed unsuccessfully.</p>";
 
 		// Start the form
-		echo "<form action=\"". $PHP_SELF . "\" method=\"post\">";
+		echo "<form action=\"".htmlentities($_SERVER['PHP_SELF']). "\" method=\"post\">";
 		echo("<input type=\"hidden\" name=\"formaction\" value=\"createstudents\">");
 
 		$studentTable = new Table(5);
@@ -179,7 +192,9 @@ else if ($showStudentRecords == true)
 			$lastNameBox = "<input type=\"text\" name=\"lastName".$i."\" value=\"" . $record[2] . "\" size=\"20\">";
 			$checkBox	 = "<input type=\"checkbox\" name=\"create_student[]\" value=\"" . $i . "\" CHECKED>";
 			$problemSelectBox = generateProblemSelectBox("problem".$i,$problemIdArray,$problemNameArray);
-			$studentTable->writeRow(&$checkBox,&$userIdBox,&$firstNameBox,&$lastNameBox,&$problemSelectBox);
+			// passbyreference - resolved
+			// $studentTable->writeRow(&$checkBox,&$userIdBox,&$firstNameBox,&$lastNameBox,&$problemSelectBox);
+			$studentTable->writeRow($checkBox,$userIdBox,$firstNameBox,$lastNameBox,$problemSelectBox);
 		}
 
 
@@ -193,7 +208,9 @@ else if ($showStudentRecords == true)
 			$lastNameBox = "<input type=\"text\" name=\"lastName".$i."\" value=\"" . $record[2] . "\" size=\"20\">";
 			$checkBox	 = "<input type=\"checkbox\" name=\"create_student[]\" value=\"" . $i . "\">";
 			$problemSelectBox = generateProblemSelectBox("problem".$i,$problemIdArray,$problemNameArray);
-			$studentTable->writeRow(&$checkBox,&$userIdBox,&$firstNameBox,&$lastNameBox,&$problemSelectBox);
+			// passbyreference - resolved
+			$studentTable->writeRow($checkBox,$userIdBox,$firstNameBox,$lastNameBox,$problemSelectBox);
+			// $studentTable->writeRow(&$checkBox,&$userIdBox,&$firstNameBox,&$lastNameBox,&$problemSelectBox);
 		}
 
 		$studentTable->flush();

@@ -16,7 +16,10 @@ $page = new Page($user, 'Modify My Account', 10);
 
 // FORM LOGIC
 // - get form variables
-$formaction = $_POST['formaction'];
+$formaction = false;
+if(isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 
 if($formaction == 'saveuser')
 {
@@ -63,8 +66,8 @@ $page->writeHeader();
 // handle errors
 $page->handleErrors();
 
-// page content
-echo("<form action=\"$PHP_SELF\" method=\"post\">");
+// page cont
+echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 echo("<input type=\"hidden\" name=\"formaction\" value=\"saveuser\">");
 
 $table = new Table(2, false, true);

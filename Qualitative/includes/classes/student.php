@@ -41,6 +41,7 @@ class Student extends User
 
 		$problem = $g_db -> fetch($studentRecord);
 
+		if (is_object($problem)) {
 		$this->m_cropName = $problem -> Name;
 		$this->m_description = $problem -> Description;
 		$this->m_gmu12 = $problem -> GMU1_2;
@@ -67,8 +68,8 @@ class Student extends User
         $this->m_progenyPerMating = $problem->ProgenyPerMating;
         $this->m_maxProgeny = $problem->MaxProgeny;
         $this->m_progenyGenerated = $problem->ProgenyGenerated;
-        //echo "<p>Student $this->m_userId created! Prog per mating = $this->m_progenyPerMating";
-
+		//echo "<p>Student $this->m_userId created! Prog per mating = $this->m_progenyPerMating";
+		}
 	}
 
     /**

@@ -23,7 +23,10 @@ $g_db = new DB();
 $showProblemForm = false;
 $showProblemSummary = false;
 
-$formaction = $_POST['formaction'];
+$formaction = false;
+if (isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 
 $traitRecordset = $user->getTraits();
 
@@ -65,22 +68,34 @@ $page -> setOnLoad("loadTips();");
 	}
 
 	$arrPhenotypes = array();
-	determineDominance($_POST['dom0'] == 'ON',0,&$arrPhenotypes);
-	determineDominance($_POST['dom1'] == 'ON',1,&$arrPhenotypes);
+	$dom0 = isset($_POST['dom0']) ? $_POST['dom0'] : null; 
+	$dom1 = isset($_POST['dom1']) ? $_POST['dom1'] : null; 
+	$dom2 = isset($_POST['dom2']) ? $_POST['dom2'] : null; 
+	$arrPhenotypes[0] = determineDominance($dom0,0,$arrPhenotypes);
+	$arrPhenotypes[1] = determineDominance($dom1,1,$arrPhenotypes);
+	// $arrPhenotypes = determineDominance($_POST['dom0'] == 'ON',0,$arrPhenotypes);
+	// $arrPhenotypes = determineDominance($_POST['dom1'] == 'ON',1,$arrPhenotypes);
 
-	if ($_POST['epistCheck']=='ON')
+	// passbyreference - resolved
+	// determineDominance($_POST['dom0'] == 'ON',0,&$arrPhenotypes);
+	// determineDominance($_POST['dom1'] == 'ON',1,&$arrPhenotypes);
+	if (isset($_POST['epistCheck']) && $_POST['epistCheck']=='ON')
 	{
-		determineEpistasis($inputEpistasis,2,&$arrPhenotypes);
+		// passbyreference - resolved
+		$arrPhenotypes[2] = determineEpistasis($inputEpistasis,2,$arrPhenotypes);
+		//determineEpistasis($inputEpistasis,2,&$arrPhenotypes);
 	}
 	else
 	{
 		$inputEpistasis = -1;
-		determineDominance($_POST['dom2'] == 'ON',2,&$arrPhenotypes);
+		// passbyreference - resolved
+		$arrPhenotypes[2] = determineDominance($dom2,2,$arrPhenotypes);
+		// determineDominance($_POST['dom2'] == 'ON',2,&$arrPhenotypes);
 	}
 
 	// get linkage distances
-	$inputLinkdist_01 = ($_POST['check01']=='ON')?($_POST['linkdist01']=='')?50:($_POST['linkdist01']==0)?50:$_POST['linkdist01']:50;
-	$inputLinkdist_12 = ($_POST['check12']=='ON')?($_POST['linkdist12']=='')?50:($_POST['linkdist12']==0)?50:$_POST['linkdist12']:50;
+	$inputLinkdist_01 = (isset($_POST['check01'])&& $_POST['check01']=='ON')?($_POST['linkdist01']=='')?50:($_POST['linkdist01']==0)?50:$_POST['linkdist01']:50;
+	$inputLinkdist_12 = (isset($_POST['check12'])&& $_POST['check12']=='ON')?($_POST['linkdist12']=='')?50:($_POST['linkdist12']==0)?50:$_POST['linkdist12']:50;
 	if ($inputLinkdist_01 < 0 || $inputLinkdist_12 < 0)
 	{
 		UserError::addError(758);
@@ -114,7 +129,11 @@ else
 		$traitNameArray = array();
 
 		// load up the recordset into memory (in the from of arrays)
-		loadTraitsFromRecordset($traitRecordset,&$traitIdArray,&$traitNameArray);
+		// passbyreference - resolved
+		$result = loadTraitsFromRecordset($traitRecordset,$traitIdArray,$traitNameArray);
+		$traitIdArray = $result['traitIdArray'];
+		$traitNameArray = $result['traitNameArray'];
+		// loadTraitsFromRecordset($traitRecordset,&$traitIdArray,&$traitNameArray);
 	}
 }
 
@@ -187,6 +206,7 @@ function loadTraitsFromRecordset($p_recordset,$p_traitIdArray, $p_traitNameArray
 		$p_traitIdArray[$i]= $currRow->TraitId;
 		$p_traitNameArray[$i] = $currRow->Name;
 	}
+	return array("traitIdArray" => $p_traitIdArray, "traitNameArray" => $p_traitNameArray);
 }
 
 function generateEpistSelectBox()
@@ -225,27 +245,24 @@ function determineDominance($p_isDominance,$p_traitNumber,$p_arrPhenotypes) // (
 			UserError::addError(756);
 			return false;
 		}
-		else
-		{
-			$p_arrPhenotypes[$p_traitNumber] = array($AATrait,$bbTrait);
-		}
+		
+		
+		// $p_arrPhenotypes[$p_traitNumber] = array($AATrait,$bbTrait);
+		return array($AATrait, $bbTrait);
 	}
-	else
+	
+	
+	$AATrait = $_POST['pheno'.$p_traitNumber.'0'];
+	$mixedTrait = $_POST['pheno'.$p_traitNumber.'1'];
+	$bbTrait = $_POST['pheno'.$p_traitNumber.'2'];
+	if (empty($AATrait) || empty($bbTrait) || empty($mixedTrait))
 	{
-		$AATrait = $_POST['pheno'.$p_traitNumber.'0'];
-		$mixedTrait = $_POST['pheno'.$p_traitNumber.'1'];
-		$bbTrait = $_POST['pheno'.$p_traitNumber.'2'];
-		if (empty($AATrait) || empty($bbTrait) || empty($mixedTrait))
-		{
-			UserError::addError(757);
-			return false;
-		}
-		else
-		{
-			$p_arrPhenotypes[$p_traitNumber] = array($AATrait,$bbTrait,$mixedTrait);
-		}
+		UserError::addError(757);
+		return false;
 	}
-	return true;
+
+	// $p_arrPhenotypes[$p_traitNumber] = array($AATrait,$bbTrait,$mixedTrait);
+	return array($AATrait, $bbTrait, $mixedTrait);
 }
 
 function generateTraitSelectBox($p_name, $p_traitIdArray, $p_traitNameArray)
@@ -285,23 +302,28 @@ function determineEpistasis($p_epistasisValue, $p_traitNumber, $p_arrPhenotypes)
 			$epistTraits[$i] = $_POST['pheno2'.$i];
 		}
 	}
-	$p_arrPhenotypes[$p_traitNumber] = $epistTraits;
-	return true;
+	return $epistTraits;
+	// return True;
 }
 
-function problemForm($type=''){
+function problemForm($type='', $V_pheno, $V_epistCheck){
 	global 	$g_epistaticRatios, $V_problemId, $V_trait, $V_problemname, $V_problemdesc,
 			$V_progpermating, $V_totalprogeny, $V_dom, $V_ordering,
-			$V_pheno, $V_epistCheck, $V_linkdist, $V_epistCode, $traitNameArray;
+			$V_epistCheck, $V_linkdist, $V_epistCode, $traitNameArray;
 	$formType = $type;	//create or any other for modify
 	if ($V_problemId!='')
 		$formType = "createFromExisting";
 	//FORM START
 	$t = new Table(3, false);
 	setProblemList();
-	echo '<form name="problem" action="'.$PHP_SELF.'" method="post">';
+	echo '<form name="problem" action="'.htmlentities($_SERVER['PHP_SELF']).'" method="post">';
 	echo '<input type="hidden" name="formaction" value="createproblem">';
 	echo '<input type="hidden" name="problemId" value="'.$V_problemId.'">';
+
+	// Added to remove $p_style and $id undefined notice
+	$p_style = "";
+	$ld = "";
+	$p = 0;
 
 	if(empty($V_progpermating))
 		$V_progpermating = 50;
@@ -314,6 +336,11 @@ function problemForm($type=''){
 	$t -> writeRow('Maximum Progeny:', textInput('totalprogeny', $V_totalprogeny, 5, 10));
 	$t -> writeRow('Display Order of Genes:&nbsp;', '<table border="0"><td><Input type="hidden" name="ordering" value="'.$V_ordering.'"><select name="order" size="3"><option value="'.substr($V_ordering, 0, 1).'">Gene '.(substr($V_ordering, 0, 1)*1+1).'</option><option value="'.substr($V_ordering, 1, 1).'">Gene '.(substr($V_ordering, 1, 1)*1+1).'</option><option value="'.substr($V_ordering, 2, 1).'">Gene '.(substr($V_ordering, 2, 1)*1+1).'</option></select></td><td><input name="Button" value="Up" type="button" onclick="reorder(true);"> <br> <input name="Button" value="Down" type="button" onclick="reorder(false);"></td></table>');
 	$t -> writeDivider();
+
+	if (!isset($_POST['linkdist01']) || !isset($_POST['linkdist12'])) {
+		$_POST['linkdist01'] = false;
+		$_POST['linkdist12'] = false;
+	}
 
 	$p = 0;
 	for ($i = 0; $i < 3; $i++)
@@ -353,8 +380,11 @@ function problemForm($type=''){
 		{
 			if ($formType=="create")
 				$t -> writeRow(phenoTip($i, 3).'&nbsp;</DIV>', $innerTable[0] . phenoData($i, 3, 'visibility: hidden;') . $innerTable[1] . epistTip($i, 3, 'visibility: hidden;') . $innerTable[2]);
-			else
-				$t -> writeRow(phenoTip($i, 3).'&nbsp;</DIV>', $innerTable[0] . '<DIV id="pheno'.$i.'3" name="pheno'.$i.'3"'.$p_style.'>'.textInput('pheno'.$i.'3', $V_pheno[$p]). '</DIV>' . $innerTable[1] . epistTip($i, 3, 'visibility: hidden;') . $innerTable[2]);
+			else {
+				if ($V_epistCheck) {
+					$t -> writeRow(phenoTip($i, 3).'&nbsp;</DIV>', $innerTable[0] . '<DIV id="pheno'.$i.'3" name="pheno'.$i.'3"'.$p_style.'>'.textInput('pheno'.$i.'3', $V_pheno[$p]). '</DIV>' . $innerTable[1] . epistTip($i, 3, 'visibility: hidden;') . $innerTable[2]);
+				}
+			}
 		}
 		if ($i == 1){
 			if ($V_linkdist[0]==''){$V_linkdist[0] = 50; $ld = ' disabled="true"';}
@@ -447,25 +477,63 @@ $page->writeHeader();
 
 
 // LOGIC FOR SHOWING PROBLEM FORM
-$V_problemId = $_GET['problemId']?$_GET['problemId']:$_POST['problemId'];
-$V_trait = array($_POST['trait0'], $_POST['trait1'], $_POST['trait2']);
-$V_problemname = $_POST['problemname'];
-$V_problemdesc = $_POST['problemdesc'];
-$V_progpermating = $_POST['progpermating'];
-$V_totalprogeny = $_POST['totalprogeny'];
-$V_dom = array($_POST['dom0']=='ON', $_POST['dom1']=='ON', $_POST['dom2']=='ON');
-$V_ordering = $_POST['ordering'];
+// values will be assigned false if non of the values are set
+$V_problemId = isset($_GET['problemId'])? $_GET['problemId'] : (isset($_POST['problemId'])?$_POST['problemId']:false);
+//$V_problemId = $_GET['problemId']?$_GET['problemId']:$_POST['problemId'];
+$V_trait = array(
+	isset($_POST['trait0'])?$_POST['trait0']: false,
+	isset($_POST['trait1'])?$_POST['trait1']: false,
+	isset($_POST['trait2'])?$_POST['trait2']: false);
+//$V_trait = array($_POST['trait0'], $_POST['trait1'], $_POST['trait2']);
+$V_problemname = isset($_POST['problemname'])?$_POST['problemname']:false;
+//$V_problemname = $_POST['problemname'];
+$V_problemdesc = isset($_POST['problemdesc'])?$_POST['problemdesc']:false;
+//$V_problemdesc = $_POST['problemdesc'];
+$V_progpermating = isset($_POST['progpermating'])?$_POST['progpermating']:false;
+//$V_progpermating = $_POST['progpermating'];
+$V_totalprogeny = isset($_POST['totalprogeny'])?$_POST['totalprogeny']:false;
+//$V_totalprogeny = $_POST['totalprogeny'];
+$V_dom = array(
+	isset($_POST['dom0'])?$_POST['dom0']=='ON': false,
+	isset($_POST['dom1'])?$_POST['dom1']=='ON': false,
+	isset($_POST['dom2'])?$_POST['dom2']=='ON': false);
+//$V_dom = array($_POST['dom0']=='ON', $_POST['dom1']=='ON', $_POST['dom2']=='ON');
+$V_ordering = isset($_POST['ordering'])?$_POST['ordering']: false;
+//$V_ordering = $_POST['ordering'];
 if ($V_ordering=='')
 	$V_ordering="012";
-$V_pheno = array($_POST['pheno00'], $_POST['pheno01'], $_POST['pheno02'], $_POST['pheno10'], $_POST['pheno11'], $_POST['pheno12'], $_POST['pheno20'], $_POST['pheno21'], $_POST['pheno22'], $_POST['pheno23']);
-$V_epistCheck = $_POST['epistCheck']=='ON';
-$V_linkdist = array($_POST['linkdist01'], $_POST['linkdist12']);
-$V_epistCode = $_POST['epist'];
+$V_pheno = array(
+	isset($_POST['pheno00'])?$_POST['pheno00']:false,
+	isset($_POST['pheno01'])?$_POST['pheno01']:false,
+	isset($_POST['pheno02'])?$_POST['pheno02']:false,
+	isset($_POST['pheno10'])?$_POST['pheno10']:false,
+	isset($_POST['pheno11'])?$_POST['pheno11']:false,
+	isset($_POST['pheno12'])?$_POST['pheno12']:false,
+	isset($_POST['pheno20'])?$_POST['pheno20']:false,
+	isset($_POST['pheno21'])?$_POST['pheno21']:false,
+	isset($_POST['pheno22'])?$_POST['pheno22']:false,
+	isset($_POST['pheno23'])?$_POST['pheno23']:false);
+//$V_pheno = array($_POST['pheno00'], 
+//			$_POST['pheno01'], $_POST['pheno02'],
+//			 $_POST['pheno10'], $_POST['pheno11'], 
+// 				$_POST['pheno12'], $_POST['pheno20'],
+//				 $_POST['pheno21'], $_POST['pheno22'], 
+// 					$_POST['pheno23']); - only when Epistasis clicked
+$V_epistCheck = isset($_POST['epistCheck'])?($_POST['epistCheck']=='ON'):false;
+//$V_epistCheck = $_POST['epistCheck']=='ON';
+$V_linkdist = array(
+	isset($_POST['linkdist01'])?$_POST['linkdist01']:false,
+	isset($_POST['linkdist12'])?$_POST['linkdist12']:false);
+//$V_linkdist = array($_POST['linkdist01'], $_POST['linkdist12']);
+$V_epistCode = isset($_POST['epist'])?$_POST['epist']:false;
+//$V_epistCode = $_POST['epist'];
 
 
 echo '<script language="JavaScript">';
 
-javascriptSetup(&$traitIdArray, &$traitNameArray);
+// passbyreference - resolved? value of parameter was not reassigned inside javascriptSetup
+//javascriptSetup(&$traitIdArray, &$traitNameArray);
+javascriptSetup($traitIdArray, $traitNameArray);
 
 echo "function loadTips(){\n";
 	for ($i = 0; $i < 3; $i++){
@@ -530,13 +598,14 @@ if ($showProblemForm == true){
 					array_push($V_pheno, $row->Trait3bbPhenoName);
 				break;
 			}
-		}else
+		}else {
 			($V_dom[2])?
 			array_push($V_pheno, $row->Trait3AAPhenoName,$row->Trait3bbPhenoName,$row->Trait3AbPhenoName):
 			array_push($V_pheno, $row->Trait3AAPhenoName,$row->Trait3AbPhenoName,$row->Trait3bbPhenoName);
 			$V_linkdist = array($row->GMU1_2, $row->GMU2_3);
+		}
 	}
-	problemForm("create");
+	problemForm("create", $V_pheno, $V_epistCheck);
 }
 //-------------------------------------------------------------------------------
 

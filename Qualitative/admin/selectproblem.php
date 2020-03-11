@@ -17,7 +17,8 @@ $studentId = $_GET['studentId']? $_GET['studentId']:$_POST['studentId'];
 $page = new Page($user, 'Assign Problem', 2);
 
 //if assign a problem without modification
-if($_GET['problemId'])
+//if($_GET['problemId'])
+if(isset($_GET['problemId']))
 {
 	$rs = $user->getStudentProblem($studentId);
 	if( !empty($rs) && $g_db->getNumRows($rs)<= 0 )
@@ -54,7 +55,8 @@ $student = new Student($studentId);
 $page->writeHeader();
 $page->handleErrors();
 
-echo("<p>Assigning Problem for Student: $student->m_firstName $student->lastName ($studentId)</p>");
+echo("<p>Assigning Problem for Student: $student->m_firstName $student->m_lastName ($studentId)</p>");
+//echo("<p>Assigning Problem for Student: $student->m_firstName $student->lastName ($studentId)</p>");
 
 $problemTable = new Table(4, true, false);
 $problemTable->writeHeaders('Name', 'Descriptions', 'Last Modified', '');

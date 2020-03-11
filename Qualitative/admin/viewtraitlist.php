@@ -19,16 +19,18 @@ $page->writeHeader();
 $failure = false;
 
 // check for previous page's deleted problems
-$delTrait = $_POST['del_trait'];
-for( $i = 0; $i < count($delTrait); $i++)
-	$user->deleteTrait($delTrait[$i]);
+if (isset($_POST['del_trait'])) {
+	$delTrait = $_POST['del_trait'];
+	for( $i = 0; $i < count($delTrait); $i++)
+		$user->deleteTrait($delTrait[$i]);
+}
 
 // retrieve the list of problems associated with the user's courseId
 $recordset = $user->getTraits();
 
 $page->handleErrors();
 
-echo "<form action=\"$PHP_SELF\" method=\"post\">";
+echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
 
 $traitTable = new Table(4, true, false);
 $traitTable->writeHeaders('', 'Name', 'Phenotypes', '');
@@ -47,10 +49,15 @@ while($row = $g_db->fetch($recordset))
 		array_push($phenoArray, $pheno_row->Name);
 	$phenoList = implode(', ', $phenoArray);
 
+	// TODO: passbyreference
 	$traitTable->writeRow("<input type=\"checkbox\" name=\"del_trait[]\" value=\"$traitId\">",
-		&$traitName,
-		&$phenoList,
+		$traitName,
+		$phenoList,
 		"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifytrait.php?traitId=$traitId');\">");
+	// $traitTable->writeRow("<input type=\"checkbox\" name=\"del_trait[]\" value=\"$traitId\">",
+	//	&$traitName,
+	//	&$phenoList,
+	//	"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifytrait.php?traitId=$traitId');\">");
 }
 $traitTable->flush();
 

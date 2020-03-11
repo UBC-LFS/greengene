@@ -16,7 +16,10 @@ $page = new Page($user, 'Modify Course', 1);
 
 // FORM LOGIC
 // - get form variables
-$formaction = $_POST['formaction'];
+$formaction = false;
+if(isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 
 if($formaction == 'save')
 {
@@ -28,7 +31,7 @@ if($formaction == 'save')
 		$user->m_courseName = $courseName;
 		$user->m_courseDescription = $courseDesc;
 		$_SESSION['userSession'] = $user;
-		Page::redirect($PHP_SELF);
+		Page::redirect($_SERVER['PHP_SELF']);
 	}
 }
 else
@@ -44,7 +47,7 @@ $page->writeHeader();
 $page->handleErrors();
 
 // page content
-echo("<form action=\"$PHP_SELF\" method=\"post\">");
+echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 echo("<input type=\"hidden\" name=\"formaction\" value=\"save\">");
 
 $table = new Table(2, false, true);

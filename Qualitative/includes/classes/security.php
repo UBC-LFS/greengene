@@ -66,13 +66,18 @@ class Security
 	 */
 	function getUser($p_checkSession='true')
 	{
-		echo 'getUser '. $p_checkSession. ' , '. ( $_SESSION['userSession'] ). ' , '.isset($_SESSION['userSession']). ' , ' . ($p_checkSession && !isset($_SESSION['userSession'])). ' end';
-		if($p_checkSession && !isset($_SESSION['userSession']))
+		if($p_checkSession == false && !isset($_SESSION['userSession']))
 		{
-			echo "here";
-			Page::redirect(URLROOT . '/login.php');
+			if($_SERVER['PHP_SELF'] != URLROOT.'/login.php') 
+			{
+				Page::redirect(URLROOT . '/login.php');
+			}
+		} 
+		else 
+		{
+			return $_SESSION['userSession'];
 		}
-		return $_SESSION['userSession'];
+			
 	}
 
 	/**

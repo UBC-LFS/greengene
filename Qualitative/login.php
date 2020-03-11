@@ -13,6 +13,11 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 {
 	$g_db = new DB();
 
+	// TODO: pass in LDAP userID and password
+	// Should the ta and prof use LDAP as well? 
+	// authenticate using LDAP 
+	// assign variable $_SESSION['userSession']
+	// DB problably shouldn't store pwd anymore?
 	if(Security::login($_POST['UserId'], $_POST['Pwd']) == false)
 	{
 		$g_db->disconnect();

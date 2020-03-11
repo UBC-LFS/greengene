@@ -13,8 +13,14 @@ $g_db = new DB();
 
 // FORM LOGIC
 // - get form variables
-$problemId = $_GET['problemId'];
-$studentProblemId = $_GET['studentId'];
+$problemId = null;
+if (isset($_GET['problemId'])) {
+	$problemId = $_GET['problemId'];
+}
+$studentProblemId = null;
+if (isset($_GET['studentId'])) {
+	$studentProblemId = $_GET['studentId'];
+}
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'View Problem', 2);
@@ -91,6 +97,7 @@ echo "}\n</script>";
 	$t -> writeDivider();
 
 	$p = 0;
+	$temp = [];
 	for ($i = 0; $i < 3; $i++)
 	{
 		$t -> writeHeaders('Gene '.($i+1),'');
@@ -99,21 +106,33 @@ echo "}\n</script>";
 		if ($i==2)
 		{
 			if ($V_epistCheck){
+				// echo("epist checked ");
 				$t -> writeRow('Epistasis Selected', $g_epistaticRatios[$V_epistCode]);
 				$temp = explode(":", $g_epistaticRatios[$V_epistCode]);
 				for ($j = 0; $j < count($temp); $j++){
 					$temp[$j] .= ':';
 				}
 			}else{
+				// echo("epist not checked ");
+				// echo($V_dom[$i])
 				($V_dom[$i])?$temp = array('&nbsp;', '&nbsp;'):$temp = array('&nbsp;', '&nbsp;', '&nbsp;');
 			}
-		}
 
-		$t -> writeRow(phenoTip($i, 0).'AA:</DIV>', $temp[0].$V_pheno[$p++]);
-		$t -> writeRow(phenoTip($i, 1).'Aa / aA:</DIV>', $temp[1].$V_pheno[$p++]);
-		(!$V_dom[$i]&&$i<2||$i == 2&&!$V_epistCheck&&!$V_dom[$i]||$i==2&&$V_epistCheck&&count(explode(":", $g_epistaticRatios[$V_epistCode]))>2)?
-			$t -> writeRow(phenoTip($i, 2).'aa:</DIV>', $temp[2].$V_pheno[$p++]):$p++;
-		if ($i == 2&&$V_pheno[9]!='')//have the extra phenotype selection
+			$t -> writeRow(phenoTip($i, 0).'AA:</DIV>', $temp[0].$V_pheno[$p++]);
+			$t -> writeRow(phenoTip($i, 1).'Aa / aA:</DIV>', $temp[1].$V_pheno[$p++]);
+			(!$V_dom[$i]&&$i<2||$i == 2&&!$V_epistCheck&&!$V_dom[$i]||$i==2&&$V_epistCheck&&count(explode(":", $g_epistaticRatios[$V_epistCode]))>2)?
+				$t -> writeRow(phenoTip($i, 2).'aa:</DIV>', $temp[2].$V_pheno[$p++]):$p++;
+		} else {
+			($V_dom[$i])?$temp = array('&nbsp;', '&nbsp;'):$temp = array('&nbsp;', '&nbsp;', '&nbsp;');
+			$t -> writeRow(phenoTip($i, 0).'AA:</DIV>', $temp[0].$V_pheno[$p++]);
+			$t -> writeRow(phenoTip($i, 1).'Aa / aA:</DIV>', $temp[1].$V_pheno[$p++]);
+		
+			(!$V_dom[$i]&&$i<2||$i == 2&&!$V_epistCheck&&!$V_dom[$i]||$i==2&&$V_epistCheck&&count(explode(":", $g_epistaticRatios[$V_epistCode]))>2)?
+				$t -> writeRow(phenoTip($i, 2).'aa:</DIV>', $temp[2].$V_pheno[$p++]):$p++;
+		}
+		// if ($i == 2&&$V_pheno[9]!='')//have the extra phenotype selection
+		// if ($V_epistCheck && $i == 2 && $V_pheno[9] != '')//have the extra phenotype selection
+		if ($V_epistCheck && $i == 2 && !isset($V_pheno[0]))//have the extra phenotype selection
 		{
 			$t -> writeRow(phenoTip($i, 3).'&nbsp;</DIV>', $temp[3].$V_pheno[9]);
 		}
@@ -228,11 +247,15 @@ else
 				$button = "<input type=\"button\" value=\"View\" onClick=\"goUrl('viewproblem.php?studentId=$row->UserId');\">";
 				if ($row->Modified > 0)
 				{
-					$table->writeRow($row->UserId,$row->Name,"Yes",&$button);
+					// TODO: pass by reference - resolved?
+					//$table->writeRow($row->UserId,$row->Name,"Yes",&$button);
+					$table->writeRow($row->UserId, $row->Name, "Yes", $button);
 				}
 				else
 				{
-					$table->writeRow($row->UserId,$row->Name,"No",&$button);
+					// TODO: pass by reference - resolved?
+					// $table->writeRow($row->UserId,$row->Name,"No",&$button);
+					$table->writeRow($row->UserId, $row->Name, "No", $button);
 				}
 			}
 			$table->flush();

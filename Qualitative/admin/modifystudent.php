@@ -15,7 +15,10 @@ $g_db = new DB();
 // FORM LOGIC
 // - get form variables
 $studentId = $_GET['studentId'];
-$formaction = $_POST['formaction'];
+$formaction = false;
+if (isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 
 $showStudentForm = false;
 $formError = false;
@@ -120,7 +123,7 @@ $page->handleErrors();
 if ($showStudentForm == true)
 {
 	$row = $g_db->fetch($studentRecordset);
-	echo "<form name=\"createstudent\" action=\"$PHP_SELF\" method=\"post\">";
+	echo "<form name=\"createstudent\" action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"modifystudent\">");
 	echo("<input type=\"hidden\" name=\"userId\" value=\"" . $row->UserId . "\">");
 

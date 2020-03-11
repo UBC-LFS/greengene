@@ -21,7 +21,7 @@ CREATE TABLE `Course` (
   `Name` varchar(30) NOT NULL default '',
   `Description` varchar(250) default NULL,
   PRIMARY KEY  (`CourseId`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -39,9 +39,9 @@ CREATE TABLE `Cross` (
   `SeedPlantNum` int(10) NOT NULL default '0',
   `SeedGene` varchar(4) NOT NULL default '',
   `GeneSequences` varchar(200) default NULL,
-  `CreationDate` timestamp(14) NOT NULL,
+  `CreationDate` timestamp NOT NULL,
   PRIMARY KEY  (`CrossNum`,`UserId`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE `LongerGeneSequences` (
   `CrossNum` int(10) unsigned NOT NULL default '0',
   `GeneSequences` varchar(200) NOT NULL default '',
   PRIMARY KEY  (`SequencesId`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,7 @@ CREATE TABLE `MasterProblem` (
   `GMU2_3` float unsigned NOT NULL default '50',
   `TraitOrder` char(3) NOT NULL default '123',
   `CourseId` int(10) NOT NULL default '0',
-  `ModificationDate` timestamp(14) NOT NULL,
+  `ModificationDate` timestamp NOT NULL,
   `EpistasisCode` tinyint(3) unsigned default NULL,
   `Trait1Name` varchar(20) NOT NULL default '',
   `Trait1AAPhenoName` varchar(20) NOT NULL default '',
@@ -91,7 +91,7 @@ CREATE TABLE `MasterProblem` (
   `ProgenyPerMating` int(10) unsigned NOT NULL default '50',
   `MaxProgeny` int(10) unsigned NOT NULL default '1000',
   PRIMARY KEY  (`ProblemId`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE `Phenotype` (
   `TraitId` int(10) unsigned NOT NULL default '0',
   `Name` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`PhenotypeId`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -121,7 +121,7 @@ CREATE TABLE `StudentProblem` (
   `GMU1_2` float unsigned NOT NULL default '50',
   `GMU2_3` float unsigned NOT NULL default '50',
   `TraitOrder` char(3) NOT NULL default '123',
-  `ModificationDate` timestamp(14) NOT NULL,
+  `ModificationDate` timestamp NOT NULL,
   `EpistasisCode` tinyint(3) unsigned default NULL,
   `Trait1Name` varchar(20) NOT NULL default '',
   `Trait1AAPhenoName` varchar(20) NOT NULL default '',
@@ -142,7 +142,7 @@ CREATE TABLE `StudentProblem` (
   `MaxProgeny` int(10) unsigned NOT NULL default '1000',
   `ProgenyGenerated` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`UserId`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -156,7 +156,7 @@ CREATE TABLE `Trait` (
   `Name` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`TraitId`),
   FULLTEXT KEY `Name` (`Name`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -173,4 +173,4 @@ CREATE TABLE `User` (
   `Pwd` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`UserId`),
   KEY `LastName` (`LastName`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;

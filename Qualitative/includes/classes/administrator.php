@@ -206,9 +206,11 @@ class Administrator extends TA
 		$p_trait3Name = $p_arrPhenotypeNames[2];
 
 		//Call TA's assignPhenotypeLogic method to extract phenotypes
-		$phenotypeArray;
-		$this->assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
-
+		$phenotypeArray = array();
+		// TODO: pass by reference - resolved
+		//$this->assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
+		$phenotypeArray = $this->assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, $phenotypeArray);
+		// Values in phenotypeArray is null
 		$p_trait1AAName = $phenotypeArray[0][0];
 		$p_trait1AbName = $phenotypeArray[0][1];
 		$p_trait1bAName = $phenotypeArray[0][2];
@@ -337,7 +339,10 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	}
 }
 */
-		$this->assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
+
+		$phenotypeArray = array();
+		$phenotypeArray = $this->assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, $phenotypeArray);
+		//$this->assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
 
 		$p_trait1AAName = $phenotypeArray[0][0];
 		$p_trait1AbName = $phenotypeArray[0][1];

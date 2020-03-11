@@ -12,19 +12,21 @@ $g_db = new DB();
 $page = new Page($user, 'Modify Trait', 1);
 
 // GET PARAMETERS
-$traitId = $_GET['traitId'] ? $_GET['traitId'] : $_POST['traitId'];
+$traitId = isset($_GET['traitId']) ? $_GET['traitId'] : $_POST['traitId'];
 $traitName = $user->getTraitName($traitId);
 
 // delete phenotypes
-$delPhenotype = $_POST['del_phenotype'];
-if(count($delPhenotype) > 0)
-{
-	for( $i = 0; $i < count($delPhenotype); $i++)
-		$user->deletePhenotype($traitId, $delPhenotype[$i]);
+if(isset($_POST['del_phenotype'])) {
+	$delPhenotype = $_POST['del_phenotype'];
+	if(count($delPhenotype) > 0)
+	{
+		for( $i = 0; $i < count($delPhenotype); $i++)
+			$user->deletePhenotype($traitId, $delPhenotype[$i]);
+	}
 }
 
 //check for previous page's added new phenotype
-if($_POST['new_phenotype'])
+if(isset($_POST['new_phenotype']))
 {
 	$user->addPhenotype($traitId, $_POST['new_phenotype']);
 }
@@ -44,7 +46,7 @@ $page->writeSectionHeader('Phenotypes');
 if($g_db->getNumRows($recordset) > 0)
 {
 	// Start the form
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"traitId\" value=\"$traitId\">");
 
 	// table for phenotypes
@@ -62,7 +64,7 @@ if($g_db->getNumRows($recordset) > 0)
 }
 
 // Start the form
-echo("<form action=\"$PHP_SELF\" method=\"post\">");
+echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 echo("<input type=\"hidden\" name=\"traitId\" value=\"$traitId\">");
 
 //Form for new phenotype.

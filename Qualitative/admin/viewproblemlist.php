@@ -15,10 +15,12 @@ $page = new Page($user, 'Manage Problem Templates', 1);
 // write page header, including toolbar
 $page->writeHeader();
 
-$delProblem = $_POST['del_prob'];
-if(count($delProblem) > 0)
-	for( $i = 0; $i < count($delProblem); $i++)
-		$user->deleteProblem($delProblem[$i]);
+if(isset($_POST['del_prob'])) {
+	$delProblem = $_POST['del_prob'];
+	if(count($delProblem) > 0)
+		for( $i = 0; $i < count($delProblem); $i++)
+			$user->deleteProblem($delProblem[$i]);
+}
 
 // retrieve the list of problems associated with the user's courseId
 $recordset = $user->getProblems();

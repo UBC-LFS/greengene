@@ -18,7 +18,10 @@ else
 
 // FORM LOGIC
 // - get form variables
-$formaction = $_POST['formaction'];
+$formaction = false;
+if(isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 
 if($formaction == 'adduser')
 {
@@ -114,13 +117,19 @@ elseif($formaction == 'saveuserpwd')
 }
 elseif(empty($formaction))
 {
-	$userId = $_GET['userId'];
+	$userId = "";
+	if(isset($_GET['userID'])) {
+		$userId = $_GET['userId'];
+	}
 
 	if(empty($userId))
 	{
 		// adding a user
 		$formaction = 'adduser';
 		$formType = 'add';
+		$FirstName = '';
+		$LastName = '';
+		$PrivilegeLvl = '';
 	}
 	else
 	{
@@ -146,7 +155,7 @@ $page->handleErrors();
 
 if($formType == 'add')
 {
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"adduser\">");
 
 	$table = new Table(2, false, true);
@@ -178,7 +187,7 @@ if($formType == 'add')
 }
 else
 {
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"saveuser\">");
 
 	$table = new Table(2, false, true);

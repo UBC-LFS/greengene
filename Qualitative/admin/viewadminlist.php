@@ -16,7 +16,10 @@ $page = new Page($user, 'Course Administrators', 1);
 
 // FORM LOGIC
 // - get form variables
-$formaction = $_POST['formaction'];
+$formaction = false;
+if(isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 
 if($formaction == 'deleteuser')
 {
@@ -37,7 +40,7 @@ $users = $user->getManagementUsers();
 $page->handleErrors();
 
 // page content
-echo("<form action=\"$PHP_SELF\" method=\"post\">");
+echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 echo("<input type=\"hidden\" name=\"formaction\" value=\"deleteuser\">");
 
 $table = new Table(6, true, true);

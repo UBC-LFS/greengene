@@ -15,7 +15,10 @@ $page = new Page($user, 'Manage Courses', 10);
 
 // FORM LOGIC
 // - get form variables
-$formaction = $_POST['formaction'];
+$formaction = false;
+if(isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 if($formaction == 'delete')
 {
 	$delCourse = $_POST['delCourse'];
@@ -41,7 +44,7 @@ $page->handleErrors();
 $table = new Table(4, true, true);
 $table->writeHeaders('', 'Course Name', 'Course Description', '');
 
-echo("<form action=\"$PHP_SELF\" method=\"post\">");
+echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 echo("<input type=\"hidden\" name=\"formaction\" value=\"delete\">");
 
 while($row = $g_db->fetch($courses))

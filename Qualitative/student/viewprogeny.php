@@ -11,13 +11,23 @@ $user = Security::getUser();
 $page = new Page($user, 'View Progeny', 3);
 
 // for bad IE CSS compatibility
-$ie = eregi("MSIE", $HTTP_USER_AGENT);
+$ie = null;
+if(isset($HTTP_USER_AGENT)) {
+	echo($HTTP_USER_AGENT);
+	// $ie = eregi("MSIE", $HTTP_USER_AGENT);
+	$ie = preg_match("#MSIE#i", $HTTP_USER_AGENT);
+}
 
 // get the real student
+if(!isset($_GET['_userId']))
+	$_GET['_userId'] = null;
 $student = $page->translateUser($_GET['_userId']);
 
 // FORM LOGIC
-$formaction = $_GET['formaction'];
+$formaction = null;
+if (isset($_GET['formaction'])) {
+	$formaction = $_GET['formaction'];
+}
 
 $isStudent = ($user->m_userId == $student->m_userId);
 
@@ -71,7 +81,8 @@ else if($formaction == 'performcross')
 				unset($_SESSION['pollenPlantNum']);
 
 				// Redirect user to page with new cross data
-				Page::redirect("$PHP_SELF?cross=$newCrossNum");
+				Page::redirect($_SERVER['PHP_SELF']."?cross=$newCrossNum");
+				// Page::redirect("$PHP_SELF?cross=$newCrossNum");
 			}
 		}
 		else
@@ -81,7 +92,9 @@ else if($formaction == 'performcross')
 	}
 }
 
-if($_GET['export'] == 'CSV')
+
+//if($_GET['export'] == 'CSV')
+if(isset($_GET['export']) && $_GET['export'] == 'CSV')
 {
 	$crossStr = $_GET['cross'];
 	if($crossStr == '')
@@ -96,7 +109,8 @@ if($_GET['export'] == 'CSV')
 }
 else
 {
-	if($_GET['print'] == true)
+	// if($_GET['print'] == true)
+	if(isset($_GET['print']) && ($_GET['print'] == true))
 		$page->setOnLoad('showAllCrosses(); printPage();');
 	else if(!empty($_SESSION['pollenCrossNum']) || !empty($_SESSION['seedCrossNum']))
 	{
@@ -111,6 +125,8 @@ else
 		UserError::addError(401);
 
 	// DATA LOGIC
+	if(!isset($_GET['cross']))
+		$_GET['cross'] = null;
 	$crossNum = $_GET['cross'];
 	$cross = empty($_GET['cross']) ? $student->getProgeny() : $student->getProgeny($_GET['cross']);
 
@@ -130,7 +146,9 @@ else
 		<b>$crossesLeft</b> crosses remaining.</p>");
 	}
 
-	echo("<p><input type=\"button\" value=\"Download Data\" onClick=\"goUrl('$PHP_SELF?export=CSV&cross=" .
+	/*echo("<p><input type=\"button\" value=\"Download Data\" onClick=\"goUrl('$PHP_SELF?export=CSV&cross=" .
+		$_GET['cross'] . "&_userId=" . $_GET['_userId'] . "');\">");*/
+	echo("<p><input type=\"button\" value=\"Download Data\" onClick=\"goUrl('".htmlentities($_SERVER['PHP_SELF'])."?export=CSV&cross=" .
 		$_GET['cross'] . "&_userId=" . $_GET['_userId'] . "');\">");
 
 	if($crossNum == 'All')
@@ -249,16 +267,33 @@ for($i = $crossLow; $i < $crossHigh; $i++)
 		if($isStudent)
 		{
 ?>
-<form name="cross" method="get" action="<?=$PHP_SELF?>">
+<form name="cross" method="get" action="<?=$_SERVER['PHP_SELF']?>">
+<!--<form name="cross" method="get" action="<?=$PHP_SELF?>">-->
 <input type="hidden" name="formaction" value="performcross">
 <div id="crossFloater<?php if($ie) echo ('IE'); ?>">
 <table>
 <tr>
+<?php
+	if(!isset($_SESSION['pollenCrossNum'])) {
+		$_SESSION['pollenCrossNum'] = null;
+	}
+	if(!isset($_SESSION['pollenPlantNum'])) {
+		$_SESSION['pollenPlantNum'] = null;
+	}
+?>
 	<td>Pollen</td>
 	<td>Cross #: <input type="text" readonly name="pollenCrossNum" size="5" value="<?=$_SESSION['pollenCrossNum']?>"></td>
 	<td>Plant #: <input type="text" readonly name="pollenPlantNum" size="5" value="<?=$_SESSION['pollenPlantNum']?>"></td>
 	<td><input type="button" value="Cancel" onClick="cancelCross();"></td>
 </tr>
+<?php
+	if(!isset($_SESSION['seedCrossNum'])) {
+		$_SESSION['seedCrossNum'] = null;
+	}
+	if(!isset($_SESSION['seedPlantNum'])) {
+		$_SESSION['seedPlantNum'] = null;
+	}
+?>
 <tr>
 	<td>Seed</td>
 	<td>Cross #: <input type="text" readonly name="seedCrossNum" size="5" value="<?=$_SESSION['seedCrossNum']?>"></td>

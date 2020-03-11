@@ -11,9 +11,15 @@ $user = Security::getUser();
 
 
 // - get form variables
-$formaction = $_POST['formaction'];
-$courseId = $_GET['courseId'];
+$formaction = false;
+if(isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 
+$courseId = false;
+if(isset($_POST['courseId'])) {
+	$courseId = $_GET['courseId'];
+}
 
 // PAGE CREATION LOGIC
 if(empty($courseId))
@@ -111,7 +117,7 @@ if(!empty($courseId))
 {
 	// COURSE SETTINGS
 
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"savecourse\">");
 	echo("<input type=\"hidden\" name=\"CourseId\" value=\"$courseId\">");
 
@@ -131,7 +137,7 @@ if(!empty($courseId))
 	// COURSE ADMINS
 	$page->writeSectionHeader('Course Administrators');
 
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"deleteuser\">");
 	echo("<input type=\"hidden\" name=\"CourseId\" value=\"$courseId\">");
 
@@ -157,14 +163,24 @@ if(!empty($courseId))
 }
 else
 {
+	
+	if(!isset($_POST['CourseName']) || !isset($_POST['CourseDescription']) || !isset($_POST['UserId']) 
+		|| !isset($_POST['FirstName']) || !isset($_POST['LastName'])) {
+			$_POST['CourseName'] = false;
+			$_POST['CourseDescription'] = false;
+			$_POST['UserId'] = false;
+			$_POST['FirstName'] = false;
+			$_POST['LastName'] = false;
+		}
+		
 	// COURSE SETTINGS
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"addcourse\">");
 
 	$table = new Table(2, false, true);
 
 	$table->writeRow('Course Name:',
-		"<input type=\"text\" name=\"CourseName\" value=\"" . $_POST['CourseName']. "\" maxlength=\"30\" size=\"20\">");
+		"<input type=\"text\" name=\"CourseName\" value=\"" .$_POST['CourseName']. "\" maxlength=\"30\" size=\"20\">");
 	$table->writeRow('Course Description:',
 		"<input type=\"text\" name=\"CourseDescription\" value=\"" . $_POST['CourseDescription'] . "\" maxlength=\"250\" size=\"40\">");
 
@@ -176,7 +192,7 @@ else
 	$table->writeRow('First Name:',
 		"<input type=\"text\" name=\"FirstName\" value=\"" . $_POST['FirstName'] . "\" maxlength=\"20\" size=\"20\">");
 	$table->writeRow('Last Name:',
-		"<input type=\"text\" name=\"LastName\" value=\"" . $_POST['LastName'] . "\" maxlength=\"20\" size=\"20\">");
+		"<input type=\"text\" name=\"LastName\" value=\"" .$_POST['LastName'] . "\" maxlength=\"20\" size=\"20\">");
 	$table->writeRow('Password (enter twice):',
 		"<input type=\"password\" name=\"Pwd1\" maxlength=\"25\"><br>
 		<input type=\"password\" name=\"Pwd2\" maxlength=\"25\">");

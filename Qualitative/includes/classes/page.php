@@ -42,8 +42,11 @@ class Page
 		$this->m_jsIncludes = array();
 		$this->addJSInclude('default.js');
 
-		if ($_GET['print']!='')
+		if (isset($_GET['print'])){
 			$this -> setOnLoad('printPage();');
+		}
+		//if ($_GET['print']!='')
+		//	$this -> setOnLoad('printPage();');
 
 		$this->m_userActor = $this->m_user;
 	}
@@ -129,7 +132,7 @@ class Page
 		if($this->m_user->m_privilegeLvl != 1 && $this->m_user->m_privilegeLvl != 2)
 			return $this->m_userActor;
 
-		if($this->m_user->userId != $p_userId)
+		if($this->m_user->m_userId != $p_userId)
 			$this->m_userActor = new Student($p_userId);
 
 		return $this->m_userActor;
@@ -243,14 +246,14 @@ Display Cross: <select name="cross" onChange="goUrl(form.cross.value);">
 END;
 		// parse GET string to determine cross number
 		echo("<option value=\"$root/student/viewprogeny.php?_userId=" . $_GET['_userId'] . "&cross=Latest\"");
-		if($_GET['cross'] == 'Latest' || !isset($_GET['cross']))
+		if(!isset($_GET['cross']) || $_GET['cross'] == 'Latest' )
 			echo(" selected");
 		else
 			echo(" class=\"item\"");
 		echo(">Latest</option>");
 
 		echo("<option value=\"$root/student/viewprogeny.php?_userId=" . $_GET['_userId'] . "&cross=All\"");
-		if($_GET['cross'] == 'All')
+		if(isset($_GET['cross']) && $_GET['cross'] == 'All')
 			echo(" selected");
 		else
 			echo(" class=\"item\"");
@@ -260,7 +263,7 @@ END;
 		for($i = 1; $i <= $crossCount; $i++)
 		{
 			echo("<option value=\"$root/student/viewprogeny.php?_userId=" . $_GET['_userId'] . "&cross=$i\"");
-			if($_GET['cross'] == $i)
+			if(isset($_GET['cross']) && $_GET['cross'] == $i)
 				echo('  selected');
 			else
 				echo(' class="item"');
@@ -314,10 +317,13 @@ END;
 		else
 			$bodyTag = "<body $load $scroll>";
 
-		$printURL = "$PHP_SELF?print=true";
+		$printURL = $_SERVER['PHP_SELF']."?print=true";
+		// $printURL = "$PHP_SELF?print=true";
 		foreach($_GET as $key => $arg)
 			$printURL .= "&$key=$arg";
 
+        // TODO:
+		$jsTag = "";
 		foreach($this->m_jsIncludes as $js)
 			$jsTag .= "<script language=\"JavaScript\" src=\"$root/includes/js/$js\"></script>\n";
 

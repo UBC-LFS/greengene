@@ -284,7 +284,7 @@ class TA extends User
 	 * @param string [][] $p_arrPhenotypes
 	 * @return string [][] $phenotypeArray
 	 */
-	function assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, $p_phenotypeArray)
+	function assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, $p_phenotypeArray = null)
 	{
 		// return structure
 		// phenotypeArray
@@ -323,7 +323,9 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		for ( $i = 0; $i < 3; $i++)
 		{
 			$current_trait = $p_arrPhenotypes[$i];
-			$pheno_num = count($current_trait);
+			if (is_array($current_trait)) {
+				$pheno_num = count($current_trait);
+			}
 
 			// go in here if we are processing the first 2 traits,
 			// or if we are in the third trait but we don't have
@@ -396,6 +398,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 			}
 		}
+		return $p_phenotypeArray;
 
 	}
 	/**
@@ -457,7 +460,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 								 $g_db->sqlString($row->Trait2Name) .  "','" . $g_db->sqlString($row->Trait2AAPhenoName) . "','" .
 								 $g_db->sqlString($row->Trait2AbPhenoName) . "','" . $g_db->sqlString($row->Trait2bAPhenoName) . "','" . $g_db->sqlString($row->Trait2bbPhenoName) . "','" .
 								 $g_db->sqlString($row->Trait3Name) .  "','" . $g_db->sqlString($row->Trait3AAPhenoName) . "','" .
-								 $g_db->sqlString($row->Trait3AbPhenoName) . "','" . $g_db->sqlString($row->Trait3bAPhenoName) . "','" . $g_db->sqlString($row->Trait1bbPhenoName) . "'," .
+								 $g_db->sqlString($row->Trait3AbPhenoName) . "','" . $g_db->sqlString($row->Trait3bAPhenoName) . "','" . $g_db->sqlString($row->Trait3bbPhenoName) . "'," .
 								 $row->ProgenyPerMating . "," . $row->MaxProgeny . " ";
 
 			$sql_query = 	"INSERT ".
@@ -665,7 +668,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$p_trait3Name = $p_arrPhenotypeNames[2];
 
 		$phenotypeArray = array();
-		TA::assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
+		//TA::assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
 
 		$p_trait1AAName = $phenotypeArray[0][0];
 		$p_trait1AbName = $phenotypeArray[0][1];
@@ -811,8 +814,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$p_trait3Name = $p_arrPhenotypeNames[2];
 
 		$phenotypeArray = array();
-		TA::assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
-
+		//TA::assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
+		//$phenotypeArray = TA::assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
 		$p_trait1AAName = $phenotypeArray[0][0];
 		$p_trait1AbName = $phenotypeArray[0][1];
 		$p_trait1bAName = $phenotypeArray[0][2];
@@ -1081,6 +1084,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		//$fhandle=fopen($p_file,"r");
 		//while (!feof($fhandle))
+		$arrayOfResult = [[], []];
 		for ($tempCounter = 0; $tempCounter < count($p_lineArray); $tempCounter++)
 		{
    			//$line = fgets($fhandle);
@@ -1090,14 +1094,16 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			// check for bad values
 			if (empty($userId ) || empty($firstName) || empty($lastName))
 			{
-				$p_studentErrorListArray[] = array($userId,$firstName,$lastName);
+				$arrayOfResult[1][] = array($userId,$firstName,$lastName);
+				// $p_studentErrorListArray[] = array($userId,$firstName,$lastName);
 			}
 			else
 			{
-				$p_studentListArray[] = array($userId,$firstName,$lastName);
+				$arrayOfResult[0][] = array($userId, $firstName, $lastName);
+				// $p_studentListArray[] = array($userId,$firstName,$lastName);
 			}
 		}
-
+		return $arrayOfResult;
    		//fclose($fhandle);
 	}
 

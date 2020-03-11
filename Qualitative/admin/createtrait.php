@@ -21,7 +21,7 @@ if(!empty($_POST['traitName']))
 $page->writeHeader();
 $page->handleErrors();
 
-echo("<form action=\"$PHP_SELF\" method=\"post\">");
+echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 
 $table = new Table(2, false, true);
 $table->writeRow('Trait Name', '<input type="text" name="traitName">');

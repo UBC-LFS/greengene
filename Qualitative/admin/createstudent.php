@@ -15,7 +15,10 @@ $userId = $user->m_userId;
 
 // FORM LOGIC
 // - get form variables
-$formaction = $_POST['formaction'];
+$formaction = false;
+if(isset($_POST['formaction'])) {
+	$formaction = $_POST['formaction'];
+}
 
 //$ta = new TA($userId);
 $showStudentForm = false;
@@ -29,9 +32,17 @@ $inputLastName;
 // Logic for handling form
 // =============================================================================
 
-$inputUserId = $_POST['userId'];
-$inputFirstName = $_POST['firstName'];
-$inputLastName = $_POST['lastName'];
+
+$inputUserId = false;
+$inputFirstName = false;
+$inputLastName = false;
+
+if (isset($_POST['userId'])) 
+	$inputUserId = $_POST['userId'];
+if (isset($_POST['firstName']))	
+	$inputFirstName = $_POST['firstName'];
+if (isset($_POST['lastName']))
+	$inputLastName = $_POST['lastName'];
 
 if ($formaction == "createstudent")
 {
@@ -63,7 +74,7 @@ $page->handleErrors();
 
 // LOGIC FOR SHOWING PROBLEM FORM
 
-echo "<form name=\"createstudent\" action=\"". $PHP_SELF . "\" method=\"post\">";
+echo "<form name=\"createstudent\" action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
 echo("<input type=\"hidden\" name=\"formaction\" value=\"createstudent\">");
 
 $studentTable = new Table(2, false, true);
