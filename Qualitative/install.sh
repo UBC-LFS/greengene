@@ -81,15 +81,23 @@ echo
 echo
 
 echo "STEP 5. Initial user account."
-echo "You must now pick an initial password for the site administrator account."
-echo "The username of this account is: admin"
-echo
-echo "Enter initial password:"
-read USERPWD
-echo
-echo "Attempting to create default user..."
+#echo "You must now pick an initial password for the site administrator account."
+#echo "The username of this account is: admin"
+#echo
+#echo "Enter initial password:"
+#read USERPWD
+#echo
+#echo "Attempting to create default user..."
 
-echo "INSERT INTO User (UserId, PrivilegeLvl, FirstName, LastName, Pwd) VALUES ('admin', 10, 'Site', 'Administrator', password('$USERPWD'))" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
+# echo "INSERT INTO User (UserId, PrivilegeLvl, FirstName, LastName, Pwd) VALUES ('admin', 10, 'Site', 'Administrator', password('$USERPWD'))" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
+echo "You must now enter your CWL username for the site administrator account"
+read CWLUSERNAME
+
+echo 
+echo "Attempting to create default user..."
+echo "INSERT INTO User (UserId, FirstName, LastName ) VALUES ($CWLUSERNAME, 'Site', 'Administrator')" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
+echo "INSERT INTO Course (CourseId, Name, Description) VALUES (0, 'AdminCourse', 'Used for creating admin account')" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
+echo "INSERT INTO User_Course (id, uid, cid, PrivilegeLvl) VALUES (0, $CWLUSERNAME, 0, 10)" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
 
 if [ $? -ne 0 ]; then
 	echo "Error creating default user."

@@ -166,11 +166,17 @@ CREATE TABLE `Trait` (
 
 CREATE TABLE `User` (
   `UserId` varchar(10) NOT NULL default '',
-  `CourseId` int(10) NOT NULL default '0',
-  `PrivilegeLvl` tinyint(3) unsigned NOT NULL default '3',
-  `FirstName` varchar(20) NOT NULL default '',
-  `LastName` varchar(20) NOT NULL default '',
-  `Pwd` varchar(50) NOT NULL default '',
+  `FirstName` varchar(20) default '',
+  `LastName` varchar(20) default '',
   PRIMARY KEY  (`UserId`),
   KEY `LastName` (`LastName`)
 ) ENGINE=MyISAM;
+
+CREATE TABLE User_Course (
+    `id` int(10) PRIMARY KEY,
+    `uid` varchar(10) NOT NULL,
+    `cid` int(10) NOT NULL,
+    `PrivilegeLvl` tinyint(3) unsigned default '3',
+    FOREIGN KEY (`uid`) REFERENCES User(`UserId`),
+    FOREIGN KEY (`cid`) REFERENCES Course(`CourseId`)
+) ENGINE = MyISAM;
