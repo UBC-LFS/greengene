@@ -27,6 +27,7 @@ class User
 		global $g_db;
 
 		// Get user information
+		/*
 		$sqlQuery = "SELECT FirstName,LastName,PrivilegeLvl,CourseId, Pwd
 				FROM User
 				WHERE UserId = '".$g_db->sqlString($p_userId)."'";
@@ -37,6 +38,24 @@ class User
 		$this->m_userId = $p_userId;
 		$this->m_firstName = $row->FirstName;
 		$this->m_lastName =  $row->LastName;
+		$this->m_privilegeLvl = $row->PrivilegeLvl;
+		$this->m_courseId = $row->CourseId;
+		*/
+		$sqlQuery = "SELECT FirstName, LastName
+				FROM User
+				WHERE UserId = '".$g_db->sqlString($p_userId)."'";
+		$recordset = $g_db->querySelect($sqlQuery);
+
+		$row = $g_db->fetch($recordset);
+		$this->m_userId = $p_userId;
+		$this->m_firstName = $row->FirstName;
+		$this->m_lastName =  $row->LastName;
+
+
+		$sqlQuery = "SELECT cid, PrivilegeLvl
+				FROM User_Course
+				WHERE uid = '".$g_db->sqlString($p_userId)."'";
+		$recordset = $g_db->querySelect($sqlQuery);
 		$this->m_privilegeLvl = $row->PrivilegeLvl;
 		$this->m_courseId = $row->CourseId;
 
