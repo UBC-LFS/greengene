@@ -369,12 +369,13 @@ class MasterAdmin extends User
 	{
 		global $g_db;
 
-		$result = $g_db->querySelect("SELECT UserId, FirstName, LastName, PrivilegeLvl
-			FROM User
-			WHERE CourseId=$p_courseId
-			AND PrivilegeLvl IN (1, 2)
-			ORDER BY UserId");
-
+		$sql = "SELECT UserId, FirstName, LastName, PrivilegeLvl 
+				FROM User
+				INNER JOIN User_Course
+				WHERE cid=$p_courseId
+				AND PrivilegeLvl IN (1,2)
+				ORDER BY UserId";
+		$result = $g_db->querySelect($sql);
 		return $result;
 	}
 

@@ -16,6 +16,7 @@
 -- Table structure for table `Course`
 --
 
+-- TODO: need to do delete cascade ?
 CREATE TABLE `Course` (
   `CourseId` int(10) unsigned NOT NULL auto_increment,
   `Name` varchar(30) NOT NULL default '',
