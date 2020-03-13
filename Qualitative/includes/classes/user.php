@@ -56,6 +56,7 @@ class User
 				FROM User_Course
 				WHERE uid = '".$g_db->sqlString($p_userId)."'";
 		$recordset = $g_db->querySelect($sqlQuery);
+		$row = $g_db->fetch($recordset);
 		$this->m_privilegeLvl = $row->PrivilegeLvl;
 		$this->m_courseId = $row->CourseId;
 

@@ -20,6 +20,7 @@ class Security
 	 * @return user
 	 * @return false
 	 */
+	/*
 	function login($p_userId, $p_pwd)
 	{
 		global $g_db;
@@ -57,9 +58,8 @@ class Security
 			return false;
 		}
 	}
-
-
-	/*
+	*/
+	
 	function login($p_userId, $p_pwd)
 	{
 		$ds = ldap_connect("eldapdccons.id.ubc.ca", 389);
@@ -68,10 +68,12 @@ class Security
 		{
 				$starttls = ldap_start_tls($ds);
 				$usr = "uid=".$p_userId.",ou=People,dc=landfood,dc=ubc,dc=ca";
+				set_error_handler(function () {});
 				$r = ldap_bind($ds, $usr, $p_pwd);
+				restore_error_handler();
 				if ($r) 
 				{
-					$user = new MasterAdmin("a");
+					$user = new MasterAdmin($p_userId);
 					$_SESSION['userSession'] = $user;
 					return $user;
 				} 
@@ -86,7 +88,7 @@ class Security
 		}
 		ldap_close($ds);
 	}
-	*/
+	
 	/**
 	 * getUser: Login method will take in user name and password check account existance and return user object.
 	 * PRE: a valid user session data
