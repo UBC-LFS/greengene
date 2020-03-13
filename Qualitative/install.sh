@@ -91,10 +91,12 @@ echo "STEP 5. Initial user account."
 
 # echo "INSERT INTO User (UserId, PrivilegeLvl, FirstName, LastName, Pwd) VALUES ('admin', 10, 'Site', 'Administrator', password('$USERPWD'))" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
 echo "You must now enter your CWL username for the site administrator account"
+echo "Enter CWL username:"
 read CWLUSERNAME
 
 echo 
 echo "Attempting to create default user..."
+# TODO: don't understand line after |
 echo "INSERT INTO User (UserId, FirstName, LastName ) VALUES ($CWLUSERNAME, 'Site', 'Administrator')" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
 echo "INSERT INTO Course (CourseId, Name, Description) VALUES (0, 'AdminCourse', 'Used for creating admin account')" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
 echo "INSERT INTO User_Course (id, uid, cid, PrivilegeLvl) VALUES (0, $CWLUSERNAME, 0, 10)" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
