@@ -64,9 +64,7 @@ if($formaction == 'addcourse')
 			$_POST['CourseDescription'],
 			$_POST['UserId'],
 			$_POST['FirstName'],
-			$_POST['LastName'],
-			$_POST['Pwd1'],
-			$_POST['Pwd2']);
+			$_POST['LastName']);
 		if($newCourseId != false)
 			Page::redirect("managecourse.php?courseId=$newCourseId");
 	}
@@ -187,17 +185,13 @@ else
 
 	$table->writeDivider();
 
-	$table->writeRow('Admin User Id:',
+	$table->writeRow('CWL username:',
 		"<input type=\"text\" name=\"UserId\" value=\"" . $_POST['UserId'] . "\" maxlength=\"10\">");
 
 	$table->writeRow('First Name:',
 		"<input type=\"text\" name=\"FirstName\" value=\"" . $_POST['FirstName'] . "\" maxlength=\"20\" size=\"20\">");
 	$table->writeRow('Last Name:',
 		"<input type=\"text\" name=\"LastName\" value=\"" .$_POST['LastName'] . "\" maxlength=\"20\" size=\"20\">");
-	$table->writeRow('Password (enter twice):',
-		"<input type=\"password\" name=\"Pwd1\" maxlength=\"25\"><br>
-		<input type=\"password\" name=\"Pwd2\" maxlength=\"25\">");
-
 	$table->flush();
 
 	echo("<p><input type=\"submit\" value=\"Add\"></p>");
