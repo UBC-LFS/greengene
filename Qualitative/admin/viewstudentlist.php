@@ -58,7 +58,8 @@ $studentTable->flush();
 // end the form
 echo("<p><input type=\"submit\" value=\"Delete Selected\"> &nbsp;&nbsp;
 <input type=\"button\" value=\"Create Student\" onClick=\"goUrl('createstudent.php');\">
-<input type=\"button\" value=\"Import Students\" onClick=\"goUrl('importstudents.php');\"></p>");
+<input type=\"button\" value=\"Import Students\" onClick=\"goUrl('importstudents.php');\">
+<input type=\"button\" value=\"Sync Students\" onClick=\"goUrl('importstudents.php);\"></p>");
 echo "</form>";
 
 // write main footer and close database connection

@@ -151,7 +151,10 @@ if ($showBrowseBox == true )
 	echo "<input type=\"file\" name=\"theFile\" size=\"50\" class=\"formtextfield\"><br>";
 	echo "<input type=\"submit\" value=\"Load\">";
 	echo "</form>";
-
+	echo "<div>";
+	echo "<h3> Or Import student from course </h3>";
+	echo "<input type=\"button\" value=\"Import\" onClick=\"goUrl('importstudents.php');\">";
+	echo "</div>";
 }
 else if ($showStudentRecords == true)
 {

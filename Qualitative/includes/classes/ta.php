@@ -1085,22 +1085,24 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		//$fhandle=fopen($p_file,"r");
 		//while (!feof($fhandle))
 		$arrayOfResult = [[], []];
-		for ($tempCounter = 0; $tempCounter < count($p_lineArray); $tempCounter++)
-		{
-   			//$line = fgets($fhandle);
-   			$line = $p_lineArray[$tempCounter];
-   			list($userId, $firstName,$lastName) = explode(",",$line);
+		if (isset($p_lineArray)) {
+			for ($tempCounter = 0; $tempCounter < count($p_lineArray); $tempCounter++)
+			{
+   				//$line = fgets($fhandle);
+   				$line = $p_lineArray[$tempCounter];
+   				list($userId, $firstName,$lastName) = explode(",",$line);
 
-			// check for bad values
-			if (empty($userId ) || empty($firstName) || empty($lastName))
-			{
-				$arrayOfResult[1][] = array($userId,$firstName,$lastName);
-				// $p_studentErrorListArray[] = array($userId,$firstName,$lastName);
-			}
-			else
-			{
-				$arrayOfResult[0][] = array($userId, $firstName, $lastName);
-				// $p_studentListArray[] = array($userId,$firstName,$lastName);
+				// check for bad values
+				if (empty($userId ) || empty($firstName) || empty($lastName))
+				{
+					$arrayOfResult[1][] = array($userId,$firstName,$lastName);
+					// $p_studentErrorListArray[] = array($userId,$firstName,$lastName);
+				}
+				else
+				{
+					$arrayOfResult[0][] = array($userId, $firstName, $lastName);
+					// $p_studentListArray[] = array($userId,$firstName,$lastName);
+				}
 			}
 		}
 		return $arrayOfResult;
@@ -1242,5 +1244,3 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		return true;
 	}
 }
-
-?>
