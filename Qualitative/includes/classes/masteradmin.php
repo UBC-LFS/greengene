@@ -74,11 +74,12 @@ class MasterAdmin extends User
 	 * @param string $p_pwd admin password
 	 * @return bool
 	 */
-	function deleteCourse($p_courseId, $p_pwd)
+	function deleteCourse($p_courseId, $p_pwd=null)
 	{
 		global $g_db;
 
 		// check master admin password
+		/*
 		$result = $g_db->querySelect("SELECT UserId
 			FROM User
 			WHERE Pwd=password('" . $g_db->sqlString($p_pwd) . "')
@@ -89,6 +90,7 @@ class MasterAdmin extends User
 			UserError::addError(902);
 			return false;
 		}
+		*/
 
 		// all set to delete
 
@@ -415,6 +417,52 @@ class MasterAdmin extends User
 			return false;
 		}
 
+		return $result;
+	}
+
+	/**
+	 * Gets user associated to a course
+	 * 
+	 * @param string $course 
+	 * @return recordset
+	 */
+	function getUsers($course) 
+	{
+		global $g_db;
+
+		$sql = "SELECT * 
+			FROM User
+			WHERE CourseId = $course";
+		$result = $g_db->querySelect($sql);
+
+		return $result;
+	}
+
+	/**
+	 * Gets user associated to a course
+	 * 
+	 * @param string $course 
+	 * @return recordset
+	 */
+	function getProblems($course)
+	{
+		global $g_db;
+		$sql = "SELECT * 
+			FROM MasterProblem
+			WHERE CourseId = $course";
+		$result = $g_db->querySelect($sql);
+
+		return $result;
+
+	}
+
+	function getTraits($course)
+	{
+		global $g_db;
+		$sql = "SELECT *
+			FROM Trait
+			WHERE CourseId = $course";
+		$result = $g_db->querySelect($sql);
 		return $result;
 	}
 }

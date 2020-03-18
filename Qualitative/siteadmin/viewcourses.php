@@ -21,7 +21,7 @@ if(isset($_POST['formaction'])) {
 }
 if($formaction == 'delete')
 {
-	$delCourse = $_POST['delCourse'];
+	$delCourse = isset($_POST['delCourse']) ? $_POST['delCourse']: null;
 	$password = $_POST['password'];
 
 	if(isset($delCourse) && count($delCourse) > 0)
@@ -42,23 +42,26 @@ $page->handleErrors();
 
 
 $table = new Table(4, true, true);
-$table->writeHeaders('', 'Course Name', 'Course Description', '');
+$table->writeHeaders('','Course Name', 'Course Description', '');
 
 echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 echo("<input type=\"hidden\" name=\"formaction\" value=\"delete\">");
 
 while($row = $g_db->fetch($courses))
-	$table->writeRow("<input type=\"checkbox\" name=\"delCourse[]\" value=\"$row->CourseId\">",
+	$table->writeRow("",
 		$row->Name,
 		$row->Description,
-		"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('managecourse.php?courseId=$row->CourseId');\">");
+		"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('managecourse.php?courseId=$row->CourseId');\">
+		<input type=\"button\" value=\"Delete Selected\" onClick=\"goUrl('deletecourse.php?courseId=$row->CourseId');\">");
 
 $table->flush();
 
+/*
 echo("<p>Enter password to confirm deletion:<br>");
 echo("<input type=\"password\" name=\"password\"></p>");
 
 echo("<p><input type=\"submit\" value=\"Delete Selected\">");
+*/
 echo("</form>");
 
 // write main footer and close database connection
