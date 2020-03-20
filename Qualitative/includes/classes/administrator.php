@@ -493,37 +493,25 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	 * @param string $p_userId
 	 * @return bool New management user is created
 	 */
-	function createManagementUser($p_userId, $p_firstName, $p_lastName, $p_pwd1, $p_pwd2,
-		$p_privilegeLvl)
+	function createManagementUser($p_userId, $p_firstName, $p_lastName, $p_privilegeLvl)
 	{
 		global $g_db;
 		$default_courseId = $this->m_courseId;
 
-		if(strlen($p_pwd1) < 3)
+		//check user's two entries of password
+		$sql_query =	"INSERT INTO User
+			(UserId, FirstName, LastName, CourseId, PrivilegeLvl)
+			VALUES ('". $g_db->sqlString($p_userId) ."',
+				'". $g_db->sqlString($p_firstName) ."',
+				'". $g_db->sqlString($p_lastName) ."',
+				$default_courseId,
+				$p_privilegeLvl)";
+		if( !$g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(301);
+			UserError::addError(707);
 			return false;
 		}
-
-		//check user's two entries of password
-		if( strcmp($p_pwd1,$p_pwd2) == 0 )
-		{
-			$sql_query =	"INSERT INTO User
-				(UserId, FirstName, LastName, CourseId, PrivilegeLvl, Pwd)
-				VALUES ('". $g_db->sqlString($p_userId) ."',
-					'". $g_db->sqlString($p_firstName) ."',
-					'". $g_db->sqlString($p_lastName) ."',
-					$default_courseId,
-					$p_privilegeLvl,
-					Password('". $g_db->sqlString($p_pwd1) ."'))";
-			if( !$g_db->queryCommit($sql_query) )
-			{
-				UserError::addError(707);
-				return false;
-			}
-			return true;
-		}
-		return false;
+		return true;
 	}
 
 	/**

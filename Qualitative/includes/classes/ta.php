@@ -69,10 +69,11 @@ class TA extends User
 		$privilege_lvl = 3; // level 3 for student
 
 		$record_row_values = "'". $g_db->sqlString($p_userId) . "'," . $default_courseId . ","  . $privilege_lvl . "," .
-							 "'" . $g_db->sqlString($p_firstName) . "','" . $g_db->sqlString($p_lastName) . "',Password('" . $g_db->sqlString($default_password) . "') ";
+							 "'" . $g_db->sqlString($p_firstName) . "','" . $g_db->sqlString($p_lastName). "'";
 
+		echo($record_row_values);
 		$sql_query =	"INSERT ".
-						"INTO User (UserId,CourseId,PrivilegeLvl,FirstName,LastName,Pwd) ".
+						"INTO User (UserId,CourseId,PrivilegeLvl,FirstName,LastName) ".
 						"VALUES (" . $record_row_values . ")";
 
 		if ($g_db->queryCommit($sql_query)!=true)
@@ -1246,5 +1247,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 	function importStudentsFromClassList() {
 		echo("importing students");
+		// TODO: call createStudents(userID, firstName, lastName)
 	}
 }

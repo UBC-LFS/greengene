@@ -32,19 +32,6 @@ class MasterAdmin extends User
 	function createCourse($p_courseName, $p_description, $p_userId,
 		$p_firstName, $p_lastName, $p_pwd1, $p_pwd2)
 	{
-		// are passwords valid?
-		if($p_pwd1 != $p_pwd2)
-		{
-			UserError::addError(300);
-			return false;
-		}
-
-		if(strlen($p_pwd1) < 3)
-		{
-			UserError::addError(301);
-			return false;
-		}
-
 		global $g_db;
 
 		if($g_db->queryCommit("INSERT INTO Course " .
@@ -58,8 +45,7 @@ class MasterAdmin extends User
 
 		$courseId = $g_db->getLastInsertId();
 
-		if($this->createManagementUser($p_userId, $p_firstName, $p_lastName, $p_pwd1, $p_pwd2,
-			$courseId, 1) != true)
+		if($this->createManagementUser($p_userId, $p_firstName, $p_lastName, $courseId, 1) != true)
 		{
 			return false;
 		}
@@ -215,23 +201,9 @@ class MasterAdmin extends User
 	 * @param int $p_privilegeLvl account privilege level
 	 * @return bool
 	 */
-	function createManagementUser($p_userId, $p_firstName, $p_lastName, $p_pwd1, $p_pwd2,
-		$p_courseId, $p_privilegeLvl)
+	function createManagementUser($p_userId, $p_firstName, $p_lastName, $p_courseId, $p_privilegeLvl)
 	{
 		global $g_db;
-
-		// are passwords valid?
-		if($p_pwd1 != $p_pwd2)
-		{
-			UserError::addError(300);
-			return false;
-		}
-
-		if(strlen($p_pwd1) < 3)
-		{
-			UserError::addError(301);
-			return false;
-		}
 
 		if($p_privilegeLvl != 1 && $p_privilegeLvl != 2)
 		{
@@ -249,13 +221,12 @@ class MasterAdmin extends User
 		}
 
 		if($g_db->queryCommit("INSERT INTO User
-			(UserId, CourseId, PrivilegeLvl, FirstName, LastName, Pwd)
+			(UserId, CourseId, PrivilegeLvl, FirstName, LastName)
 			VALUES('" . $g_db->sqlString($p_userId) . "',
 			$p_courseId,
 			$p_privilegeLvl,
 			'" . $g_db->sqlString($p_firstName) . "',
-			'" . $g_db->sqlString($p_lastName) . "',
-			password('" . $g_db->sqlString($p_pwd1) . "'))") != true)
+			'" . $g_db->sqlString($p_lastName) . "')") != true)
 		{
 			UserError::addError(901);
 			return false;

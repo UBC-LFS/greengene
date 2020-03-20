@@ -154,9 +154,6 @@ if ($showStudentForm == true)
 	}
 	$studentTable->flush();
 
-	echo "<p><input type=\"checkbox\" name=\"reset_password[]\" value=\"yes\">".
-		 "Reset student password.<p>\n";
-
 	echo "<p><input type=\"submit\" name=\"submit\" value=\"Save\"></p>";
 	echo "</form>";
 }

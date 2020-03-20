@@ -49,8 +49,6 @@ if($formaction == 'adduser')
 	if($formOk == true && $user->createManagementUser($userId,
 		$_POST['FirstName'],
 		$_POST['LastName'],
-		$_POST['Pwd1'],
-		$_POST['Pwd2'],
 		$courseId,
 		$_POST['PrivilegeLvl']) == true)
 	{
