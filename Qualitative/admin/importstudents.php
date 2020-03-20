@@ -78,6 +78,10 @@ else if ($formaction == "loadfile")
 	$showStudentRecords = true;
 	$showBrowseBox = false;
 }
+else if ($formaction == "Import") 
+{
+	$user->importStudentsFromClassList();
+}
 
 
 // only necessary on Student pages
@@ -153,7 +157,9 @@ if ($showBrowseBox == true )
 	echo "</form>";
 	echo "<div>";
 	echo "<h3> Or Import student from course </h3>";
-	echo "<input type=\"button\" value=\"Import\" onClick=\"goUrl('importstudents.php');\">";
+	echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
+	echo "<input type=\"submit\" name=\"formaction\" value=\"Import\">";
+	echo "</form>";
 	echo "</div>";
 }
 else if ($showStudentRecords == true)

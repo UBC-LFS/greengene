@@ -1243,4 +1243,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		}
 		return true;
 	}
+
+	function importStudentsFromClassList() {
+		echo("importing students");
+	}
 }
