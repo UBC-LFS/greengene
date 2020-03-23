@@ -25,12 +25,10 @@ class MasterAdmin extends User
 	 * @param string $p_userId admin UserId
 	 * @param string $p_firstName admin first name
 	 * @param string $p_lastName admin last name
-	 * @param string $p_pwd1 admin password (first entry)
-	 * @param string $p_pwd2 admin password (second entry)
 	 * @return bool
 	 */
 	function createCourse($p_courseName, $p_description, $p_userId,
-		$p_firstName, $p_lastName, $p_pwd1, $p_pwd2)
+		$p_firstName, $p_lastName)
 	{
 		global $g_db;
 

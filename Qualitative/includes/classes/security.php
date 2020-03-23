@@ -23,7 +23,12 @@ class Security
 	function login($p_userId, $p_pwd)
 	{
 		global $g_db;
-		$SQL = "SELECT PrivilegeLvl
+		// TODO: for development purposes - remove ternery operator before pushing to production
+		$SQL = $p_pwd === null ? 
+			"SELECT PrivilegeLvl
+				FROM User
+				WHERE UserId='".$g_db -> sqlString($p_userId)."'"
+		: 	"SELECT PrivilegeLvl
 				FROM User
 				WHERE UserId='".$g_db -> sqlString($p_userId)."'
 					AND Pwd=Password('". $g_db -> sqlString($p_pwd)."')";

@@ -13,11 +13,6 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 {
 	$g_db = new DB();
 
-	// TODO: pass in LDAP userID and password
-	// Should the ta and prof use LDAP as well? 
-	// authenticate using LDAP 
-	// assign variable $_SESSION['userSession']
-	// DB problably shouldn't store pwd anymore?
 	if(Security::login($_POST['UserId'], $_POST['Pwd']) == false)
 	{
 		$g_db->disconnect();
@@ -28,6 +23,20 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 		$g_db->disconnect();
 		Page::redirectInitial(Security::getUser());
 	}
+}
+// TODO: for development purposes - remove before pushing to production 
+if (!empty($_POST['UserId']))
+{
+	$g_db = new DB();
+	if (Security::login($_POST['UserId'], null) == false)
+	{
+		$g_db-> disconnect();
+		UserError::addError(306);
+	} else {
+		$g_db->disconnect();
+		Page::redirectInitial(Security::getUser());	
+	}
+
 }
 
 $page = new Page($user, 'GreenGene Login', 0);

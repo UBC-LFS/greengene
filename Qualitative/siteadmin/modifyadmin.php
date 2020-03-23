@@ -177,9 +177,6 @@ if($formType == 'add')
 	$table->writeRow('User Type:',
 		"<select name=\"PrivilegeLvl\">$privs</select>");
 
-	$table->writeRow('Password (enter twice):',
-		"<input type=\"password\" name=\"Pwd1\" maxlength=\"25\"><br>
-		<input type=\"password\" name=\"Pwd2\" maxlength=\"25\">");
 	$table->flush();
 
 	echo("<p><input type=\"submit\" value=\"Add\"></p>");
@@ -221,11 +218,6 @@ else
 	echo("<input type=\"hidden\" name=\"CourseId\" value=\"$courseId\">");
 	echo("<input type=\"hidden\" name=\"UserId\" value=\"$userId\">");
 
-	$table->writeRow('Password (enter twice):',
-		"<input type=\"password\" name=\"Pwd1\" maxlength=\"25\"><br>
-		<input type=\"password\" name=\"Pwd2\" maxlength=\"25\">");
-
-	$table->writeSpanningRow('<input type="submit" value="Change Password">');
 	echo('</form>');
 	$table->flush();
 }
