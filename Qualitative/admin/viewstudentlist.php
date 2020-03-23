@@ -17,12 +17,16 @@ $page->writeHeader();
 
 // check for previous page's deleted problems
 if(isset($_POST['del_student'])) {
-$delStudent = $_POST['del_student'];
+	$delStudent = $_POST['del_student'];
 	if(count($delStudent) > 0)
 	{
 		for( $i = 0; $i < count($delStudent); $i++)
 			$user->deleteStudent($delStudent[$i]);
 	}
+}
+
+if (isset($_POST['sync'])) {
+	$user->syncStudents();
 }
 
 // retrieve the list of problems associated with the user's courseId
@@ -57,9 +61,14 @@ $studentTable->flush();
 
 // end the form
 echo("<p><input type=\"submit\" value=\"Delete Selected\"> &nbsp;&nbsp;
-<input type=\"button\" value=\"Create Student\" onClick=\"goUrl('createstudent.php');\">
-<input type=\"button\" value=\"Import Students\" onClick=\"goUrl('importstudents.php');\">
-<input type=\"button\" value=\"Sync Students\" onClick=\"goUrl('importstudents.php);\"></p>");
+	<input type=\"button\" value=\"Create Student\" onClick=\"goUrl('createstudent.php');\">
+	<input type=\"button\" value=\"Import Students\" onClick=\"goUrl('importstudents.php');\">
+	</p>");
+echo "</form>";
+
+echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
+echo "<input type=\"hidden\" name=\"sync\"> </input>"; 
+echo "<input type=\"submit\" value=\"Sync\"> </input>";
 echo "</form>";
 
 // write main footer and close database connection

@@ -25,7 +25,7 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 	}
 }
 // TODO: for development purposes - remove before pushing to production 
-if (!empty($_POST['UserId']))
+else if (!empty($_POST['UserId']))
 {
 	$g_db = new DB();
 	if (Security::login($_POST['UserId'], null) == false)

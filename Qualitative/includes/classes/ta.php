@@ -1249,4 +1249,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		echo("importing students");
 		// TODO: call createStudents(userID, firstName, lastName)
 	}
+
+	function syncStudents() {
+		echo "syncStudents";
+	}
 }

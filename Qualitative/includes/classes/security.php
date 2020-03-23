@@ -63,6 +63,59 @@ class Security
 		}
 	}
 
+	// TODO: this function is to replace the login() function in this class
+	function login_($p_userId, $p_pwd)
+	{	
+		global $g_db;
+		$SQL = "SELECT PrivilegeLvl
+				FROM User
+				WHERE UserId='".$g_db -> sqlString($p_userId)."'";
+		$rs = $g_db -> querySelect($SQL);
+		if ($g_db -> getNumRows($rs) == 1)
+		{
+			if (self::ldap_login($p_userId, $p_pwd)) {
+				$row = $g_db -> fetch($rs);
+				switch ($row -> PrivilegeLvl){
+					case 10:
+					$user = new MasterAdmin($p_userId);
+					break;
+					case 1:
+					$user = new Administrator($p_userId);
+					break;
+					case 2:
+					$user = new TA($p_userId);
+					break;
+					case 3:
+					$user = new Student($p_userId);
+					break;
+					default:
+					echo "Unknown user privilege level.";
+					exit;
+				}
+				$_SESSION['userSession'] = $user;
+				//create session variable
+				return $user;
+			}
+		}
+		return false;
+	}
+
+	function ldap_login($p_userId, $p_pwd) {
+		// TODO: move the following variables to config 
+		// TODO: handle timeout else it hangs
+		/*
+		$ldap = "eldapdccons.id.ubc.ca";
+		$port = 389;
+		$usr = "uid=".$p_userId.",ou=People,dc=landfood,dc=ubc,dc=ca";
+		$ds = ldap_connect($ldap, $port);
+		if ($ds) {
+			ldap_start_tls($ds);
+			return ldap_bind($ds, $usr, $p_pwd);
+		}	
+		*/
+		return false;
+	}
+
 	/**
 	 * getUser: Login method will take in user name and password check account existance and return user object.
 	 * PRE: a valid user session data
