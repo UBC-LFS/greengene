@@ -1,2 +1,2 @@
-<?php header('Location: greengene/Qualitative/login.php'); ?>
+<?php header('Location: login.php'); ?>
 
