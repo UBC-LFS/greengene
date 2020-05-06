@@ -122,20 +122,13 @@ class Security
 	 * POST: return false if session does not exist, return user if session does exist
 	 * @return user
 	 */
-	function getUser($p_checkSession='true')
+	function getUser($p_checkSession=true)
 	{
-		if($p_checkSession == false && !isset($_SESSION['userSession']))
-		{
-			if($_SERVER['PHP_SELF'] != URLROOT.'/login.php') 
-			{
-				Page::redirect(URLROOT . '/login.php');
-			}
-		} 
-		else 
+		if ($p_checkSession && isset($_SESSION['userSession']))
 		{
 			return $_SESSION['userSession'];
 		}
-			
+		return false;
 	}
 
 	/**
