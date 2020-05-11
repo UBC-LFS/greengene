@@ -127,25 +127,18 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	}
 
 	$arrPhenotypes = array();
-	// TODO: pass by reference - resolved might have problem with $_POST['dom0']
 	$arrPhenotypes[0] = determineDominance($_POST['dom0'] == 'ON', 0 , $arrPhenotypes);
 	$arrPhenotypes[1] = determineDominance($_POST['dom1'] == 'ON', 1 , $arrPhenotypes);
-	// determineDominance($_POST['dom0'] == 'ON',0,&$arrPhenotypes);
-	// determineDominance($_POST['dom1'] == 'ON',1,&$arrPhenotypes);
 
 	// if ($_POST['epistCheck']=='ON')
 	if ($V_epistCheck)
 	{
-		// TODO: pass by reference - resolved
 		$arrPhenotypes[2] = determineEpistasis($inputEpistasis, 2, $arrPhenotypes);
-		// determineEpistasis($inputEpistasis,2,&$arrPhenotypes);
 	}
 	else
 	{
-		// TODO: pass by reference - resolved 
 		$inputEpistasis = -1;
 		$arrPhenotypes[2] = determineDominance($_POST['dom2'] == 'ON', 2, $arrPhenotypes);
-		// determineDominance($_POST['dom2'] == 'ON',2,&$arrPhenotypes);
 	}
 
 	// get linkage distances
@@ -155,10 +148,7 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	{
 		UserError::addError(758);
 	}
-
-	//echo $_POST['traitorder0'] . ":" . $_POST['traitorder1'] . ":" . $_POST['traitorder2'];
 	// get trait orders
-	// TODO: variable not used
 	if (isset($_POST['traitorder0']) && isset($_POST['traitorder1']) && isset($_POST['traitorder2'])) {
 		$inputTraitOrder0 = $_POST['traitorder0']-1;
 		$inputTraitOrder1 = $_POST['traitorder1']-1;
@@ -166,9 +156,7 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	}
 	$inputTraitOrder = $V_ordering;
 	$arrFinalPhenotypes = [];
-	// TODO: pass by reference - resolved
     $arrFinalPhenotypes = $user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes,$arrFinalPhenotypes);
-	// $user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes,&$arrFinalPhenotypes);
 
 	$masterRecordset = $user->viewProblem($problemId);
 	$problemEqual = areProblemsEqual($masterRecordset,
@@ -204,8 +192,6 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 
 			if (UserError::hasError() == 0)
 			{
-				//$page->redirect("viewstudent.php?studentId=".$studentId);
-				//wrapUp("viewstudentlist.php");
 				$page->redirect("viewstudentlist.php");
 			}
 		}
@@ -379,8 +365,6 @@ if ($showProblemForm == true)
 		$pheno2NameArray = array();
 
 		// load up the recordset into memory (in the from of arrays)
-		// TODO: pass by reference - resolved accessing key that is not define?
-		// $result = loadTraitsFromRecordset($traitRecordset,&$traitIdArray,&$traitNameArray);
 		$result = loadTraitsFromRecordset($traitRecordset,$traitIdArray,$traitNameArray);
 		$traitIdArray = $result->TraitId;
 		$traitNameArray = $result->Name;
@@ -389,9 +373,7 @@ if ($showProblemForm == true)
 }
 else if ($showProblemSummary == true)
 {
-	// TODO: pass by reference - resolved;
 	$arrFinalPhenotypes = [];
-	// $user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes,&$arrFinalPhenotypes);
     $arrFinalPhenotypes = $user->assignPhenotypeLogic($inputEpistasis,$arrPhenotypes, $arrFinalPhenotypes);
 
 	echo "Problem Summary:<p>";

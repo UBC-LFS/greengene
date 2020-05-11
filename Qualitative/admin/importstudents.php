@@ -66,8 +66,6 @@ if ($formaction == "createstudents")
 }
 else if ($formaction == "loadfile")
 {
-	// passbyreference - resolved
-	// $user->importStudents(uploaded(),&$studentListArray,&$studentErrorListArray);
 	$studentListArray = [];
 	$studentErrorListArray = [];
 	$result = $user->importStudents(uploaded(),$studentListArray,$studentErrorListArray);
@@ -80,7 +78,7 @@ else if ($formaction == "loadfile")
 }
 else if ($formaction == "Import") 
 {
-	$user->importStudentsFromClassList();
+	$page->redirect("import.php");
 }
 
 
@@ -171,8 +169,6 @@ else if ($showStudentRecords == true)
 		$problemRecordset = $user->getProblems();
 		if (!empty($problemRecordset) )
 		{
-			// passbyreference - resolved
-			// loadProblemsFromRecordset($problemRecordset,&$problemIdArray,&$problemNameArray);
 			 $result = loadProblemsFromRecordset($problemRecordset,$problemIdArray,$problemNameArray);
 			 $problemIdArray = $result[0];
 			 $problemNameArray = $result[1];
@@ -201,8 +197,6 @@ else if ($showStudentRecords == true)
 			$lastNameBox = "<input type=\"text\" name=\"lastName".$i."\" value=\"" . $record[2] . "\" size=\"20\">";
 			$checkBox	 = "<input type=\"checkbox\" name=\"create_student[]\" value=\"" . $i . "\" CHECKED>";
 			$problemSelectBox = generateProblemSelectBox("problem".$i,$problemIdArray,$problemNameArray);
-			// passbyreference - resolved
-			// $studentTable->writeRow(&$checkBox,&$userIdBox,&$firstNameBox,&$lastNameBox,&$problemSelectBox);
 			$studentTable->writeRow($checkBox,$userIdBox,$firstNameBox,$lastNameBox,$problemSelectBox);
 		}
 
@@ -219,7 +213,6 @@ else if ($showStudentRecords == true)
 			$problemSelectBox = generateProblemSelectBox("problem".$i,$problemIdArray,$problemNameArray);
 			// passbyreference - resolved
 			$studentTable->writeRow($checkBox,$userIdBox,$firstNameBox,$lastNameBox,$problemSelectBox);
-			// $studentTable->writeRow(&$checkBox,&$userIdBox,&$firstNameBox,&$lastNameBox,&$problemSelectBox);
 		}
 
 		$studentTable->flush();
