@@ -1245,9 +1245,30 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		return true;
 	}
 
-	function importStudentsFromClassList() {
+	function importClassList() {
 		echo("importing students");
 		// TODO: call createStudents(userID, firstName, lastName)
+		
+		$ds = ldap_connect(LDAP_HOST);
+		$result = [];
+		if ($ds) {
+			$r=ldap_bind($ds, LDAP_DN, LDAP_PW);
+
+			$base_dn = "ou=UBC,ou=ACADEMIC,dc=id,dc=ubc,dc=ca"; 
+			$filter = "(&(objectClass=*)(cn=APBI_318_001_2019W))";
+			
+			$sr=ldap_search($ds, $base_dn, $filter);
+			$info = ldap_get_entries($ds, $sr);
+			$uniquemember = $info[0]['uniquemember'];
+			for ($i = 0; $i < $uniquemember['count']; $i++) {
+				$temp = substr($uniquemember[$i], 4);
+				$temp = explode(",", $temp)[0];
+				array_push($result, $temp);
+			}
+		}
+		ldap_close($ds);
+		var_dump($result);
+		return $result;
 	}
 
 	

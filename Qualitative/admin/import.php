@@ -2,8 +2,9 @@
 require_once('../includes/global.php');
 $user = Security::getUser();
 $page = new Page($user, 'Import Students', 2);
-echo $user->importStudentsFromClassList();
 $page->writeHeader();
+
+$user->importClassList();
 ?>
 <!DOCTYPE html>
 <body>
