@@ -54,15 +54,6 @@ class TA extends User
 	{
 		global $g_db;
 
-		$default_password = TA::generatePassword($p_firstName, $p_lastName);
-
-		if (strlen($default_password) < 3)
-		{
-			UserError::addError(651);
-			return false;
-		}
-
-
 		$default_courseId = $this->m_courseId;
 
 
@@ -71,7 +62,6 @@ class TA extends User
 		$record_row_values = "'". $g_db->sqlString($p_userId) . "'," . $default_courseId . ","  . $privilege_lvl . "," .
 							 "'" . $g_db->sqlString($p_firstName) . "','" . $g_db->sqlString($p_lastName). "'";
 
-		echo($record_row_values);
 		$sql_query =	"INSERT ".
 						"INTO User (UserId,CourseId,PrivilegeLvl,FirstName,LastName) ".
 						"VALUES (" . $record_row_values . ")";
@@ -1245,33 +1235,57 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		return true;
 	}
 
-	function importClassList() {
-		echo("importing students");
-		// TODO: call createStudents(userID, firstName, lastName)
+	function importClassList($payload) {
+		$result = [];
+		$cn = self::getCommonName($payload);
 		
 		$ds = ldap_connect(LDAP_HOST);
-		$result = [];
-		if ($ds) {
-			$r=ldap_bind($ds, LDAP_DN, LDAP_PW);
 
-			$base_dn = "ou=UBC,ou=ACADEMIC,dc=id,dc=ubc,dc=ca"; 
-			$filter = "(&(objectClass=*)(cn=APBI_318_001_2019W))";
-			
-			$sr=ldap_search($ds, $base_dn, $filter);
-			$info = ldap_get_entries($ds, $sr);
-			$uniquemember = $info[0]['uniquemember'];
-			for ($i = 0; $i < $uniquemember['count']; $i++) {
-				$temp = substr($uniquemember[$i], 4);
-				$temp = explode(",", $temp)[0];
-				array_push($result, $temp);
-			}
+		if ($ds) {
+			// remove warning when bind fails
+			set_error_handler(function() {});
+			$r=ldap_bind($ds, LDAP_DN, LDAP_PW);
+			restore_error_handler();
+
+			if ($r){
+				$base_dn = "ou=UBC,ou=ACADEMIC,dc=id,dc=ubc,dc=ca"; 
+				$filter = "(&(objectClass=*)(cn=".$cn."))";
+
+				$sr=ldap_search($ds, $base_dn, $filter);
+				$info = ldap_get_entries($ds, $sr);
+				$uniquemember = $info[0]['uniquemember'];
+				for ($i = 0; $i < $uniquemember['count']; $i++) {
+					$temp = substr($uniquemember[$i], 4);
+					$temp = explode(",", $temp)[0];
+					array_push($result, $temp);
+				}
+			} else {
+				echo "<h2 style=\"color:red;\"> Failed to retrieve student records. Please make sure you are connected to UBC VPN</h2>";
+			};
 		}
 		ldap_close($ds);
-		var_dump($result);
+		
+		return $result;
+	}
+	 
+	function getCommonName($payload) {
+		$result = "";
+		$result = $payload['subjectCode']."_";
+		$result = $result.$payload['courseNumber']."_";
+		$result = $result.$payload['section']."_";
+		$result = $result.$payload['year'].$payload['session'];
 		return $result;
 	}
 
-	
+	function deleteAllStudents(){
+		global $g_db;
+		$students = self::getStudents();
+
+		while ($row = $g_db->fetch($students)) {
+			self::deleteStudent($row->UserId);
+		}
+	}
+
 	function syncStudents() {
 		/**
 		 *  TODO: from the incoming list compare users students for course
