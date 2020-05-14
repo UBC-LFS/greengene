@@ -17,6 +17,9 @@ if ($formaction == "import") {
         'year' => $_POST['year'],
         'session' => $_POST['session']);
     $classList = $user->importClassList($payload);
+    if (!count($classList)) {
+    	echo "<p style='color:red;' >Class has no students. Please try another Class.</p>";
+    }
 } else if ($formaction == "add"){
     
     if (isset($_POST['removeExisting'])) {
@@ -41,6 +44,7 @@ $table->writeRow('Course Section', "<input requiredtype=\"text\" name=\"section\
 $table->writeRow('Year', "<input required type=\"number\" name=\"year\" maxlength=\"4\" placeholder=\"2019\">");
 $table->writeRow('Session', "<select name=\"session\"> <option value=\"W\">Winter</option> <option value=\"S\">Summer</option></select>");
 $table->flush();
+echo '<br/>';
 echo '<input type="submit" value="import">';
 echo "</form>";
 
