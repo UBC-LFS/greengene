@@ -25,10 +25,6 @@ if(isset($_POST['del_student'])) {
 	}
 }
 
-if (isset($_POST['sync'])) {
-	$user->syncStudents();
-}
-
 // retrieve the list of problems associated with the user's courseId
 $recordset = $user->getStudents();
 
@@ -66,9 +62,10 @@ echo("<p><input type=\"submit\" value=\"Delete Selected\"> &nbsp;&nbsp;
 	</p>");
 echo "</form>";
 
-echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
-echo "<input type=\"hidden\" name=\"sync\"> </input>"; 
-echo "<input type=\"submit\" value=\"Sync\"> </input>";
+
+echo "<form style=\"margin: 0; padding: 0;\" action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
+echo "<input style=\"display:inline;\" type=\"hidden\" name=\"deleteAll\" value=\"deleteAll\"> </input>"; 
+echo "<input style=\"display:inline;\" type=\"submit\" value=\"Delete All\" onClick=\"javascript: return window.confirm('Are you sure you want to delete all students?');\"></input>";
 echo "</form>";
 
 // write main footer and close database connection

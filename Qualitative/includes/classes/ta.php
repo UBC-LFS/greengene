@@ -1264,7 +1264,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			};
 		}
 		ldap_close($ds);
-		
 		return $result;
 	}
 	 
@@ -1285,31 +1284,5 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			self::deleteStudent($row->UserId);
 		}
 	}
-
-	function syncStudents() {
-		/**
-		 *  TODO: from the incoming list compare users students for course
-		 * if student doesnt exists in database add into database 
-		 * else ignore 
-		 * 
-		 * */
-		$newStudentList = 0;
-		$oldStudentList = self::getStudentsCWL();
-		var_dump($oldStudentList);
-		return true;
-	}
-
-	function getStudentsCWL() {
-		$recordset = self::getStudents();
-		$result = [];
-		global $g_db;	
-		while($row = $g_db->fetch($recordset)) {
-			if(!empty($row->UserId)) {
-				array_push($result, $row->UserId);
-			}
-		}
-		return $result;
-	}
 	
-	function getMissingStudents() {}
 }

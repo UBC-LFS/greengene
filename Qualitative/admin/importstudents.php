@@ -1,234 +1,74 @@
 <?php
 require_once('../includes/global.php');
-
-// SESSION
-// - check session (session hander should redirect user if not logged in)
-// - get user object
 $user = Security::getUser();
-
-// PAGE CREATION LOGIC
-$page = new Page($user, 'Import Students', 2);
-
-// DATABASE CONNECTION
 $g_db = new DB();
-$userId = $user->m_userId;
-
-
-//$ta = new TA($userId);
-$studentListArray;
-$studentErrorListArray;
-$showStudentRecords = false;
-$showBrowseBox = true;
-
-$numStudentRecords;
-$numErrorRecords;
-
-// FORM LOGIC
-// - get form variables
-$formaction = false;
-if (isset($_POST['formaction']))
-	$formaction = $_POST['formaction'];
-
-if ($formaction == "createstudents")
-{
-	$createStudent = $_POST['create_student'];
-	$showBrowseBox = false;
-	$createStudentError = false;
-	//echo "<p>Students created: ";
-	for( $i = 0; $i < count($createStudent); $i++)
-	{
-		$pos = $createStudent[$i];
-		$inputUserId = $_POST['userId'.$pos];
-		$inputFirstName = $_POST['firstName'.$pos];
-		$inputLastName = $_POST['lastName'.$pos];
-		if ($user->createStudent($inputUserId,$inputFirstName,$inputLastName)!=true)
-		{
-			$createStudentError = true;
-		}
-		else
-		{
-			// now, we try to assign the problem to a student
-			$inputProblemId = $_POST['problem'.$pos];
-			if (!empty($inputProblemId) && $inputProblemId != -1)
-			{
-				if ($user->assignProblem($inputUserId,$inputProblemId)!=true)
-				{
-					$createStudentError = true;
-				}
-			}
-		}
-	}
-
-	if ($createStudentError == false)
-	{
-		$page->redirect("viewstudentlist.php");
-	}
-}
-else if ($formaction == "loadfile")
-{
-	$studentListArray = [];
-	$studentErrorListArray = [];
-	$result = $user->importStudents(uploaded(),$studentListArray,$studentErrorListArray);
-	$studentListArray = $result[0];
-	$studentErrorListArray = $result[1];
-	$numStudentRecords = count($studentListArray);
-	$numErrorRecords = count($studentErrorListArray);
-	$showStudentRecords = true;
-	$showBrowseBox = false;
-}
-else if ($formaction == "Import") 
-{
-	$page->redirect("import.php");
-}
-
-
-// only necessary on Student pages
-// $student = $page->translateUser($userId);
-// note: Student is now an appropriate object of either the current student
-//       or a student object representing the admin viewing the student's data
-
-
-// write page header, including toolbar
+$page = new Page($user, 'Import Students', 2);
 $page->writeHeader();
 
-// DATA LOGIC
-
-function uploaded()
-{
-	if (is_uploaded_file($_FILES['theFile']['tmp_name']))
-	{
-	    $lines = file($_FILES['theFile']['tmp_name']);
-	    //$all = implode("\n", $lines);
-	    return $lines;
-	}
-	else
-	{
-		UserError::addError(607);//upload problem.
-	}
-}
-
-function loadProblemsFromRecordset($p_recordset,$p_problemIdArray, $p_problemNameArray)
-{
-	global $g_db;
-	$counter = $g_db->getNumRows($p_recordset);
-
-	$currRow;
-
-	// iterate through each row, and get the information
-	for ($i = 0; $i < $counter; $i++)
-	{
-		$currRow = $g_db->fetch($p_recordset);
-		$p_problemIdArray[$i]= $currRow->ProblemId;
-		$p_problemNameArray[$i] = $currRow->Name;
-	}
-	return [$p_problemIdArray, $p_problemNameArray];
-}
-
-function generateProblemSelectBox($p_name, $p_problemIdArray, $p_problemNameArray)
-{
-	$counter = count($p_problemIdArray);
-
-	$selectBox = "<select name=\"". $p_name . "\">\n";
-
-	$selectBox = $selectBox. "<option value=\"-1\">None";
-	// iterate through each row, and get the information
-	for ($i = 0; $i < $counter; $i++)
-	{
-		$option = "<option value=\"" . $p_problemIdArray[$i] . "\">" . $p_problemNameArray[$i]."\n";
-		$selectBox = $selectBox.$option;
-	}
-
-	$selectBox = $selectBox."</select>\n";
-	return $selectBox;
-}
-
-
-if ($showBrowseBox == true )
-{
-	echo "<p>Please browse for a CSV file that contain entries for User Id,
-		  First Name, and Last Name on each line (with each entry separated by commas).<p>";
-	echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\" enctype=\"multipart/form-data\">";
-	echo("<input type=\"hidden\" name=\"formaction\" value=\"loadfile\">");
-	//echo "<font size=-1 color=\"#E24A00\">File Upload Script</font><br>";
-	echo "<input type=\"file\" name=\"theFile\" size=\"50\" class=\"formtextfield\"><br>";
-	echo "<input type=\"submit\" value=\"Load\">";
-	echo "</form>";
-	echo "<div>";
-	echo "<h3> Or Import student from course </h3>";
-	echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
-	echo "<input type=\"submit\" name=\"formaction\" value=\"Import\">";
-	echo "</form>";
-	echo "</div>";
-}
-else if ($showStudentRecords == true)
-{
-	if ($numStudentRecords > 0)
-	{
-		$problemIdArray = [];
-		$problemNameArray = [];
-		$problemRecordset = $user->getProblems();
-		if (!empty($problemRecordset) )
-		{
-			 $result = loadProblemsFromRecordset($problemRecordset,$problemIdArray,$problemNameArray);
-			 $problemIdArray = $result[0];
-			 $problemNameArray = $result[1];
-		}
-
-		// now generate the content of the page
-
-		echo "<p>" . $numStudentRecords . " student record(s) were parsed successfully.</p>";
-		echo "<p>" . $numErrorRecords . " student record(s) were parsed unsuccessfully.</p>";
-
-		// Start the form
-		echo "<form action=\"".htmlentities($_SERVER['PHP_SELF']). "\" method=\"post\">";
-		echo("<input type=\"hidden\" name=\"formaction\" value=\"createstudents\">");
-
-		$studentTable = new Table(5);
-
-		$studentTable->writeHeaders("Create","UserID", "First Name", "Last Name", "Assign Problem");
-
-
-		// first, show the lists of records that did not have any errors
-		for ($i = 0; $i < $numStudentRecords; $i++)
-		{
-			$record = $studentListArray[$i];
-			$userIdBox = "<input type=\"text\" name=\"userId".$i."\" value=\"" . $record[0] . "\" size=\"10\">";
-			$firstNameBox = "<input type=\"text\" name=\"firstName".$i."\" value=\"" . $record[1] . "\" size=\"20\">";
-			$lastNameBox = "<input type=\"text\" name=\"lastName".$i."\" value=\"" . $record[2] . "\" size=\"20\">";
-			$checkBox	 = "<input type=\"checkbox\" name=\"create_student[]\" value=\"" . $i . "\" CHECKED>";
-			$problemSelectBox = generateProblemSelectBox("problem".$i,$problemIdArray,$problemNameArray);
-			$studentTable->writeRow($checkBox,$userIdBox,$firstNameBox,$lastNameBox,$problemSelectBox);
-		}
-
-
-		// now, show the list of records with errors
-
-		for ($i = $numStudentRecords; $i < $numErrorRecords + $numStudentRecords; $i++)
-		{
-			$record = $studentErrorListArray[$i - $numStudentRecords];
-			$userIdBox = "<input type=\"text\" name=\"userId".$i."\" value=\"" . $record[0] . "\" size=\"10\">";
-			$firstNameBox = "<input type=\"text\" name=\"firstName".$i."\" value=\"" . $record[1] . "\" size=\"20\">";
-			$lastNameBox = "<input type=\"text\" name=\"lastName".$i."\" value=\"" . $record[2] . "\" size=\"20\">";
-			$checkBox	 = "<input type=\"checkbox\" name=\"create_student[]\" value=\"" . $i . "\">";
-			$problemSelectBox = generateProblemSelectBox("problem".$i,$problemIdArray,$problemNameArray);
-			// passbyreference - resolved
-			$studentTable->writeRow($checkBox,$userIdBox,$firstNameBox,$lastNameBox,$problemSelectBox);
-		}
-
-		$studentTable->flush();
-
-		// the delete button
-		echo "<p><input type=\"submit\" value=\"Create Students\"></p>";
-
-		// end the form
-		echo "</form>";
-	}
-	else
-	{
-		UserError::addError(652);
-	}
-}
 $page->handleErrors();
+
+$formaction = isset($_POST['formaction']) ? $_POST['formaction'] : false;
+$classList = [];
+
+if ($formaction == "import") {
+    $payload = array('subjectCode' => $_POST['subjectCode'],
+        'courseNumber' => $_POST['courseNumber'],
+        'section' => $_POST['section'],
+        'year' => $_POST['year'],
+        'session' => $_POST['session']);
+    $classList = $user->importClassList($payload);
+} else if ($formaction == "add"){
+    
+    if (isset($_POST['removeExisting'])) {
+        $user->deleteAllStudents();
+    }
+
+    $studentUserId = isset($_POST['data']) ? $_POST['data'] : false;
+    if ($studentUserId) {
+        for ($i = 0; $i < count($studentUserId); $i++) {
+            $user->createStudent($studentUserId[$i] ," " ," ");
+        }
+    }
+    Page::redirect("viewstudentlist.php");
+}
+ 
+echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
+echo "<input type=\"hidden\" name=\"formaction\" value=\"import\">";
+$table = new Table(2, false, true);
+$table->writeRow('Course Subject Code', "<input required type=\"text\" name=\"subjectCode\" maxlength=\"4\" placeholder=\"APBI\">");
+$table->writeRow('Course Number', "<input required type=\"text\" name=\"courseNumber\" maxlength=\"4\" placeholder=\"318\">");
+$table->writeRow('Course Section', "<input requiredtype=\"text\" name=\"section\" maxlength=\"4\" placeholder=\"001\">");
+$table->writeRow('Year', "<input required type=\"number\" name=\"year\" maxlength=\"4\" placeholder=\"2019\">");
+$table->writeRow('Session', "<select name=\"session\"> <option value=\"W\">Winter</option> <option value=\"S\">Summer</option></select>");
+$table->flush();
+echo '<input type="submit" value="import">';
+echo "</form>";
+
+if (count($classList)) {
+    // echo 'printing class list';
+    
+    echo "<p>Class List for ".$payload['subjectCode'].$payload['courseNumber']." Section ".$payload['section']." Year ".$payload['year'].$payload['session']."</p>";
+    echo "<p>Number of Students: ".count($classList)."</p>";
+    echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
+    echo "<input type=\"hidden\" name=\"formaction\" value=\"add\">";
+    $table = new Table(2, true, true);
+    $table->writeHeaders('','CWL Username');
+    
+    for ($i = 0; $i < count($classList); $i++) {
+        $cwl = $classList[$i];
+        $table->writeRow('', "<input type=\"hidden\" name=\"data[$i]\" value=\"$cwl\">".$cwl."</input>");
+    }
+    
+    $table->flush();
+    echo '<br/>';
+    echo '<br/>';
+    echo '<input type="checkbox" name="removeExisting" value="remove">';
+    echo '<label> Remove Existing Students</label>';
+    echo '<br/>';
+    echo '<br/>';
+    echo '<input type="submit" value="Add Students ">';
+    echo "</form>";
+}
+
 $page->writeFooter();
-$g_db->disconnect();
 ?>
