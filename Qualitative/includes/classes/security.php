@@ -20,7 +20,7 @@ class Security
 	 * @return user
 	 * @return false
 	 */
-	function login($p_userId, $p_pwd)
+	function login_($p_userId, $p_pwd)
 	{
 		global $g_db;
 		// TODO: for development purposes - remove ternery operator before pushing to production
@@ -64,7 +64,7 @@ class Security
 	}
 
 	// TODO: this function is to replace the login() function in this class
-	function login_($p_userId, $p_pwd)
+	function login($p_userId, $p_pwd)
 	{	
 		global $g_db;
 		$SQL = "SELECT PrivilegeLvl
@@ -103,16 +103,13 @@ class Security
 	function ldap_login($p_userId, $p_pwd) {
 		// TODO: move the following variables to config 
 		// TODO: handle timeout else it hangs
-		/*
-		$ldap = "eldapdccons.id.ubc.ca";
-		$port = 389;
+		$ldap = "ldaps://eldapdccons.id.ubc.ca";
 		$usr = "uid=".$p_userId.",ou=People,dc=landfood,dc=ubc,dc=ca";
-		$ds = ldap_connect($ldap, $port);
+		$ds = ldap_connect($ldap);
 		if ($ds) {
 			ldap_start_tls($ds);
 			return ldap_bind($ds, $usr, $p_pwd);
-		}	
-		*/
+		}
 		return false;
 	}
 
