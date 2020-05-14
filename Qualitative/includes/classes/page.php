@@ -359,7 +359,6 @@ END;
 	<td class="courseInfo">$courseText&nbsp;&nbsp; <span class="userTypeText">$userType</span></td>
 	<td class="textLinks">
 		$userName |
-		<a href="$root/changepassword.php">Change Password</a> |
 		<a href="$root/logout.php">Logout</a>
 	</td>
 </tr>

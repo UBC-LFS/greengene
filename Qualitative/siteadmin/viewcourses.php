@@ -22,11 +22,10 @@ if(isset($_POST['formaction'])) {
 if($formaction == 'delete')
 {
 	$delCourse = isset($_POST['delCourse']) ? $_POST['delCourse']: null;
-	$password = $_POST['password'];
 
 	if(isset($delCourse) && count($delCourse) > 0)
 		foreach($delCourse as $delCourseId)
-			$user->deleteCourse($delCourseId, $password);
+			$user->deleteCourse($delCourseId);
 }
 
 // write page header, including toolbar
@@ -56,12 +55,6 @@ while($row = $g_db->fetch($courses))
 
 $table->flush();
 
-/*
-echo("<p>Enter password to confirm deletion:<br>");
-echo("<input type=\"password\" name=\"password\"></p>");
-
-echo("<p><input type=\"submit\" value=\"Delete Selected\">");
-*/
 echo("</form>");
 
 // write main footer and close database connection

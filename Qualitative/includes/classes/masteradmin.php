@@ -58,25 +58,9 @@ class MasterAdmin extends User
 	 * @param string $p_pwd admin password
 	 * @return bool
 	 */
-	function deleteCourse($p_courseId, $p_pwd=null)
+	function deleteCourse($p_courseId)
 	{
 		global $g_db;
-
-		// check master admin password
-		/*
-		$result = $g_db->querySelect("SELECT UserId
-			FROM User
-			WHERE Pwd=password('" . $g_db->sqlString($p_pwd) . "')
-			AND UserId='" . $g_db->sqlString($this->m_userId) . "'");
-
-		if($g_db->getNumRows($result) != 1)
-		{
-			UserError::addError(902);
-			return false;
-		}
-		*/
-
-		// all set to delete
 
 		$g_db->queryCommit("DELETE FROM Course
 			WHERE CourseId=$p_courseId");

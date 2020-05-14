@@ -215,47 +215,6 @@ class TA extends User
 	}
 
 	/**
-	 * resetPassword: This resets a user's password
-	 * PRE: $p_userId is a non-null value
-	 * POST: bool indicating whether the action was succesful or not
-	 * @param string $p_userId
-	 * @return bool
-	 */
-	function resetPassword($p_userId)
-	{
-		global $g_db;
-
-		$sql_query = 	"SELECT UserId, FirstName, LastName ".
-						"FROM User ".
-						"	WHERE UserId = '". $g_db->sqlString($p_userId) . "'";
-
-		$recordSet = $g_db->querySelect($sql_query);
-
-
-		if (!empty($recordSet) && $g_db->getNumRows($recordSet) != 0)
-		// if we can't find the user, return false
-		{
-			$row = $g_db->fetch($recordSet);
-			$default_password = TA::generatePassword($row->FirstName, $row->LastName);
-			$sql_query = 	"UPDATE User ".
-							"SET Pwd = password('" . $g_db->sqlString($default_password) . "') " .
-							"	WHERE UserId = '". $g_db->sqlString($p_userId) . "'";
-
-			if ($g_db->queryCommit($sql_query)!=true)
-			{
-				UserError::addError(604);
-				return false;
-			}
-			return true;
-		}
-		else
-		{
-			UserError::addError(603);
-			return false;
-		}
-	}
-
-	/**
 	 * assignPhenotypeLogic: A helper function for assignProblem and reassignProblem
 	 * This function helps to determine what each of trait_AA, trait_Ab, trait_bA, trait_bb,
 	 * (where _ is from 1 to 3), based on the information given by $p_epistasisRatio and $p_arrPhenotypes
@@ -1131,37 +1090,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 					 " ORDER BY Name";
 
 		return $g_db->querySelect($sql_query);
-	}
-
-	/**
-	 * generatePassword: a helper function to generate a default password
-	 *
-	 * PRE: $p_firstName and $p_lastName are non-null values
-	 *
-	 * POST: a password in the form of firstName + first character of lastName,
-	 * where the password is in lowercase and only contains alphabetical characters
-	 *
-	 * @param string $p_firstName first name
-	 * @param string $p_lastName last name
-	 * @return string
-	 */
-	function generatePassword($p_firstName, $p_lastName)
-	{
-		$pattern = "/(\W+)/"; 	
-		// pattern to match nonalphabetical characters
-
-		$digitPattern = "/(\d+)/"; 
-		// pattern to match digits
-		
-		$replace = "";
-
-		$parsedFirstName = preg_replace($pattern,$replace,$p_firstName);
-		$parsedFirstName = preg_replace($digitPattern,$replace,$parsedFirstName);
-		
-		$parsedLastName = preg_replace($pattern,$replace,$p_lastName);
-		$parsedLastName = preg_replace($digitPattern,$replace,$parsedLastName);		
-		return strtolower($parsedLastName) . strtolower($parsedFirstName{0});
-
 	}
 
 	/**

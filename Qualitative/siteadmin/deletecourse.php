@@ -12,7 +12,7 @@ $page->writeHeader();
 $page->handleErrors();
 
 if ($formaction != null ) {
-        $user->deleteCourse($formaction, null);
+        $user->deleteCourse($formaction);
         Page::redirect('viewcourses.php');
 }
 

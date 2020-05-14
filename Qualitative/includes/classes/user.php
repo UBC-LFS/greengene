@@ -51,51 +51,6 @@ class User
 		$this->m_courseDescription = $row->Description;
 	}
 
-	/**
-	 * Change (current) user's password
-	 *
-	 * @param string @p_oldPwd current password
-	 * @param string @p_pwd1 new password (first emtry)
-	 * @param string @p_pwd2 new password (second entry)
-	 * @return bool
-	 */
-	function changePassword($p_oldPwd, $p_pwd1, $p_pwd2)
-	{
-		global $g_db;
 
-		$userId = $g_db->sqlString($this->m_userId);
-		$pwd = $g_db->sqlString($p_oldPwd);
-
-		$sqlQuery = "SELECT UserId
-				FROM User
-				WHERE Pwd=PASSWORD('$pwd')
-				AND UserId='$userId'";
-
-		$recordSet = $g_db->querySelect($sqlQuery);
-
-		if(strlen($p_pwd1) < 3)
-		{
-			UserError::addError(301);
-			return false;
-		}
-
-		//check that the old password matches and that the new passwords match, too
-		if(($g_db->getNumRows($recordSet) == 1) && (strcmp($p_pwd1,$p_pwd2) == 0))
-		{
-			//the old password matches the current pwd and the new pwds match, too, so perform the update
-			$sqlQuery = "UPDATE User
-					SET Pwd=PASSWORD('".$g_db->sqlString($p_pwd1)."')
-					WHERE UserId='$userId'";
-
-			return $g_db->queryCommit($sqlQuery);
-		}
-		else
-		{
-			UserError::addError(300);
-			return false;
-		}
-
-		return true;
-	}
 }
 ?>

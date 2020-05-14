@@ -70,25 +70,6 @@ elseif($formaction == 'saveuser')
 	$LastName = $_POST['LastName'];
 	$PrivilegeLvl = $_POST['PrivilegeLvl'];
 }
-elseif($formaction == 'saveuserpwd')
-{
-	$userId = $_POST['UserId'];
-
-	if($user->changeTAPwd($_POST['UserId'],
-		$_POST['Pwd1'],
-		$_POST['Pwd2']) == true)
-	{
-		Page::redirect("viewadminlist.php");
-	}
-
-	$formType = 'save';
-
-	$userRs = $user->getManagementUser($userId);
-	$userData = $g_db->fetch($userRs);
-	$FirstName = $userData->FirstName;
-	$LastName = $userData->LastName;
-	$PrivilegeLvl = $userData->PrivilegeLvl;
-}
 elseif(empty($formaction))
 {
 	$userId = "";
@@ -185,12 +166,6 @@ else
 
 	echo('</form>');
 
-	$table = new Table(2, false, true);
-	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
-	echo("<input type=\"hidden\" name=\"formaction\" value=\"saveuserpwd\">");
-	echo("<input type=\"hidden\" name=\"UserId\" value=\"$userId\">");
-
-	echo('</form>');
 	$table->flush();
 }
 
