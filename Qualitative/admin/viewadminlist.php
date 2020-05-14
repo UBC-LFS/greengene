@@ -44,7 +44,7 @@ echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">")
 echo("<input type=\"hidden\" name=\"formaction\" value=\"deleteuser\">");
 
 $table = new Table(6, true, true);
-$table->writeHeaders('', 'User Id', 'First Name', 'Last Name', 'User Type', '');
+$table->writeHeaders('', 'CWL Username', 'First Name', 'Last Name', 'User Type', '');
 
 $priv = array(1 => 'Professor', 2 => 'TA');
 

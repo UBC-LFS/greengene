@@ -120,16 +120,6 @@ class TA extends User
 	{
 		global $g_db;
 
-		$default_password = TA::generatePassword($p_firstName, $p_lastName);
-
-		// enforce that 2 alphabetical characters must be entered for each
-		// of first name and last name
-		if (strlen($default_password) < 3)
-		{
-			UserError::addError(651);
-			return false;
-		}
-
 		$sql_query = 	"UPDATE User ".
 						"SET FirstName = '". $g_db->sqlString($p_firstName) . "'," .
 						"	 LastName = '" . $g_db->sqlString($p_lastName) . "' " .

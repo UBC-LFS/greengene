@@ -39,7 +39,7 @@ echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
 
 $studentTable = new Table(6, true, true);
 
-$studentTable->writeHeaders('', 'User Id', 'First Name', 'Last Name', 'Assigned Problem', '');
+$studentTable->writeHeaders('', 'CWL Username', 'First Name', 'Last Name', 'Assigned Problem', '');
 
 // iterate through each row, and get the information
 while($row = $g_db->fetch($recordset))

@@ -14,7 +14,7 @@ $g_db = new DB();
 
 // FORM LOGIC
 // - get form variables
-$studentId = $_GET['studentId'];
+$studentId = isset($_GET['studentId']) ? $_GET['studentId']: null;
 $formaction = false;
 if (isset($_POST['formaction'])) {
 	$formaction = $_POST['formaction'];
@@ -42,12 +42,6 @@ if ($formaction == "modifystudent")
 	$inputLastName = $_POST['lastName'];
 	$inputProgenyPerMating = -1;
 	$inputMaxProgeny = -1;
-
-	if (empty($inputFirstName) || empty($inputLastName) )
-	{
-		UserError::addError(650);
-		$formError = true;
-	}
 
 	if (!empty($_POST['progenychange']))
 	{
@@ -88,11 +82,6 @@ if ($formaction == "modifystudent")
 		$user->modifyStudent($inputUserId, $inputFirstName, $inputLastName,
 						   $inputProgenyPerMating,$inputMaxProgeny);
 
-		if (count($_POST['reset_password']) && !UserError::hasError())
-		{
-			$user->resetPassword($inputUserId);
-		}
-
 		if (!UserError::hasError())
 		{			
 			$page->redirect("viewstudentlist.php");
@@ -128,7 +117,7 @@ if ($showStudentForm == true)
 	echo("<input type=\"hidden\" name=\"userId\" value=\"" . $row->UserId . "\">");
 
 	$studentTable = new Table(2, false, true);
-	$studentTable->writeRow("UserId:",$row->UserId);
+	$studentTable->writeRow("CWL Username:",$row->UserId);
 	$studentTable->writeRow("First Name:",
 		"<input type=\"text\" name=\"firstName\" maxlength=\"20\" value=\"" . $row->FirstName . "\">");
 	$studentTable->writeRow("Last Name:",

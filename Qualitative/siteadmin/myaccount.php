@@ -72,7 +72,7 @@ echo("<input type=\"hidden\" name=\"formaction\" value=\"saveuser\">");
 
 $table = new Table(2, false, true);
 
-$table->writeRow('User Id:',
+$table->writeRow('CWL Username:',
 	"<input type=\"text\" name=\"UserId\" value=\"$userId\" maxlength=\"10\" readonly>");
 
 $table->writeRow('First Name:',

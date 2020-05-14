@@ -34,18 +34,6 @@ if($formaction == 'adduser')
 		$formOk = false;
 	}
 
-	if($_POST['FirstName'] == '')
-	{
-		UserError::addError(303);
-		$formOk = false;
-	}
-
-	if($_POST['LastName'] == '')
-	{
-		UserError::addError(304);
-		$formOk = false;
-	}
-
 	if($formOk == true && $user->createManagementUser($userId,
 		$_POST['FirstName'],
 		$_POST['LastName'],
@@ -67,18 +55,6 @@ elseif($formaction == 'saveuser')
 	$courseId = $_POST['CourseId'];
 
 	$formOk = true;
-
-	if($_POST['FirstName'] == '')
-	{
-		UserError::addError(303);
-		$formOk = false;
-	}
-
-	if($_POST['LastName'] == '')
-	{
-		UserError::addError(304);
-		$formOk = false;
-	}
 
 	if($formOk == true && $user->modifyManagementUser($_POST['UserId'],
 		$_POST['FirstName'],
@@ -160,8 +136,8 @@ if($formType == 'add')
 
 	$table = new Table(2, false, true);
 
-	$table->writeRow('User Id:',
-		"<input type=\"text\" name=\"UserId\" value=\"$userId\" maxlength=\"10\">");
+	$table->writeRow('CWL Username:',
+		"<input type=\"text\" name=\"UserId\" value=\"$userId\" maxlength=\"10\" readonly>");
 
 	$table->writeRow('First Name:',
 		"<input type=\"text\" name=\"FirstName\" value=\"$FirstName\" maxlength=\"20\">");
@@ -190,7 +166,7 @@ else
 
 	$table = new Table(2, false, true);
 
-	$table->writeRow('User Id:',
+	$table->writeRow('CWL Username:',
 		"<input type=\"text\" name=\"UserId\" value=\"$userId\" maxlength=\"10\" readonly>");
 
 	$table->writeRow('First Name:',

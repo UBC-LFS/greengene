@@ -101,8 +101,6 @@ class Security
 	}
 
 	function ldap_login($p_userId, $p_pwd) {
-		// TODO: move the following variables to config 
-		// TODO: handle timeout else it hangs
 		$ldap = "ldaps://eldapdccons.id.ubc.ca";
 		$usr = "uid=".$p_userId.",ou=People,dc=landfood,dc=ubc,dc=ca";
 		$ds = ldap_connect($ldap);

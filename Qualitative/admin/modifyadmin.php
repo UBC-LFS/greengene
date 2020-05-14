@@ -36,18 +36,6 @@ if($formaction == 'adduser')
 		$formOk = false;
 	}
 
-	if($_POST['FirstName'] == '')
-	{
-		UserError::addError(303);
-		$formOk = false;
-	}
-
-	if($_POST['LastName'] == '')
-	{
-		UserError::addError(304);
-		$formOk = false;
-	}
-
 	if($formOk == true && $user->createManagementUser($userId,
 		$_POST['FirstName'],
 		$_POST['LastName'],
@@ -67,18 +55,6 @@ elseif($formaction == 'saveuser')
 	$userId = $_POST['UserId'];
 
 	$formOk = true;
-
-	if($_POST['FirstName'] == '')
-	{
-		UserError::addError(303);
-		$formOk = false;
-	}
-
-	if($_POST['LastName'] == '')
-	{
-		UserError::addError(304);
-		$formOk = false;
-	}
 
 	if($formOk == true && $user->modifyManagementUser($_POST['UserId'],
 		$_POST['FirstName'],
@@ -116,7 +92,7 @@ elseif($formaction == 'saveuserpwd')
 elseif(empty($formaction))
 {
 	$userId = "";
-	if(isset($_GET['userID'])) {
+	if(isset($_GET['userId'])) {
 		$userId = $_GET['userId'];
 	}
 
@@ -158,7 +134,7 @@ if($formType == 'add')
 
 	$table = new Table(2, false, true);
 
-	$table->writeRow('User Id:',
+	$table->writeRow('CWL Username:',
 		"<input type=\"text\" name=\"UserId\" value=\"$userId\" maxlength=\"10\">");
 
 	$table->writeRow('First Name:',
@@ -187,7 +163,7 @@ else
 
 	$table = new Table(2, false, true);
 
-	$table->writeRow('User Id:',
+	$table->writeRow('CWL Username:',
 		"<input type=\"text\" name=\"UserId\" value=\"$userId\" maxlength=\"10\" readonly>");
 
 	$table->writeRow('First Name:',
@@ -210,7 +186,7 @@ else
 	echo('</form>');
 
 	$table = new Table(2, false, true);
-	echo("<form action=\"$PHP_SELF\" method=\"post\">");
+	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
 	echo("<input type=\"hidden\" name=\"formaction\" value=\"saveuserpwd\">");
 	echo("<input type=\"hidden\" name=\"UserId\" value=\"$userId\">");
 

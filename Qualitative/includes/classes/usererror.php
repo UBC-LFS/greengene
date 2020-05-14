@@ -14,11 +14,11 @@
 $g_errorTypes = array(
 	300 => 'Passwords entered do not match or old password is incorrect',
 	301 => 'Password too short.',
-	302 => 'User Id cannot be empty.',
+	302 => 'CWL username cannot be empty.',
 	303 => 'First Name cannot be empty.',
 	304 => 'Last Name cannot be empty.',
-	305 => 'User Id already exists.',
-	306 => 'Login Failed. Invalid UserId or Password.',
+	305 => 'CWL username already exists.',
+	306 => 'Login Failed. Invalid CWL username or Password.',
 
 	400 => 'Invalid cross number.',
 	401 => 'No problem assigned.',
@@ -38,7 +38,7 @@ $g_errorTypes = array(
 	609 => 'Error removing student problem.',
 	610 => 'Error removing current student simulation.',
 	// starting at 650, errors returned from the page
-	650 => 'Please specify all of UserId, First Name, and Last Name.',
+	650 => 'Please specify all of CWL username, First Name, and Last Name.',
 	651 => 'Please specify at least 2 alphabetical characters for each of First Name and Last Name.',
 	652 => 'Cannot parse any student records from the file.',
 	653 => 'Cannot find requested problem.',

@@ -46,18 +46,6 @@ if($formaction == 'addcourse')
 		$formOk = false;
 	}
 
-	if($_POST['FirstName'] == '')
-	{
-		UserError::addError(303);
-		$formOk = false;
-	}
-
-	if($_POST['LastName'] == '')
-	{
-		UserError::addError(304);
-		$formOk = false;
-	}
-
 	if($formOk == true)
 	{
 		$newCourseId = $user->createCourse($_POST['CourseName'],
@@ -141,7 +129,7 @@ if(!empty($courseId))
 	echo("<input type=\"hidden\" name=\"CourseId\" value=\"$courseId\">");
 
 	$table = new Table(6, true, true);
-	$table->writeHeaders('', 'User ID', 'First Name', 'Last Name', 'User Type', '');
+	$table->writeHeaders('', 'CWL Username', 'First Name', 'Last Name', 'User Type', '');
 
 	$priv = array(1 => 'Professor', 2 => 'TA');
 
@@ -185,7 +173,7 @@ else
 
 	$table->writeDivider();
 
-	$table->writeRow('Admin User Id:',
+	$table->writeRow('Admin CWL Username:',
 		"<input type=\"text\" name=\"UserId\" value=\"" . $_POST['UserId'] . "\" maxlength=\"10\">");
 
 	$table->writeRow('First Name:',

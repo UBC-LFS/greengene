@@ -47,7 +47,7 @@ if (isset($_POST['lastName']))
 if ($formaction == "createstudent")
 {
 
-	if (empty($inputUserId) || empty($inputFirstName) || empty($inputLastName))
+	if (empty($inputUserId) )
 	{
 		UserError::addError(650);
 	}
@@ -78,7 +78,7 @@ echo "<form name=\"createstudent\" action=\"".htmlentities($_SERVER['PHP_SELF'])
 echo("<input type=\"hidden\" name=\"formaction\" value=\"createstudent\">");
 
 $studentTable = new Table(2, false, true);
-$studentTable->writeRow("User Id:","<input type=\"text\" name=\"userId\" maxlength=\"10\" value=\"$inputUserId\">");
+$studentTable->writeRow("CWL Username:","<input type=\"text\" name=\"userId\" maxlength=\"10\" value=\"$inputUserId\">");
 $studentTable->writeRow("First Name:","<input type=\"text\" name=\"firstName\" maxlength=\"20\" value=\"$inputFirstName\">");
 $studentTable->writeRow("Last Name:","<input type=\"text\" name=\"lastName\" maxlength=\"20\" value=\"$inputLastName\">");
 $studentTable->writeRow("Assign Problem Now:", "<input type=\"checkbox\" name=\"assign_problem[]\" value=\"yes\">");
