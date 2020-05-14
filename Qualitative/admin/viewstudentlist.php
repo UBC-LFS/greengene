@@ -25,6 +25,10 @@ if(isset($_POST['del_student'])) {
 	}
 }
 
+if(isset($_POST['deleteAll'])) {
+	$user->deleteAllStudents();
+}
+
 // retrieve the list of problems associated with the user's courseId
 $recordset = $user->getStudents();
 

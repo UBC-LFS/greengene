@@ -1236,6 +1236,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	}
 
 	function importClassList($payload) {
+		return ['john', 'ben', 'sam'];
 		$result = [];
 		$cn = self::getCommonName($payload);
 		
