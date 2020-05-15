@@ -24,20 +24,6 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 		Page::redirectInitial(Security::getUser());
 	}
 }
-// TODO: for development purposes - remove before pushing to production 
-else if (!empty($_POST['UserId']))
-{
-	$g_db = new DB();
-	if (Security::login($_POST['UserId'], null) == false)
-	{
-		$g_db-> disconnect();
-		UserError::addError(306);
-	} else {
-		$g_db->disconnect();
-		Page::redirectInitial(Security::getUser());	
-	}
-
-}
 
 $page = new Page($user, 'GreenGene Login', 0);
 
