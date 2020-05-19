@@ -137,7 +137,7 @@ if($formType == 'add')
 	$table = new Table(2, false, true);
 
 	$table->writeRow('CWL Username:',
-		"<input type=\"text\" name=\"UserId\" value=\"$userId\" maxlength=\"10\" readonly>");
+		"<input type=\"text\" name=\"UserId\" value=\"$userId\" maxlength=\"10\">");
 
 	$table->writeRow('First Name:',
 		"<input type=\"text\" name=\"FirstName\" value=\"$FirstName\" maxlength=\"20\">");
