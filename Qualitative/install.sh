@@ -123,7 +123,7 @@ echo "Attempting to connect to $LDAP_HOST ..."
 
 echo "ldapsearch -x -H $LDAP_HOST -D \"$LDAP_DN\" -w $LDAP_PW"
 
-if [ $? -ne 0]; then
+if [ $? -ne 0 ]; then
 	echo "Error Connecting to $LDAP_HOST "
 	exit
 fi
