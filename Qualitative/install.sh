@@ -116,7 +116,7 @@ read LDAP_DN
 echo "LDAP DN entered: $LDAP_DN"
 echo 
 echo "Enter the LDAP Password for the Service Account:"
-echo LDAP_PW
+read LDAP_PW
 echo "LDAP Password entered: $LDAP_PW"
 echo
 echo "Attempting to connect to $LDAP_HOST ..."
