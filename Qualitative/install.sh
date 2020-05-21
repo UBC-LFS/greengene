@@ -45,10 +45,9 @@ fi
 echo "OKAY."
 
 echo "STEP 3. Relative URL to installation."
-echo "Do not include http:// or hostnames. Do not include trailing slashes."
 echo "Examples:"
-echo "   /greengene"
-echo "   /~joeprof/greengene"
+echo "   https://https://dev-greengene.landfood.ubc.ca"
+echo "   https://192.168.0.18"
 echo
 echo "Enter relative URL:"
 read URLROOT
@@ -81,15 +80,15 @@ echo
 echo
 
 echo "STEP 5. Initial user account."
-echo "You must now pick an initial password for the site administrator account."
-echo "The username of this account is: admin"
+echo "Please enter your CWL Username for the site administrator account."
+echo "This CWL User will be allowed to enter the application as a site Administrator."
 echo
-echo "Enter initial password:"
-read USERPWD
+echo "Enter administrator CWL:"
+read USERNAME
 echo
 echo "Attempting to create default user..."
 
-echo "INSERT INTO User (UserId, PrivilegeLvl, FirstName, LastName, Pwd) VALUES ('admin', 10, 'Site', 'Administrator', password('$USERPWD'))" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
+echo "INSERT INTO User (UserId, PrivilegeLvl, FirstName, LastName) VALUES ('$USERNAME', 10, 'Site', 'Administrator')" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
 
 if [ $? -ne 0 ]; then
 	echo "Error creating default user."
@@ -100,7 +99,42 @@ echo "Default user created."
 echo
 echo
 
-echo "STEP 6. Writing configuration."
+echo "STEP 6. LDAP service account"
+echo "Please enter the details for the LDAP account used to import the class list"
+echo "Example LDAP HOST:"
+echo "   ldaps://eldapcons.id.ubc.ca"
+echo 
+echo "Enter the LDAP HOST for the Service Account:"
+read LDAP_HOST
+echo "LDAP HOST entered: $LDAP_HOST"
+echo
+echo "Example LDAP DN(Distinguished Name):"
+echo "   uid=lfs-svc-greengene,ou=forestry.ubc.ca,dc=id,dc=ubc,dc=ca"
+echo 
+echo "Enter LDAP DN for the Service Account: "
+read LDAP_DN 
+echo "LDAP DN entered: $LDAP_DN"
+echo 
+echo "Enter the LDAP Password for the Service Account:"
+echo LDAP_PW
+echo "LDAP Password entered: $LDAP_PW"
+echo
+echo "Attempting to connect to $LDAP_HOST ..."
+
+echo "ldapsearch -x -H $LDAP_HOST -D \"$LDAP_DN\" -w $LDAP_PW"
+
+if [ $? -ne 0]; then
+	echo "Error Connecting to $LDAP_HOST "
+	exit
+fi
+
+echo "LDAP details successfully added to config file"
+echo 
+echo
+
+# TODO: STEP 7 LDAP Configuration for ldap login 
+
+echo "STEP 8. Writing configuration."
 echo "<?php
 // GLOBAL CONFIGURATION FILE
 define('DBHOST', '$DBHOST');
@@ -110,6 +144,9 @@ define('DBNAME', '$DBNAME');
 define('URLROOT', '$URLROOT');
 define('REALROOT', '`pwd`');
 define('LOGPATH', REALROOT.'/logs/error.log');
+define('LDAP_HOST', $LDAP_HOST);
+define('LDAP_DN', $LDAP_DN);
+define('LDAP_PW', $LDAP_PW);
 ?>" > includes/config.php
 
 if [ $? -ne 0 ]; then
@@ -123,7 +160,7 @@ echo
 echo
 echo
 
-echo "STEP 7. Verify permissions."
+echo "STEP 9. Verify permissions."
 
 mkdir logs
 touch logs/error.log
