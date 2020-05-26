@@ -109,7 +109,7 @@ class Gene
 	}	
 }
 
-class Trait
+class Traits
 {
 	var $str_name;
 	var $int_number_of_genes;
@@ -154,7 +154,7 @@ class Plant
 	*                       in the first trait
 	*                       $bln_strong_gene1 - int, number of strong
 	*                       genes in the first trait
-	$                       int_number_of_genes2 - int, number of genes
+	*                       int_number_of_genes2 - int, number of genes
 	*                       in the second trait
 	*                       $bln_strong_gene2 - int, number of strong
 	*                       genes in the second trait
