@@ -501,7 +501,7 @@ class ProblemManager
 		if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 		{
 			$bln_success = false;
-			break;
+			return false;
 		}
 
 		$str_sql_query = "UPDATE XG_ProblemTraitMadeFor "
@@ -512,7 +512,7 @@ class ProblemManager
 		if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 		{
 			$bln_success = false;
-			break;
+			return false;
 		}
 
 		$str_sql_query = "COMMIT";
@@ -520,7 +520,7 @@ class ProblemManager
 		if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 		{
 			$bln_success = false;
-			break;
+			return false;
 		}
 
 		if( !$bln_success )
