@@ -401,7 +401,7 @@ class ProblemManager
 	function create_trait( $str_name, $int_number_of_genes, $dbl_parent_A_mean, $dbl_parent_B_mean, $dbl_variance_value )
 	{
 		// create the trait
-		$obj_trait = new Trait;
+		$obj_trait = new Traits;
 		$obj_trait->create( $str_name, $int_number_of_genes, min( $dbl_parent_A_mean, $dbl_parent_B_mean ), max( $dbl_parent_A_mean, $dbl_parent_B_mean ), $dbl_variance_value );
 		
 		return $obj_trait;
