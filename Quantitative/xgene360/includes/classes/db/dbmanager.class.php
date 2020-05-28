@@ -56,7 +56,7 @@ class DBManager
 	function query_commit( $str_SQL )
 	{
 		$tmp_resource = mysqli_query( $this->m_obj_connection, $str_SQL )
-			or Log::write_log( $this->m_obj_connection, LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection).'\n'.$str_SQL );
+			or Log::write_log( LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection).'\n'.$str_SQL );
 		
 		return ( mysqli_errno($this->m_obj_connection) == 0 );
 	}
