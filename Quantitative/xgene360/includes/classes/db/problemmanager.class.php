@@ -426,6 +426,7 @@ class ProblemManager
 		$bln_stronger_gene_A = ( $dbl_trait_A_parent_A_mean > $dbl_trait_A_parent_B_mean );
 		$bln_stronger_gene_B = ( $dbl_trait_B_parent_A_mean > $dbl_trait_B_parent_B_mean );
 
+		// TODO: $arr_new_generation generated here
 		$obj_plant_A = new Plant;
 		$obj_plant_A->create( $int_trait_A_number_of_genes, $bln_stronger_gene_A, $int_trait_B_number_of_genes, $bln_stronger_gene_B );
 		$obj_plant_B = new Plant;
