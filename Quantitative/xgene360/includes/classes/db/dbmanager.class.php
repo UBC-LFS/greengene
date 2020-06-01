@@ -109,11 +109,6 @@ class DBManager
 	*/
 	function format_sql_string( $str )
 	{
-		if ( get_magic_quotes_gpc() )
-		{
-			return mysqli_real_escape_string($this->m_obj_connection, stripslashes( $str ) );
-		}
-		
 		return mysqli_real_escape_string( $this->m_obj_connection, $str );
 	}
 
