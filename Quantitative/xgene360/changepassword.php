@@ -87,9 +87,7 @@ function process_post()
 {
 	global $g_obj_lock;
 
-	var_dump(PageHandler::get_post_value('SerialId'));
 	if (isset($_POST['Command']) && $g_obj_lock->page_lock(PageHandler::get_post_value('SerialId'))) {
-		echo "here";
 		$str_command = $_POST['Command'];
 
 		switch ($str_command) {

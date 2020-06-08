@@ -463,9 +463,9 @@ function process_post()
 */
 function on_submit_handler()
 {
-	global $g_obj_db, $g_int_problem_id, $g_obj_solution_manager;
-	
-	if ( $g_obj_db->time() <= $g_arr_problem_info->due_date )
+	global $g_obj_db, $g_int_problem_id, $g_obj_solution_manager, $g_arr_problem_info;
+
+	if ( $g_obj_db->time() >= $g_arr_problem_info->due_date )
 	{
 		MessageHandler::add_message( MSG_FAIL, "You cannot submit your solution because the due date is already over" );
 		return;
