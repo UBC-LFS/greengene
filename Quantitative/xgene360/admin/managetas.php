@@ -154,30 +154,6 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
                 <td><input class="textinput" type="password" name="ConfirmPassword" id="ConfirmPassword" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
               <tr>
-                <td colspan="2"><input type="checkbox" name="AllowGreenGene" id="AllowGreenGeneCreate" onclick="enableGreenGeneCourseSelection( this, GreenGeneCourseCreate );" /><label for="AllowGreenGeneCreate" style="font-size: 0.85em;">&nbsp;Allow user to access GreenGene site</label></td>
-              </tr>
-              <tr>
-                <td>GreenGene Course:</td>
-                <td>
-                  <select name="GreenGeneCourseCreate" id="GreenGeneCourseCreate" disabled="disabled">
-            
-<?php
-  
-$res_courses = $g_obj_course_manager->view_courses();
-
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-	
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
-}
-
-?>
-          
-                  </select>&nbsp;
-                </td>
-              </tr>
-              <tr>
                 <td colspan="2" align="right">
                 <input class="buttoninput" type="submit" name="Command" id="CommandCreate" value="Create" onclick="return validateCreateTAForm();" />
                 &nbsp;<input class="buttoninput" type="reset" name="Reset" value="Reset" onclick="return resetCreateTAForm();" />
@@ -207,31 +183,6 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
             <input class="fileinput" type="file" name="ImportTAFile" id="ImportTAFile" />
             <br />
             <input class="buttoninput" type="submit" name="Command" value="Import" onclick="return validateImportTA();" />
-          </td>
-        </tr>
-
-        <tr>
-          <td><input type="checkbox" name="AllowGreenGene" id="AllowGreenGeneCourseImport" onclick="enableGreenGeneCourseSelection( this, 'GreenGeneCourseImport' );" /><label for="AllowGreenGeneCourseImport">&nbsp;Allow user to access GreenGene site</label></td>
-        </tr>
-              
-        <tr>
-          <td>GreenGene Course:
-            <select name="GreenGeneCourseImport" id="GreenGeneCourseImport" disabled="disabled">
-
-<?php
-  
-$res_courses = $g_obj_course_manager->view_courses();
-
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-    
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
-}
-
-?>
-
-            </select>&nbsp;
           </td>
         </tr>
 
@@ -326,7 +277,6 @@ function on_create_handler()
 	$str_last_name = PageHandler::get_post_value( 'LastName' );
 	$str_password = PageHandler::get_post_value( 'Password' );
 	$str_password_confirm = PageHandler::get_post_value( 'ConfirmPassword' );
-	$int_greengene_course = PageHandler::get_post_value( 'GreenGeneCourseCreate' );
 
 	// verify the input
 	if ( !isset( $str_first_name ) || !isset( $str_last_name ) )
@@ -351,13 +301,8 @@ function on_create_handler()
 		$str_password = $g_obj_ta_manager->autogen_password( $str_first_name, $str_last_name );
 	}
 	
-	if ( empty( $int_greengene_course ) )
-	{
-		$int_greengene_course = 0;
-	}
-	
 	// create a new ta
-	if ( $g_obj_ta_manager->create_user( $str_user_name, $int_greengene_course, UP_TA,  $str_first_name, $str_last_name, $str_password, 0 ) )
+	if ( $g_obj_ta_manager->create_user( $str_user_name, UP_TA,  $str_first_name, $str_last_name, $str_password, 0 ) )
 	{
 		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for TA "' . $str_user_name . '" with password "' . $str_password . '"' );
 	}
@@ -496,14 +441,7 @@ function on_import_handler()
 		
 		else
 		{
-			$int_greengene_course = PageHandler::get_post_value( 'GreenGeneCourseImport' );
-			
-			if ( empty( $int_greengene_course ) )
-			{
-				$int_greengene_course = 0;
-			}
-			
-			FileHandler::import_ta_list( $_FILES['ImportTAFile']['tmp_name'], $int_greengene_course );
+			FileHandler::import_ta_list( $_FILES['ImportTAFile']['tmp_name']);
 		}
 	}
 }

@@ -122,8 +122,10 @@ class UserManager
 *                       
 *    Returns/Assigns:   boolean or null
 */
-	function create_user( $str_user_id, $int_course_id, $int_user_privilege, $str_first_name, $str_last_name, $str_password, $int_student_num )
+	function create_user( $str_user_id, $int_user_privilege, $str_first_name, $str_last_name, $str_password, $int_student_num )
 	{
+		// TODO: remove int_course_id
+		$int_course_id = 0;
 		$str_sql_query = null;
 		$res_check_if_exists = null;
 		$str_this_user = $this->m_obj_user->str_username;

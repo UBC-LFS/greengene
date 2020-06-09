@@ -14,7 +14,7 @@ class FileHandler
 	*
 	*    Returns/Assigns:   None
 	*/
-	function import_student_list( $obj_file, $int_greengene_course )
+	function import_student_list( $obj_file)
 	{
 		global $g_obj_student_manager;
 		
@@ -45,7 +45,7 @@ class FileHandler
 				$arr_tmp[1] = $str_password;
 				
 				// add the user to the database
-				if ( $g_obj_student_manager->create_user( $str_user_name, $int_greengene_course, UP_STUDENT,  $str_first_name, $str_last_name, $str_password, $str_student_number ) )
+				if ( $g_obj_student_manager->create_user( $str_user_name,  UP_STUDENT,  $str_first_name, $str_last_name, $str_password, $str_student_number ) )
 				{
 					array_push( $arr_success, $arr_tmp );
 				}
@@ -120,7 +120,7 @@ class FileHandler
 	*
 	*    Returns/Assigns:   None
 	*/
-	function import_ta_list( $obj_file, $int_greengene_course )
+	function import_ta_list( $obj_file)
 	{
 		global $g_obj_ta_manager;
 		
@@ -150,7 +150,7 @@ class FileHandler
 				$arr_tmp[1] = $str_password;
 				
 				// add the user to the database
-				if ( $g_obj_ta_manager->create_user( $str_user_name, $int_greengene_course, UP_TA,  $str_first_name, $str_last_name, $str_password, 0 ) )
+				if ( $g_obj_ta_manager->create_user( $str_user_name, UP_TA,  $str_first_name, $str_last_name, $str_password, 0 ) )
 				{
 					array_push( $arr_success, $arr_tmp );
 				}
@@ -225,7 +225,7 @@ class FileHandler
 	*
 	*    Returns/Assigns:   None
 	*/
-	function import_professor_list( $obj_file, $int_greengene_course )
+	function import_professor_list( $obj_file)
 	{
 		global $g_obj_professor_manager;
 				
@@ -255,7 +255,7 @@ class FileHandler
 				$arr_tmp[1] = $str_password;
 				
 				// add the user to the database
-				if ( $g_obj_professor_manager->create_user( $str_user_name, $int_greengene_course, UP_PROFESSOR,  $str_first_name, $str_last_name, $str_password, 0 ) )
+				if ( $g_obj_professor_manager->create_user( $str_user_name, UP_PROFESSOR,  $str_first_name, $str_last_name, $str_password, 0 ) )
 				{
 					array_push( $arr_success, $arr_tmp );
 				}

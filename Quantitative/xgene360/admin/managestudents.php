@@ -254,32 +254,6 @@ if ( $g_obj_user->int_privilege != UP_TA )
               </tr>
 
               <tr>
-                <td colspan="2"><input type="checkbox" name="AllowGreenGene" id="AllowGreenGeneCreate" onclick="enableGreenGeneCourseSelection( this, GreenGeneCourseCreate );" /><label for="AllowGreenGeneCreate" style="font-size: 0.85em;">&nbsp;Allow user to access GreenGene site</label></td>
-              </tr>
-
-              <tr>
-                <td>GreenGene Course:</td>
-                <td>
-                  <select name="GreenGeneCourseCreate" id="GreenGeneCourseCreate" disabled="disabled">
-            
-<?php
-  
-$res_courses = $g_obj_course_manager->view_courses();
-
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-	
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
-}
-
-?>
-          
-                  </select>&nbsp;
-                </td>
-              </tr>
-
-              <tr>
                 <td colspan="2" align="right">
                   <input class="buttoninput" type="submit" name="Command" id="CommandCreate" value="Create" onclick="return validateCreateStudentForm();" />
                   &nbsp;<input class="buttoninput" type="reset" name="Reset" value="Reset" onclick="return resetCreateStudentForm();" />
@@ -313,32 +287,6 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
             <input class="buttoninput" type="submit" name="Command" value="Import" onclick="return validateImportStudent();" />
           </td>
         </tr>
-
-        <tr>
-          <td><input type="checkbox" name="AllowGreenGene" id="AllowGreenGeneCourseImport" onclick="enableGreenGeneCourseSelection( this, 'GreenGeneCourseImport' );" /><label for="AllowGreenGeneCourseImport">&nbsp;Allow user to access GreenGene site</label></td>
-        </tr>
-              
-        <tr>
-          <td>GreenGene Course:
-            <select name="GreenGeneCourseImport" id="GreenGeneCourseImport" disabled="disabled">
-
-<?php
-  
-$res_courses = $g_obj_course_manager->view_courses();
-
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-    
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
-}
-
-?>
-
-            </select>&nbsp;
-          </td>
-        </tr>
-
       </table>
 
     </div>
@@ -429,7 +377,6 @@ function on_create_handler()
 	$str_password = PageHandler::get_post_value( 'Password' );
 	$str_password_confirm = PageHandler::get_post_value( 'ConfirmPassword' );
 	$str_student_number = PageHandler::get_post_value( 'StudentNumber' );
-	$int_greengene_course = PageHandler::get_post_value( 'GreenGeneCourseCreate' );
 	
 	// verify the input
 	if ( strlen( $str_user_name ) == 0 || strlen( $str_first_name ) == 0 || strlen( $str_last_name ) == 0 || strlen( $str_password ) == 0 || strlen( $str_student_number ) == 0 )
@@ -444,13 +391,7 @@ function on_create_handler()
 		return;
 	}
 		
-	if ( empty( $int_greengene_course ) )
-	{
-		$int_greengene_course = 0;
-	}
-
-	
-	if ( $g_obj_student_manager->create_user( $str_user_name, $int_greengene_course, UP_STUDENT,  $str_first_name, $str_last_name, $str_password, $str_student_number ) )
+	if ( $g_obj_student_manager->create_user( $str_user_name, UP_STUDENT,  $str_first_name, $str_last_name, $str_password, $str_student_number ) )
 	{
 		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}
@@ -609,14 +550,7 @@ function on_import_handler()
 	
 		else
 		{
-			$int_greengene_course = PageHandler::get_post_value( 'GreenGeneCourseImport' );
-			
-			if ( empty( $int_greengene_course ) )
-			{
-				$int_greengene_course = 0;
-			}
-			
-			FileHandler::import_student_list( $_FILES['ImportStudentFile']['tmp_name'], $int_greengene_course );
+			FileHandler::import_student_list( $_FILES['ImportStudentFile']['tmp_name']);
 		}
 	}
 }
