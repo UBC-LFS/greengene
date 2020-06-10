@@ -281,14 +281,14 @@ function on_create_handler()
 	// verify the input
 	if ( !isset($str_user_name) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter a CWL Username' );
+		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
 		return;
 	}
 	
 	$str_first_name = !isset($str_first_name) ? " " : $str_first_name;
 	$str_last_name = !isset($str_last_name) ? " " : $str_last_name;
-
 	$str_password = "";
+
 	// create a new professor
 	if ( $g_obj_professor_manager->create_user( $str_user_name, UP_PROFESSOR,  $str_first_name, $str_last_name, $str_password, 0 ) )
 	{
