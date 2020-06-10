@@ -229,7 +229,6 @@ class GenerationManager
 					}
 				}
 					
-				// TODO: weird sql found here. 
 				if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 				{
 					$bln_success = false;

@@ -124,7 +124,7 @@ class UserManager
 */
 	function create_user( $str_user_id, $int_user_privilege, $str_first_name, $str_last_name, $str_password, $int_student_num )
 	{
-		// TODO: remove int_course_id
+		// TODO: remove int_course_id - int_course_id is used in greengene Qualitative no longer relevant
 		$int_course_id = 0;
 		$str_sql_query = null;
 		$res_check_if_exists = null;
