@@ -685,6 +685,7 @@ class UserManager
 		return $int_number_of_rows > 0;
 	}
 	
+	// TODO: remove - function  generates username for user but changed to CWL username
 	function autogen_user ( $str_firstName, $str_lastName )
 	{
 		$str_lastName = rtrim( $str_lastName );
@@ -727,7 +728,7 @@ class UserManager
 		return $str_username;
 	}
 	
-	//function 
+	// TODO: remove - generates password for user 
 
 	function autogen_password ( $str_firstName, $str_lastName )
 	{

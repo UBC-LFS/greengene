@@ -216,12 +216,10 @@ class FileHandler
 		FileHandler::send_downloadable_text( 'ta.csv', $str_output );
 	}
 	
-	/**  Function: import_professor_list( $obj_file, $int_greengene_course )
+	/**  Function: import_professor_list( $obj_file )
 	*    ---------------------------------------------------------------- 
 	*    Purpose:           Import the professor list
 	*    Arguments:         $obj_file - object, the file
-	*                       $int_greengene_course - int, the greengene
-	*                       course id
 	*
 	*    Returns/Assigns:   None
 	*/
@@ -239,23 +237,23 @@ class FileHandler
 		{
 			$line = FileHandler::trim_string( $arr_lines[$i] );
 			
-			list( $str_first_name, $str_last_name ) = explode( ',', $line );
+			list( $str_first_name, $str_last_name, $cwl_username ) = explode( ',', $line );
 		
 			if ( isset( $str_first_name ) && isset( $str_last_name ) )
 			{
 				$str_first_name = FileHandler::trim_string( $str_first_name );
 				$str_last_name = FileHandler::trim_string( $str_last_name );
+				$cwl_username = FileHandler::trim_string( $cwl_username );
 				
-				// generate username and password for this user
-				$str_user_name = $g_obj_professor_manager->autogen_user( $str_first_name, $str_last_name );
-				$str_password = $g_obj_professor_manager->autogen_password( $str_first_name, $str_last_name );
+				// TODO: remove password reference 
+				$str_password = "";
 				
 				$arr_tmp = array();
-				$arr_tmp[0] = $str_user_name;
+				$arr_tmp[0] = $cwl_username;
 				$arr_tmp[1] = $str_password;
 				
 				// add the user to the database
-				if ( $g_obj_professor_manager->create_user( $str_user_name, UP_PROFESSOR,  $str_first_name, $str_last_name, $str_password, 0 ) )
+				if ( $g_obj_professor_manager->create_user( $cwl_username, UP_PROFESSOR,  $str_first_name, $str_last_name, $str_password, 0 ) )
 				{
 					array_push( $arr_success, $arr_tmp );
 				}

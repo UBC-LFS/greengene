@@ -59,7 +59,7 @@ if ( $g_bln_display_content )
       
       <tr>
         <td>
-          <input class="buttoninput" type="button" value="Create New" name="Command" onclick="displayCreateProfessor();" />&nbsp;
+          <input class="buttoninput" type="button" value="Add New" name="Command" onclick="displayCreateProfessor();" />&nbsp;
           <input class="buttoninput" type="button" value="Import List" name="Command" onclick="displayImportProfessor();" />&nbsp;
           <input class="buttoninput" type="submit" value="Export Selected" name="Command" onclick="return validateProfessorSelection(); " />&nbsp;          
           <input class="buttoninput" type="submit" value="Delete Selected" name="Command" onclick="return validateDeleteProfessor();" />
@@ -97,7 +97,7 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
         <th width="50"><input type="checkbox" id="UserIdSelectionToggle" onclick="xgene360_cu.checkAll( this, 'ProfessorId[]' );" /></th>
         <th width="150">First Name</th>
         <th width="150">Last Name</th>
-        <th>Username</th>
+        <th>CWL Username</th>
       </tr>
 
 <?php
@@ -120,7 +120,7 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_professors ); ++$i )
 
     </table>
 
-    <input class="buttoninput" type="button" value="Create New" name="Command" onclick="displayCreateProfessor();" />&nbsp;
+    <input class="buttoninput" type="button" value="Add New" name="Command" onclick="displayCreateProfessor();" />&nbsp;
     <input class="buttoninput" type="button" value="Import List" name="Command" onclick="displayImportProfessor();" />&nbsp;
     <input class="buttoninput" type="submit" value="Export Selected" name="Command" onclick="return validateProfessorSelection();" />&nbsp;    
     <input class="buttoninput" type="submit" value="Delete Selected" name="Command" onclick="return validateDeleteProfessor();" />
@@ -150,20 +150,10 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_professors ); ++$i )
               </tr>
 
               <tr>
-                <td>Username <span style="font-size: 9px;">(Optional)</span>:</td>
+                <td>CWL Username:</td>
                 <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
 
-              <tr>
-                <td>Password <span style="font-size: 9px;">(Optional)</span>:</td>
-                <td><input class="textinput" type="password" name="Password" id="Password" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
-              </tr>
-
-              <tr>
-                <td>Confirm Password:&nbsp;</td>
-                <td><input class="textinput" type="password" name="ConfirmPassword" id="ConfirmPassword" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
-              </tr>
-			 
               <tr>
                 <td colspan="2" align="right">
                   <input class="buttoninput" type="submit" name="Command" id="CommandCreate" value="Create" onclick="return validateCreateProfessorForm();" />
@@ -287,36 +277,22 @@ function on_create_handler()
 	$str_user_name = PageHandler::get_post_value( 'Username' );
 	$str_first_name = PageHandler::get_post_value( 'FirstName' );
 	$str_last_name = PageHandler::get_post_value( 'LastName' );
-	$str_password = PageHandler::get_post_value( 'Password' );
-	$str_password_confirm = PageHandler::get_post_value( 'ConfirmPassword' );
 	
 	// verify the input
-	if ( !isset( $str_first_name ) || !isset( $str_last_name ) )
+	if ( !isset($str_user_name) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		MessageHandler::add_message( MSG_FAIL, 'Please enter a CWL Username' );
 		return;
 	}
 	
-	if ( $str_password != $str_password_confirm )
-	{
-		MessageHandler::add_message( MSG_FAIL, 'The password does not match' );
-		return;
-	}
-	
-	if ( strlen( $str_user_name ) == 0 )
-	{
-		$str_user_name = $g_obj_professor_manager->autogen_user( $str_first_name, $str_last_name );
-	}
-	
-	if ( strlen( $str_password ) == 0 )
-	{
-		$str_password = $g_obj_professor_manager->autogen_password( $str_first_name, $str_last_name );
-	}
-	
+	$str_first_name = !isset($str_first_name) ? " " : $str_first_name;
+	$str_last_name = !isset($str_last_name) ? " " : $str_last_name;
+
+	$str_password = "";
 	// create a new professor
 	if ( $g_obj_professor_manager->create_user( $str_user_name, UP_PROFESSOR,  $str_first_name, $str_last_name, $str_password, 0 ) )
 	{
-			MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Professor "' . $str_user_name . '" with password "' . $str_password . '"' );
+			MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Professor "' . $str_user_name );
 	}
 
 	else
