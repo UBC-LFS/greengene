@@ -277,6 +277,7 @@ function on_create_handler()
 	
 	$str_first_name = !isset($str_first_name) ? " " : $str_first_name;
 	$str_last_name = !isset($str_last_name) ? " " : $str_last_name;
+	// TODO: remove password 
 	$str_password = "";
 	
 	// create a new ta

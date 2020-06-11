@@ -66,8 +66,8 @@ if ( $g_obj_user->int_privilege != UP_TA )
     <table class="format" width="100%">
       <tr>
         <td>
-          <input class="buttoninput" type="button" value="Create New" name="Command"  onclick="displayCreateStudent();"/>&nbsp;
-          <input class="buttoninput" type="button" value="Import List" name="Command"  onclick="displayImportStudent();"/>&nbsp;
+          <input class="buttoninput" type="button" value="Add New" name="Command"  onclick="displayCreateStudent();"/>&nbsp;
+          <input class="buttoninput" type="button" value="Import Class" name="Command"  onclick="displayImportStudent();"/>&nbsp;
           <input class="buttoninput" type="submit" value="Export Selected" name="Command" onclick="return validateStudentSelection();" />&nbsp;    
           <input class="buttoninput" type="submit" value="Delete Selected" name="Command" onclick="return validateDeleteStudent();" />
         </td>
@@ -169,7 +169,7 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
         <th width="150">Student Number</th>
         <th width="150">First Name</th>
         <th width="150">Last Name</th>
-        <th>Username</th>
+        <th>CWL Username</th>
       </tr>
 
 <?php
@@ -199,8 +199,8 @@ if ( $g_obj_user->int_privilege != UP_TA )
 {
 ?>              
 
-    <input class="buttoninput" type="button" value="Create New" name="Command" onclick="displayCreateStudent();" />&nbsp;
-    <input class="buttoninput" type="button" value="Import List" name="Command" onclick="displayImportStudent();" />&nbsp;
+    <input class="buttoninput" type="button" value="Add New" name="Command" onclick="displayCreateStudent();" />&nbsp;
+    <input class="buttoninput" type="button" value="Import Class" name="Command" onclick="displayImportStudent();" />&nbsp;
     <input class="buttoninput" type="submit" value="Export Selected" name="Command" onclick="return validateStudentSelection();" />&nbsp;
     <input class="buttoninput" type="submit" value="Delete Selected" name="Command" onclick="return validateDeleteStudent();" />
 
@@ -239,18 +239,8 @@ if ( $g_obj_user->int_privilege != UP_TA )
               </tr>
 
               <tr>
-                <td>Username:</td>
+                <td>CWL Username:</td>
                 <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
-              </tr>
-
-              <tr>
-                <td>Password:</td>
-                <td><input class="textinput" type="password" name="Password" id="Password" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
-              </tr>
-
-              <tr>
-                <td>Confirm Password:</td>
-                <td><input class="textinput" type="password" name="ConfirmPassword" id="ConfirmPassword" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
 
               <tr>
@@ -269,8 +259,8 @@ if ( $g_obj_user->int_privilege != UP_TA )
 
     </div>
 
-    <div id="ImportStudentDiv" style="display: none">
-
+	<div id="ImportStudentDiv" style="display: none">
+	<!--  TODO: change to input field-->
       <br /><br />
 
       <table class="box">
@@ -371,34 +361,32 @@ function on_create_handler()
 {
 	global $g_obj_student_manager;
 	
-	$str_user_name = PageHandler::get_post_value( 'Username' );
+	$cwl_username = PageHandler::get_post_value( 'Username' );
 	$str_first_name = PageHandler::get_post_value( 'FirstName' );
 	$str_last_name = PageHandler::get_post_value( 'LastName' );
-	$str_password = PageHandler::get_post_value( 'Password' );
-	$str_password_confirm = PageHandler::get_post_value( 'ConfirmPassword' );
 	$str_student_number = PageHandler::get_post_value( 'StudentNumber' );
 	
 	// verify the input
-	if ( strlen( $str_user_name ) == 0 || strlen( $str_first_name ) == 0 || strlen( $str_last_name ) == 0 || strlen( $str_password ) == 0 || strlen( $str_student_number ) == 0 )
+	if (strlen( $str_last_name ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
 		return;
 	}
 	
-	if ( $str_password != $str_password_confirm )
-	{
-		MessageHandler::add_message( MSG_FAIL, 'The password does not match' );
-		return;
-	}
+	$str_first_name = !isset($str_first_name) ? " " : $str_first_name;
+	$str_last_name = !isset($str_last_name) ? " " : $str_last_name;
+	$str_student_number = 0;
+	// TODO: remove password
+	$str_password = " ";
 		
-	if ( $g_obj_student_manager->create_user( $str_user_name, UP_STUDENT,  $str_first_name, $str_last_name, $str_password, $str_student_number ) )
+	if ( $g_obj_student_manager->create_user( $cwl_username, UP_STUDENT,  $str_first_name, $str_last_name, $str_password, $str_student_number ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
+		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student with CWL username: "' . $cwl_username);
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to create an account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
+		MessageHandler::add_message( MSG_FAIL, 'Failed to create an account for Student with CWL username: "' .$cwl_username );
 	}
 }
 
@@ -536,6 +524,7 @@ function on_assign_handler()
 */
 function on_import_handler()
 {
+	// TODO: import from ldap
 	if ( !isset( $_FILES['ImportStudentFile'] ) )
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Please select a file' );
