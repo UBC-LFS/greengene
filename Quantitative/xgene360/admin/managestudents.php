@@ -266,17 +266,45 @@ if ( $g_obj_user->int_privilege != UP_TA )
       <table class="box">
 
         <tr>
-          <th>Import Students</th>
+		  <th>Import Class </th>
         </tr>
 
         <tr>
-          <td>
-            Upload File [<a href="">Help?</a>]<br />
-            <input class="fileinput" type="file" name="ImportStudentFile" id="ImportStudentFile" />
-            <br />
-            <input class="buttoninput" type="submit" name="Command" value="Import" onclick="return validateImportStudent();" />
-          </td>
-        </tr>
+			<td>Course Subject Code</td>
+			<td><input class="textinput" type="text" name="CourseSubjectCode" placeholder="APBI" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSubjectCode' ) ) ?>" ></input></td>
+		</tr>
+
+        <tr>
+			<td>Course Number</td>
+			<td><input class="textinput" type="text" name="CourseNumber" placeholder="318" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseNumber' ) ) ?>"></input></td>
+		</tr>
+ 
+		<tr>
+			<td>Course Section</td>
+			<td><input class="textinput" type="text" name="CourseSection" placeholder="001" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSection' ) ) ?>"></input></td>
+		</tr>
+   
+		<tr>
+			<td>Year</td>
+			<td><input class="textinput" type="text" name="Year" placeholder="2019" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Year' ) ) ?>"></input></td>
+		</tr>
+
+        <tr>
+			<td>Session</td>
+			<td>
+				<select name="Session">
+					<option value="W">Winter</option>
+					<option value="S">Summer</option>
+
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2" align="right">
+				<input class="buttoninput" type="submit" name="Command" value="Import" onclick="return validateImportStudent();"/>
+			</td>
+		</tr>
       </table>
 
     </div>
@@ -524,6 +552,7 @@ function on_assign_handler()
 */
 function on_import_handler()
 {
+	echo "on import";
 	// TODO: import from ldap
 	if ( !isset( $_FILES['ImportStudentFile'] ) )
 	{
