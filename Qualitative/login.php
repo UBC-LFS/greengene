@@ -41,7 +41,7 @@ $page = new Page($user, 'GreenGene Login', 0);
 <br>
 <table style="margin-left:auto; margin-right:auto;">
 <tr>
-<td valign="top" background="includes/images/login.gif" width="548" height="638">
+<td valign="top" background="includes/images/login.jpg" width="548" height="638">
 
 <div style="position:relative;top:290px;">
 
