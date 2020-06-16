@@ -129,14 +129,16 @@ function validateAssignStudentToACourseOrAProblem()
 
 function validateImportStudent()
 {
-  var objFile = xgene360_cu.Element( 'ImportStudentFile' );
-  
-  if ( xgene360_cu.stringLength( objFile.value ) == 0 )
-  {
-    alert( 'Please select the file to import' );
-    return false;
-  }
-  
+  console.log("validate import student ");
+  xgene360_cu.using('form');
+
+  xgene360_cu.form.init('ManageStudentsForm');
+
+  xgene360_cu.form.addRequiredTextBox('CourseSubjectCode', 'Please enter the \'Course Subject Code\'', 20);
+  xgene360_cu.form.addRequiredTextBox('CourseNumber', 'Please enter the \'Course Subject Code\'', 20);
+  xgene360_cu.form.addRequiredTextBox('CourseSection', 'Please enter the \'Course Subject Code\'', 20);
+  xgene360_cu.form.addRequiredTextBox('Year', 'Please enter the \'Course Subject Code\'', 20);
+  xgene360_cu.form.validate();
   return confirm( 'Are you sure you want to import the file?\n\nPlease make sure that the proper csv file is selected to continue' );
 }
 
@@ -198,5 +200,4 @@ function displayImportStudent()
   
   window.scrollTo( 0, document.body.scrollHeight );
 
-  xgene360_cu.Element( 'ImportStudentFile' ).focus();
 }

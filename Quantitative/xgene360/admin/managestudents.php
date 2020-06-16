@@ -271,22 +271,22 @@ if ( $g_obj_user->int_privilege != UP_TA )
 
         <tr>
 			<td>Course Subject Code</td>
-			<td><input class="textinput" type="text" name="CourseSubjectCode" placeholder="APBI" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSubjectCode' ) ) ?>" ></input></td>
+			<td><input class="textinput" type="text" id="CourseSubjectCode" name="CourseSubjectCode" placeholder="APBI" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSubjectCode' ) ) ?>" ></input></td>
 		</tr>
 
         <tr>
 			<td>Course Number</td>
-			<td><input class="textinput" type="text" name="CourseNumber" placeholder="318" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseNumber' ) ) ?>"></input></td>
+			<td><input class="textinput" type="text" id='CourseNumber' name="CourseNumber" placeholder="318" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseNumber' ) ) ?>"></input></td>
 		</tr>
  
 		<tr>
 			<td>Course Section</td>
-			<td><input class="textinput" type="text" name="CourseSection" placeholder="001" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSection' ) ) ?>"></input></td>
+			<td><input class="textinput" type="text" id='CourseSection' name="CourseSection" placeholder="001" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSection' ) ) ?>"></input></td>
 		</tr>
    
 		<tr>
 			<td>Year</td>
-			<td><input class="textinput" type="text" name="Year" placeholder="2019" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Year' ) ) ?>"></input></td>
+			<td><input class="textinput" type="text" id='Year' name="Year" placeholder="2019" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Year' ) ) ?>"></input></td>
 		</tr>
 
         <tr>
