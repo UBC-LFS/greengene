@@ -552,8 +552,16 @@ function on_assign_handler()
 */
 function on_import_handler()
 {
-	echo "on import";
-	// TODO: import from ldap
+	$courseSubjectCode = PageHandler::get_post_value('CourseSubjectCode');
+	$courseNumber = PageHandler::get_post_value('CourseNumber');
+	$courseSection = PageHandler::get_post_value('CourseSection');
+	$year = PageHandler::get_post_value('Year');
+	$session = PageHandler::get_post_value('Session');
+	echo " ".$courseSubjectCode. " ";
+	echo " ".$courseNumber." ";
+	echo " ".$courseSection." ";
+	echo " ".$year." ";
+	echo " ".$session." ";
 	if ( !isset( $_FILES['ImportStudentFile'] ) )
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Please select a file' );

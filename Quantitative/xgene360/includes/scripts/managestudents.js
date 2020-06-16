@@ -138,8 +138,10 @@ function validateImportStudent()
   xgene360_cu.form.addRequiredTextBox('CourseNumber', 'Please enter the \'Course Subject Code\'', 20);
   xgene360_cu.form.addRequiredTextBox('CourseSection', 'Please enter the \'Course Subject Code\'', 20);
   xgene360_cu.form.addRequiredTextBox('Year', 'Please enter the \'Course Subject Code\'', 20);
-  xgene360_cu.form.validate();
-  return confirm( 'Are you sure you want to import the file?\n\nPlease make sure that the proper csv file is selected to continue' );
+  if ( !xgene360_cu.form.validate()) {
+    return false;
+  };
+  return confirm( 'Are you sure you want to import the class list?\n\nPlease check the class details provided (\'Course Subject Code\', \'Course Number\', etc.).');
 }
 
 function validateUpdateStudentForm()
