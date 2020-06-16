@@ -461,7 +461,7 @@ function on_cross_handler()
 	
 	else
 	{
-		$arr_plant_ids = split( ';', $str_selected_plants );
+		$arr_plant_ids = explode( ';', $str_selected_plants );
 		
 		// save the parents for later use
 		$g_obj_generation_manager->set_parents( $g_int_problem_id, $arr_plant_ids );
