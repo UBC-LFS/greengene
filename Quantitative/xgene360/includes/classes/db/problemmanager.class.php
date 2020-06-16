@@ -735,7 +735,13 @@ class ProblemManager
 						$bln_success = false;
 						break;
 					}
-							   
+					$str_sql_query = "COMMIT";
+
+					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
+					{
+						$bln_success = false;
+						break;
+					}	   
 				if ( $bln_changed )
 				{
 
