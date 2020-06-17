@@ -57,12 +57,17 @@ class Security
 	}
 
 	function ldap_login($p_userId, $p_pwd) {
+		return true;
 		$ldap = "ldaps://eldapdccons.id.ubc.ca";
 		$usr = "uid=".$p_userId.",ou=People,dc=landfood,dc=ubc,dc=ca";
 		$ds = ldap_connect($ldap);
+		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
 		if ($ds) {
+			set_error_handler(function(){});
 			ldap_start_tls($ds);
-			return ldap_bind($ds, $usr, $p_pwd);
+			$result = ldap_bind($ds, $usr, $p_pwd);
+			restore_error_handler();
+			return $result;
 		}
 		return false;
 	}

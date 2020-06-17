@@ -914,7 +914,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function getStudent($p_userId)
 	{
 		global $g_db;
-		$sql_query = 	"SELECT UserId,CourseId,PrivilegeLvl,FirstName,LastName,Pwd ".
+		$sql_query = 	"SELECT UserId,CourseId,PrivilegeLvl,FirstName,LastName".
 		 				"FROM User ".
 		 				"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND PrivilegeLvl = 3";
 
@@ -1158,6 +1158,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$cn = self::getCommonName($payload);
 		
 		$ds = ldap_connect(LDAP_HOST);
+		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
 
 		if ($ds) {
 			// remove warning when bind fails
