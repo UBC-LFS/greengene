@@ -482,14 +482,12 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	/**
 	 * Create a management user, which includes Admin and TA
 	 * PRE: $p_privilegeLevel is a meaningful level to the system
-	 *      $p_userId, $p_firstName, $p_lastName, $p_pwd1, $p_pwd2 are
+	 *      $p_userId, $p_firstName, $p_lastName are
 	 * 		not null values.
 	 * POST: a new managment user is created in User table
 	 * @param int $p_privilegeLevel New user's privilege level
 	 * @param string $p_firstName
 	 * @param string $p_lastName
-	 * @param string $p_pwd1 initial password
-	 * @param string $p_pwd2 initial password - re-entry
 	 * @param string $p_userId
 	 * @return bool New management user is created
 	 */
@@ -600,44 +598,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			UserError::addError(709);
 			return false;
 		}
-		return true;
-	}
-
-	/**
-	 * Change TA's Password
-	 * PRE: $p_userId is a valid UserId in User table
-	 *      $p_pwd1 and $p_pwd2 are not null
-	 * POST: password is changed to $p_pwd1 if $p_pwd1 and $p_pwd2 are same
-	 * @param String $p_userId
-	 * @param String $p_pwd1
-	 * @param String $p_pwd2
-	 * @return bool password changed
-	 */
-	function changeTAPwd($p_userId, $p_pwd1, $p_pwd2)
-	{
-		global $g_db;
-
-		if($p_pwd1 != $p_pwd2)
-		{
-			UserError::addError(300);
-			return false;
-		}
-
-		if(strlen($p_pwd1) < 3)
-		{
-			UserError::addError(301);
-			return false;
-		}
-
-		if($g_db->queryCommit("UPDATE User
-			SET Pwd=password('" . $g_db->sqlString($p_pwd1) . "')
-			WHERE PrivilegeLvl IN (1,2)
-			AND UserId='" . $g_db->sqlString($p_userId) . "'") != true)
-		{
-			UserError::addError(710);
-			return false;
-		}
-
 		return true;
 	}
 
