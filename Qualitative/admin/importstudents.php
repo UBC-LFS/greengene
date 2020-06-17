@@ -17,7 +17,7 @@ if ($formaction == "import") {
         'year' => $_POST['year'],
         'session' => $_POST['session']);
     $classList = $user->importClassList($payload);
-    if ($classList != null) {
+    if ($classList !== null) {
         if (!count($classList)) {
             echo "<p style='color:red;' >Class has no students. Please try another Class.</p>";
         }
