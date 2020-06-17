@@ -70,27 +70,6 @@ elseif($formaction == 'saveuser')
 	$LastName = $_POST['LastName'];
 	$PrivilegeLvl = $_POST['PrivilegeLvl'];
 }
-elseif($formaction == 'saveuserpwd')
-{
-	$userId = $_POST['UserId'];
-	$courseId = $_POST['CourseId'];
-
-	if($user->modifyAdminPwd($_POST['UserId'],
-		$_POST['Pwd1'],
-		$_POST['Pwd2']) == true)
-	{
-		Page::redirect("managecourse.php?courseId=$courseId");
-	}
-
-	$formType = 'save';
-
-	$userRs = $user->getManagementUser($userId);
-	$userData = $g_db->fetch($userRs);
-	$courseId = $userData->CourseId;
-	$FirstName = $userData->FirstName;
-	$LastName = $userData->LastName;
-	$PrivilegeLvl = $userData->PrivilegeLvl;
-}
 elseif(empty($formaction))
 {
 	$userId = isset($_GET['userId'])? $_GET['userId']: null;
@@ -190,7 +169,6 @@ else
 
 	$table = new Table(2, false, true);
 	echo("<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">");
-	echo("<input type=\"hidden\" name=\"formaction\" value=\"saveuserpwd\">");
 	echo("<input type=\"hidden\" name=\"CourseId\" value=\"$courseId\">");
 	echo("<input type=\"hidden\" name=\"UserId\" value=\"$userId\">");
 
