@@ -1179,6 +1179,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 					array_push($result, $temp);
 				}
 			} else {
+				$result = null;
 				echo "<h2 style=\"color:red;\"> Failed to retrieve student records. Please make sure you are connected to UBC VPN</h2>";
 			};
 		}
