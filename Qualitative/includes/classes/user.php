@@ -27,9 +27,10 @@ class User
 		global $g_db;
 
 		// Get user information
-		$sqlQuery = "SELECT FirstName,LastName,PrivilegeLvl,CourseId, Pwd
+		$sqlQuery = "SELECT FirstName,LastName,PrivilegeLvl,CourseId
 				FROM User
-				WHERE UserId = '".$g_db->sqlString($p_userId)."'";
+				WHERE UserId = '".$g_db->sqlString($p_userId)."'";	
+
 		$recordset = $g_db->querySelect($sqlQuery);
 
 		$row = $g_db->fetch($recordset);

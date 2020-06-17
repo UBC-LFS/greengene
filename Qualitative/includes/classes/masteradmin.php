@@ -55,7 +55,6 @@ class MasterAdmin extends User
 	 * Deletes specified course
 	 *
 	 * @param string $p_courseId CourseId
-	 * @param string $p_pwd admin password
 	 * @return bool
 	 */
 	function deleteCourse($p_courseId)
@@ -177,8 +176,6 @@ class MasterAdmin extends User
 	 * @param string $p_userId admin UserId
 	 * @param string $p_firstName admin first name
 	 * @param string $p_lastName admin last name
-	 * @param string $p_pwd1 admin password (first entry)
-	 * @param string $p_pwd2 admin password (second entry)
 	 * @param int $p_courseId course Id
 	 * @param int $p_privilegeLvl account privilege level
 	 * @return bool
@@ -267,41 +264,6 @@ class MasterAdmin extends User
 			LastName='" . $g_db->sqlString($p_lastName) . "'
 			WHERE PrivilegeLvl=10
 			AND UserId='" . $g_db->sqlString($p_userId) . "'") != true)
-		{
-			UserError::addError(904);
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Modify an Admin account
-	 *
-	 * @param string $p_userId admin UserId
-	 * @param string $p_pwd1 admin password (first entry)
-	 * @param string $p_pwd1 admin password (second entry)
-	 * @return bool
-	 */
-	function modifyAdminPwd($p_userId, $p_pwd1, $p_pwd2)
-	{
-		global $g_db;
-
-		if($p_pwd1 != $p_pwd2)
-		{
-			UserError::addError(300);
-			return false;
-		}
-
-		if(strlen($p_pwd1) < 3)
-		{
-			UserError::addError(301);
-			return false;
-		}
-
-		if($g_db->queryCommit("UPDATE User
-			SET Pwd=password('" . $g_db->sqlString($p_pwd1) . "')
-			WHERE UserId='" . $g_db->sqlString($p_userId) . "'") != true)
 		{
 			UserError::addError(904);
 			return false;

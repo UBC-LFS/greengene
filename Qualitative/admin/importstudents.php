@@ -17,8 +17,10 @@ if ($formaction == "import") {
         'year' => $_POST['year'],
         'session' => $_POST['session']);
     $classList = $user->importClassList($payload);
-    if (!count($classList)) {
-    	echo "<p style='color:red;' >Class has no students. Please try another Class.</p>";
+    if ($classList !== null) {
+        if (!count($classList)) {
+            echo "<p style='color:red;' >Class has no students. Please try another Class.</p>";
+        }
     }
 } else if ($formaction == "add"){
     
@@ -48,7 +50,7 @@ echo '<br/>';
 echo '<input type="submit" value="import">';
 echo "</form>";
 
-if (count($classList)) {
+if ($classList != null && count($classList)) {
     // echo 'printing class list';
     
     echo "<p>Class List for ".$payload['subjectCode'].$payload['courseNumber']." Section ".$payload['section']." Year ".$payload['year'].$payload['session']."</p>";
