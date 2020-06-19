@@ -9,6 +9,7 @@ require_once( '../includes/classes/db/studentmanager.class.php' );
 require_once( '../includes/classes/db/coursemanager.class.php' );
 require_once( '../includes/classes/db/problemmanager.class.php' );
 require_once( '../includes/classes/db/assignstudentmanager.class.php' );
+require_once( '../includes/classes/handler/ldaphandler.class.php' );
 
 /*
 * initialize common stuff
@@ -557,28 +558,15 @@ function on_import_handler()
 	$courseSection = PageHandler::get_post_value('CourseSection');
 	$year = PageHandler::get_post_value('Year');
 	$session = PageHandler::get_post_value('Session');
-	echo " ".$courseSubjectCode. " ";
-	echo " ".$courseNumber." ";
-	echo " ".$courseSection." ";
-	echo " ".$year." ";
-	echo " ".$session." ";
-	if ( !isset( $_FILES['ImportStudentFile'] ) )
-	{
-		MessageHandler::add_message( MSG_FAIL, 'Please select a file' );
-	}
-	
-	else
-	{
-		if ( !is_uploaded_file( $_FILES['ImportStudentFile']['tmp_name'] ) )
-		{
-			MessageHandler::add_message( MSG_FAIL, 'The file cannot be retrieved' );
-		}
-	
-		else
-		{
-			FileHandler::import_student_list( $_FILES['ImportStudentFile']['tmp_name']);
-		}
-	}
+
+	$payload = ['subjectCode' => $courseSubjectCode,
+			'courseNumber' => $courseNumber,
+			'section' => $courseSection,
+			'year' => $year,
+			'session' => $session]; 
+
+	$result = LDAPHandler::importClassList($payload);
+	LDAPHandler::createUserFromLDAPResult($result);
 }
 
 /**  Function: void on_export_handler()
