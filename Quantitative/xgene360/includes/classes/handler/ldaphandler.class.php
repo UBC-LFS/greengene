@@ -54,8 +54,8 @@ class LDAPHandler
 		$arr_fail = array();
 		for ($i = 0; $i < count($classList); $i++) {
 			$arr_tmp = array();
-			$arr_tmp[0] = $classList[$i];
-			$arr_tmp[1] = '';
+			$arr_tmp[1] = $classList[$i];
+			$arr_tmp[2] = ''; 
 
 			// add the user to the database
 			if ( $g_obj_student_manager->create_user( $classList[$i],  UP_STUDENT,  '',  '', '', '0') )
@@ -70,20 +70,21 @@ class LDAPHandler
 
 		if ( count( $arr_success ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_password( 'Successfully created', $arr_success );
+			$str_message = PageHandler::display_users_id_name( 'Successfully created user with CWL Username', $arr_success );
 		
 			MessageHandler::add_message( MSG_SUCCESS, $str_message );
 		}
 		
 		if ( count( $arr_fail ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_password( 'Failed to create', $arr_fail );
+			$str_message = PageHandler::display_users_id_name( 'Failed to create user with CWL Username', $arr_fail );
 		
 			MessageHandler::add_message( MSG_FAIL, $str_message );
 		}
 	}
 
 }
+/*
 echo ' List of students for APBI318 001 2019W: ';
 echo "\n";
 $payload = ['subjectCode' => 'APBI',
@@ -94,4 +95,5 @@ $payload = ['subjectCode' => 'APBI',
 $result = LDAPHandler::importClassList($payload);
 var_dump($result);
 echo "\n";
+*/
 ?>
