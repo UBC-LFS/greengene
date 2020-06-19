@@ -52,31 +52,29 @@ class LDAPHandler
 		$arr_success = array();
 		$arr_fail = array();
 		for ($i = 0; $i < count($classList); $i++) {
-			$arr_tmp = array();
-			$arr_tmp[1] = $classList[$i];
-			$arr_tmp[2] = ''; 
+			$userId = $classList[$i];
 
 			// add the user to the database
 			if ( $g_obj_student_manager->create_user( $classList[$i],  UP_STUDENT,  '',  '', '', '0') )
 			{
-				array_push( $arr_success, $arr_tmp );
+				array_push( $arr_success, $userId );
 			}				
 			else
 			{
-				array_push( $arr_fail, $arr_tmp );
+				array_push( $arr_fail, $userId );
 			}
 		}
 
 		if ( count( $arr_success ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_name( 'Successfully created user with CWL Username', $arr_success );
+			$str_message = PageHandler::display_users_cwl( 'Successfully created user with CWL Username', $arr_success );
 		
 			MessageHandler::add_message( MSG_SUCCESS, $str_message );
 		}
 		
 		if ( count( $arr_fail ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_name( 'Failed to create user with CWL Username', $arr_fail );
+			$str_message = PageHandler::display_users_cwl( 'Failed to create user with CWL Username', $arr_fail );
 		
 			MessageHandler::add_message( MSG_FAIL, $str_message );
 		}

@@ -444,31 +444,27 @@ function on_delete_handler()
 	for ( $i = 0; $i < count($arr_student_list); ++$i) 
 	{
 		$userId = $arr_student_list[$i];
-		$tmp = array();
-		array_push($tmp, ' ');
-		array_push($tmp,  $userId);
-		array_push($tmp, ' ');
 		if ( $g_obj_student_manager->delete_user( $userId ) )
 		{
-			array_push( $arr_success, $tmp );
+			array_push( $arr_success, $userId );
 		}
 		
 		else
 		{
-			array_push( $arr_fail, $tmp );
+			array_push( $arr_fail, $userId );
 		}	
 	}
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Successfully deleted students with CWL Username', $arr_success );
+		$str_message = PageHandler::display_users_cwl( 'Successfully deleted students with CWL Username', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Failed to delete students with CWL Username', $arr_fail );
+		$str_message = PageHandler::display_users_cwl( 'Failed to delete students with CWL Username', $arr_fail );
 		
 		MessageHandler::add_message( MSG_FAIL, $str_message );
 	}
