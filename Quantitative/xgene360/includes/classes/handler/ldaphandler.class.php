@@ -4,7 +4,6 @@ class LDAPHandler
     // payload should be a nested object keys: subjectCode, courseNumber, section, year, session
     function importClassList($payload) 
     {
-		// TODO: remove 
         $result = [];
         $cn = self::getCommonName($payload);
 		
