@@ -410,7 +410,7 @@ function on_create_handler()
 		
 	if ( $g_obj_student_manager->create_user( $cwl_username, UP_STUDENT,  $str_first_name, $str_last_name, $str_password, $str_student_number ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student with CWL username: "' . $cwl_username);
+		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student with CWL username: ' . $cwl_username);
 	}
 	
 	else
@@ -438,34 +438,37 @@ function on_delete_handler()
 		return;
 	}
 	
-	$arr_student_names = $g_obj_student_manager->user_names_list( $arr_student_list );
-	
 	$arr_success = array();
 	$arr_fail = array();
 	
-	for ( $i = 0; $i < count( $arr_student_names ); ++$i )
+	for ( $i = 0; $i < count($arr_student_list); ++$i) 
 	{
-		if ( $g_obj_student_manager->delete_user( $arr_student_names[$i][0] ) )
+		$userId = $arr_student_list[$i];
+		$tmp = array();
+		array_push($tmp, ' ');
+		array_push($tmp,  $userId);
+		array_push($tmp, ' ');
+		if ( $g_obj_student_manager->delete_user( $userId ) )
 		{
-			array_push( $arr_success, $arr_student_names[$i] );
+			array_push( $arr_success, $tmp );
 		}
 		
 		else
 		{
-			array_push( $arr_fail, $arr_student_names[$i] );
-		}
+			array_push( $arr_fail, $tmp );
+		}	
 	}
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Successfully deleted', $arr_success );
+		$str_message = PageHandler::display_users_id_name( 'Successfully deleted students with CWL Username', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Failed to delete', $arr_fail );
+		$str_message = PageHandler::display_users_id_name( 'Failed to delete students with CWL Username', $arr_fail );
 		
 		MessageHandler::add_message( MSG_FAIL, $str_message );
 	}
