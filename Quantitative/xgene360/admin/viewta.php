@@ -86,20 +86,6 @@ if ( $g_bln_display_content )
               <td>Last Name:</td>
               <td><input class="longtextinput" type="text" name="TALastName" value="<?= htmlspecialchars( $g_arr_ta_info->LastName ) ?>"/></td>
             </tr>
-
-            <tr>
-              <td>New Password&#42;:&nbsp;</td>
-              <td><input class="longtextinput" type="password" name="TAPassword" id="TAPassword" /></td>
-            </tr>
-
-            <tr>
-              <td>Confirm New Password:&nbsp;</td>
-              <td><input class="longtextinput" type="password" name="TAPasswordConfirm" id="TAPasswordConfirm" /></td>
-            </tr>
-
-            <tr>
-              <td colspan="2"><div style="font-size: 0.8em">&#42; Leave password fields blank if you do <strong>not</strong> want to change current password.</div></td>
-            </tr>
           
             <tr>
               <td colspan="2" align="right">
@@ -306,28 +292,6 @@ function on_update_handler()
 	else
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Failed to update the account for TA "' . $str_first_name . ' ' . $str_last_name . '"' );
-	}
-	
-	$str_password = PageHandler::get_post_value( 'TAPassword' );
-	$str_password_confirm = PageHandler::get_post_value( 'TAPasswordConfirm' );
-	
-	if ( strlen( $str_password ) != 0 )
-	{
-		if ( $str_password != $str_password_confirm )
-		{
-			MessageHandler::add_message( MSG_FAIL, 'The password does not match' );
-			return;
-		}
-		
-		if ( $g_obj_ta_manager->modify_password( $g_str_ta_id, $str_password ) )
-		{
-			MessageHandler::add_message( MSG_SUCCESS, 'Successfully changed the password' );
-		}
-		
-		else
-		{
-			MessageHandler::add_message( MSG_FAIL, 'Failed to change the password' );
-		}
 	}
 	
 	// force to load the updated info

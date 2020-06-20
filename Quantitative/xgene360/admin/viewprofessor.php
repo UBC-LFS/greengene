@@ -91,21 +91,7 @@ if ( $g_obj_user->int_privilege == UP_ADMINISTRATOR || $g_obj_user->str_username
             <tr>
               <td>Last Name:</td>
               <td><input class="longtextinput" type="text" name="ProfessorLastName" value="<?= htmlspecialchars( $g_arr_professor_info->LastName ) ?>"/></td>
-            </tr>
-
-            <tr>
-              <td>New Password&#42;:&nbsp;</td>
-              <td><input class="longtextinput" type="password" name="ProfessorPassword" id="ProfessorPassword" /></td>
-            </tr>
-
-            <tr>
-              <td>Confirm New Password:&nbsp;</td>
-              <td><input class="longtextinput" type="password" name="ProfessorPasswordConfirm" id="ProfessorPasswordConfirm" /></td>
-            </tr>
-
-            <tr>
-              <td colspan="2"><div style="font-size: 0.8em">&#42; Leave password fields blank if you do <strong>not</strong> want to change current password.</div></td>
-            </tr>
+			</tr>
 
             <tr>
               <td colspan="2" align="right">
@@ -316,28 +302,6 @@ function on_update_handler()
 	else
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Failed to update the account for Professor "' . $str_first_name . ' ' . $str_last_name . '"' );
-	}
-
-	$str_password = PageHandler::get_post_value( 'ProfessorPassword' );
-	$str_password_confirm = PageHandler::get_post_value( 'ProfessorPasswordConfirm' );
-	
-	if ( strlen( $str_password ) != 0 )
-	{
-		if ( $str_password != $str_password_confirm )
-		{
-			MessageHandler::add_message( MSG_FAIL, 'The password does not match' );
-			return;
-		}
-		
-		if ( $g_obj_professor_manager->modify_password( $g_str_professor_id, $str_password ) )
-		{
-			MessageHandler::add_message( MSG_SUCCESS, 'Successfully changed the password' );
-		}
-		
-		else
-		{
-			MessageHandler::add_message( MSG_FAIL, 'Failed to change the password' );
-		}
 	}
 	
 	// force to load updated info
