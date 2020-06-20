@@ -284,7 +284,7 @@ function on_update_handler()
 		return;
 	}
 	
-	if ( $g_obj_ta_manager->modify_user( $g_str_ta_id, $str_first_name, $str_last_name, 0 ) )
+	if ( $g_obj_ta_manager->modify_user( $g_str_ta_id, $str_first_name, $str_last_name) )
 	{
 		MessageHandler::add_message( MSG_SUCCESS, 'Successfully updated the account for TA "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}

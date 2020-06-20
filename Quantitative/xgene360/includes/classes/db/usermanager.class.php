@@ -240,9 +240,8 @@ class UserManager
 *                       
 *    Returns/Assigns:   boolean or null
 */
-	function modify_user( $str_user_id, $str_first_name, $str_last_name, $int_student_number )
+	function modify_user( $str_user_id, $str_first_name, $str_last_name)
 	{
-		// TODO: remove student number
 		$str_sql_query = null;
 		$res_check_if_exists = null;
 		$str_this_user = $this->m_obj_user->str_username;
@@ -280,8 +279,7 @@ class UserManager
 				{
 					$str_sql_query = "UPDATE User "
 								   . "SET FirstName = '". $this->m_obj_db->format_sql_string( $str_first_name ) ."', "
-								   . "LastName = '". $this->m_obj_db->format_sql_string( $str_last_name ) . "', "
-								   . "StudentNum = ".  $this->m_obj_db->format_sql_string( $int_student_number ) . " "
+								   . "LastName = '". $this->m_obj_db->format_sql_string( $str_last_name ) . "' "
 								   . "WHERE UserId = '" . $this->m_obj_db->format_sql_string( $str_user_id ) . "'";
 
 					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
@@ -312,7 +310,6 @@ class UserManager
 														   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 														   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
 														   . $this->m_obj_db->format_sql_string( $str_last_name ) . " "
-														   . $this->m_obj_db->format_sql_string( $int_student_number ) 
 														   . " or user "
 														   . $this->m_obj_db->format_sql_string( $str_user_id ) 
 														   . " does not exist" ); 
@@ -334,8 +331,7 @@ class UserManager
 			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 												   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
-												   . $this->m_obj_db->format_sql_string( $str_last_name ) . " "
-												   . $this->m_obj_db->format_sql_string( $int_student_number ) );
+												   . $this->m_obj_db->format_sql_string( $str_last_name ) );
 			return false;
 		}
   
@@ -345,8 +341,7 @@ class UserManager
 			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to modify user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 												   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
-												   . $this->m_obj_db->format_sql_string( $str_last_name ) . " "
-												   . $this->m_obj_db->format_sql_string( $int_student_number ) 
+												   . $this->m_obj_db->format_sql_string( $str_last_name )
 												   . " due to database error" );
 			return false;
 		}
@@ -354,8 +349,7 @@ class UserManager
 		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified user " 
 											   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 											   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
-											   . $this->m_obj_db->format_sql_string( $str_last_name ) . " "
-											   . $this->m_obj_db->format_sql_string( $int_student_number ) );
+											   . $this->m_obj_db->format_sql_string( $str_last_name ));
 		return true;
 	} 
 

@@ -337,8 +337,6 @@ function on_update_handler()
 	
 	$str_first_name = PageHandler::get_post_value( 'StudentFirstName' );
 	$str_last_name = PageHandler::get_post_value( 'StudentLastName' );
-	// TODO: remove student number
-	$str_student_number =  '0';
 	
 	if ( strlen( $str_first_name ) == 0 || strlen( $str_last_name ) == 0 )
 	{
@@ -346,7 +344,7 @@ function on_update_handler()
 		return;
 	}
 	
-	if ( $g_obj_student_manager->modify_user( $g_str_student_id, $str_first_name, $str_last_name, $str_student_number ) )
+	if ( $g_obj_student_manager->modify_user( $g_str_student_id, $str_first_name, $str_last_name) )
 	{
 		MessageHandler::add_message( MSG_SUCCESS, 'Successfully updated the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}
