@@ -55,7 +55,7 @@ class LDAPHandler
 			$userId = $classList[$i];
 
 			// add the user to the database
-			if ( $g_obj_student_manager->create_user( $classList[$i],  UP_STUDENT,  '',  '', '', '0') )
+			if ( $g_obj_student_manager->create_user( $classList[$i],  UP_STUDENT,  '',  '') )
 			{
 				array_push( $arr_success, $userId );
 			}				

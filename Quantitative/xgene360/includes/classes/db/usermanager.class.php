@@ -118,11 +118,11 @@ class UserManager
 /**  Function: boolean create_user
 *    ---------------------------------------------------------------- 
 *    Purpose:           create a new user
-*    Arguments:         user id, course id, user privilege calss, first name, last name, password, student number
+*    Arguments:         user id, course id, user privilege calss, first name, last name
 *                       
 *    Returns/Assigns:   boolean or null
 */
-	function create_user( $str_user_id, $int_user_privilege, $str_first_name, $str_last_name, $str_password, $int_student_num )
+	function create_user( $str_user_id, $int_user_privilege, $str_first_name, $str_last_name )
 	{
 		// TODO: remove int_course_id - int_course_id is used in greengene Qualitative no longer relevant
 		$int_course_id = 0;
@@ -160,14 +160,12 @@ class UserManager
 
 				if ( $this->m_obj_db->get_number_of_rows( $res_check_if_exists ) == 0 ) 
 				{
-					$str_sql_query = "INSERT INTO User(UserId, CourseId, PrivilegeLvl, FirstName, LastName, Pwd, StudentNum) "
+					$str_sql_query = "INSERT INTO User(UserId, CourseId, PrivilegeLvl, FirstName, LastName) "
 								   . "VALUES ('" . $this->m_obj_db->format_sql_string( $str_user_id ) . "', "
 								   . $this->m_obj_db->format_sql_string( $int_course_id ) . ", "
 								   . $this->m_obj_db->format_sql_string( $int_user_privilege ) . ", '"
 								   . $this->m_obj_db->format_sql_string( $str_first_name ) . "', '"
-								   . $this->m_obj_db->format_sql_string( $str_last_name ) . "', "
-								   . "Password('" . $this->m_obj_db->format_sql_string( $str_password ) . "'), "
-								   . $this->m_obj_db->format_sql_string( $int_student_num ) . ")";
+								   . $this->m_obj_db->format_sql_string( $str_last_name ) . "')";
 
 					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 					{
@@ -244,6 +242,7 @@ class UserManager
 */
 	function modify_user( $str_user_id, $str_first_name, $str_last_name, $int_student_number )
 	{
+		// TODO: remove student number
 		$str_sql_query = null;
 		$res_check_if_exists = null;
 		$str_this_user = $this->m_obj_user->str_username;

@@ -287,11 +287,9 @@ function on_create_handler()
 	
 	$str_first_name = !isset($str_first_name) ? " " : $str_first_name;
 	$str_last_name = !isset($str_last_name) ? " " : $str_last_name;
-	// TODO: remove password
-	$str_password = "";
 
 	// create a new professor
-	if ( $g_obj_professor_manager->create_user( $str_user_name, UP_PROFESSOR,  $str_first_name, $str_last_name, $str_password, 0 ) )
+	if ( $g_obj_professor_manager->create_user( $str_user_name, UP_PROFESSOR,  $str_first_name, $str_last_name) )
 	{
 			MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Professor "' . $str_user_name );
 	}

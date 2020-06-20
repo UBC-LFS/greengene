@@ -277,11 +277,9 @@ function on_create_handler()
 	
 	$str_first_name = !isset($str_first_name) ? " " : $str_first_name;
 	$str_last_name = !isset($str_last_name) ? " " : $str_last_name;
-	// TODO: remove password 
-	$str_password = "";
 	
 	// create a new ta
-	if ( $g_obj_ta_manager->create_user( $str_user_name, UP_TA,  $str_first_name, $str_last_name, $str_password, 0 ) )
+	if ( $g_obj_ta_manager->create_user( $str_user_name, UP_TA,  $str_first_name, $str_last_name ) )
 	{
 		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for TA "' . $str_user_name  );
 	}

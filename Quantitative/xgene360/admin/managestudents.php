@@ -393,7 +393,6 @@ function on_create_handler()
 	$cwl_username = PageHandler::get_post_value( 'Username' );
 	$str_first_name = PageHandler::get_post_value( 'FirstName' );
 	$str_last_name = PageHandler::get_post_value( 'LastName' );
-	$str_student_number = PageHandler::get_post_value( 'StudentNumber' );
 	
 	// verify the input
 	if (strlen( $str_last_name ) == 0 )
@@ -404,11 +403,8 @@ function on_create_handler()
 	
 	$str_first_name = !isset($str_first_name) ? " " : $str_first_name;
 	$str_last_name = !isset($str_last_name) ? " " : $str_last_name;
-	$str_student_number = 0;
-	// TODO: remove password
-	$str_password = " ";
 		
-	if ( $g_obj_student_manager->create_user( $cwl_username, UP_STUDENT,  $str_first_name, $str_last_name, $str_password, $str_student_number ) )
+	if ( $g_obj_student_manager->create_user( $cwl_username, UP_STUDENT,  $str_first_name, $str_last_name ) )
 	{
 		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student with CWL username: ' . $cwl_username);
 	}
