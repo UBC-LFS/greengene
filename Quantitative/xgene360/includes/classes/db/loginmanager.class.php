@@ -55,15 +55,16 @@ class LoginManager
 
 	function ldap_login($str_username, $str_password)
 	{
-		return true;
 		$ldap = LDAP_LOGIN_HOST;
-		$usr = "uid=".$str_username."ou=People,dc=landfood,dc=ubc,dc=ca";
+		$usr = "uid=".$str_username.",ou=People,dc=landfood,dc=ubc,dc=ca";
+		echo $usr;
+		return false ;
 		$ds = ldap_connect($ldap);
 		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
 
 		if ($ds) {
 			set_error_handler(function(){});
-			$result = ldap_bind($ds, $str_username, $str_password);
+			$result = ldap_bind($ds, $usr, $str_password);
 			restore_error_handler();
 			return $result;
 		}
