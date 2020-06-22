@@ -49,6 +49,10 @@ class LDAPHandler
 	function createUserFromLDAPResult($classList) {
 		global $g_obj_student_manager;
 
+		if ($classList === null) {
+			return null;
+		}
+
 		$arr_success = array();
 		$arr_fail = array();
 		for ($i = 0; $i < count($classList); $i++) {
