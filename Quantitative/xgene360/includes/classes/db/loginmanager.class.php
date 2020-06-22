@@ -57,8 +57,6 @@ class LoginManager
 	{
 		$ldap = LDAP_LOGIN_HOST;
 		$usr = "uid=".$str_username.",ou=People,dc=landfood,dc=ubc,dc=ca";
-		echo $usr;
-		return false ;
 		$ds = ldap_connect($ldap);
 		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
 
