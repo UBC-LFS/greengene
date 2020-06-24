@@ -7,4 +7,8 @@ define('DB_NAME', 'DB-name');
 define('URLROOT', '');
 define( 'GREENGENEURLROOT', '' );
 define( 'USER_TIME_ZONE', '-8' );
+define('LDAP_HOST', 'someone');
+define('LDAP_DN', 'uid=something');
+define('LDAP_PW', 'password');
+define('LDAP_LOGIN_HOST', 'ldaps://eldapdccons.id.ubc.ca');
 ?>
