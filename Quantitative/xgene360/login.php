@@ -82,7 +82,7 @@ require( 'includes/header.inc.php' );
                     <table width="185">
 
                       <tr>
-                        <td width="75">Username:&nbsp;</td>
+                        <td width="75">CWL:&nbsp;</td>
                         <td><input class="textinput" type="text" name="UserId" id="UserId" value="<?= PageHandler::get_post_value( 'UserId' ); ?>" size="20" /></td>
                       </tr>
 
