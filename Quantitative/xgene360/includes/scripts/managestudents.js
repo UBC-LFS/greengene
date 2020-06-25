@@ -46,22 +46,6 @@ function validateCreateStudentForm()
   return xgene360_cu.form.validate();
 }
 
-function passwordValidatorCreate()
-{
-  var objPassowrd = xgene360_cu.Element( 'Password' );
-  var objConfirmPassword = xgene360_cu.Element( 'ConfirmPassword' );
- 
-  if ( objPassowrd.value != objConfirmPassword.value )
-  {
-    alert( 'Please make sure the password fields match.' );
-    objPassowrd.focus();
-    
-    return false;
-  }
-  
-  return true;
-}
-
 function validateAssignStudentsToACourseOrAProblem()
 {
   if ( !validateStudentSelection() )
@@ -138,39 +122,6 @@ function validateImportStudent()
     return false;
   };
   return confirm( 'Are you sure you want to import the class list?\n\nPlease check the class details provided (\'Course Subject Code\', \'Course Number\', etc.).');
-}
-
-function validateUpdateStudentForm()
-{
-  xgene360_cu.using( 'form' );
-  
-  xgene360_cu.form.init( 'UpdateStudentsForm' );
-  
-  xgene360_cu.form.addRequiredTextBox( 'StudentFirstName', 'Please enter the \'First Name\'', 20 );
-  xgene360_cu.form.addRequiredTextBox( 'StudentLastName', 'Please enter the \'Last Name\'', 20 );
-  xgene360_cu.form.addRegExTextBox( 'StudentNumber', 'Please enter number for \'Student Number\'', '[0-9]+', false );
-
-  xgene360_cu.form.addCustomValidator( passwordValidatorUpdate );
-  
-  return xgene360_cu.form.validate();
-  
-  return true;
-}
-
-function passwordValidatorUpdate()
-{
-  var objPassowrd = xgene360_cu.Element( 'StudentPassword' );
-  var objConfirmPassword = xgene360_cu.Element( 'StudentPasswordConfirm' );
- 
-  if ( objPassowrd.value != objConfirmPassword.value )
-  {
-    alert( 'Please make sure the password fields match.' );
-    objPassowrd.focus();
-    
-    return false;
-  }
-  
-  return true;
 }
 
 function resetCreateStudentForm()

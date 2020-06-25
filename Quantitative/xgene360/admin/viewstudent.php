@@ -78,13 +78,17 @@ if ( $g_bln_display_content )
         <td>
 
           <table>
+			 <tr>
+				<td>CWL:&nbsp;</td>
+				<td><input class="longtextinput" type="text" size="30" value="<?php echo($g_arr_student_info->UserId)?>" disabled></td>
+			</tr>
             <tr>
               <td>First Name:&nbsp;</td>
-              <td> <input class="longtextinput" type="text" name="StudentFirstName" id="StudentFirstName" size="30" value="<?= htmlspecialchars( $g_arr_student_info->FirstName ) ?>" /></td>
+              <td> <input class="longtextinput" type="text" name="StudentFirstName" id="StudentFirstName" size="30" value="<?php htmlspecialchars( $g_arr_student_info->FirstName ) ?>" /></td>
             </tr>
             <tr>
               <td>Last Name:&nbsp;</td>
-              <td> <input class="longtextinput" type="text" name="StudentLastName" id="StudentLastName" size="30" value="<?= htmlspecialchars( $g_arr_student_info->LastName ) ?>" /></td>
+              <td> <input class="longtextinput" type="text" name="StudentLastName" id="StudentLastName" size="30" value="<?php htmlspecialchars( $g_arr_student_info->LastName ) ?>" /></td>
             </tr>
             <tr>
               <td colspan="2" align="right">
@@ -239,8 +243,8 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
 
     <br /><br /><br /><br />    
 
-    <input class="buttonback" type="button" value="&lt;&nbsp;&nbsp;Back to Student Listing" onclick="window.location='<?= $g_str_parent_page ?>';" />
-    <input type="hidden" name="SerialId" id="SerialId" value="<?= $g_str_serial ?>"/>
+    <input class="buttonback" type="button" value="&lt;&nbsp;&nbsp;Back to Student Listing" onclick="window.location='<?php $g_str_parent_page ?>';" />
+    <input type="hidden" name="SerialId" id="SerialId" value="<?php $g_str_serial ?>"/>
   </form>
 
 </div>
@@ -337,12 +341,6 @@ function on_update_handler()
 	
 	$str_first_name = PageHandler::get_post_value( 'StudentFirstName' );
 	$str_last_name = PageHandler::get_post_value( 'StudentLastName' );
-	
-	if ( strlen( $str_first_name ) == 0 || strlen( $str_last_name ) == 0 )
-	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
-		return;
-	}
 	
 	if ( $g_obj_student_manager->modify_user( $g_str_student_id, $str_first_name, $str_last_name) )
 	{
