@@ -41,12 +41,8 @@ function validateCreateStudentForm()
   
   xgene360_cu.form.init( 'ManageStudentsForm' );
   
-  xgene360_cu.form.addRequiredTextBox( 'FirstName', 'Please enter the \'First Name\'', 20 );
-  xgene360_cu.form.addRequiredTextBox( 'LastName', 'Please enter the \'Last Name\'', 20 );
-  xgene360_cu.form.addRegExTextBox( 'StudentNumber', 'Please enter number for \'Student Number\'', '[0-9]+', false );
+  xgene360_cu.form.addRequiredTextBox( 'Username', 'Please enter the \'CWL Username\'', 30 );
 
-  xgene360_cu.form.addCustomValidator( passwordValidatorCreate );
-  
   return xgene360_cu.form.validate();
 }
 

@@ -235,11 +235,6 @@ if ( $g_obj_user->int_privilege != UP_TA )
               </tr>
 
               <tr>
-                <td>Student Number:</td>
-                <td><input class="textinput" type="text" name="StudentNumber" id="StudentNumber" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'StudentNumber' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
-              </tr>
-
-              <tr>
                 <td>CWL Username:</td>
                 <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
@@ -395,7 +390,7 @@ function on_create_handler()
 	$str_last_name = PageHandler::get_post_value( 'LastName' );
 	
 	// verify the input
-	if (strlen( $str_last_name ) == 0 )
+	if (strlen( $cwl_username ) == 0 )
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
 		return;
