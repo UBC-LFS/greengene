@@ -91,16 +91,17 @@ $g_res_student_solution = $g_obj_solution_manager->view_student_solution( $g_str
 
 ?>
           <table>
+			<tr>
+              <td>CWL Username:</td>
+              <td><?= $g_arr_student_info->UserId ?></td>
+			</tr>
 
             <tr>
               <td width="100">Name:</td>
               <td><?= $g_arr_student_info->FirstName ?>, <?= $g_arr_student_info->LastName ?></td>
             </tr>
 
-            <tr>
-              <td>Student Id:</td>
-              <td><?= $g_arr_student_info->StudentNum ?></td>
-            </tr>
+            
               
 <?php
 
