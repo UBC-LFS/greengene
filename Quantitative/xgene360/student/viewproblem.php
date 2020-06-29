@@ -83,6 +83,7 @@ if ( $g_bln_display_content )
               <td><strong>DESCRIPTION: </strong></td>
               <td><?= $g_arr_problem_info->problem_desc ?></td>
             </tr>
+			<!--
             <tr>
               <td><strong>START DATE: </strong></td>
               <td><?= PageHandler::format_date( $g_arr_problem_info->start_date ) ?></td>
@@ -91,7 +92,7 @@ if ( $g_bln_display_content )
               <td><strong>DUE DATE: </strong></td>
               <td><?= PageHandler::format_date( $g_arr_problem_info->due_date ) ?></td>
             </tr>
-            
+            -->
           </table>
 
         </td>
@@ -188,10 +189,10 @@ for ( $i = 1; $i < $g_int_number_of_generations + 1; ++$i )
     <br /><br />
   
 <?php
-
+/*
 if ( $g_obj_db->time() <= $g_arr_problem_info->due_date )
 {
-
+*/
 ?>
 
     <table class="box">
@@ -273,15 +274,17 @@ if ( $g_obj_db->time() <= $g_arr_problem_info->due_date )
     </table>
 
 <?php
+/*
 }
 
 else
 {
+	*/
 ?>
-    <div class="errortext">You cannot submit your solution because the due date is already over.</div>
+    <!--<div class="errortext">You cannot submit your solution because the due date is already over.</div>-->
  
  <?php
- }
+ // }
  ?>
  
     <input type="hidden" name="SerialId" id="SerialId" value="<?= $g_str_serial ?>"/>
@@ -465,12 +468,13 @@ function on_submit_handler()
 {
 	global $g_obj_db, $g_int_problem_id, $g_obj_solution_manager, $g_arr_problem_info;
 
+	/*
 	if ( $g_obj_db->time() >= $g_arr_problem_info->due_date )
 	{
 		MessageHandler::add_message( MSG_FAIL, "You cannot submit your solution because the due date is already over" );
 		return;
 	}
-	
+	*/
 	$dbl_Trait_A_Parent_A_Mean = PageHandler::get_post_value( 'TraitAParent1Mean' );
 	$dbl_Trait_A_Parent_B_Mean = PageHandler::get_post_value( 'TraitAParent2Mean' );
 	$dbl_Trait_B_Parent_A_Mean = PageHandler::get_post_value( 'TraitBParent1Mean' );
