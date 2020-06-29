@@ -84,11 +84,11 @@ if ( $g_bln_display_content )
 			</tr>
             <tr>
               <td>First Name:&nbsp;</td>
-              <td> <input class="longtextinput" type="text" name="StudentFirstName" id="StudentFirstName" size="30" value="<?php htmlspecialchars( $g_arr_student_info->FirstName ) ?>" /></td>
+              <td> <input class="longtextinput" type="text" name="StudentFirstName" id="StudentFirstName" size="30" value="<?= htmlspecialchars( $g_arr_student_info->FirstName ) ?>" /></td>
             </tr>
             <tr>
               <td>Last Name:&nbsp;</td>
-              <td> <input class="longtextinput" type="text" name="StudentLastName" id="StudentLastName" size="30" value="<?php htmlspecialchars( $g_arr_student_info->LastName ) ?>" /></td>
+              <td> <input class="longtextinput" type="text" name="StudentLastName" id="StudentLastName" size="30" value="<?= htmlspecialchars( $g_arr_student_info->LastName ) ?>" /></td>
             </tr>
             <tr>
               <td colspan="2" align="right">
@@ -243,8 +243,8 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
 
     <br /><br /><br /><br />    
 
-    <input class="buttonback" type="button" value="&lt;&nbsp;&nbsp;Back to Student Listing" onclick="window.location='<?php $g_str_parent_page ?>';" />
-    <input type="hidden" name="SerialId" id="SerialId" value="<?php $g_str_serial ?>"/>
+    <input class="buttonback" type="button" value="&lt;&nbsp;&nbsp;Back to Student Listing" onclick="window.location='<?= $g_str_parent_page ?>';" />
+    <input type="hidden" name="SerialId" id="SerialId" value="<?= $g_str_serial ?>"/>
   </form>
 
 </div>
