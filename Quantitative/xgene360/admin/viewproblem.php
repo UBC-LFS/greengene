@@ -118,6 +118,7 @@ if ( $g_bln_is_editable )
                     <td>Author:</td>
                     <td><?= htmlspecialchars( $g_arr_problem_info->LastName ) . ',&nbsp;' . htmlspecialchars( $g_arr_problem_info->FirstName ) ?></td>
                   </tr>
+                  <!--
                   <tr>
                     <td colspan="2" height="10">&nbsp;</td>
                   </tr>
@@ -167,8 +168,7 @@ if ( $g_bln_is_editable )
 <?= PageHandler::generate_minute( 'DueDateMinute', date( 'i', $g_int_due_date ) ); ?>
 
                     </td>
-                  </tr>
-
+                  </tr>-->
                   <tr>
                     <td colspan="2" height="10">&nbsp;</td>
                   </tr>
@@ -510,7 +510,7 @@ function on_update_handler()
 			!isset( $dbl_Trait_B_Parent_A_Mean ) || !isset( $dbl_Trait_B_Parent_B_Mean ) ||
 			!isset( $int_Histogram_A_Range ) || !isset( $int_Histogram_B_Range ) ||
 			!isset( $int_offspring_per_cross ) || !isset( $int_max_cross ) || !isset( $int_plants_displayed ) ||
-			!isset( $dbl_range_of_acceptance ) || !isset( $dat_start_date ) || !isset( $date_due_date ) )
+			!isset( $dbl_range_of_acceptance ) )
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;

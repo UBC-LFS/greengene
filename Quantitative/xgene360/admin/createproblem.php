@@ -137,6 +137,7 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
                       </select>
                     </td>
                   </tr>
+                  <!--
                   <tr>
                     <td colspan="2" height="10">&nbsp;</td>
                   </tr>
@@ -187,7 +188,7 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
 
                     </td>
                   </tr>
-
+-->
                   <tr>
                     <td colspan="2" height="10">&nbsp;</td>
                   </tr>
@@ -517,7 +518,7 @@ function on_create_handler()
 			!isset( $dbl_Trait_B_Parent_A_Mean ) || !isset( $dbl_Trait_B_Parent_B_Mean ) ||
 			!isset( $int_Histogram_A_Range ) || !isset( $int_Histogram_B_Range ) ||
 			!isset( $int_offspring_per_cross ) || !isset( $int_max_cross )  || !isset( $int_plants_displayed ) ||
-			!isset( $dbl_range_of_acceptance ) || !isset( $dat_start_date ) || !isset( $date_due_date ) )
+			!isset( $dbl_range_of_acceptance ))
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
