@@ -340,8 +340,8 @@ class ProblemManager
 							   . $this->m_obj_db->format_sql_string( $dbl_range_of_acceptance ) . ", "
 							   . $this->m_obj_db->format_sql_string( $dbl_trait_A_histogram_range ) . ", "
 							   . $this->m_obj_db->format_sql_string( $dbl_trait_B_histogram_range ) . ", '"
-							   . $this->m_obj_db->format_sql_string( $dat_start_date ) . "', '"
-							   . $this->m_obj_db->format_sql_string( $dat_due_date ) . "'); ";
+							   . $this->m_obj_db->format_sql_string( '0000-00-00 00:00:00' ) . "', '"
+							   . $this->m_obj_db->format_sql_string( '9000-00-00 00:00:00' ) . "'); ";
 							   
 				if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 				{
@@ -726,8 +726,8 @@ class ProblemManager
 								. "range_of_acceptance = " . $this->m_obj_db->format_sql_string( $dbl_range_of_acceptance ) . ", "
 								. "trait_A_histogram_range = " . $this->m_obj_db->format_sql_string( $dbl_trait_A_histogram_range ) . ", "
 								. "trait_B_histogram_range = " . $this->m_obj_db->format_sql_string( $dbl_trait_B_histogram_range ) . ", "
-								. "start_date = '" . $this->m_obj_db->format_sql_string( $dat_start_date ) . "', "
-								. "due_date = '" . $this->m_obj_db->format_sql_string( $dat_due_date ) . "' "
+								. "start_date = '" . $this->m_obj_db->format_sql_string( '0000-00-00 00:00:00' ) . "', "
+								. "due_date = '" . $this->m_obj_db->format_sql_string( '9000-00-00 00:00:00' ) . "' "
 								. "WHERE problem_id = " . $this->m_obj_db->format_sql_string(  $int_problem_id );
 							   
 					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
