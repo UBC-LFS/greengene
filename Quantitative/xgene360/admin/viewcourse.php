@@ -199,8 +199,6 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
     <table class="listing" id="ListOfProblem">
       <tr>
         <th width="200">Problem</th>
-        <th width="200">Start Date</th>
-        <th>Due Date</th>
       </tr>
 		
 <?php
@@ -220,8 +218,6 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
 
 	echo( '<tr onclick="openProblemDetail( \'' . htmlspecialchars( $res_row->problem_id, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->problem_name ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->start_date ) ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->due_date ) ) . '</td>' . "\n" );
 	echo( '</tr>' . "\n" );
 }
 ?>
