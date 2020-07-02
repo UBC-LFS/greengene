@@ -221,7 +221,7 @@ for ( $i = 1; $i < $g_int_number_of_generations + 1; ++$i )
 	echo( '<tr>' . "\n" );
 	echo( '<td>'. $i .'&nbsp;/&nbsp;' . $g_arr_problem_info->max_cross . '</td>' . "\n" );
 	
-	$arr_trait_values = $g_obj_generation_manager->get_parents_trait_values( $g_obj_user->str_username, $g_int_problem_id, $i );
+	$arr_trait_values = $g_obj_generation_manager->get_parents_trait_values( $g_str_student_id, $g_int_problem_id, $i );
 	
 	$dbl_mean_A = 0.0;
 	$dbl_mean_B = 0.0;
