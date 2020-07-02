@@ -92,9 +92,9 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
     <table class="listing" id="ListOfTAs">
       <tr>
         <th width="50"><input type="checkbox" id="UserIdSelectionToggle" onclick="xgene360_cu.checkAll( this, 'TAId[]' );" /></th>
+        <th width="150">CWL Username</th>
         <th width="150">First Name</th>
-        <th width="150">Last Name</th>
-        <th>CWL Username</th>
+        <th >Last Name</th>
       </tr>
 		
 <?php
@@ -107,9 +107,9 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
 
 	echo( '<tr onclick="openTADetail( \'' . htmlspecialchars( $res_row->UserId ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
 	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="TAId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
+	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' );
 	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' );
 	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' );
 	echo( '</tr>' );
 }
 	
