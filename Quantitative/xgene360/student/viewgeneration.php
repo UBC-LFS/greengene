@@ -454,12 +454,6 @@ function on_cross_handler()
 		MessageHandler::add_message( MSG_FAIL, 'You have reached the maximum number of generations' );
 	}
 	
-	/*
-	else if ( $g_obj_db->time() > $g_arr_problem_info->due_date )
-	{
-		MessageHandler::add_message( MSG_FAIL, 'You cannot cross because the due date is already over' );
-	}
-	*/
 	else
 	{
 		$arr_plant_ids = explode( ';', $str_selected_plants );

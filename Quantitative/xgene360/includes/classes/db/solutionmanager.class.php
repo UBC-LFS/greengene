@@ -197,10 +197,6 @@ class SolutionManager
 						break;
 					}
 					
-					/* time used here is unix epoch time
-					$res_row = $this->m_obj_db->fetch( $res_date );
-					$dat_hand_in_date = $res_row->time;
-					*/
 					date_default_timezone_set('America/Vancouver');
 					$dat_hand_in_date = date('Y-m-d ');
 					$time_array =  localtime();

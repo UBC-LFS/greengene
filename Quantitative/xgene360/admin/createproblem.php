@@ -137,58 +137,6 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
                       </select>
                     </td>
                   </tr>
-                  <!--
-                  <tr>
-                    <td colspan="2" height="10">&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td>Start Date:</td>
-                    <td>
-<?= PageHandler::generate_month( 'StartDateMonth', $g_int_start_date_month ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_day( 'StartDateDay', $g_int_start_date_day ); ?>
-
-                    &nbsp;
-                    
-<?= PageHandler::generate_year( 'StartDateYear', date( 'Y' ), $g_int_start_date_year ); ?>
-
-                    &nbsp;&nbsp;&nbsp;
-
-<?= PageHandler::generate_hour( 'StartDateHour', $g_int_start_date_hour ); ?>
-
-                    :
-                  
-<?= PageHandler::generate_minute( 'StartDateMinute', $g_int_start_date_minute ); ?>
-
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Due Date:</td>
-                    <td>
-
-<?= PageHandler::generate_month( 'DueDateMonth', $g_int_due_date_month ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_day( 'DueDateDay', $g_int_due_date_day ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_year( 'DueDateYear', date( 'Y' ), $g_int_due_date_year ); ?>
-
-                    &nbsp;&nbsp;&nbsp;
-                  
-<?= PageHandler::generate_hour( 'DueDateHour', $g_int_due_date_hour ); ?>
-
-                    :
-                  
-<?= PageHandler::generate_minute( 'DueDateMinute', $g_int_due_date_minute ); ?>
-
-                    </td>
-                  </tr>
--->
                   <tr>
                     <td colspan="2" height="10">&nbsp;</td>
                   </tr>

@@ -42,9 +42,6 @@ if ( $g_bln_display_content )
   <tr>
     <th width="150">Problem</th>
 	<th width="100">Course</th>
-	<!--
-    <th width="125">Start Date</th>
-    <th width="125">Due Date</th>-->
     <th>Breeding History</th>
   </tr>
 
@@ -73,8 +70,6 @@ if ( $g_bln_display_content )
 			echo( '<tr onclick="openProblemDetail( \'' . htmlspecialchars( $res_row->problem_id ) .'\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
 			echo( '<td>' . htmlspecialchars( $res_row->problem_name ) . '</td>' . "\n" );
 			echo( '<td>' . htmlspecialchars( $res_row->Name ) . '</td>' . "\n" );
-			// echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->start_date ) ) . '</td>' . "\n" );
-			// echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->due_date ) ) . '</td>' . "\n" );
 			echo( '<td>' . htmlspecialchars( $int_generation_num ) . '&nbsp;/&nbsp;' . htmlspecialchars( $res_row->max_cross ) . '</td>' . "\n" );
 			echo( '</tr>' . "\n" );
 		}

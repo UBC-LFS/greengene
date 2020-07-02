@@ -118,57 +118,6 @@ if ( $g_bln_is_editable )
                     <td>Author:</td>
                     <td><?= htmlspecialchars( $g_arr_problem_info->LastName ) . ',&nbsp;' . htmlspecialchars( $g_arr_problem_info->FirstName ) ?></td>
                   </tr>
-                  <!--
-                  <tr>
-                    <td colspan="2" height="10">&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td>Start Date:</td>
-                    <td>
-<?= PageHandler::generate_month( 'StartDateMonth', date( 'n', $g_int_start_date ) ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_day( 'StartDateDay', date( 'j', $g_int_start_date ) ); ?>
-
-                    &nbsp;
-                    
-<?= PageHandler::generate_year( 'StartDateYear', date( 'Y' ), date( 'Y', $g_int_start_date ) ); ?>
-
-                    &nbsp;&nbsp;&nbsp;
-
-<?= PageHandler::generate_hour( 'StartDateHour', date( 'H', $g_int_start_date ) ); ?>
-
-                    :
-                  
-<?= PageHandler::generate_minute( 'StartDateMinute', date( 'i', $g_int_start_date ) ); ?>
-
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Due Date:</td>
-                    <td>
-
-<?= PageHandler::generate_month( 'DueDateMonth', date( 'n', $g_int_due_date ) ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_day( 'DueDateDay', date( 'j', $g_int_due_date ) ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_year( 'DueDateYear', date( 'Y' ), date( 'Y', $g_int_due_date ) ); ?>
-
-                    &nbsp;&nbsp;&nbsp;
-                  
-<?= PageHandler::generate_hour( 'DueDateHour', date( 'H', $g_int_due_date ) ); ?>
-
-                    :
-                  
-<?= PageHandler::generate_minute( 'DueDateMinute', date( 'i', $g_int_due_date ) ); ?>
-
-                    </td>
-                  </tr>-->
                   <tr>
                     <td colspan="2" height="10">&nbsp;</td>
                   </tr>
