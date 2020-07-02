@@ -115,8 +115,8 @@ if ( $g_bln_is_editable )
                     <td><?= htmlspecialchars( $g_arr_problem_info->Name ) ?></td>
                   </tr>
                   <tr>
-                    <td>Author:</td>
-                    <td><?= htmlspecialchars( $g_arr_problem_info->LastName ) . ',&nbsp;' . htmlspecialchars( $g_arr_problem_info->FirstName ) ?></td>
+                    <td>Author's CWL:</td>
+                    <td><?= htmlspecialchars( $g_arr_problem_info->UserId ) ?></td>
                   </tr>
                   <tr>
                     <td colspan="2" height="10">&nbsp;</td>
