@@ -45,7 +45,7 @@ $g_obj_solution_manager = new SolutionManager( $g_obj_user, $g_obj_db );
 $g_str_student_id = $_GET['StudentId'];
 $g_int_problem_id = $_GET['ProblemId'];
 
-verify_problem_exists();
+$bln_problem_exists = verify_problem_exists();
 verify_student_exists();
 
 process_post();
@@ -59,8 +59,9 @@ $g_arr_styles = array( 'histogram.css' );
 $g_arr_scripts = array( 'commonadmin.js', 'histogram.js', 'plant.js' );
 $g_arr_nav_links = $g_arr_nav_defined_links[$g_obj_user->int_privilege];
 
-generate_script_block();
-
+if ($bln_problem_exists) {
+	generate_script_block();
+}
 require_once( '../includes/header.inc.php' );
 
 if ( $g_bln_display_content )
@@ -347,11 +348,13 @@ function verify_student_exists()
 	if ( $g_obj_db->get_number_of_rows( $res_student ) == 0 )
 	{
 		MessageHandler::add_message( MSG_ERROR, 'The Student does not exist' );
+		return false;
 	}
 	
 	else
 	{
 		$g_arr_student_info = $g_obj_db->fetch( $res_student );
+		return true;
 	}
 }
 
