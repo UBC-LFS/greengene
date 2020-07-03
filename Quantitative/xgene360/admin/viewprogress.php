@@ -315,6 +315,7 @@ function verify_problem_exists()
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
 		MessageHandler::add_message( MSG_ERROR, 'The Problem does not exist' );
+		return false;
 	}
 	
 	else
@@ -327,6 +328,7 @@ function verify_problem_exists()
 		$res_row = $g_obj_db->fetch( $res_number_of_generations );
 		
 		$g_int_number_of_generations = $res_row->generation_count;
+		return true;
 	}
 }
 
@@ -348,13 +350,11 @@ function verify_student_exists()
 	if ( $g_obj_db->get_number_of_rows( $res_student ) == 0 )
 	{
 		MessageHandler::add_message( MSG_ERROR, 'The Student does not exist' );
-		return false;
 	}
 	
 	else
 	{
 		$g_arr_student_info = $g_obj_db->fetch( $res_student );
-		return true;
 	}
 }
 
