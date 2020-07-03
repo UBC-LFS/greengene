@@ -318,25 +318,25 @@ function on_delete_handler()
 	{
 		if( $g_obj_ta_manager->delete_user( $arr_ta_names[$i][0] ) )
 		{
-			array_push( $arr_success, $arr_ta_names[$i] );
+			array_push( $arr_success, $arr_ta_names[$i][0] );
 		}
 		
 		else
 		{
-			array_push( $arr_fail, $arr_ta_names[$i] );
+			array_push( $arr_fail, $arr_ta_names[$i][0] );
 		}
 	}
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Successfully deleted', $arr_success );
+		$str_message = PageHandler::display_users_cwl( 'Successfully deleted', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Failed to delete', $arr_fail );
+		$str_message = PageHandler::display_users_cwl( 'Failed to delete', $arr_fail );
 		
 		MessageHandler::add_message( MSG_FAIL, $str_message );
 	}
@@ -371,25 +371,25 @@ function on_assign_handler()
 	{
 		if ( $g_obj_assign_ta_manager->assign_TA( $arr_ta_names[$i][0], $int_selected_course_id ) )
 		{
-			array_push( $arr_success, $arr_ta_names[$i] );
+			array_push( $arr_success, $arr_ta_names[$i][0]);
 		}
 		
 		else
 		{
-			array_push( $arr_fail, $arr_ta_names[$i] );
+			array_push( $arr_fail, $arr_ta_names[$i][0]);
 		}
 	}
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Successfully assigned', $arr_success );
+		$str_message = PageHandler::display_user_cwl( 'Successfully assigned', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Failed to assign', $arr_fail );
+		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
 		
 		MessageHandler::add_message( MSG_FAIL, $str_message );
 	}

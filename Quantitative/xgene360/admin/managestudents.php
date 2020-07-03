@@ -493,12 +493,12 @@ function on_assign_handler()
 		{
 			if ( $g_obj_assign_student_manager->assign_student_to_course( $arr_student_names[$i][0], $int_selected_course_id ) )
 			{
-				array_push( $arr_success, $arr_student_names[$i] );
+				array_push( $arr_success, $arr_student_names[$i][0] );
 			}
 			
 			else
 			{
-				array_push( $arr_fail, $arr_student_names[$i] );
+				array_push( $arr_fail, $arr_student_names[$i][0] );
 			}
 		}
 	}
@@ -509,26 +509,26 @@ function on_assign_handler()
 		{
 			if ( $g_obj_assign_student_manager->assign_student_to_problem( $arr_student_names[$i][0], $int_selected_problem_id ) )
 			{
-				array_push( $arr_success, $arr_student_names[$i] );
+				array_push( $arr_success, $arr_student_names[$i][0] );
 			}
 			
 			else
 			{
-				array_push( $arr_fail, $arr_student_names[$i] );
+				array_push( $arr_fail, $arr_student_names[$i][0] );
 			}
 		}
 	}
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Successfully assigned', $arr_success );
+		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Failed to assign', $arr_fail );
+		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
 		
 		MessageHandler::add_message( MSG_FAIL, $str_message );
 	}
