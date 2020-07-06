@@ -7,7 +7,7 @@
   <p>To login to the application:</p> 
   <ol> 
     <li>Enter a CWL username.</li> 
-    <li>Enter a password.</li> 
+    <li>Enter a password associated with the CWL username.</li> 
     <li>Press the "Login" button.</li> 
     <li>If the user is valid, the user will log into their account.</li> 
     <li>If the user is not valid, an error message will be produced and the user will be prompted to enter the information again.</li> 

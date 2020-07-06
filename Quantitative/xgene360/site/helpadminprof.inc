@@ -7,54 +7,31 @@
       <p>To login to the application:</p>
       <ol>
         <li>
-          Enter a username.</li>
+          Enter a CWL username.</li>
         <li>
-          Enter a password.</li>
+          Enter a password associated with the CWL username.</li>
         <li>
-          Choose between logging in either XGene 360 or GreenGene.</li>
-        <li>
-          Press the ‘Login’ button.</li>
+          Press the "Login" button.</li>
         <li>
           If the user is valid, the user will log into their account.</li>
         <li>
           If the user is not valid, an error message will be produced and the user will 
           be prompted to enter the information again.</li>
       </ol>
-      <p>There is an additional option in the login box to login to either XGene 360 or 
-        GreenGene. If the user selected the GreenGene radio button, the user should be 
-        a valid GreenGene user. By default the user will be logged into XGene 360.</p>
-      <p>If user desires to create an account, the user will have to contact the 
-        administrator of the application.</p>
+      <p>Only users with valid UBC CWL account are allowed to access the application.</p>
+      <p>If user desires to have access to the application, the user will have to contact either a professor or site administrator of the application.</p> 
       <a name="logout"></a>
       <h3><a name="_Toc132145131">Logout</a></h3>
       <p>To logout of the application while logged in:</p>
       <ol>
         <li>
-          Click the ‘LOGOUT’ link on the upper-right corner of the page.
+          Click the "LOGOUT" link on the upper-right corner of the page.
         </li>
         <li>
           The user will be logged out and brought back to the login page.</li>
       </ol>
       <p>Note that the user can log out at any time while logged in.</p>
       <a name="changepassword"></a>
-      <h3><a name="_Toc132145132">Change Password</a></h3>
-      <p>Users have the capacity to change their own passwords. To change passwords:</p>
-      <ol>
-        <li>
-          Click on the ‘Change Password’ link on the upper-right corner of the page.
-        </li>
-        <li>
-          Enter the old password.</li>
-        <li>
-          Enter the new password.</li>
-        <li>
-          Enter the new password again for confirmation.
-        </li>
-        <li>
-          Press the ‘Update’ button.</li>
-      </ol>
-      <p>If the confirmation does not match, an error message will be produced and the 
-        user will be prompted to fill the correct information.</p>
       <h3><a name="_Toc132145133">Navigation Bar</a></h3>
       <p>The navigation bar on the top will hold links to relevant pages such as 
         managing courses or viewing problems.</p>
@@ -90,14 +67,14 @@
       <p>To view a list of courses:</p>
       <ol>
         <li>
-          Select ‘Manage Courses’ on the navigation bar.
+          Select "Manage Courses" on the navigation bar.
         </li>
       </ol>
       <h3><a name="_Toc132145138">Creating New Course</a></h3>
       <p>To create a new course:</p>
       <ol>
         <li>
-          Click on the ‘Create New Course’ button on the ‘Manage Courses’ page.
+          Click on the "Create New Course" button on the "Manage Courses" page.
         </li>
         <li>
           A box will open with course information fields.</li>
@@ -105,20 +82,20 @@
           Fill the fields in the box.
         </li>
         <li>
-          Press the ‘Create' button inside the box, or press ‘Reset’ to reset fields.</li>
+          Press the "Create" button inside the box, or press "Reset" to reset fields.</li>
       </ol>
       <h3><a name="_Toc132145139">Deleting Existing Course(s)</a></h3>
       <p>To delete existing courses:</p>
       <ol>
         <li>
-          Select courses to be deleted via checkboxes on the ‘Manage Courses’ page.</li>
+          Select courses to be deleted via checkboxes on the "Manage Courses" page.</li>
         <li>
-          Press the ‘Delete Selected Courses’ button.</li>
+          Press the "Delete Selected Courses" button.</li>
       </ol>
       <h3><a name="_Toc132145140">Viewing Course Information</a></h3>
       <p>To view specific information for a course entry:</p>
       <ol>
-        <li>Left-click on a particular course entry on the ‘Manage Courses’ page.</li>
+        <li>Left-click on a particular course entry on the "Manage Courses" page.</li>
         <li>
         A new page will load with specific course information.</li>
       </ol>
@@ -127,13 +104,13 @@
       <ol>
         <li>
           View specific course information by left-clicking on a particular entry on the 
-          ‘Manage Courses’ page.</li>
+          "Manage Courses" page.</li>
         <li>
           Edit the fields that allow editing.</li>
         <li>
-          Press the ‘Update’ button.</li>
+          Press the "Update" button.</li>
       </ol>
-      <p><a name="_Toc132145142"> class=Heading2Char> style='font-size:14.0pt'>Problems 
+      <p><a name="_Toc132145142" class=Heading2Char style='font-size:14.0pt' >Problems 
           Management</a></p>
       <p>Problems are the heart of the application. This is where the professor can 
         assign students a group of plants for the student to breed and solve the 
@@ -142,14 +119,14 @@
       <p>To view a list of problems:</p>
       <ol>
         <li>
-          Select ‘Manage Problems’ on the navigation bar.
+          Select "Manage Problems" on the navigation bar.
         </li>
       </ol>
       <h3><a name="_Toc132145144">Creating New Problem</a></h3>
       <p>To create a new problem:</p>
       <ol>
         <li>
-          Click on the ‘Create New Problem’ button on the ‘Manage Problems’ page.
+          Click on the "Create New Problem" button on the "Manage Problems" page.
         </li>
         <li>
           A new page will appear with problem information fields.</li>
@@ -157,21 +134,21 @@
           Fill the fields in the box.
         </li>
         <li>
-          Press the ‘Create' button, or press ‘Reset’ to reset fields.</li>
+          Press the "Create" button, or press "Reset" to reset fields.</li>
       </ol>
       <h3><a name="_Toc132145145">Deleting Selected Problem(s)</a></h3>
       <p>To delete existing problems:</p>
       <ol>
         <li>
-          Select problems to be deleted via checkboxes on the ‘Manage Problems’ page.</li>
+          Select problems to be deleted via checkboxes on the "Manage Problems" page.</li>
         <li>
-          Press the ‘Delete Selected Problems’ button.</li>
+          Press the "Delete Selected Problems" button.</li>
       </ol>
       <h3><a name="_Toc132145146">Viewing Problem Information</a></h3>
       <p>To view specific information for a problem entry:</p>
       <ol>
         <li>
-          Left-click on a particular problem entry on the ‘Manage Problems’ page.</li>
+          Left-click on a particular problem entry on the "Manage Problems" page.</li>
         <li>
           A new page will load with specific problem information.</li>
       </ol>
@@ -180,17 +157,17 @@
       <ol>
         <li>
           View specific problem information by left-clicking on a particular entry on the 
-          ‘Manage Problem’ page.</li>
+          "Manage Problem" page.</li>
         <li>
           Edit the fields that allow editing.</li>
         <li>
-          Press the ‘Update’ button.</li>
+          Press the "Update" button.</li>
       </ol>
       <h3><a name="_Toc132145148">Viewing Submitted Problems</a></h3>
-      <p>To view a student’s particular submitted problem:</p>
+      <p>To view a student's particular submitted problem:</p>
       <ol>
         <li>
-          Find a button labeled ‘View Submitted’ on the ‘Manage Problems’ page that will 
+          Find a button labeled "View Submitted" on the "Manage Problems" page that will 
           lead to information about problem solutions.
         </li>
         <li>
@@ -203,14 +180,14 @@
       <p>To view a list of professors:</p>
       <ol>
         <li>
-          Select ‘Manage Professors’ on the navigation bar.
+          Select "Manage Professors" on the navigation bar.
         </li>
       </ol>
       <h3><a name="_Toc132145151">Creating New Professor</a></h3>
       <p>To create a new professor:</p>
       <ol>
         <li>
-          Click on the ‘Create New’ button on the ‘Manage Professors’ page.
+          Click on the "Create New" button on the "Manage Professors" page.
         </li>
         <li>
           A box will open with professor information fields.</li>
@@ -218,21 +195,21 @@
           Fill the fields in the box.
         </li>
         <li>
-          Press the ‘Create' button inside the box, or press ‘Reset’ to reset fields.</li>
+          Press the "Create" button inside the box, or press "Reset" to reset fields.</li>
       </ol>
       <h3><a name="_Toc132145152">Deleting Existing Professor(s)</a></h3>
       <p>To delete existing professor(s):</p>
       <ol>
         <li>
-          Select courses to be deleted via checkboxes on the ‘Manage Professors’ page.</li>
+          Select courses to be deleted via checkboxes on the "Manage Professors" page.</li>
         <li>
-          Press the ‘Delete Selected’ button.</li>
+          Press the "Delete Selected" button.</li>
       </ol>
       <h3><a name="_Toc132145153">Viewing Professor Information</a></h3>
       <p>To view specific information for a professor entry:</p>
       <ol>
         <li>
-          Left-click on a particular course entry on the ‘Manage Professors’ page.</li>
+          Left-click on a particular course entry on the "Manage Professors" page.</li>
         <li>
           A new page will load with specific professor information.</li>
       </ol>
@@ -241,14 +218,14 @@
       <ol>
         <li>
           View specific professor information by left-clicking on a particular entry on 
-          the ‘Manage Professors’ page.</li>
+          the "Manage Professors" page.</li>
         <li>
           Edit the fields that allow editing.</li>
         <li>
-          Press the ‘Update’ button.</li>
+          Press the "Update" button.</li>
       </ol>
       <p>Professors can be edited when their information is viewed. Users can edit the 
-        fields and then press the ‘Update’ button.</p>
+        fields and then press the "Update" button.</p>
       <h3><a name="_Toc132145155">Importing Professors from External List</a></h3>
       <p>Users are able to import professor accounts by providing a .csv file. A .csv 
         file is essentially a file which lists professor information to be inserted 
@@ -257,21 +234,16 @@
       <p>To import professor data:</p>
       <ol>
         <li>
-          Press the ‘Import List’ button.
+          Press the "Import List" button.
         </li>
         <li>
           A box will appear for importing data.</li>
         <li>
-          Click ‘Browse’ to select a local file to load.
+          Click "Browse" to select a local file to load.
         </li>
         <li>
-          After selecting the file, press the ‘Import’ button to import the file.</li>
+          After selecting the file, press the "Import" button to import the file.</li>
       </ol>
-      <p>There is an option for the professor to be able to access the GreenGene 
-        application. To be able to do so, the user can check the box beside the 
-        sentence ‘Allow user to access GreenGene site’. The user will be prompted to 
-        choose a GreenGene course to insert the professor in. The course selection is a 
-        mandatory step.</p>
       <h3><a name="_Toc132145156">Exporting Selected Professors to External List</a></h3>
       <p>Users are able to export professor accounts into new local .csv files.
       </p>
@@ -281,7 +253,7 @@
           Select professors from the list via the checkboxes on the left.
         </li>
         <li>
-          Press the ‘Exported Selected’ button.</li>
+          Press the "Exported Selected" button.</li>
         <li>
           After pressing the button, there will be a prompt for downloading the file into 
           a local folder.</li>
@@ -296,7 +268,7 @@
           Select a course in the dropdown menu on the top-right of the professor listing.
         </li>
         <li>
-          Press the ‘Assign’ button.</li>
+          Press the "Assign" button.</li>
       </ol>
       <h2><a name="_Toc132145158">Teaching Assistants (TAs) Management</a></h2>
       <p>TAs are able to view lists of courses, problems and students. They can also 
@@ -305,14 +277,14 @@
       <p>To view a list of TAs:</p>
       <ol>
         <li>
-          Select ‘Manage TAs’ on the navigation bar.
+          Select "Manage TAs" on the navigation bar.
         </li>
       </ol>
       <h3><a name="_Toc132145160">Creating New TA</a></h3>
       <p>To create a new TA:</p>
       <ol>
         <li>
-          Click on the ‘Create New’ button on the ‘Manage TAs’ page.
+          Click on the "Create New" button on the "Manage TAs" page.
         </li>
         <li>
           A box will open with TA information fields.</li>
@@ -320,20 +292,20 @@
           Fill the fields in the box.
         </li>
         <li>
-          Press the ‘Create' button inside the box, or press ‘Reset’ to reset fields.</li>
+          Press the "Create" button inside the box, or press "Reset" to reset fields.</li>
       </ol>
       <h3><a name="_Toc132145161">Deleting Existing TA(s)</a></h3>
       <p>To delete existing TA(s):</p>
       <ol>
         <li>
-        Select courses to be deleted via checkboxes on the ‘Manage TAs’ page.</li>
+        Select courses to be deleted via checkboxes on the "Manage TAs" page.</li>
       <li>
-        Press the ‘Delete Selected’ button.</li> </ol>
+        Press the "Delete Selected" button.</li> </ol>
         <h3><a name="_Toc132145162">Viewing TA Information</a></h3>
         <p>To view specific information for a TA entry:</p>
        <ol>
       <li>
-        Left-click on a particular course entry on the ‘Manage TAs’ page.</li>
+        Left-click on a particular course entry on the "Manage TAs" page.</li>
       <li>
         A new page will load with specific TA information.</li>
       </ol>
@@ -342,14 +314,14 @@
       <ol>
         <li>
           View specific TA information by left-clicking on a particular entry on the 
-          ‘Manage TAs’ page.</li>
+          "Manage TAs" page.</li>
         <li>
           Edit the fields that allow editing.</li>
         <li>
-          Press the ‘Update’ button.</li>
+          Press the "Update" button.</li>
       </ol>
       <p>TAs can be edited when their information is viewed. Users can edit the fields 
-        and then press the ‘Update’ button.</p>
+        and then press the "Update" button.</p>
       <h3><a name="_Toc132145164">Importing TAs from External List</a></h3>
       <p>Users are able to import TA accounts by providing a .csv file. A .csv file is 
         essentially a file which lists TA information to be inserted into the 
@@ -358,20 +330,16 @@
       <p>To import TA data:</p>
       <ol>
         <li>
-          Press the ‘Import List’ button.
+          Press the "Import List" button.
         </li>
         <li>
           A box will appear for importing data.</li>
         <li>
-          Click ‘Browse’ to select a local file to load.
+          Click "Browse" to select a local file to load.
         </li>
         <li>
-          After selecting the file, press the ‘Import’ button to import the file.</li>
+          After selecting the file, press the "Import" button to import the file.</li>
       </ol>
-      <p>There is an option for the TA to be able to access the GreenGene application. 
-        To be able to do so, the user can check the box beside the sentence ‘Allow user 
-        to access GreenGene site’. The user will be prompted to choose a GreenGene 
-        course to insert the TA in. The course selection is a mandatory step.</p>
       <h3><a name="_Toc132145165">Exporting Selected TAs to External List</a></h3>
       <p>Users are able to export TA accounts into new local .csv files.
       </p>
@@ -381,7 +349,7 @@
           Select TAs from the list via the checkboxes on the left.
         </li>
         <li>
-          Press the ‘Exported Selected’ button.</li>
+          Press the "Exported Selected" button.</li>
         <li>
           After pressing the button, there will be a prompt for downloading the file into 
           a local folder.</li>
@@ -396,7 +364,7 @@
           Select a course in the dropdown menu on the top-right of the TA listing.
         </li>
         <li>
-          Press the ‘Assign’ button.</li>
+          Press the "Assign" button.</li>
       </ol>
       <h2><a name="_Toc132145167">Students Management</a></h2>
       <p>Students are the users who will be solving the problems in the application.</p>
@@ -404,14 +372,14 @@
       <p>To view a list of students:</p>
       <ol>
         <li>
-          Select ‘Manage Students’ on the navigation bar.
+          Select "Manage Students" on the navigation bar.
         </li>
       </ol>
       <h3><a name="_Toc132145169">Creating New Student</a></h3>
       <p>To create a new student:</p>
       <ol>
         <li>
-          Click on the ‘Create New’ button on the ‘Manage Students’ page.
+          Click on the "Create New" button on the "Manage Students" page.
         </li>
         <li>
           A box will open with student information fields.</li>
@@ -419,21 +387,21 @@
           Fill the fields in the box.
         </li>
         <li>
-          Press the ‘Create' button inside the box, or press ‘Reset’ to reset fields.</li>
+          Press the "Create" button inside the box, or press "Reset" to reset fields.</li>
       </ol>
       <h3><a name="_Toc132145170">Deleting Existing Student(s)</a></h3>
       <p>To delete existing student(s):</p>
       <ol>
         <li>
-          Select courses to be deleted via checkboxes on the ‘Manage Students’ page.</li>
+          Select courses to be deleted via checkboxes on the "Manage Students" page.</li>
         <li>
-          Press the ‘Delete Selected’ button.</li>
+          Press the "Delete Selected" button.</li>
       </ol>
       <h3><a name="_Toc132145171">Viewing Student Information</a></h3>
       <p>To view specific information for a student entry:</p>
       <ol>
         <li>
-          Left-click on a particular course entry on the ‘Manage Students’ page.</li>
+          Left-click on a particular course entry on the "Manage Students" page.</li>
         <li>
           A new page will load with specific student information.</li>
       </ol>
@@ -442,37 +410,33 @@
       <ol>
         <li>
           View specific student information by left-clicking on a particular entry on the 
-          ‘Manage Students’ page.</li>
+          "Manage Students" page.</li>
         <li>
           Edit the fields that allow editing.</li>
         <li>
-          Press the ‘Update’ button.</li>
+          Press the "Update" button.</li>
       </ol>
       <p>Students can be edited when their information is viewed. Users can edit the 
-        fields and then press the ‘Update’ button.</p>
+        fields and then press the "Update" button.</p>
       <h3><a name="_Toc132145173">Importing Students from External List</a></h3>
-      <p>Users are able to import student accounts by providing a .csv file. A .csv 
-        file is essentially a file which lists student information to be inserted into 
-        the application. Student accounts are separated by newlines (Enter) and the 
-        fields of a student are separated by commas.</p>
+      <p>Users are able to import a list of CWL username of students for a specific class(class list). </p>
       <p>To import student data:</p>
       <ol>
         <li>
-          Press the ‘Import List’ button.
+          Press the "Import List" button.
         </li>
         <li>
-          A box will appear for importing data.</li>
+          A box will appear for importing the class.</li>
         <li>
-          Click ‘Browse’ to select a local file to load.
+          Fill in the details in the Import Class form.
         </li>
         <li>
-          After selecting the file, press the ‘Import’ button to import the file.</li>
+          Press the "Import" button to import class list for the specified section.</li>
+        <li>
+          A prompt will appear to confirm the import of the class list.
+        <li>
+          Click "OK" to import the class list.
       </ol>
-      <p>There is an option for the student to be able to access the GreenGene 
-        application. To be able to do so, the user can check the box beside the 
-        sentence ‘Allow user to access GreenGene site’. The user will be prompted to 
-        choose a GreenGene course to insert the student in. The course selection is a 
-        mandatory step.</p>
       <h3><a name="_Toc132145174">Exporting Selected Students to External List</a></h3>
       <p>Users are able to export student accounts into new local .csv files.
       </p>
@@ -482,7 +446,7 @@
           Select students from the list via the checkboxes on the left.
         </li>
         <li>
-          Press the ‘Exported Selected’ button.</li>
+          Press the "Exported Selected" button.</li>
         <li>
           After pressing the button, there will be a prompt for downloading the file into 
           a local folder.</li>
@@ -497,7 +461,7 @@
           Select a problem in the dropdown menu on the top-right of the student listing.
         </li>
         <li>
-          Press the ‘Assign’ button.</li>
+          Press the "Assign" button.</li>
       </ol>
       <h3><a name="_Toc132145176">Assigning Student(s) to All Problems in a Course</a></h3>
       <p>To assign students to all problems in a course:</p>
@@ -509,7 +473,7 @@
           Select a course in the dropdown menu on the top-right of the student listing.
         </li>
         <li>
-          Press the ‘Assign’ button.</li>
+          Press the "Assign" button.</li>
       </ol>
       <h1><a name="_Toc132145177">Page Information</a></h1>
       <h2><a name="_Toc132145178">General Page Attributes</a></h2>
@@ -518,10 +482,6 @@
       <p>This link on the upper-right corner will lead to a help page that corresponds 
         with the current page the user is viewing. A help page has information on 
         functions and attributes for the page, as well as access to other help files.</p>
-      <h3><a name="_Toc132145180">Change Password</a></h3>
-      <p>This link on the upper-right corner will lead to a page that will allow you to 
-        change the password of the user that is logged in. This option does not appear 
-        when no account is active.</p>
       <h3><a name="_Toc132145181">LOGOUT</a></h3>
       <p>This link on the upper-right corner will allow a logged user to log out of 
         his/her account. After clicking the link, the user will be redirected to the 
@@ -538,24 +498,12 @@
       <h3><a name="_Toc132145185">Login Fields</a></h3>
       <table class="format" width="100%">
         <tr>
-          <td width="200"><p><i>Username</i></p>
-          </td>
-          <td><p>The unique username associated with each account.</p>
-          </td>
+          <td width="200"><p><i>CWL Username</i></p></td> 
+          <td><p>The CWL username associated with each account.</p></td> 
         </tr>
         <tr>
-          <td><p><i>Password</i></p>
-          </td>
-          <td><p>The password associated with the username entered above.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>XGene 360/GreenGene radio buttons</i></p>
-          </td>
-          <td><p>This will allow the user to choose whether he/she wants to login to the 
-              XGene 360 or GreenGene application. It is assumed that the user has a valid 
-              account with the desired login type.</p>
-          </td>
+          <td><p><i>Password</i></p></td> 
+          <td><p>The password associated with the CWL username entered above.</p></td> 
         </tr>
       </table>
       <a name="createproblem"></a>
@@ -594,21 +542,6 @@
           </td>
         </tr>
         <tr>
-          <td><p><i>Start Date</i></p>
-          </td>
-          <td><p>The starting date for the problem. The problem will not show until the 
-              starting date has passed. The month, day, year, hour and minute can be 
-              specified.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Due Date</i></p>
-          </td>
-          <td><p>The due date for the problem. The month, day, year, hour and minute can be 
-              specified.</p>
-          </td>
-        </tr>
-        <tr>
           <td><p><i>First Trait Name</i></p>
           </td>
           <td><p>This field denotes the name of one of the traits to be specified.</p>
@@ -643,7 +576,7 @@
         <tr>
           <td><p><i>Range</i><i> of Acceptance</i></p>
           </td>
-          <td><p>This is a percentage that denotes how far the student’s numerical solutions 
+          <td><p>This is a percentage that denotes how far the student's numerical solutions 
               can be from the actual solution to be considered correct.</p>
           </td>
         </tr>
@@ -682,7 +615,7 @@
         <tr>
           <td><p><i>Histogram</i><i> Range</i></p>
           </td>
-          <td><p>This is a percentage that denotes the histogram’s range on the x-axis.</p>
+          <td><p>This is a percentage that denotes the histogram's range on the x-axis.</p>
           </td>
         </tr>
       </table>
@@ -718,35 +651,9 @@
           </td>
         </tr>
         <tr>
-          <td><p><i>Username</i></p>
+          <td><p><i>CWL Username</i></p>
           </td>
-          <td><p>This field denotes the unique username associated with the professor.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Password</i></p>
-          </td>
-          <td><p>This field denotes the password associated with the professor</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Confirm Password</i></p>
-          </td>
-          <td><p>When creating a new professor, a confirmation is needed for the newly 
-              entered password in case the password is incorrectly typed in.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Allow user to access GreenGene site</i></p>
-          </td>
-          <td><p>This checkbox, if selected, allows a professor to access the GreenGene site.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>GreenGene Course</i></p>
-          </td>
-          <td><p>If the above checkbox is selected, this field denotes the GreenGene course 
-              associated with the professor.</p>
+          <td><p>This field denotes the CWL username associated with the professor.</p>
           </td>
         </tr>
       </table>
@@ -789,35 +696,9 @@
           </td>
         </tr>
         <tr>
-          <td><p><i>Username</i></p>
+          <td><p><i>CWL Username</i></p>
           </td>
-          <td><p>This field denotes the unique username associated with the TA.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Password</i></p>
-          </td>
-          <td><p>This field denotes the password associated with the TA</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Confirm Password</i></p>
-          </td>
-          <td><p>When creating a new TA, a confirmation is needed for the newly entered 
-              password in case the password is incorrectly typed in.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Allow user to access GreenGene site</i></p>
-          </td>
-          <td><p>This checkbox, if selected, allows a TA to access the GreenGene site.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>GreenGene Course</i></p>
-          </td>
-          <td><p>If the above checkbox is selected, this field denotes the GreenGene course 
-              associated with the TA.</p>
+          <td><p>This field denotes the CWL username associated with the TA.</p>
           </td>
         </tr>
       </table>
@@ -860,44 +741,12 @@
           </td>
         </tr>
         <tr>
-          <td><p><i>Student Number</i></p>
+          <td><p><i>CWL Username</i></p>
           </td>
-          <td><p>The field denotes the unique student number associated with the student.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Username</i></p>
-          </td>
-          <td><p>This field denotes the unique username associated with the student.</p>
+          <td><p>This field denotes the CWL username associated with the student.</p>
           </td>
         </tr>
-        <tr>
-          <td><p><i>Password</i></p>
-          </td>
-          <td><p>This field denotes the password associated with the student</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Confirm Password</i></p>
-          </td>
-          <td><p>When creating a new student, a confirmation is needed for the newly entered 
-              password in case the password is incorrectly typed in.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>Allow user to access GreenGene site</i></p>
-          </td>
-          <td><p>This checkbox, if selected, allows a student to access the GreenGene site.</p>
-          </td>
-        </tr>
-        <tr>
-          <td><p><i>GreenGene Course</i></p>
-          </td>
-          <td><p>If the above checkbox is selected, this field denotes the GreenGene course 
-              associated with the student.</p>
-          </td>
-        </tr>
-      </table>
+   </table>
       <h3><a name="_Toc132145208">Create New</a></h3>
       <p>This button is displayed on the left side, above and below the table of data. 
         Pressing this button will open a box that displays fields to fill in to create 
@@ -905,10 +754,8 @@
       </p>
       <h3><a name="_Toc132145209">Import List</a></h3>
       <p>This button is displayed on the left side, above and below the table of data. 
-        Pressing this button will open a box that displays fields to import a .csv 
-        file. A .csv file is essentially a file which lists student information to be 
-        inserted into the application. Student accounts are separated by newlines 
-        (Enter) and the fields of a student are separated by commas.</p>
+        Pressing this button will open a box that displays fields to import a list of 
+        students from a specific class.</p>
       <h3><a name="_Toc132145210">Export Selected</a></h3>
       <p>This button is displayed on the left side, above and below the table of data. 
         Pressing this button will allow the exporting of selected students into a .csv 
@@ -939,8 +786,8 @@
         <tr>
           <td><p><i>Description</i></p>
           </td>
-          <td><p>This field is the description of the course. (i.e. “Introduction to 
-              Biology”) The description field is limited to 250 characters, and the number of 
+          <td><p>This field is the description of the course. (i.e. "Introduction to 
+              Biology") The description field is limited to 250 characters, and the number of 
               characters will be indicated by the world count field below the description 
               field.&nbsp;
             </p>
