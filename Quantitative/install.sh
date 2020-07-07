@@ -179,23 +179,6 @@ if [ $? -ne 0 ]; then
 	exit
 fi
 
-echo "<?php
-// GLOBAL CONFIGURATION FILE
-define('DBHOST', '$DBHOST');
-define('DBUSER', '$DBUSER');
-define('DBPWD', '$DBPWD');
-define('DBNAME', '$DBNAME');
-
-define('URLROOT', '$URLROOTgreengene/');
-define('REALROOT', '`pwd`/greengene');
-define('LOGPATH', REALROOT.'/greengene/logs/error.log');
-?>" > greengene/includes/config.php
-
-if [ $? -ne 0 ]; then
-	echo "Error writing configuration file: `pwd`/greengene/includes/config.php"
-	exit
-fi
-
 echo "Configuration file written successfully!"
 
 echo
