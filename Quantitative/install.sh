@@ -185,8 +185,9 @@ echo
 echo
 echo
 
-echo "STEP 8. Verify permissions."
+echo "STEP 10. Verify permissions."
 
+mkdir xgene360/log
 touch xgene360/log/sql.log
 
 chmod a+w xgene360/log/sql.log
@@ -198,18 +199,6 @@ fi
 touch xgene360/log/transaction.log
 
 chmod a+w xgene360/log/transaction.log
-if [ $? -ne 0 ]; then
-	echo "Error setting file permissions."
-	exit
-fi
-
-mkdir greengene/logs/
-
-cat /dev/null > greengene/logs/error.log
-
-touch greengene/logs/error.log
-
-chmod a+w greengene/logs/error.log
 if [ $? -ne 0 ]; then
 	echo "Error setting file permissions."
 	exit
