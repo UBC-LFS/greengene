@@ -47,7 +47,7 @@ echo "STEP 3. Relative URL to installation."
 echo "Do not include http:// or hostnames. Do include trailing slashes."
 echo "Examples:"
 echo "   /xgene360/"
-echo "   /~joeprof/xgene360/"
+echo "   /greengene/Quantitative/xgene360/"
 echo
 echo "Enter relative URL:"
 read URLROOT
@@ -67,37 +67,36 @@ echo "Enter database username:"
 read DBUSER
 echo "Enter database user password:"
 read DBPWD
-# echo "Attempting to connect to database..."
-# 
-# $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME < schema.sql
-# if [ $? -ne 0 ]; then
-# 	echo "Database errors encountered. Please verify your credentials."
-# 	exit
-# fi
-# 
-# echo "Database schema created successfully!"
-# echo
-# echo
+echo "Attempting to connect to database..."
+ 
+$MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME < schema.sql
+if [ $? -ne 0 ]; then
+	echo "Database errors encountered. Please verify your credentials."
+	exit
+fi
+ 
+echo "Database schema created successfully!"
+echo
+echo
+echo "STEP 5. Initial user account."
+echo "Please enter your CWL Username for the site administrator account."
+echo "This CWL User will be allowed to enter the application as a site Administrator."
+echo
+echo "Enter administrator CWL:"
+read USERNAME
+echo
+echo "Attempting to create default user..."
 
-# echo "STEP 5. Initial user account."
-# echo "You must now pick an initial password for the site administrator account."
-# echo "The username of this account is: admin"
-# echo
-# echo "Enter initial password:"
-# read USERPWD
-# echo
-# echo "Attempting to create default user..."
-# 
-# echo "INSERT INTO User (UserId, PrivilegeLvl, FirstName, LastName, Pwd) VALUES ('admin', 10, 'Site', 'Administrator', password('$USERPWD'))" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
-# 
-# if [ $? -ne 0 ]; then
-# 	echo "Error creating default user."
-# 	exit
-# fi
-# 
-# echo "Default user created."
-# echo
-# echo
+echo "INSERT INTO User (UserId, PrivilegeLvl, FirstName, LastName) VALUES ('$USERNAME', 10, 'Site', 'Administrator')" | $MYSQL -h $DBHOST -u $DBUSER --password=$DBPWD $DBNAME
+
+if [ $? -ne 0 ]; then
+	echo "Error creating default user."
+	exit
+fi
+
+echo "Default user created."
+echo
+echo
 
 echo "STEP 6. System Time Zone."
 echo "You must specify the numeric time zone where users of XGene 360 will reside."
