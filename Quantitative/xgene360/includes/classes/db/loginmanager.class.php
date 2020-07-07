@@ -55,7 +55,6 @@ class LoginManager
 
 	function ldap_login($str_username, $str_password)
 	{
-		return true;
 		$ldap = LDAP_LOGIN_HOST;
 		$usr = "uid=".$str_username.",ou=People,dc=landfood,dc=ubc,dc=ca";
 		$ds = ldap_connect($ldap);
