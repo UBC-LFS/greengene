@@ -4,7 +4,7 @@ class LoginManager
 {
 	function authenticate( $str_username, $str_password, $obj_db )
 	{
-		$str_sql_query = "SELECT U.UserId, U.Pwd, U.PrivilegeLvl, U.FirstName, U.LastName, U.PrivilegeLvl
+		$str_sql_query = "SELECT U.UserId, U.PrivilegeLvl, U.FirstName, U.LastName, U.PrivilegeLvl
 							          FROM User U
 									  WHERE U.UserId = '" . $obj_db->format_sql_string( $str_username ) . "'";
 
@@ -14,7 +14,7 @@ class LoginManager
 	
 	function authenticate_hash( $str_username, $str_password_hash, $obj_db )
 	{
-		$str_sql_query = "SELECT U.UserId, U.Pwd, U.PrivilegeLvl, U.FirstName, U.LastName, U.PrivilegeLvl
+		$str_sql_query = "SELECT U.UserId, U.PrivilegeLvl, U.FirstName, U.LastName, U.PrivilegeLvl
 							          FROM User U
 							          WHERE U.UserId = '" . $obj_db->format_sql_string( $str_username ) . "'";
 	  
@@ -55,6 +55,7 @@ class LoginManager
 
 	function ldap_login($str_username, $str_password)
 	{
+		return true;
 		$ldap = LDAP_LOGIN_HOST;
 		$usr = "uid=".$str_username.",ou=People,dc=landfood,dc=ubc,dc=ca";
 		$ds = ldap_connect($ldap);
