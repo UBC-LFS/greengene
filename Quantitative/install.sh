@@ -35,7 +35,7 @@ echo
 echo "STEP 2. Physical (file system) installation path."
 echo "Current directory is: `pwd`"
 
-if [ ! -e 'xgene360/includes/global.inc.php' ] || [ ! -e 'greengene/includes/global.php' ]; then
+if [ ! -e 'xgene360/includes/global.inc.php' ]; then
 	echo "Missing files. Please correct installation path."
 	echo
 	exit
