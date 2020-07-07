@@ -57,7 +57,7 @@ class Security
 	}
 
 	function ldap_login($p_userId, $p_pwd) {
-		$ldap = "ldaps://eldapdccons.id.ubc.ca";
+		$ldap = LDAP_LOGIN_HOST;
 		$usr = "uid=".$p_userId.",ou=People,dc=landfood,dc=ubc,dc=ca";
 		$ds = ldap_connect($ldap);
 		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
