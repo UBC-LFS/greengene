@@ -176,7 +176,7 @@ CREATE TABLE `User` (
   `PrivilegeLvl` tinyint(3) unsigned NOT NULL default '3',
   `FirstName` varchar(20) NOT NULL default '',
   `LastName` varchar(20) NOT NULL default '',
-  `Pwd` varchar(50) default password('123'),
+  `Pwd` varchar(50),
   `StudentNum` int(8) unsigned default NULL,
   PRIMARY KEY  (`UserId`),
   KEY `LastName` (`LastName`)
