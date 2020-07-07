@@ -114,8 +114,52 @@ echo
 echo
 echo
 
+echo "STEP 7. LDAP service account"
+echo "Please enter the details for the LDAP account used to import the class list"
+echo "Example LDAP HOST:"
+echo "   ldaps://eldapcons.id.ubc.ca"
+echo 
+echo "Enter the LDAP HOST for the Service Account:"
+read LDAP_HOST
+echo "LDAP HOST entered: $LDAP_HOST"
+echo
+echo "Example LDAP DN(Distinguished Name):"
+echo "   uid=lfs-svc-greengene,ou=forestry.ubc.ca,dc=id,dc=ubc,dc=ca"
+echo 
+echo "Enter LDAP DN for the Service Account: "
+read LDAP_DN 
+echo "LDAP DN entered: $LDAP_DN"
+echo 
+echo "Enter the LDAP Password for the Service Account:"
+read LDAP_PW
+echo "LDAP Password entered: $LDAP_PW"
+echo
+echo "Attempting to connect to $LDAP_HOST ..."
 
-echo "STEP 7. Writing configuration."
+echo "ldapsearch -x -H $LDAP_HOST -D \"$LDAP_DN\" -w $LDAP_PW"
+
+if [$? -ne 0]; then 
+	echo "Error Connecting to $LDAP_HOST"
+	exit
+fi
+
+echo  "LDAP details successfully added to config file"
+echo 
+echo
+
+echo "Step 8. LDAP login"
+echo "Please enter the details LDAP used for students to login"
+echo "Example LDAP HOST:"
+echo "   ldaps://eldapcons.id.ubc.ca" 
+echo
+echo "Enter the LDAP HOST for the Student Login to connect to:"
+read LDAP_LOGIN_HOST
+echo "LDAP LOGIN HOST entered: $LDAP_LOGIN_HOST"
+
+echo
+echo 
+
+echo "STEP 9. Writing configuration."
 echo "<?php
 // GLOBAL CONFIGURATION FILE
 define('DB_SERVER', '$DBHOST');
@@ -125,6 +169,10 @@ define('DB_NAME', '$DBNAME');
 define('URLROOT', '"$URLROOT"xgene360/');
 define( 'GREENGENEURLROOT', '"$URLROOT"greengene/' );
 define( 'USER_TIME_ZONE', '$TIMEZONE' );
+define( 'LDAP_HOST', $LDAP_HOST);
+define( 'LDAP_DN', $LDAP_DN);
+define( 'LDAP_PW', $LDAP_PW);
+define( 'LDAP_LOGIN_HOST', $LDAP_LOGIN_HOST );
 ?>" > xgene360/includes/config.inc.php
 
 if [ $? -ne 0 ]; then
