@@ -168,10 +168,10 @@ define('DB_NAME', '$DBNAME');
 define('URLROOT', '"$URLROOT"xgene360/');
 define( 'GREENGENEURLROOT', '"$URLROOT"greengene/' );
 define( 'USER_TIME_ZONE', '$TIMEZONE' );
-define( 'LDAP_HOST', $LDAP_HOST);
-define( 'LDAP_DN', $LDAP_DN);
-define( 'LDAP_PW', $LDAP_PW);
-define( 'LDAP_LOGIN_HOST', $LDAP_LOGIN_HOST );
+define( 'LDAP_HOST', '$LDAP_HOST' );
+define( 'LDAP_DN', '$LDAP_DN' );
+define( 'LDAP_PW', '$LDAP_PW' );
+define( 'LDAP_LOGIN_HOST', '$LDAP_LOGIN_HOST' );
 ?>" > xgene360/includes/config.inc.php
 
 if [ $? -ne 0 ]; then
