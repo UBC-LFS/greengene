@@ -382,7 +382,7 @@ function on_assign_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_user_cwl( 'Successfully assigned', $arr_success );
+		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
