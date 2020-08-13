@@ -56,6 +56,7 @@ class LoginManager
 	function ldap_login($str_username, $str_password)
 	{
 		$ldap = LDAP_LOGIN_HOST;
+		// TODO: change dn 
 		$usr = "uid=".$str_username.",ou=People,dc=landfood,dc=ubc,dc=ca";
 		$ds = ldap_connect($ldap);
 		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
