@@ -74,12 +74,12 @@ class TA extends User
 
 		return true;
 	}
-	
+
 	/**
 	 * check that progeny values are valid
 	 * returns true if values are valid, false otherwise
 	 */
-	 function validProgenyValues($p_progenyPerMating, $p_maxProgeny) 
+	 function validProgenyValues($p_progenyPerMating, $p_maxProgeny)
 	 {
 	 		if ($p_progenyPerMating < 0)
 			{
@@ -91,14 +91,14 @@ class TA extends User
 				UserError::addError(752);
 				return false;
 			}
-			
+
 			//check to make sure that maxprogeny is NOT < progpermating
 			if ($p_maxProgeny < $p_progenyPerMating)
 			{
 				UserError::addError(765);
 				return false;
 			}
-			
+
 			//all values are OK
 			return true;
 	 }
@@ -135,10 +135,10 @@ class TA extends User
 		if ($p_progenyPerMating != -1 && $p_maxProgeny != -1)
 		{
 			//echo "<p> DEBUGGING: inside progenyvalues updating : $p_progenyPerMating, $p_maxProgeny";
-			
+
 			if (TA::validProgenyValues($p_progenyPerMating, $p_maxProgeny))
 			{
-				
+
 				$sql_query = 	"UPDATE StudentProblem ".
 							"SET ProgenyPerMating = " . $p_progenyPerMating . ",".
 							"	 MaxProgeny = " . $p_maxProgeny . ",".
@@ -146,14 +146,14 @@ class TA extends User
 							"		WHERE UserId = '" . $g_db->sqlString($p_userId) . "'";
 
 				//echo "<p> DEBUGGING: $sql_query";
-				
+
 				if ($g_db->queryCommit($sql_query) != true)
 				{
 					UserError::addError(608);
 					return false;
 				}
 			}
-			else 
+			else
 			{
 				//the progeny values entered were invalid
 				return false;
@@ -344,19 +344,19 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	/**
 	 * updateProgenyGenerated: helper function to update row in Student Problem table
 	 */
-	
+
 	function updateProgenyGenerated($p_userId,$p_currProgGenerated)
 	{
 		global $g_db;
-		
-		$sqlQuery = "UPDATE `StudentProblem` 
+
+		$sqlQuery = "UPDATE `StudentProblem`
 						 SET `ModificationDate` = NOW( ) ,
 						`ProgenyGenerated` = ". $p_currProgGenerated.
 						 " WHERE `UserId` = '". $g_db->sqlString($p_userId) ."'" ;
-		
-		
+
+
 		//echo "<p> DEBUGGING STATEMENT (UPDATEPROGENY GENERATED FUNCTION)".$sqlQuery;
-		
+
 		return $g_db->queryCommit($sqlQuery);
 	}
 
@@ -431,7 +431,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				$db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
 			                       	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
 			}
-			
+
 			if ($db_success)
 			{
 				//update the progenyGenerated field in StudentProblem because Cross::generateProgeny was called directly
@@ -441,7 +441,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				}
 					return false;
 			}
-			else 
+			else
 			{
 				//generateProgeny failed, so return false
 				return false;
@@ -544,7 +544,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				$db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
 			                       	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
 			}
-			
+
 			if ($db_success)
 			{
 				//update the progenyGenerated field in StudentProblem because Cross::generateProgeny was called directly
@@ -554,12 +554,12 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				}
 					return false;
 			}
-			else 
+			else
 			{
 				//generateProgeny failed, so return false
 				return false;
 			}
-			
+
 		}
 		else
 		{
@@ -596,7 +596,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function assignModifiedProblem($p_userId, $p_masterProblemId, $p_description, $p_name, $p_gmu1_2, $p_gmu2_3, $p_traitOrder, $p_epistasisCode, $p_arrPhenotypeNames, $p_arrPhenotypes, $p_progenyPerMating, $p_maxProgeny)
 	{
 		global $g_db;
-		
+
 		//check the progeny values
 		if (! TA::validProgenyValues($p_progenyPerMating, $p_maxProgeny)) {
 			return false;
@@ -696,7 +696,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			$db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
 		                       	   $p_gmu1_2, $p_gmu2_3, $p_progenyPerMating, 1);
 		}
-		
+
 		if ($db_success)
 			{
 				//update the progenyGenerated field in StudentProblem because Cross::generateProgeny was called directly
@@ -706,7 +706,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				}
 					return false;
 			}
-			else 
+			else
 			{
 				//generateProgeny failed, so return false
 				return false;
@@ -747,7 +747,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		if (! TA::validProgenyValues($p_progenyPerMating, $p_maxProgeny)) {
 			return false;
 		}
-		
+
 		// determine the traitnames
 		$p_trait1Name = $p_arrPhenotypeNames[0];
 		$p_trait2Name = $p_arrPhenotypeNames[1];
@@ -870,7 +870,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				}
 					return false;
 			}
-			else 
+			else
 			{
 				//generateProgeny failed, so return false
 				return false;
@@ -915,7 +915,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	{
 		global $g_db;
 		$sql_query = 	"SELECT UserId,CourseId,PrivilegeLvl,FirstName,LastName".
-		 				"FROM User ".
+		 				" FROM User ".
 		 				"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND PrivilegeLvl = 3";
 
 		return $g_db->querySelect($sql_query);
@@ -1156,7 +1156,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function importClassList($payload) {
 		$result = [];
 		$cn = self::getCommonName($payload);
-		
+
 		$ds = ldap_connect(LDAP_HOST);
 		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
 
@@ -1167,7 +1167,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			restore_error_handler();
 
 			if ($r){
-				$base_dn = "ou=UBC,ou=ACADEMIC,dc=id,dc=ubc,dc=ca"; 
+				$base_dn = "ou=UBC,ou=ACADEMIC,dc=id,dc=ubc,dc=ca";
 				$filter = "(&(objectClass=*)(cn=".$cn."))";
 
 				$sr=ldap_search($ds, $base_dn, $filter);
@@ -1186,7 +1186,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		ldap_close($ds);
 		return $result;
 	}
-	 
+
 	function getCommonName($payload) {
 		$result = "";
 		$result = $payload['subjectCode']."_";
@@ -1204,5 +1204,5 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			self::deleteStudent($row->UserId);
 		}
 	}
-	
+
 }
