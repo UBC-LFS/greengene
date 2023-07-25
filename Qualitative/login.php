@@ -1,7 +1,7 @@
 <?php
 require_once('includes/global.php');
 
-$user = Security::getUser(false);
+$user = (new Security()) -> getUser(false);
 
 if(!empty($user))
 {
@@ -13,7 +13,7 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 {
 	$g_db = new DB();
 
-	if(Security::login($_POST['UserId'], $_POST['Pwd']) == false)
+	if((new Security())->login($_POST['UserId'], $_POST['Pwd']) == false)
 	{
 		$g_db->disconnect();
 		UserError::addError(306);

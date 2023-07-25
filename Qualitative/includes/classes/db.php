@@ -121,7 +121,9 @@ class DB
 	 */
 	function sqlString($p_string)
 	{
-		if (get_magic_quotes_gpc())
+		// function is deprecated. will always return false
+		// if (get_magic_quotes_gpc())
+		if (false)
 			return mysqli_real_escape_string($this->m_conn, stripslashes($p_string));
 			//return mysql_real_escape_string(stripslashes($p_string));
 		return mysqli_real_escape_string($this->m_conn,$p_string);

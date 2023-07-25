@@ -228,7 +228,7 @@ class Cross
         if ($p_curGeneIdx == $p_geneLength)
             return;
 
-		$gene = $p_geneSeq{$p_curGeneIdx};
+		$gene = $p_geneSeq[$p_curGeneIdx];
 		
 		$allele1 = $gene == '0' || $gene == '1';    // Dominance of allele 1
 		$allele2 = $gene == '0' || $gene == '2';    // Dominance of allele 2

@@ -43,12 +43,12 @@ class CrossView
         $this->m_crossNums = array_keys($p_cross->m_crosses);
 
 		// Positions in string of gene sequences for each trait
-		if(isset($p_cross->m_traitOrder{0}))
-	        $this->m_trait1Idx = $p_cross->m_traitOrder{0};
-		if(isset($p_cross->m_traitOrder{1}))
-	        $this->m_trait2Idx = $p_cross->m_traitOrder{1};
-		if(isset($p_cross->m_traitOrder{2}))
-	        $this->m_trait3Idx = $p_cross->m_traitOrder{2};
+		if(isset($p_cross->m_traitOrder[0]))
+	        $this->m_trait1Idx = $p_cross->m_traitOrder[0];
+		if(isset($p_cross->m_traitOrder[1]))
+	        $this->m_trait2Idx = $p_cross->m_traitOrder[1];
+		if(isset($p_cross->m_traitOrder[2]))
+	        $this->m_trait3Idx = $p_cross->m_traitOrder[2];
 
 		// Trait names in display order
 		if(isset($p_cross->m_traitNames[$this->m_trait1Idx]))
@@ -70,14 +70,14 @@ class CrossView
 	 */
     function translateEpistasis(&$p_geneSeq, $p_idx)
     {
-		if (isset($p_geneSeq{$p_idx + 1}) && $p_geneSeq{$p_idx + 1} != ' ')			// Has epistasis
+		if (isset($p_geneSeq[$p_idx + 1]) && $p_geneSeq[$p_idx + 1] != ' ')			// Has epistasis
         {
             // Convert sequence to simplify phenotype retrieval
             // Gene at $p_idx is made to represent the phenotype
 
-            if ($p_geneSeq{$p_idx} == '3')			// Epistatic gene 1 is recessive
+            if ($p_geneSeq[$p_idx] == '3')			// Epistatic gene 1 is recessive
         	{
-				if ($p_geneSeq{$p_idx + 1} == '3')	// Epistatic gene 2 is recessive
+				if ($p_geneSeq[$p_idx + 1] == '3')	// Epistatic gene 2 is recessive
 					return '3';
         	        // $p_geneSeq{$p_idx} = '3';		// bb
 				else
@@ -86,7 +86,7 @@ class CrossView
         	}
         	else									// Epistatic gene 1 is dominant
         	{
-				if ($p_geneSeq{$p_idx + 1} == '3')	// Epistatic gene 2 is recessive
+				if ($p_geneSeq[$p_idx + 1] == '3')	// Epistatic gene 2 is recessive
 					return '1';
        		        // $p_geneSeq{$p_idx} = '1';		// Ab
 				else
@@ -95,7 +95,7 @@ class CrossView
         	}
 		}
 		// TODO: not sure about this
-		return $p_geneSeq{$p_idx};
+		return $p_geneSeq[$p_idx];
     }
 
     /**
@@ -111,9 +111,9 @@ class CrossView
 		echo("get PlantDescription ");
 		$p_gene[2] = $this->translateEpistasis($p_gene, 2);
 
-		return "$this->m_trait1Name: " . $this->m_phenoNames[$this->m_trait1Idx][$p_gene{$this->m_trait1Idx}] .
-			" | $this->m_trait2Name: " . $this->m_phenoNames[$this->m_trait2Idx][$p_gene{$this->m_trait2Idx}] .
-			" | $this->m_trait3Name: " . $this->m_phenoNames[$this->m_trait3Idx][$p_gene{$this->m_trait3Idx}];
+		return "$this->m_trait1Name: " . $this->m_phenoNames[$this->m_trait1Idx][$p_gene[$this->m_trait1Idx]] .
+			" | $this->m_trait2Name: " . $this->m_phenoNames[$this->m_trait2Idx][$p_gene[$this->m_trait2Idx]] .
+			" | $this->m_trait3Name: " . $this->m_phenoNames[$this->m_trait3Idx][$p_gene[$this->m_trait3Idx]];
 	}
 
 	/**
@@ -158,7 +158,7 @@ class CrossView
 				$this->m_trait3Name);
 
 				// write pollen
-				$curCross['PollenGene']{2} = $this->translateEpistasis($curCross['PollenGene'], 2);
+				$curCross['PollenGene'][2] = $this->translateEpistasis($curCross['PollenGene'], 2);
 				// $curCross[PollenGene]{2} = $this->translateEpistasis($curCross[PollenGene], 2);
 				// $this->translateEpistasis($curCross[PollenGene], 2);
 				$pollenCrossNum = $curCross['PollenCrossNum'];
@@ -169,15 +169,15 @@ class CrossView
 				$table->writeRow("Pollen:
 					<a href=\"viewprogeny.php?_userId=$userId&cross=$pollenCrossNum#$pollenCrossNum-$pollenPlantNum\">Plant $pollenPlantNum</a> of
 					<a href=\"viewprogeny.php?_userId=$userId&cross=$pollenCrossNum#$pollenCrossNum\">Cross $pollenCrossNum</a>",
-					$this->m_phenoNames[$this->m_trait1Idx][$curCross['PollenGene']{$this->m_trait1Idx}],
-					$this->m_phenoNames[$this->m_trait2Idx][$curCross['PollenGene']{$this->m_trait2Idx}],
-					$this->m_phenoNames[$this->m_trait3Idx][$curCross['PollenGene']{$this->m_trait3Idx}]);
+					$this->m_phenoNames[$this->m_trait1Idx][$curCross['PollenGene'][$this->m_trait1Idx]],
+					$this->m_phenoNames[$this->m_trait2Idx][$curCross['PollenGene'][$this->m_trait2Idx]],
+					$this->m_phenoNames[$this->m_trait3Idx][$curCross['PollenGene'][$this->m_trait3Idx]]);
 					// $this->m_phenoNames[$this->m_trait1Idx][$curCross[PollenGene]{$this->m_trait1Idx}],
 					// $this->m_phenoNames[$this->m_trait2Idx][$curCross[PollenGene]{$this->m_trait2Idx}],
 					// $this->m_phenoNames[$this->m_trait3Idx][$curCross[PollenGene]{$this->m_trait3Idx}]);
 
 				// write seed
-				$curCross['SeedGene']{2} = $this->translateEpistasis($curCross['SeedGene'], 2);
+				$curCross['SeedGene'][2] = $this->translateEpistasis($curCross['SeedGene'], 2);
 				// $curCross[SeedGene]{2} = $this->translateEpistasis($curCross[SeedGene], 2);
 				// $this->translateEpistasis($curCross[SeedGene], 2);
 				$seedCrossNum = $curCross['SeedCrossNum'];
@@ -188,9 +188,9 @@ class CrossView
 				$table->writeRow("Seed:
 					<a href=\"viewprogeny.php?_userId=$userId&cross=$seedCrossNum#$seedCrossNum-$seedPlantNum\">Plant $seedPlantNum</a> of
 					<a href=\"viewprogeny.php?_userId=$userId&cross=$seedCrossNum#$seedCrossNum\">Cross $seedCrossNum</a>",
-					$this->m_phenoNames[$this->m_trait1Idx][$curCross['SeedGene']{$this->m_trait1Idx}],
-					$this->m_phenoNames[$this->m_trait2Idx][$curCross['SeedGene']{$this->m_trait2Idx}],
-					$this->m_phenoNames[$this->m_trait3Idx][$curCross['SeedGene']{$this->m_trait3Idx}]);
+					$this->m_phenoNames[$this->m_trait1Idx][$curCross['SeedGene'][$this->m_trait1Idx]],
+					$this->m_phenoNames[$this->m_trait2Idx][$curCross['SeedGene'][$this->m_trait2Idx]],
+					$this->m_phenoNames[$this->m_trait3Idx][$curCross['SeedGene'][$this->m_trait3Idx]]);
 					// $this->m_phenoNames[$this->m_trait1Idx][$curCross[SeedGene]{$this->m_trait1Idx}],
 					// $this->m_phenoNames[$this->m_trait2Idx][$curCross[SeedGene]{$this->m_trait2Idx}],
 					// $this->m_phenoNames[$this->m_trait3Idx][$curCross[SeedGene]{$this->m_trait3Idx}]);
@@ -243,15 +243,15 @@ class CrossView
 			{
 				// pass by reference - resolved
 				// Shouldn't translate epistatsis for the ones without epistasis 
-				$geneSeq{$i + 2} = $this->translateEpistasis($geneSeq, $i + 2);
+				$geneSeq[$i + 2] = $this->translateEpistasis($geneSeq, $i + 2);
 				$plantNum++;
 
 				// Print phenotypes for current plant
 				// $geneSeq{2} is undefined 
 				$table->writeRow("<a name=\"$crossNum-$plantNum\"></a>$plantNum",
-					$this->m_phenoNames[$this->m_trait1Idx][$geneSeq{$i + $this->m_trait1Idx}],
-					$this->m_phenoNames[$this->m_trait2Idx][$geneSeq{$i + $this->m_trait2Idx}],
-					$this->m_phenoNames[$this->m_trait3Idx][$geneSeq{$i + $this->m_trait3Idx}],
+					$this->m_phenoNames[$this->m_trait1Idx][$geneSeq[$i + $this->m_trait1Idx]],
+					$this->m_phenoNames[$this->m_trait2Idx][$geneSeq[$i + $this->m_trait2Idx]],
+					$this->m_phenoNames[$this->m_trait3Idx][$geneSeq[$i + $this->m_trait3Idx]],
 					"<input type=\"button\" value=\"Pollen\" onClick=\"addPollenCross($crossNum, $plantNum);\">
 					&nbsp;&nbsp;
 					<input type=\"button\" value=\"Seed\" onClick=\"addSeedCross($crossNum, $plantNum);\">");
@@ -306,15 +306,15 @@ class CrossView
 
             for ($i = 0; $i < $length; $i += 4) // Write each plant in the cross
             {
-				$geneSeq{$i + 2} = $this->translateEpistasis($geneSeq, $i + 2);
+				$geneSeq[$i + 2] = $this->translateEpistasis($geneSeq, $i + 2);
 				// $this->translateEpistasis(&$geneSeq, $i + 2);
 
                 echo $plantNum . ",";
 
                 // Print phenotypes for current plant
-                echo $this->m_phenoNames[$this->m_trait1Idx][$geneSeq{$i + $this->m_trait1Idx}] . ",";
-                echo $this->m_phenoNames[$this->m_trait2Idx][$geneSeq{$i + $this->m_trait2Idx}] . ",";
-                echo $this->m_phenoNames[$this->m_trait3Idx][$geneSeq{$i + $this->m_trait3Idx}] . "\n";
+                echo $this->m_phenoNames[$this->m_trait1Idx][$geneSeq[$i + $this->m_trait1Idx]] . ",";
+                echo $this->m_phenoNames[$this->m_trait2Idx][$geneSeq[$i + $this->m_trait2Idx]] . ",";
+                echo $this->m_phenoNames[$this->m_trait3Idx][$geneSeq[$i + $this->m_trait3Idx]] . "\n";
 
                 $plantNum++;
             }
