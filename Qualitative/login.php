@@ -1,27 +1,43 @@
 <?php
 require_once('includes/global.php');
 
-$user = (new Security()) -> getUser(false);
+// $user = Security::getUser(false);
+$security = new Security(); // new way of initalizing class
+$user = $security -> getUser(false);
+
+// initalize new Page
+$pageObj = new Page();
+// initalize new userError
+// $userErrorObj = new UserError();
+
+// var_dump($user);
 
 if(!empty($user))
 {
 	// if we're already logged in, redirect the user home
-	Page::redirectInitial($user);
+	// Page::redirectInitial($user);
+	$pageObj->redirectInitial($user);
 }
 
 if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 {
 	$g_db = new DB();
 
-	if((new Security())->login($_POST['UserId'], $_POST['Pwd']) == false)
+	// if(Security::login($_POST['UserId'], $_POST['Pwd']) == false)
+	if ($security -> login($_POST['UserId'], $_POST['Pwd']) == false)
 	{
 		$g_db->disconnect();
 		UserError::addError(306);
+		// $userErrorObj->addError(306);
+		var_dump($userErrorObj);
 	}
-	else
+	else // LOGIN accepted
 	{
 		$g_db->disconnect();
-		Page::redirectInitial(Security::getUser());
+		// Page::redirectInitial(Security::getUser());
+		// var_dump($pageObj);
+		var_dump($security->getUser());
+		$pageObj->redirectInitial($security->getUser());
 	}
 }
 

@@ -98,6 +98,7 @@ class Page
 	 */
 	function redirectInitial($p_user)
 	{
+		var_dump($p_user);
 		switch($p_user->m_privilegeLvl)
 		{
 			case 10:

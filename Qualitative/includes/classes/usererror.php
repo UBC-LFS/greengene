@@ -112,7 +112,7 @@ class UserError
 	 *
 	 * @param int $p_errorId error number
 	 */
-	function addError($p_errorId)
+	static function addError($p_errorId)
 	{
 		global $g_errorTypes, $g_errorList;
 		array_push($g_errorList, $p_errorId);
@@ -125,7 +125,7 @@ class UserError
 	 *
 	 * @return bool
 	 */
-	function hasError()
+	static function hasError()
 	{
 		global $g_errorList;
 		return (count($g_errorList) > 0);
@@ -138,7 +138,7 @@ class UserError
 	 *
 	 * @return string
 	 */
-	function nextError()
+	static function nextError()
 	{
 		global $g_errorTypes, $g_errorList;
 		//$Hash = array_shift($g_errorList);

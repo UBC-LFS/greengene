@@ -15,7 +15,7 @@ class DB
 	 * PRE: require /include/config.php for database info (DBHOST, DBUSER, DBPWD, DBNAME)
 	 * POST: connection established & DB has been selected.
 	 */
-	function DB()
+	function __construct() // in php8, constructors must be called like this
 	{
 		$this->m_conn = mysqli_connect(DBHOST, DBUSER, DBPWD);
 		//$this->m_conn = mysql_connect(DBHOST, DBUSER, DBPWD);

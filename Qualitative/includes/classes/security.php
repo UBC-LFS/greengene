@@ -31,8 +31,11 @@ class Security
 		{
 			if (self::ldap_login($p_userId, $p_pwd)) {
 				$row = $g_db -> fetch($rs);
+				var_dump($row -> PrivilegeLvl);
 				switch ($row -> PrivilegeLvl){
 					case 10:
+					var_dump($p_userId);
+					// error is here, master admin returning null
 					$user = new MasterAdmin($p_userId);
 					break;
 					case 1:
@@ -48,6 +51,7 @@ class Security
 					echo "Unknown user privilege level.";
 					exit;
 				}
+				var_dump($user);
 				$_SESSION['userSession'] = $user;
 				//create session variable
 				return $user;
@@ -82,6 +86,7 @@ class Security
 	{
 		if ($p_checkSession && isset($_SESSION['userSession']))
 		{
+			// var_dump($_SESSION['userSession']);
 			return $_SESSION['userSession'];
 		}
 		return false;
