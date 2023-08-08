@@ -7,7 +7,8 @@ $g_db = new DB();
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-$user = Security::getUser();
+// $user = Security::getUser();
+$user = (new Security) -> getUser();
 
 // - get form variables
 $formaction = isset($_POST['formaction'])? $_POST['formaction']: null;
@@ -40,7 +41,8 @@ if($formaction == 'adduser')
 		$courseId,
 		$_POST['PrivilegeLvl']) == true)
 	{
-		Page::redirect("managecourse.php?courseId=$courseId");
+		// Page::redirect("managecourse.php?courseId=$courseId");
+		$page->redirect("managecourse.php?courseId=$courseId");
 	}
 
 	$formType = 'add';
@@ -61,7 +63,8 @@ elseif($formaction == 'saveuser')
 		$_POST['LastName'],
 		$_POST['PrivilegeLvl']) == true)
 	{
-		Page::redirect("managecourse.php?courseId=$courseId");
+		// Page::redirect("managecourse.php?courseId=$courseId");
+		$page->redirect("managecourse.php?courseId=$courseId");
 	}
 
 	$formType = 'save';

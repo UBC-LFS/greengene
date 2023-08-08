@@ -6,7 +6,7 @@ $security = new Security(); // new way of initalizing class
 $user = $security -> getUser(false);
 
 // initalize new Page
-$pageObj = new Page();
+$pageObj = new Page($user, 'GreenGene Login', 0);
 // initalize new userError
 // $userErrorObj = new UserError();
 

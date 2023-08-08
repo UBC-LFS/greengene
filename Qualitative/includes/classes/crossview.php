@@ -35,7 +35,8 @@ class CrossView
 	 *
 	 * @param Cross $p_cross Cross information
 	 */
-    function CrossView($p_cross)
+    // function CrossView($p_cross)
+	function __construct($p_cross)
     {
         $this->m_cross = $p_cross;	// Store Cross object
 

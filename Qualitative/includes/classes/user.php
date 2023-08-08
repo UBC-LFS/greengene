@@ -22,7 +22,8 @@ class User
 	 *
 	 * @param string $p_userId User Id of user to construct object for
 	 */
-	function User($p_userId)
+	// function User($p_userId)
+	function __construct($p_userId)
 	{
 		global $g_db;
 

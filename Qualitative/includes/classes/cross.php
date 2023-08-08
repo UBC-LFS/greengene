@@ -23,7 +23,8 @@ class Cross
      * @param string[] $p_traitNames Names of traits, keyed to trait number
      * @param string[][] $p_phenoNames 2D array of phenotype names, keyed to trait number
      */
-    function Cross($p_traitOrder, $p_traitNames, $p_phenoNames)
+    // function Cross($p_traitOrder, $p_traitNames, $p_phenoNames)
+	function __construct($p_traitOrder, $p_traitNames, $p_phenoNames)
     {
         $this->m_traitOrder = $p_traitOrder;
         $this->m_traitNames = $p_traitNames;

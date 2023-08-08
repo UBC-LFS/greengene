@@ -24,7 +24,8 @@ class Student extends User
      *
      * @param string $p_userId userID of a student (userId must be in the StudentProblem table)
      */
-	function Student($p_userId)
+	// function Student($p_userId)
+	function __construct($p_userId)
 	{
 		parent::User($p_userId);
 		global $g_db;

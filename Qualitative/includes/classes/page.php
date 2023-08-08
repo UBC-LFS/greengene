@@ -24,7 +24,8 @@ class Page
 	 * @param string $p_title Page title
 	 * @param int $p_privilegeLevel privilege level required to access page.
 	 */
-	function Page($p_user, $p_title, $p_privilegeLevel)
+	// function Page($p_user, $p_title, $p_privilegeLevel)
+	function __construct($p_user, $p_title, $p_privilegeLevel)
 	{
 		$this->m_user = $p_user;
 		$this->m_title = $p_title;
@@ -99,6 +100,7 @@ class Page
 	function redirectInitial($p_user)
 	{
 		var_dump($p_user);
+		// $p_user->m_privilegeLvl = 1; // testing purposes
 		switch($p_user->m_privilegeLvl)
 		{
 			case 10:

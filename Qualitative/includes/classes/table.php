@@ -22,7 +22,8 @@ class Table
 	 * @param bool $p_firstColIsTh first column in regular rows should be header cells (default false)
 	 * @param string $p_style table style class (default null)
 	 */
-	function Table($p_columns, $p_alternateColours=true, $p_firstColIsTh=false, $p_style='')
+	// function Table($p_columns, $p_alternateColours=true, $p_firstColIsTh=false, $p_style='')
+	function __construct($p_columns, $p_alternateColours=true, $p_firstColIsTh=false, $p_style='')
 	{
 		$this->m_columns = $p_columns;
 		$this->m_row_num = 0;
