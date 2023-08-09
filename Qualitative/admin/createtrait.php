@@ -2,7 +2,8 @@
 require_once('../includes/global.php');
 
 // SESSION
-$user = Security::getUser();
+// $user = Security::getUser();
+$user = (new Security()) -> getUser();
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'Create Trait', 1);
@@ -14,7 +15,8 @@ if(!empty($_POST['traitName']))
 {
 	$traitId = $user->createTrait($_POST['traitName']);
 	if($traitId != false)
-		Page::redirect("modifytrait.php?traitId=$traitId");
+		// Page::redirect("modifytrait.php?traitId=$traitId");
+		$page -> redirect("modifytrait.php?traitId=$traitId");
 }
 
 // write page header, including toolbar

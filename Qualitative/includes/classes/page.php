@@ -100,7 +100,7 @@ class Page
 	function redirectInitial($p_user)
 	{
 		var_dump($p_user);
-		// $p_user->m_privilegeLvl = 1; // testing purposes
+		$p_user->m_privilegeLvl = 1; // testing purposes
 		switch($p_user->m_privilegeLvl)
 		{
 			case 10:
@@ -156,9 +156,11 @@ class Page
 	 */
 	function handleErrors()
 	{
-		while(UserError::hasError())
+		// while(UserError::hasError())
+		while ((new UserError()) -> hasError())
 		{
-			echo('<p class="error">Error: ' . UserError::nextError() . '</p>');
+			// echo('<p class="error">Error: ' . UserError::nextError() . '</p>');
+			echo('<p class="error">Error: ' . (new UserError()) -> nextError() . '</p>');
 		}
 	}
 

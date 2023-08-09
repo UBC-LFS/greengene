@@ -27,9 +27,10 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 	if ($security -> login($_POST['UserId'], $_POST['Pwd']) == false)
 	{
 		$g_db->disconnect();
-		UserError::addError(306);
+		// UserError::addError(306);
+		(new UserError()) -> addError(306);
 		// $userErrorObj->addError(306);
-		var_dump($userErrorObj);
+		// var_dump($userErrorObj);
 	}
 	else // LOGIN accepted
 	{

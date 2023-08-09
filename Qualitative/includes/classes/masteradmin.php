@@ -196,7 +196,8 @@ class MasterAdmin extends User
 			WHERE UserId='" . $g_db->sqlString($p_userId) . "'");
 		if($g_db->getNumRows($result) != 0)
 		{
-			UserError::addError(305);
+			// UserError::addError(305);
+			(new UserError) -> addError(305);
 			return false;
 		}
 
@@ -208,7 +209,8 @@ class MasterAdmin extends User
 			'" . $g_db->sqlString($p_firstName) . "',
 			'" . $g_db->sqlString($p_lastName) . "')") != true)
 		{
-			UserError::addError(901);
+			// UserError::addError(901);
+			(new UserError) -> addError(901);
 			return false;
 		}
 
@@ -230,7 +232,8 @@ class MasterAdmin extends User
 
 		if($p_privilegeLvl != 1 && $p_privilegeLvl != 2)
 		{
-			UserError::addError(910);
+			// UserError::addError(910);
+			(new UserError) -> addError(910);
 			return false;
 		}
 
@@ -240,7 +243,8 @@ class MasterAdmin extends User
 			PrivilegeLvl=$p_privilegeLvl
 			WHERE UserId='" . $g_db->sqlString($p_userId) . "'") != true)
 		{
-			UserError::addError(904);
+			// UserError::addError(904);
+			(new UserError) -> addError(904);
 			return false;
 		}
 
@@ -266,7 +270,8 @@ class MasterAdmin extends User
 			WHERE PrivilegeLvl=10
 			AND UserId='" . $g_db->sqlString($p_userId) . "'") != true)
 		{
-			UserError::addError(904);
+			// UserError::addError(904);
+			(new UserError) -> addError(904);
 			return false;
 		}
 
@@ -286,7 +291,8 @@ class MasterAdmin extends User
 		if($g_db->queryCommit("DELETE FROM User
 			WHERE UserId='" . $g_db->sqlString($p_userId) . "'") != true)
 		{
-			UserError::addError(909);
+			// UserError::addError(909);
+			(new UserError) -> addError(909);
 			return false;
 		}
 
@@ -329,7 +335,8 @@ class MasterAdmin extends User
 
 		if($g_db->getNumRows($result) != 1)
 		{
-			UserError::addError(906);
+			// UserError::addError(906);
+			(new UserError) -> addError(906);
 			return false;
 		}
 

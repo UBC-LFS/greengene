@@ -4,7 +4,8 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-$user = Security::getUser();
+// $user = Security::getUser();
+$user = (new Security()) -> getUser();
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'Create Problem', 1);
@@ -41,7 +42,8 @@ $page -> setOnLoad("loadTips();");
 	$inputProblemName = $_POST['problemname'];
 	if (empty($inputProblemName))
 	{
-		UserError::addError(750);
+		// UserError::addError(750);
+		(new UserError()) -> addError(750);
 	}
 
 	$inputProblemDesc = $_POST['problemdesc'];
@@ -49,12 +51,14 @@ $page -> setOnLoad("loadTips();");
 	$inputProgenyPerMating = $_POST['progpermating'];
 	if ($inputProgenyPerMating < 1)
 	{
-		UserError::addError(751);
+		// UserError::addError(751);
+		(new UserError()) -> addError(751);
 	}
 	$inputMaxProgeny = $_POST['totalprogeny'];
 	if ($inputMaxProgeny < 1)
 	{
-		UserError::addError(752);
+		// UserError::addError(752);
+		(new UserError()) -> addError(752);
 	}
 
 	$inputTrait0 = $_POST['trait0'];
@@ -64,7 +68,8 @@ $page -> setOnLoad("loadTips();");
 
 	if ($inputTrait0 == -1 || $inputTrait1 == -1 || $inputTrait2 == -1)
 	{
-		UserError::addError(753);
+		// UserError::addError(753);
+		(new UserError()) -> addError(753);
 	}
 
 	$arrPhenotypes = array();
@@ -94,24 +99,34 @@ $page -> setOnLoad("loadTips();");
 	}
 
 	// get linkage distances
-	$inputLinkdist_01 = (isset($_POST['check01'])&& $_POST['check01']=='ON')?($_POST['linkdist01']=='')?50:($_POST['linkdist01']==0)?50:$_POST['linkdist01']:50;
-	$inputLinkdist_12 = (isset($_POST['check12'])&& $_POST['check12']=='ON')?($_POST['linkdist12']=='')?50:($_POST['linkdist12']==0)?50:$_POST['linkdist12']:50;
+	// $inputLinkdist_01 = (isset($_POST['check01'])&& $_POST['check01']=='ON')?($_POST['linkdist01']=='')?50:($_POST['linkdist01']==0)?50:$_POST['linkdist01']:50;
+	// $inputLinkdist_12 = (isset($_POST['check12'])&& $_POST['check12']=='ON')?($_POST['linkdist12']=='')?50:($_POST['linkdist12']==0)?50:$_POST['linkdist12']:50;
+	$inputLinkdist_01 = (isset($_POST['check01']) && $_POST['check01']=='ON') ?
+						(($_POST['linkdist01']=='') ? 50:
+						(($_POST['linkdist01']==0) ? 50: $_POST['linkdist01'])) : 50;
+	$inputLinkdist_12 = (isset($_POST['check12'])&& $_POST['check12']=='ON') ? 
+						(($_POST['linkdist12']=='') ? 50: 
+						(($_POST['linkdist12']==0) ? 50: $_POST['linkdist12'])) : 50;
+	
 	if ($inputLinkdist_01 < 0 || $inputLinkdist_12 < 0)
 	{
-		UserError::addError(758);
+		// UserError::addError(758);
+		(new UserError()) -> addError(758);
 	}
 
 	$inputTraitOrder = $_POST['ordering'];
 
 
 	// finally - create the problem into DB!
-	if (UserError::hasError() > 0 ||
+	// if (UserError::hasError() > 0 ||
+	if ((new UserError()) -> hasError() > 0 ||
 		$user->createProblem($inputProblemDesc,$inputProblemName,$inputLinkdist_01,
 							  $inputLinkdist_12,$inputTraitOrder,$inputEpistasis,
 							  $traitNameArray,$arrPhenotypes,$inputProgenyPerMating,
 							  $inputMaxProgeny)!=true)
 	{
-		UserError::addError(761);
+		// UserError::addError(761);
+		(new UserError()) -> addError(761);
 	}
 	else
 	{
@@ -242,7 +257,8 @@ function determineDominance($p_isDominance,$p_traitNumber,$p_arrPhenotypes) // (
 		$bbTrait = $_POST['pheno'.$p_traitNumber.'1'];
 		if (empty($AATrait) || empty($bbTrait))
 		{
-			UserError::addError(756);
+			// UserError::addError(756);
+			(new UserError()) -> addError(756);
 			return false;
 		}
 		
@@ -257,7 +273,8 @@ function determineDominance($p_isDominance,$p_traitNumber,$p_arrPhenotypes) // (
 	$bbTrait = $_POST['pheno'.$p_traitNumber.'2'];
 	if (empty($AATrait) || empty($bbTrait) || empty($mixedTrait))
 	{
-		UserError::addError(757);
+		// UserError::addError(757);
+		(new UserError()) -> addError(757);
 		return false;
 	}
 
@@ -294,7 +311,8 @@ function determineEpistasis($p_epistasisValue, $p_traitNumber, $p_arrPhenotypes)
 	{
 		if (empty($_POST['pheno2'.$i]))
 		{
-			UserError::addError(760);
+			// UserError::addError(760);
+			(new UserError()) -> addError(760);
 			return false;
 		}
 		else
