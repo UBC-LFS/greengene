@@ -11,13 +11,13 @@ Qualitative Tested with PHP 8.1.2 (dev notes)
 - ^^^ must use `` for Cross because it's a reserved SQL keyword
 
 Changes still need to be made:
-- Modification date not updating
+- Other possible syntax errors?
 
 Things we can't test OR may need to tempt hardcode stuff to test:
 - Logging in with other admin privilleges without hard coding it (Admin,TA,Student)
 - Importing students (requires UBC VPN)
 - Student page
-    - will need another CWL for it
+    - will need another CWL for it (or can hard code?)
     - current CWL is the admin, can't create a student with the same CWL and assign a problem to it
 - View progress page does not display student info and header
     - due to user privilleges?
