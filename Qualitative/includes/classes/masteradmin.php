@@ -38,7 +38,7 @@ class MasterAdmin extends User
 			"VALUES('" . $g_db->sqlString($p_courseName) . "', " .
 			"'" . $g_db->sqlString($p_description) . "')") != true)
 		{
-			UserError::addError(900);
+			(new UserError) -> addError(900);
 			return false;
 		}
 
@@ -101,7 +101,7 @@ class MasterAdmin extends User
 		if($g_db->queryCommit("DELETE FROM Course " .
 			"WHERE CourseId=$p_courseId") != true)
 		{
-			UserError::addError(903);
+			(new UserError) -> addError(903);
 			return false;
 		}
 
@@ -125,7 +125,7 @@ class MasterAdmin extends User
 			Description='" . $g_db->sqlString($p_description) . "'
 			WHERE CourseId=$p_courseId") != true)
 		{
-			UserError::addError(905);
+			(new UserError) -> addError(905);
 			return false;
 		}
 
@@ -164,7 +164,7 @@ class MasterAdmin extends User
 
 		if($g_db->getNumRows($result) != 1)
 		{
-			UserError::addError(907);
+			(new UserError) -> addError(907);
 			return false;
 		}
 
@@ -187,7 +187,7 @@ class MasterAdmin extends User
 
 		if($p_privilegeLvl != 1 && $p_privilegeLvl != 2)
 		{
-			UserError::addError(910);
+			(new UserError) -> addError(910);
 			return false;
 		}
 

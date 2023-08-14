@@ -4,7 +4,7 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-// $user = Security::getUser();
+// $user = (new Security) -> getUser();
 $user = (new Security()) -> getUser();
 
 // PAGE CREATION LOGIC
@@ -130,7 +130,8 @@ $page -> setOnLoad("loadTips();");
 	}
 	else
 	{
-		Page::redirect('viewproblemlist.php');
+		// Page::redirect('viewproblemlist.php');
+		$page -> redirect('viewproblemlist.php');
 		//$showProblemSummary = true;
 	}
 

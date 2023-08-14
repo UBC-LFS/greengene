@@ -4,7 +4,8 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-$user = Security::getUser();
+$user = (new Security) -> getUser();
+
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'Create Student', 2);
@@ -49,7 +50,8 @@ if ($formaction == "createstudent")
 
 	if (empty($inputUserId) )
 	{
-		UserError::addError(650);
+		// UserError::addError(650);
+		(new UserError) -> addError(650);
 	}
 	else
 	{

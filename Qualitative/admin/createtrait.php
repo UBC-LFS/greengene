@@ -2,7 +2,7 @@
 require_once('../includes/global.php');
 
 // SESSION
-// $user = Security::getUser();
+// $user = (new Security) -> getUser();
 $user = (new Security()) -> getUser();
 
 // PAGE CREATION LOGIC

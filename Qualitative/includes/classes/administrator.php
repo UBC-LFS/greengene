@@ -56,7 +56,8 @@ class Administrator extends TA
 						"VALUES ('". $default_courseId . "','" . $name . "')";
 		if(! $g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(701);
+			// UserError::addError(701);
+			(new UserError) -> addError(701);
 			return false;
 		}
 
@@ -87,7 +88,8 @@ class Administrator extends TA
 						"VALUES ('" . $p_traitId . "','" . $p_phenotype . "')";
 		if(! $g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(702);
+			// UserError::addError(702);
+			(new UserError) -> addError(702);
 			return false;
 		}
 		return true;
@@ -109,7 +111,8 @@ class Administrator extends TA
 						"	WHERE PhenotypeId = '" . $p_phenotypeId ."'";
 		if(! $g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(703);
+			// UserError::addError(703);
+			(new UserError) -> addError(703);
 			return false;
 		}
 		return true;
@@ -137,7 +140,8 @@ class Administrator extends TA
 		if( (! $g_db->queryCommit($sql_query) ) ||
 			(! $g_db->queryCommit($sql_query2) ) )
 		{
-			UserError::addError(704);
+			// UserError::addError(704);
+			(new UserError) -> addError(704);
 			return false;
 		}
 		return true;
@@ -151,19 +155,22 @@ class Administrator extends TA
 	 {
 	 		if ($p_progenyPerMating < 0)
 			{
-				UserError::addError(751);
+				// UserError::addError(751);
+				(new UserError) -> addError(751);
 				return false;
 			}
 			if ($p_maxProgeny < 0)
 			{
-				UserError::addError(752);
+				// UserError::addError(752);
+				(new UserError) -> addError(752);
 				return false;
 			}
 			
 			//check to make sure that maxprogeny is NOT < progpermating
 			if ($p_maxProgeny < $p_progenyPerMating)
 			{
-				UserError::addError(765);
+				// UserError::addError(765);
+				(new UserError) -> addError(765);
 				return false;
 			}
 			
@@ -251,6 +258,7 @@ class Administrator extends TA
 							"Trait3Name,Trait3AAPhenoName,Trait3AbPhenoName,Trait3bAPhenoName,Trait3bbPhenoName,".
 						 	"ProgenyPerMating,MaxProgeny) ".
 						 	"VALUES (" . $record_row_values . ")";
+			var_dump($sql_query);
 		}
 		else
 		{
@@ -272,6 +280,7 @@ class Administrator extends TA
 							"Trait3Name,Trait3AAPhenoName,Trait3AbPhenoName,Trait3bAPhenoName,Trait3bbPhenoName,".
 						 	"ProgenyPerMating,MaxProgeny) ".
 						 	"VALUES (" . $record_row_values . ")";
+			var_dump($sql_query);
 
 		}
 
@@ -279,7 +288,8 @@ class Administrator extends TA
 
 		if (! $g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(705);
+			// UserError::addError(705);
+			(new UserError) -> addError(705);
 			return false;
 		}
 		return true;
@@ -317,7 +327,8 @@ class Administrator extends TA
 		
 		// Check if the modified target exists
 		if( !$this->viewProblem($p_problemId) )
-			UserError::addError(715);
+			// UserError::addError(715);
+			(new UserError) -> addError(715);
 
 		$name 			= $g_db->sqlString($p_name);
 		$description 	= $g_db->sqlString($p_description);
@@ -426,7 +437,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		if (! $g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(716);
+			// UserError::addError(716);
+			(new UserError) -> addError(716);
 			return false;
 		}
 
@@ -435,7 +447,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 						"	SET Modified=2".
 						"   WHERE MasterProblemId=".$g_db->sqlString($p_problemId)))
 		{
-			UserError::addError(717);
+			// UserError::addError(717);
+			(new UserError) -> addError(717);
 			return false;
 		}
 		return true;
@@ -465,7 +478,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		// problem
 		if (!empty($recordset) && $g_db->getNumRows($recordset) > 0)
 		{			
-			UserError::addError(718);
+			(new UserError) -> addError(718);
 			return false;
 		}
 
@@ -474,7 +487,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 						"	WHERE ProblemId = '". $g_db->sqlString($p_problemId) . "'";
 		if(! $g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(706);
+			(new UserError) -> addError(706);
 			return false;
 		}
 		return true;
@@ -507,7 +520,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				$p_privilegeLvl)";
 		if( !$g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(707);
+			(new UserError) -> addError(707);
 			return false;
 		}
 		return true;
@@ -528,7 +541,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		if($p_privilegeLvl != 1 && $p_privilegeLvl != 2)
 		{
-			UserError::addError(713);
+			(new UserError) -> addError(713);
 			return false;
 		}
 
@@ -540,7 +553,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			AND PrivilegeLvl IN (1,2)
 			AND UserId='" . $g_db->sqlString($p_userId) . "'") != true)
 		{
-			UserError::addError(714);
+			(new UserError) -> addError(714);
 			return false;
 		}
 
@@ -567,7 +580,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		if( !$g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(708);
+			(new UserError) -> addError(708);
 			return false;
 		}
 		return true;
@@ -584,7 +597,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	{
 		if($p_userId == $this->m_userId)
 		{
-			UserError::addError(709);
+			(new UserError) -> addError(709);
 			return false;
 		}
 
@@ -596,7 +609,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		if( ! $g_db->queryCommit($sql_query) )
 		{
-			UserError::addError(709);
+			(new UserError) -> addError(709);
 			return false;
 		}
 		return true;
@@ -637,7 +650,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		if($g_db->getNumRows($result) != 1)
 		{
-			UserError::addError(712);
+			(new UserError) -> addError(712);
 			return false;
 		}
 
@@ -661,7 +674,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		// 709 - error deleting management user
 		// 710 - error changing TA password
 		// 711 - TA password not equal
-		UserError::addError($p_errorCode);
+		(new UserError) -> addError($p_errorCode);
 	}
 	*/
 }

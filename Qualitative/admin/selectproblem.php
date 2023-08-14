@@ -4,7 +4,7 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-$user = Security::getUser();
+$user = (new Security) -> getUser();
 
 // DATABASE CONNECTION
 $g_db = new DB();
@@ -25,7 +25,8 @@ if(isset($_GET['problemId']))
 	{
 		if( !$user->assignProblem($studentId,$_GET['problemId']) )
 		{
-			UserError::addError(763);
+			// UserError::addError(763);
+			(new UserError) -> addError(763);
 		}
 		else
 		{
@@ -37,7 +38,8 @@ if(isset($_GET['problemId']))
 	{
 		if( !$user->reassignProblem($studentId,$_GET['problemId']))
 		{
-			UserError::addError(763);
+			// UserError::addError(763);
+			(new UserError) -> addError(763);
 		}
 		else
 		{

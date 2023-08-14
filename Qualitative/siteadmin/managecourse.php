@@ -7,7 +7,7 @@ $g_db = new DB();
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-// $user = Security::getUser();
+// $user = (new Security) -> getUser();
 $user = (new Security)->getUser(); // php8
 
 
@@ -37,13 +37,13 @@ if($formaction == 'addcourse')
 
 	if($_POST['CourseName'] == '')
 	{
-		UserError::addError(908);
+		(new UserError) -> addError(908);
 		$formOk = false;
 	}
 
 	if($_POST['UserId'] == '')
 	{
-		UserError::addError(302);
+		(new UserError) -> addError(302);
 		$formOk = false;
 	}
 
@@ -68,7 +68,7 @@ elseif($formaction == 'savecourse')
 	// check form values
 	if($_POST['CourseName'] == '')
 	{
-		UserError::addError(908);
+		(new UserError) -> addError(908);
 		$formOk = false;
 	}
 

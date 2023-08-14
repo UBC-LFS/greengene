@@ -4,7 +4,8 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-$user = Security::getUser();
+// $user = (new Security) -> getUser();
+$user = (new Security) -> getUser();
 $userId = $user->m_userId;
 
 // DATABASE CONNECTION
@@ -173,7 +174,8 @@ else if (!empty($studentProblemId))
 // in the DB
 if (empty($recordset))
 {
-	UserError::addError(653);
+	// UserError::addError(653);
+	(new UserError) -> addError(653);
 }
 else
 {

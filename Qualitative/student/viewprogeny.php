@@ -5,7 +5,7 @@ require_once('../includes/global.php');
 $g_db = new DB();
 
 // SESSION
-$user = Security::getUser();
+$user = (new Security) -> getUser();
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'View Progeny', 3);
@@ -87,7 +87,7 @@ else if($formaction == 'performcross')
 		}
 		else
 		{
-			UserError::addError(430);
+			(new UserError) -> addError(430);
 		}
 	}
 }
@@ -122,7 +122,7 @@ else
 	$page->writeHeader();
 
 	if($student->getCropName() == '')
-		UserError::addError(401);
+		(new UserError) -> addError(401);
 
 	// DATA LOGIC
 	if(!isset($_GET['cross']))

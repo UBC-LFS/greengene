@@ -27,7 +27,7 @@ class Student extends User
 	// function Student($p_userId)
 	function __construct($p_userId)
 	{
-		parent::User($p_userId);
+		// parent::User($p_userId);
 		global $g_db;
 
 		$studentRecord = $g_db->querySelect("SELECT Name, Description, GMU1_2, GMU2_3, TraitOrder,
@@ -125,7 +125,7 @@ class Student extends User
 			$sql .= "ORDER BY CrossNum";
 		else										// Invalid cross number
 		{
-			UserError::addError(400);
+			(new UserError) -> addError(400);
 			$sql .= "AND CrossNum=" . $this->getCrossCount();	// Use latest
 		}
 
@@ -240,7 +240,7 @@ class Student extends User
 		//check that progenygenerated has not been exceeded						
 		if (($this->m_progenyGenerated + $this->m_progenyPerMating) > $this->m_maxProgeny)
 		{
-			UserError::addError(410);
+			(new UserError) -> addError(410);
 			return false;
 			
 		} 
@@ -275,13 +275,13 @@ class Student extends User
 				}
 				else
 				{
-					UserError::addError(420);
+					(new UserError) -> addError(420);
 					return false;
 				}
 			}
 			else 
 			{
-				UserError::addError(420);
+				(new UserError) -> addError(420);
 				return false;
 			}
 		}

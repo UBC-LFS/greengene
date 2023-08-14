@@ -1,7 +1,7 @@
 <?php
 require_once('../includes/global.php');
 
-// $user = Security::getUser();
+// $user = (new Security) -> getUser();
 $user = (new Security) -> getUser(); // PHP 8
 $page = new Page($user, 'Delete Course', 10);
 $g_db = new DB();

@@ -4,7 +4,7 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-$user = Security::getUser();
+$user = (new Security) -> getUser();
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'View Student', 2);
@@ -25,7 +25,8 @@ $page->handleErrors();
 
 if (empty($studentRecordset))
 {
-	UserError::addError(654);
+	// UserError::addError(654);
+	(new UserError) -> addError(654);
 }
 else
 {

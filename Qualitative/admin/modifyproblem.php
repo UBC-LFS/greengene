@@ -4,7 +4,8 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-$user = Security::getUser();
+// $user = (new Security) -> getUser();
+$user = (new Security) -> getUser();
 
 $userId = $user->m_userId;
 
@@ -101,7 +102,8 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	$inputProblemName = $_POST['problemname'];
 	if (empty($inputProblemName))
 	{
-		UserError::addError(750);
+		// UserError::addError(750);
+		(new UserError) -> addError(750);
 	}
 
 	$inputProblemDesc = $_POST['problemdesc'];
@@ -109,12 +111,14 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	$inputProgenyPerMating = $_POST['progpermating'];
 	if ($inputProgenyPerMating < 1)
 	{
-		UserError::addError(751);
+		// UserError::addError(751);
+		(new UserError) -> addError(751);
 	}
 	$inputMaxProgeny = $_POST['totalprogeny'];
 	if ($inputMaxProgeny < 1)
 	{
-		UserError::addError(752);
+		// UserError::addError(752);
+		(new UserError) -> addError(752);
 	}
 	$inputTrait0 = $_POST['trait0'];
 	$inputTrait1 = $_POST['trait1'];
@@ -123,7 +127,8 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 
 	if ($inputTrait0 == -1 || $inputTrait1 == -1 || $inputTrait2 == -1)
 	{
-		UserError::addError(753);
+		// UserError::addError(753);
+		(new UserError) -> addError(753);
 	}
 
 	$arrPhenotypes = array();
@@ -142,11 +147,19 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	}
 
 	// get linkage distances
-	$inputLinkdist_01 = ($_POST['check01']=='ON')?($_POST['linkdist01']=='')?50:($_POST['linkdist01']==0)?50:$_POST['linkdist01']:50;
-	$inputLinkdist_12 = ($_POST['check12']=='ON')?($_POST['linkdist12']=='')?50:($_POST['linkdist12']==0)?50:$_POST['linkdist12']:50;
+	// $inputLinkdist_01 = ($_POST['check01']=='ON')?($_POST['linkdist01']=='')?50:($_POST['linkdist01']==0)?50:$_POST['linkdist01']:50;
+	// $inputLinkdist_12 = ($_POST['check12']=='ON')?($_POST['linkdist12']=='')?50:($_POST['linkdist12']==0)?50:$_POST['linkdist12']:50;
+	$inputLinkdist_01 = ($_POST['check01']=='ON') ?
+						(($_POST['linkdist01']=='') ? 50:
+						(($_POST['linkdist01']==0) ? 50:$_POST['linkdist01'])):50;
+	$inputLinkdist_12 = ($_POST['check12']=='ON') ?
+						(($_POST['linkdist12']=='') ? 50:
+						(($_POST['linkdist12']==0) ? 50:$_POST['linkdist12'])):50;
+	
 	if ($inputLinkdist_01 < 0 || $inputLinkdist_12 < 0)
 	{
-		UserError::addError(758);
+		// UserError::addError(758);
+		(new UserError) -> addError(758);
 	}
 	// get trait orders
 	if (isset($_POST['traitorder0']) && isset($_POST['traitorder1']) && isset($_POST['traitorder2'])) {
@@ -174,7 +187,8 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 		{
 			//echo "going into assignProblem";
 
-			if (UserError::hasError() == 0)
+			// if (UserError::hasError() == 0)
+			if ((new UserError()) -> hasError() == 0)
 			{
 				if ($problemEqual != true)
 				{
@@ -190,14 +204,16 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 				}
 			}
 
-			if (UserError::hasError() == 0)
+			// if (UserError::hasError() == 0)
+			if ((new UserError()) -> hasError() == 0)
 			{
 				$page->redirect("viewstudentlist.php");
 			}
 		}
 		else
 		{
-			if (UserError::hasError() == 0)
+			// if (UserError::hasError() == 0)
+			if ((new UserError()) -> hasError() == 0)
 			{
 				if ($problemEqual != true)
 				{
@@ -213,7 +229,8 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 				}
 			}
 
-			if (UserError::hasError() == 0)
+			// if (UserError::hasError() == 0)
+			if ((new UserError()) -> hasError() == 0)
 			{
 				//$page->redirect("viewstudent.php?studentId=".$studentId);
 				//wrapUp("viewstudentlist.php");
@@ -225,7 +242,8 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	// Modify the Problem
 	else
 	{
-		if (UserError::hasError() == 0)
+		// if (UserError::hasError() == 0)
+		if ((new UserError()) -> hasError() == 0)
 		{
 			if ($problemEqual != true)
 			{
@@ -237,7 +255,8 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 			}
 		}
 
-		if (UserError::hasError() == 0)
+		// if (UserError::hasError() == 0)
+		if ((new UserError()) -> hasError() == 0)
 		{
 			//problem summary
 
@@ -311,7 +330,8 @@ else
 			}
 			else
 			{
-				UserError::addError(653);
+				// UserError::addError(653);
+				(new UserError) -> addError(653);
 			}
 		}
 	}
@@ -577,7 +597,8 @@ function areProblemsEqual(	$masterRecordset,
 	//$masterRecordset = $user->viewProblem($problemId);
 	if (empty($masterRecordset))
 	{
-		UserError::addError(653);
+		// UserError::addError(653);
+		(new UserError) -> addError(653);
 		return false;
 	}
 	else
@@ -775,7 +796,8 @@ function determineDominance($p_isDominance,$p_traitNumber,$p_arrPhenotypes)
 
 		if (empty($AATrait) || empty($bbTrait))
 		{
-			UserError::addError(756);
+			// UserError::addError(756);
+			(new UserError) -> addError(756);
 			return false;
 		}
 		else
@@ -788,7 +810,8 @@ function determineDominance($p_isDominance,$p_traitNumber,$p_arrPhenotypes)
 	$bbTrait = $_POST['pheno'.$p_traitNumber.'2'];
 	if (empty($AATrait) || empty($bbTrait) || empty($mixedTrait) )
 	{
-		UserError::addError(757);
+		// UserError::addError(757);
+		(new UserError) -> addError(757);
 		return false;
 	}
 	
@@ -806,7 +829,8 @@ function determineEpistasis($p_epistasisValue, $p_traitNumber, $p_arrPhenotypes)
 	{
 		if (empty($_POST['pheno2'.$i]))
 		{
-			UserError::addError(760);
+			// UserError::addError(760);
+			(new UserError) -> addError(760);
 			return false;
 		}
 		else

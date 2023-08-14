@@ -4,7 +4,7 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-$user = Security::getUser();
+$user = (new Security) -> getUser();
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'Assign Problem Page', 1);
@@ -43,7 +43,8 @@ if ($formaction == "createproblem")
 	$inputProblemName = $_POST['problemname'];
 	if (empty($inputProblemName))
 	{
-		UserError::addError(750);
+		// UserError::addError(750);
+		(new UserError) -> addError(750);
 	}
 
 	$inputProblemDesc = $_POST['problemdesc'];
@@ -51,12 +52,14 @@ if ($formaction == "createproblem")
 	$inputProgenyPerMating = $_POST['progpermating'];
 	if ($inputProgenyPerMating < 1)
 	{
-		UserError::addError(751);
+		// UserError::addError(751);
+		(new UserError) -> addError(751);
 	}
 	$inputMaxProgeny = $_POST['totalprogeny'];	
 	if ($inputMaxProgeny < 1)
 	{
-		UserError::addError(752);
+		// UserError::addError(752);
+		(new UserError) -> addError(752);
 	}
 	
 	$inputTrait0 = $_POST['trait0'];	
@@ -66,7 +69,8 @@ if ($formaction == "createproblem")
 	
 	if ($inputTrait0 == -1 || $inputTrait1 == -1 || $inputTrait2 == -1)
 	{
-		UserError::addError(753);	
+		// UserError::addError(753);	
+		(new UserError) -> addError(753);
 	}
 	
 	$arrPhenotypes = array();
@@ -74,14 +78,16 @@ if ($formaction == "createproblem")
 	$inputRadio0 = $_POST['radio0'];
 	if (empty($inputRadio0))
 	{
-		UserError::addError(754);		
+		// UserError::addError(754);
+		(new UserError) -> addError(754);		
 	}
 	determineDominance($inputRadio0,0,&$arrPhenotypes);
 
 	$inputRadio1 = $_POST['radio1'];
 	if (empty($inputRadio1))
 	{
-		UserError::addError(755);
+		// UserError::addError(755);
+		(new UserError) -> addError(755);
 	}	
 	determineDominance($inputRadio1,1,&$arrPhenotypes);
 	
@@ -90,7 +96,8 @@ if ($formaction == "createproblem")
 	$inputEpistasis = $_POST['epist'];
 	if (empty($inputRadio2) && $inputEpistasis == -1)
 	{
-		UserError::addError(762);
+		// UserError::addError(762);
+		(new UserError) -> addError(762);
 	}
 	else
 	{		
@@ -120,7 +127,8 @@ if ($formaction == "createproblem")
 	$inputLinkdist_12 = $_POST['linkdist12'];
 	if ($inputLinkdist_01 < 0 || $inputLinkdist_12 < 0)
 	{
-		UserError::addError(758);
+		// UserError::addError(758);
+		(new UserError) -> addError(758);
 	}
 	
 	// get trait orders
@@ -131,7 +139,8 @@ if ($formaction == "createproblem")
 	if (	$inputTraitOrder0 == $inputTraitOrder1 || $inputTraitOrder0 == $inputTraitOrder2
 	 	|| 	$inputTraitOrder1 == $inputTraitOrder2 )
 	{	
-		UserError::addError(759);
+		// UserError::addError(759);
+		(new UserError) -> addError(759);
 	}
 	else
 	{
@@ -140,13 +149,15 @@ if ($formaction == "createproblem")
 	}
 	
 	// finally - create the problem into DB!
-	if (UserError::hasError() > 0 ||
+	// if (UserError::hasError() > 0 ||
+	if ((new UserError()) -> hasError() > ||
 		$user->createProblem($inputProblemDesc,$inputProblemName,$inputLinkdist_01,
 							  $inputLinkdist_12,$inputTraitOrder,$inputEpistasis,
 							  $traitNameArray,$arrPhenotypes,$inputProgenyPerMating,
 							  $inputMaxProgeny)!=true)
 	{
-		UserError::addError(761);		
+		// UserError::addError(761);	
+		(new UserError) -> addError(761);	
 	}
 	else
 	{
@@ -419,7 +430,8 @@ function determineDominance($p_radioValue,$p_traitNumber,$p_arrPhenotypes)
 		
 		if (empty($AATrait) || empty($bbTrait))
 		{
-			UserError::addError(756);
+			// UserError::addError(756);
+			(new UserError) -> addError(756);
 			return false;
 		}
 		else
@@ -433,7 +445,8 @@ function determineDominance($p_radioValue,$p_traitNumber,$p_arrPhenotypes)
 		$bbTrait = $_POST['pheno'.$p_traitNumber.'0'];
 		if (empty($AATrait) || empty($bbTrait))
 		{
-			UserError::addError(756);
+			// UserError::addError(756);
+			(new UserError) -> addError(756);
 			return false;
 		}
 		else
@@ -448,7 +461,8 @@ function determineDominance($p_radioValue,$p_traitNumber,$p_arrPhenotypes)
 		$mixedTrait = $_POST['pheno'.$p_traitNumber.'2'];
 		if (empty($AATrait) || empty($bbTrait) || empty($mixedTrait))
 		{
-			UserError::addError(757);
+			// UserError::addError(757);
+			(new UserError) -> addError(757);
 			return false;
 		}
 		else
@@ -470,7 +484,8 @@ function determineEpistasis($p_epistasisValue, $p_traitNumber, $p_arrPhenotypes)
 	{
 		if (empty($_POST['pheno3'.$i]))
 		{
-			UserError::addError(760);
+			// UserError::addError(760);
+			(new UserError) -> addError(760);
 			return false;
 		}
 		else

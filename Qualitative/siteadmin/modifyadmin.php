@@ -7,7 +7,7 @@ $g_db = new DB();
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-// $user = Security::getUser();
+// $user = (new Security) -> getUser();
 $user = (new Security) -> getUser();
 
 // - get form variables
@@ -31,7 +31,7 @@ if($formaction == 'adduser')
 
 	if($_POST['UserId'] == '')
 	{
-		UserError::addError(302);
+		(new UserError) -> addError(302);
 		$formOk = false;
 	}
 

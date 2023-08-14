@@ -1,6 +1,6 @@
 <?php
 require_once('../includes/global.php');
-$user = Security::getUser();
+$user = (new Security) -> getUser();
 $g_db = new DB();
 $page = new Page($user, 'Import Students', 2);
 $page->writeHeader();

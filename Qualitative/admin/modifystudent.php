@@ -4,7 +4,7 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-$user = Security::getUser();
+$user = (new Security) -> getUser();
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'Modify Student', 2);
@@ -50,12 +50,14 @@ if ($formaction == "modifystudent")
 
 		if (empty($inputProgenyPerMating) || $inputProgenyPerMating < 0)
 		{
-			UserError::addError(751);
+			// UserError::addError(751);
+			(new UserError) -> addError(751);
 			$formError = true;
 		}
 		if (empty($inputMaxProgeny) || $inputMaxProgeny < 0)
 		{
-			UserError::addError(752);
+			// UserError::addError(752);
+			(new UserError) -> addError(752);
 			$formError = true;
 		}
 		
@@ -82,7 +84,8 @@ if ($formaction == "modifystudent")
 		$user->modifyStudent($inputUserId, $inputFirstName, $inputLastName,
 						   $inputProgenyPerMating,$inputMaxProgeny);
 
-		if (!UserError::hasError())
+		// if (!UserError::hasError())
+		if (!((new UserError()) -> hasError()))
 		{			
 			$page->redirect("viewstudentlist.php");
 		}
@@ -93,7 +96,8 @@ else
 	$studentRecordset = $user->getStudent($studentId);
 	if (empty($studentRecordset) || $g_db->getNumRows($studentRecordset) == 0)
 	{
-		UserError::addError(603);
+		// UserError::addError(603);
+		(new UserError) -> addError(603);
 	}
 	else
 	{

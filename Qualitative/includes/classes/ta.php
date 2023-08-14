@@ -69,7 +69,7 @@ class TA extends User
 
 		if ($g_db->queryCommit($sql_query)!=true)
 		{
-			UserError::addError(600);
+			(new UserError) -> addError(600);
 			return false;
 		}
 
@@ -84,19 +84,19 @@ class TA extends User
 	 {
 	 		if ($p_progenyPerMating < 0)
 			{
-				UserError::addError(751);
+				(new UserError) -> addError(751);
 				return false;
 			}
 			if ($p_maxProgeny < 0)
 			{
-				UserError::addError(752);
+				(new UserError) -> addError(752);
 				return false;
 			}
 
 			//check to make sure that maxprogeny is NOT < progpermating
 			if ($p_maxProgeny < $p_progenyPerMating)
 			{
-				UserError::addError(765);
+				(new UserError) -> addError(765);
 				return false;
 			}
 
@@ -128,7 +128,7 @@ class TA extends User
 
 		if ($g_db->queryCommit($sql_query)!= true)
 		{
-			UserError::addError(601);
+			(new UserError) -> addError(601);
 			return false;
 		}
 
@@ -150,7 +150,7 @@ class TA extends User
 
 				if ($g_db->queryCommit($sql_query) != true)
 				{
-					UserError::addError(608);
+					(new UserError) -> addError(608);
 					return false;
 				}
 			}
@@ -182,7 +182,7 @@ class TA extends User
 
 		if ($g_db->queryCommit($sql_query)!= true)
 		{
-			UserError::addError(602);
+			(new UserError) -> addError(602);
 			return false;
 		}
 
@@ -202,7 +202,7 @@ class TA extends User
 
 			if ($g_db->queryCommit($sql_query)!= true)
 			{
-				UserError::addError(609);
+				(new UserError) -> addError(609);
 				return false;
 			}
 		}
@@ -416,7 +416,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 			if ($g_db->queryCommit($sql_query)!=true)
 			{
-				UserError::addError(605);
+				(new UserError) -> addError(605);
 				return false;
 			}
 
@@ -424,12 +424,16 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			$db_success = false;
 			if (!empty($row->EpistasisCode))
 			{
-				$db_success = Cross::generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
+				// $db_success = Cross::generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
+			    //                    	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
+				$db_success = (new Cross) -> generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
 			                       	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
 			}
 			else
 			{
-				$db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
+				// $db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
+			    //                    	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
+				$db_success = (new Cross) -> generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
 			                       	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
 			}
 
@@ -450,7 +454,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		}
 		else
 		{
-			UserError::addError(653);
+			(new UserError) -> addError(653);
 			return false;
 		}
 
@@ -522,7 +526,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 			if ($g_db->queryCommit($sql_query)!=true)
 			{
-				UserError::addError(606);
+				(new UserError) -> addError(606);
 				return false;
 			}
 
@@ -564,7 +568,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		}
 		else
 		{
-			UserError::addError(653);
+			(new UserError) -> addError(653);
 			return false;
 		}
 
@@ -681,7 +685,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		if ($g_db->queryCommit($sql_query)!=true)
 		{
-			UserError::addError(605);
+			(new UserError) -> addError(605);
 			return false;
 		}
 
@@ -836,7 +840,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		if ($g_db->queryCommit($sql_query)!=true)
 		{
-			UserError::addError(606);
+			(new UserError) -> addError(606);
 			return false;
 		}
 
@@ -935,6 +939,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function getStudentProblem($p_userId)
 	{
 		global $g_db;
+		var_dump("hh");
 		$sql_query = "SELECT MasterProblemId,Modified,Description,Name,GMU1_2,GMU2_3,TraitOrder,UNIX_TIMESTAMP(ModificationDate) AS FormattedTime,EpistasisCode,".
 					 "Trait1Name,Trait1AAPhenoName,Trait1AbPhenoName,Trait1bAPhenoName,Trait1bbPhenoName,".
 					 "Trait2Name,Trait2AAPhenoName,Trait2AbPhenoName,Trait2bAPhenoName,Trait2bbPhenoName,".
@@ -1125,7 +1130,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 			if ($g_db->queryCommit($sql_query)!= true)
 			{
-				UserError::addError(610);
+				(new UserError) -> addError(610);
 				return false;
 			}
 		}
@@ -1147,7 +1152,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 			if ($g_db->queryCommit($sql_query)!= true)
 			{
-				UserError::addError(610);
+				(new UserError) -> addError(610);
 				return false;
 			}
 		}
