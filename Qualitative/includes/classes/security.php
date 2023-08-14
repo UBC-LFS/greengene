@@ -32,7 +32,7 @@ class Security
 			if (self::ldap_login($p_userId, $p_pwd)) {
 				$row = $g_db -> fetch($rs);
 				// var_dump($row -> PrivilegeLvl);
-				$row -> PrivilegeLvl = 1;
+				// $row -> PrivilegeLvl = 1; // TESTING
 				switch ($row -> PrivilegeLvl){
 					case 10:
 					// var_dump($p_userId);

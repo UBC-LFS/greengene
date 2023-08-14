@@ -100,7 +100,7 @@ class Page
 	function redirectInitial($p_user)
 	{
 		// var_dump($p_user);
-		$p_user->m_privilegeLvl = 1; // testing purposes
+		// $p_user->m_privilegeLvl = 1; // testing purposes
 		switch($p_user->m_privilegeLvl)
 		{
 			case 10:
@@ -290,7 +290,7 @@ END;
 	{
 		$root = URLROOT;
 		$imgroot = "$root/includes/images";
-
+		// var_dump($this->m_user);
 		$userName = $this->m_userActor->m_firstName . ' ' . $this->m_userActor->m_lastName;
 		$courseText = $this->m_user->m_courseName . ' ' . $this->m_user->m_courseDescription;
 

@@ -349,7 +349,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function updateProgenyGenerated($p_userId,$p_currProgGenerated)
 	{
 		global $g_db;
-
+		var_dump("shsh");
 		$sqlQuery = "UPDATE `StudentProblem`
 						 SET `ModificationDate` = NOW( ) ,
 						`ProgenyGenerated` = ". $p_currProgGenerated.
