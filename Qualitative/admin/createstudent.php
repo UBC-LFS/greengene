@@ -56,8 +56,9 @@ if ($formaction == "createstudent")
 	else
 	{
 		if ($user->createStudent($inputUserId, $inputFirstName, $inputLastName) == true)
-		{
-			if (count($_POST['assign_problem']))
+		{	
+			// if (count($_POST['assign_problem']))
+			if (is_countable($_POST['assign_problem']) && count($_POST['assign_problem']))
 			{
 				$page->redirect("selectproblem.php?studentId=".$inputUserId);
 			}

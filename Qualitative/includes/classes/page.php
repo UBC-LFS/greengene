@@ -99,7 +99,7 @@ class Page
 	 */
 	function redirectInitial($p_user)
 	{
-		var_dump($p_user);
+		// var_dump($p_user);
 		$p_user->m_privilegeLvl = 1; // testing purposes
 		switch($p_user->m_privilegeLvl)
 		{

@@ -31,7 +31,7 @@ if($formaction == 'save')
 		$user->m_courseName = $courseName;
 		$user->m_courseDescription = $courseDesc;
 		$_SESSION['userSession'] = $user;
-		Page::redirect($_SERVER['PHP_SELF']);
+		$page->redirect($_SERVER['PHP_SELF']);
 	}
 }
 else

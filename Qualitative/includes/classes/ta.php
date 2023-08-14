@@ -380,6 +380,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		$recordset = TA::viewProblem($p_masterProblemId);
 
+		$cross = new Cross($this->m_traitOrder, $this->m_traitNames, $this->m_phenoNames);
+
 		if (!empty($recordset))
 		{
 			$row = $g_db->fetch($recordset);
@@ -426,14 +428,14 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			{
 				// $db_success = Cross::generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
 			    //                    	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
-				$db_success = (new Cross) -> generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
+				$db_success = $cross -> generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
 			                       	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
 			}
 			else
 			{
 				// $db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
 			    //                    	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
-				$db_success = (new Cross) -> generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
+				$db_success = $cross -> generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
 			                       	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
 			}
 
@@ -478,6 +480,10 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		global $g_db;
 
 		$sql_query;
+		
+		// testing - donald
+		$cross = new Cross($this->m_traitOrder, $this->m_traitNames, $this->m_phenoNames);
+		// ^^
 
 		$recordset = TA::viewProblem($p_masterProblemId);
 
@@ -541,12 +547,17 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			$db_success = false;
 			if (!empty($row->EpistasisCode))
 			{
-				$db_success = Cross::generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
+				// $db_success = Cross::generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
+			    //                    	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
+				// var_dump($p_userId, 0, 1,'1111', 0, 1, '1111',$row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
+				$db_success = $cross -> generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
 			                       	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
 			}
 			else
 			{
-				$db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
+				// $db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
+			    //                    	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
+				$db_success = $cross -> generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
 			                       	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
 			}
 
@@ -939,7 +950,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function getStudentProblem($p_userId)
 	{
 		global $g_db;
-		var_dump("hh");
+		// var_dump("hh");
 		$sql_query = "SELECT MasterProblemId,Modified,Description,Name,GMU1_2,GMU2_3,TraitOrder,UNIX_TIMESTAMP(ModificationDate) AS FormattedTime,EpistasisCode,".
 					 "Trait1Name,Trait1AAPhenoName,Trait1AbPhenoName,Trait1bAPhenoName,Trait1bbPhenoName,".
 					 "Trait2Name,Trait2AAPhenoName,Trait2AbPhenoName,Trait2bAPhenoName,Trait2bbPhenoName,".
