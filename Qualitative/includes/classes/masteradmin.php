@@ -12,10 +12,11 @@ class MasterAdmin extends User
 	 *
 	 * @param string $p_userId UserId
 	 */
-	function MasterAdmin($p_userId)
-	// function __construct($p_userId)
+	// function MasterAdmin($p_userId)
+	function __construct($p_userId)
 	{
-		// parent::User($p_userId); // tempt commented out
+		// parent::User($p_userId); 
+		parent::__construct($p_userId);
 	}
 
 	/**

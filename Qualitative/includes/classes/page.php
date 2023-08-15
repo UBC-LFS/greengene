@@ -99,7 +99,6 @@ class Page
 	 */
 	function redirectInitial($p_user)
 	{
-		// var_dump($p_user);
 		$p_user->m_privilegeLvl = 1; // testing purposes
 		switch($p_user->m_privilegeLvl)
 		{
@@ -132,11 +131,14 @@ class Page
 	 */
 	function translateUser($p_userId)
 	{
+		// if logged in user is not a student, keep itself as the actor
 		if($this->m_user->m_privilegeLvl != 1 && $this->m_user->m_privilegeLvl != 2)
 			return $this->m_userActor;
-
+		// if logged in user is not the student, create a new userActor
 		if($this->m_user->m_userId != $p_userId)
 			$this->m_userActor = new Student($p_userId);
+
+		// if this is null ^, something wrong with student class
 
 		return $this->m_userActor;
 	}
@@ -290,7 +292,7 @@ END;
 	{
 		$root = URLROOT;
 		$imgroot = "$root/includes/images";
-		// var_dump($this->m_user);
+
 		$userName = $this->m_userActor->m_firstName . ' ' . $this->m_userActor->m_lastName;
 		$courseText = $this->m_user->m_courseName . ' ' . $this->m_user->m_courseDescription;
 

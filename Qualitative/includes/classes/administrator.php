@@ -16,10 +16,11 @@ class Administrator extends TA
 	 * POST: TA object is constructed
 	 * @param string $p_userId
 	 */
-	function Administrator($p_userId)
-	// function __construct($p_userId)
+	// function Administrator($p_userId)
+	function __construct($p_userId)
 	{
-		parent::TA($p_userId);
+		// parent::TA($p_userId);
+		parent::__construct($p_userId);
 	}
 
 	function getTraitName($p_traitId)

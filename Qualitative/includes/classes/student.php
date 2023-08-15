@@ -28,6 +28,7 @@ class Student extends User
 	function __construct($p_userId)
 	{
 		// parent::User($p_userId);
+		parent::__construct($p_userId);
 		global $g_db;
 
 		$studentRecord = $g_db->querySelect("SELECT Name, Description, GMU1_2, GMU2_3, TraitOrder,
