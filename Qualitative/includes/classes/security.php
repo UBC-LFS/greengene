@@ -33,8 +33,8 @@ class Security
 		if ($g_db -> getNumRows($rs) == 1)
 		{
 			// var_dump(self::ldap_login($p_userId, $p_pwd));
-			// if (self::ldap_login($p_userId, $p_pwd)) {
-			if (true) {
+			if (self::ldap_login($p_userId, $p_pwd)) {
+			// if (true) { // does not authenciate password - testing purposes
 				$row = $g_db -> fetch($rs);
 				// var_dump($row -> PrivilegeLvl);
 				// $row -> PrivilegeLvl = 1; // TESTING
