@@ -23,21 +23,15 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 {
 	$g_db = new DB();
 
-	// if(Security::login($_POST['UserId'], $_POST['Pwd']) == false)
 	if ($security -> login($_POST['UserId'], $_POST['Pwd']) == false)
 	{
 		$g_db->disconnect();
-		// UserError::addError(306);
 		(new UserError()) -> addError(306);
-		// $userErrorObj->addError(306);
-		// var_dump($userErrorObj);
 	}
 	else // LOGIN accepted
 	{
 		$g_db->disconnect();
-		// Page::redirectInitial(Security::getUser());
-		// var_dump($pageObj);
-		var_dump($security->getUser());
+		// var_dump($security->getUser());
 		$pageObj->redirectInitial($security->getUser());
 	}
 }

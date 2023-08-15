@@ -81,7 +81,8 @@ else if($formaction == 'performcross')
 				unset($_SESSION['pollenPlantNum']);
 
 				// Redirect user to page with new cross data
-				Page::redirect($_SERVER['PHP_SELF']."?cross=$newCrossNum");
+				// Page::redirect($_SERVER['PHP_SELF']."?cross=$newCrossNum");
+				$page -> redirect($_SERVER['PHP_SELF']."?cross=$newCrossNum");
 				// Page::redirect("$PHP_SELF?cross=$newCrossNum");
 			}
 		}

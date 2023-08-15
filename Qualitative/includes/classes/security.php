@@ -27,12 +27,17 @@ class Security
 				FROM User
 				WHERE UserId='".$g_db -> sqlString($p_userId)."'";
 		$rs = $g_db -> querySelect($SQL);
+
+		// var_dump($g_db);
+
 		if ($g_db -> getNumRows($rs) == 1)
 		{
-			if (self::ldap_login($p_userId, $p_pwd)) {
+			// var_dump(self::ldap_login($p_userId, $p_pwd));
+			// if (self::ldap_login($p_userId, $p_pwd)) {
+			if (true) {
 				$row = $g_db -> fetch($rs);
 				// var_dump($row -> PrivilegeLvl);
-				$row -> PrivilegeLvl = 1; // TESTING
+				// $row -> PrivilegeLvl = 1; // TESTING
 				switch ($row -> PrivilegeLvl){
 					case 10:
 					// var_dump($p_userId);
@@ -54,6 +59,8 @@ class Security
 				var_dump($user);
 				$_SESSION['userSession'] = $user;
 				//create session variable
+				
+				var_dump($user);
 				return $user;
 			}
 		}

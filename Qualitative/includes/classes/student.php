@@ -109,7 +109,7 @@ class Student extends User
 	function getProgeny($p_crossNum='Latest')
 	{
 		global $g_db;
-
+		
 		$sql = "SELECT CrossNum, GeneSequences, UNIX_TIMESTAMP(CreationDate) AS CreationDate,
 				PollenCrossNum, PollenPlantNum, PollenGene, SeedCrossNum,
 				SeedPlantNum, SeedGene
@@ -248,11 +248,16 @@ class Student extends User
 		else
 		{
 		// Call generateProgeny of the Cross class to perform the actual cross (return the resulting cross number)
-		$success = Cross::generateProgeny($this->m_userId,
-							   $p_pollenCrossNum, $p_pollenPlantNum, $pollenGeneSeq,
-							   $p_seedCrossNum,   $p_seedPlantNum,   $seedGeneSeq,
-							   $this->m_gmu12, $this->m_gmu23, $this->m_progenyPerMating, $nextCrossNum);
+		// $success = Cross::generateProgeny($this->m_userId,
+		// 					   $p_pollenCrossNum, $p_pollenPlantNum, $pollenGeneSeq,
+		// 					   $p_seedCrossNum,   $p_seedPlantNum,   $seedGeneSeq,
+		// 					   $this->m_gmu12, $this->m_gmu23, $this->m_progenyPerMating, $nextCrossNum);
 							   
+		$crossData = new Cross($this->m_traitOrder, $this->m_traitNames, $this->m_phenoNames);
+		$success = $crossData -> generateProgeny($this->m_userId,
+									$p_pollenCrossNum, $p_pollenPlantNum, $pollenGeneSeq,
+									$p_seedCrossNum,   $p_seedPlantNum,   $seedGeneSeq,
+									$this->m_gmu12, $this->m_gmu23, $this->m_progenyPerMating, $nextCrossNum);
 			if ($success)
 			{
 				$this->m_progenyGenerated = $this->m_progenyGenerated + $this->m_progenyPerMating;
