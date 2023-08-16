@@ -34,7 +34,8 @@ if ($formaction == "import") {
             $user->createStudent($studentUserId[$i] ," " ," ");
         }
     }
-    Page::redirect("viewstudentlist.php");
+    // Page::redirect("viewstudentlist.php");
+    $page -> redirect("viewstudentlist.php");
 }
  
 echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";

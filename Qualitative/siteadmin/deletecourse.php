@@ -14,7 +14,8 @@ $page->handleErrors();
 
 if ($formaction != null ) {
         $user->deleteCourse($formaction);
-        Page::redirect('viewcourses.php');
+        // Page::redirect('viewcourses.php');
+        $page -> redirect('viewcourses.php');
 }
 
 echo("<h3>The following information will be deleted</h3>");

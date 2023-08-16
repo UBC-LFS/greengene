@@ -42,7 +42,8 @@ if($formaction == 'adduser')
 		$_POST['LastName'],
 		$_POST['PrivilegeLvl']) == true)
 	{
-		Page::redirect("viewadminlist.php");
+		// Page::redirect("viewadminlist.php");
+		$page -> redirect("viewadminlist.php");
 	}
 
 	$formType = 'add';
@@ -62,7 +63,8 @@ elseif($formaction == 'saveuser')
 		$_POST['LastName'],
 		$_POST['PrivilegeLvl']) == true)
 	{
-		Page::redirect("viewadminlist.php");
+		// Page::redirect("viewadminlist.php");
+		$page -> redirect("viewadminlist.php");
 	}
 
 	$formType = 'save';

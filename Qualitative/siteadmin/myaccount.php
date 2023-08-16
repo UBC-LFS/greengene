@@ -45,7 +45,8 @@ if($formaction == 'saveuser')
 		$user->m_lastName = $_POST['LastName'];
 		$_SESSION['userSession'] = $user;
 
-		Page::redirect("myaccount.php");
+		// Page::redirect("myaccount.php");
+		$page -> redirect("myaccount.php");
 	}
 
 	$formType = 'save';

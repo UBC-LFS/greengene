@@ -64,6 +64,18 @@ class TA extends User
 		$record_row_values = "'". $g_db->sqlString($p_userId) . "'," . $default_courseId . ","  . $privilege_lvl . "," .
 							 "'" . $g_db->sqlString($p_firstName) . "','" . $g_db->sqlString($p_lastName). "'";
 
+
+		// checks if user already exist
+		$result = $g_db->querySelect("SELECT UserId
+			FROM User
+			WHERE UserId='" . $g_db->sqlString($p_userId) . "'");
+		if($g_db->getNumRows($result) != 0)
+		{
+			(new UserError) -> addError(305);
+			return false;
+		}
+		// ^^
+
 		$sql_query =	"INSERT ".
 						"INTO User (UserId,CourseId,PrivilegeLvl,FirstName,LastName) ".
 						"VALUES (" . $record_row_values . ")";
@@ -73,7 +85,7 @@ class TA extends User
 			(new UserError) -> addError(600);
 			return false;
 		}
-
+	
 		return true;
 	}
 
