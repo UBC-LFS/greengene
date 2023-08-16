@@ -362,7 +362,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function updateProgenyGenerated($p_userId,$p_currProgGenerated)
 	{
 		global $g_db;
-		var_dump("shsh");
+	
 		$sqlQuery = "UPDATE `StudentProblem`
 						 SET `ModificationDate` = NOW( ) ,
 						`ProgenyGenerated` = ". $p_currProgGenerated.
@@ -494,9 +494,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		$sql_query;
 		
-		// testing - donald
 		$cross = new Cross($this->m_traitOrder, $this->m_traitNames, $this->m_phenoNames);
-		// ^^
 
 		$recordset = TA::viewProblem($p_masterProblemId);
 
@@ -562,7 +560,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			{
 				// $db_success = Cross::generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
 			    //                    	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
-				// var_dump($p_userId, 0, 1,'1111', 0, 1, '1111',$row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
+
 				$db_success = $cross -> generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
 			                       	   $row->GMU1_2, $row->GMU2_3, $row->ProgenyPerMating, 1);
 			}
@@ -963,7 +961,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function getStudentProblem($p_userId)
 	{
 		global $g_db;
-		// var_dump("hh");
+
 		$sql_query = "SELECT MasterProblemId,Modified,Description,Name,GMU1_2,GMU2_3,TraitOrder,UNIX_TIMESTAMP(ModificationDate) AS FormattedTime,EpistasisCode,".
 					 "Trait1Name,Trait1AAPhenoName,Trait1AbPhenoName,Trait1bAPhenoName,Trait1bbPhenoName,".
 					 "Trait2Name,Trait2AAPhenoName,Trait2AbPhenoName,Trait2bAPhenoName,Trait2bbPhenoName,".

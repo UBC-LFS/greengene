@@ -259,7 +259,6 @@ class Administrator extends TA
 							"Trait3Name,Trait3AAPhenoName,Trait3AbPhenoName,Trait3bAPhenoName,Trait3bbPhenoName,".
 						 	"ProgenyPerMating,MaxProgeny) ".
 						 	"VALUES (" . $record_row_values . ")";
-			var_dump($sql_query);
 		}
 		else
 		{
@@ -281,7 +280,6 @@ class Administrator extends TA
 							"Trait3Name,Trait3AAPhenoName,Trait3AbPhenoName,Trait3bAPhenoName,Trait3bbPhenoName,".
 						 	"ProgenyPerMating,MaxProgeny) ".
 						 	"VALUES (" . $record_row_values . ")";
-			var_dump($sql_query);
 
 		}
 
@@ -377,7 +375,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		// check for null epistasisCode
 		if ($p_epistasisCode != -1)
 		{
-			var_dump("hello");
 			$sql_query = 	"UPDATE MasterProblem ".
 							"SET Description = '". $g_db->sqlString($p_description) . "'," .
 							"	 Name = '". $g_db->sqlString($p_name) . "'," .

@@ -10,12 +10,9 @@ $pageObj = new Page($user, 'GreenGene Login', 0);
 // initalize new userError
 // $userErrorObj = new UserError();
 
-// var_dump($user);
-
 if(!empty($user))
 {
 	// if we're already logged in, redirect the user home
-	// Page::redirectInitial($user);
 	$pageObj->redirectInitial($user);
 }
 
@@ -31,7 +28,6 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 	else // LOGIN accepted
 	{
 		$g_db->disconnect();
-		// var_dump($security->getUser());
 		$pageObj->redirectInitial($security->getUser());
 	}
 }
