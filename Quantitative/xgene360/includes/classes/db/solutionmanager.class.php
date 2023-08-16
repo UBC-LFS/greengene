@@ -197,8 +197,10 @@ class SolutionManager
 						break;
 					}
 					
-					$res_row = $this->m_obj_db->fetch( $res_date );
-					$dat_hand_in_date = $res_row->time;
+					date_default_timezone_set('America/Vancouver');
+					$dat_hand_in_date = date('Y-m-d ');
+					$time_array =  localtime();
+					$dat_hand_in_date .= $time_array[2].':'.$time_array[1].':'.$time_array[0];
 					
 					// remove the old one if there is one
 					

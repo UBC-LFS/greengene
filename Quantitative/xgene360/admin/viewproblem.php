@@ -115,60 +115,9 @@ if ( $g_bln_is_editable )
                     <td><?= htmlspecialchars( $g_arr_problem_info->Name ) ?></td>
                   </tr>
                   <tr>
-                    <td>Author:</td>
-                    <td><?= htmlspecialchars( $g_arr_problem_info->LastName ) . ',&nbsp;' . htmlspecialchars( $g_arr_problem_info->FirstName ) ?></td>
+                    <td>Author's CWL:</td>
+                    <td><?= htmlspecialchars( $g_arr_problem_info->UserId ) ?></td>
                   </tr>
-                  <tr>
-                    <td colspan="2" height="10">&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td>Start Date:</td>
-                    <td>
-<?= PageHandler::generate_month( 'StartDateMonth', date( 'n', $g_int_start_date ) ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_day( 'StartDateDay', date( 'j', $g_int_start_date ) ); ?>
-
-                    &nbsp;
-                    
-<?= PageHandler::generate_year( 'StartDateYear', date( 'Y' ), date( 'Y', $g_int_start_date ) ); ?>
-
-                    &nbsp;&nbsp;&nbsp;
-
-<?= PageHandler::generate_hour( 'StartDateHour', date( 'H', $g_int_start_date ) ); ?>
-
-                    :
-                  
-<?= PageHandler::generate_minute( 'StartDateMinute', date( 'i', $g_int_start_date ) ); ?>
-
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Due Date:</td>
-                    <td>
-
-<?= PageHandler::generate_month( 'DueDateMonth', date( 'n', $g_int_due_date ) ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_day( 'DueDateDay', date( 'j', $g_int_due_date ) ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_year( 'DueDateYear', date( 'Y' ), date( 'Y', $g_int_due_date ) ); ?>
-
-                    &nbsp;&nbsp;&nbsp;
-                  
-<?= PageHandler::generate_hour( 'DueDateHour', date( 'H', $g_int_due_date ) ); ?>
-
-                    :
-                  
-<?= PageHandler::generate_minute( 'DueDateMinute', date( 'i', $g_int_due_date ) ); ?>
-
-                    </td>
-                  </tr>
-
                   <tr>
                     <td colspan="2" height="10">&nbsp;</td>
                   </tr>
@@ -331,10 +280,9 @@ if ( $g_bln_is_editable )
 
             <tr>
               <th width="50"><input type="checkbox" id="UserIdSelectionToggle" onclick="xgene360_cu.checkAll( this, 'StudentId[]' );" /></th>
-              <th width="150">Student Number</th>
+              <th width="150">CWL Username</th>
               <th width="150">Last Name</th>
               <th width="150">First Name</th>
-              <th>Username</th>
               <th>Progress</th>
             </tr>
             
@@ -355,10 +303,9 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_students ); ++$i )
 
 	echo( '<tr onclick="openStudentDetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
 	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="StudentId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->StudentNum ) . '</td>' . "\n" );
+	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
 	echo( '<td><input class="buttoninput" type="button" value="View Progress" onclick="openProgress( event, ' . $g_int_problem_id . ', \'' . $res_row->UserId . '\' );" /></td>' . "\n" );
 	echo( '</tr>' . "\n" );
 }
@@ -512,7 +459,7 @@ function on_update_handler()
 			!isset( $dbl_Trait_B_Parent_A_Mean ) || !isset( $dbl_Trait_B_Parent_B_Mean ) ||
 			!isset( $int_Histogram_A_Range ) || !isset( $int_Histogram_B_Range ) ||
 			!isset( $int_offspring_per_cross ) || !isset( $int_max_cross ) || !isset( $int_plants_displayed ) ||
-			!isset( $dbl_range_of_acceptance ) || !isset( $dat_start_date ) || !isset( $date_due_date ) )
+			!isset( $dbl_range_of_acceptance ) )
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;

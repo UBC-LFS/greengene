@@ -129,7 +129,7 @@ if ( $g_bln_display_content )
 <table class="listing" id="listOfSolutions">
   
   <tr>
-    <th width="85">Student Number</th>
+    <th width="85">CWL Username</th>
     <th width="100">First Name</th>
     <th width="100">Last Name</th>
     <th width="125">&nbsp;</th>
@@ -160,7 +160,7 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $g_res_student_solutions ); ++
 	$res_solution = $g_obj_db->fetch( $g_res_student_solutions );
 	
 	echo( '<tr>' . "\n" );
-	echo( '<td style="border-bottom: 0px;">' . htmlspecialchars( $res_solution->StudentNum ) . '</td>' . "\n" );
+	echo( '<td style="border-bottom: 0px;">' . htmlspecialchars( $res_solution->UserId ) . '</td>' . "\n" );
 	echo( '<td style="border-bottom: 0px;">' . htmlspecialchars( $res_solution->FirstName ) . '</td>' . "\n" );
 	echo( '<td style="border-bottom: 0px;">' . htmlspecialchars( $res_solution->LastName ) . '</td>' . "\n" );
 	echo( '<td style="border-bottom: 0px;"><strong>FIRST TRAIT</strong></td>' . "\n" );

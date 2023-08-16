@@ -45,7 +45,7 @@ $g_obj_solution_manager = new SolutionManager( $g_obj_user, $g_obj_db );
 $g_str_student_id = $_GET['StudentId'];
 $g_int_problem_id = $_GET['ProblemId'];
 
-verify_problem_exists();
+$bln_problem_exists = verify_problem_exists();
 verify_student_exists();
 
 process_post();
@@ -59,8 +59,9 @@ $g_arr_styles = array( 'histogram.css' );
 $g_arr_scripts = array( 'commonadmin.js', 'histogram.js', 'plant.js' );
 $g_arr_nav_links = $g_arr_nav_defined_links[$g_obj_user->int_privilege];
 
-generate_script_block();
-
+if ($bln_problem_exists) {
+	generate_script_block();
+}
 require_once( '../includes/header.inc.php' );
 
 if ( $g_bln_display_content )
@@ -91,16 +92,17 @@ $g_res_student_solution = $g_obj_solution_manager->view_student_solution( $g_str
 
 ?>
           <table>
+			<tr>
+              <td>CWL Username:</td>
+              <td><?= $g_arr_student_info->UserId ?></td>
+			</tr>
 
             <tr>
               <td width="100">Name:</td>
               <td><?= $g_arr_student_info->FirstName ?>, <?= $g_arr_student_info->LastName ?></td>
             </tr>
 
-            <tr>
-              <td>Student Id:</td>
-              <td><?= $g_arr_student_info->StudentNum ?></td>
-            </tr>
+            
               
 <?php
 
@@ -220,7 +222,7 @@ for ( $i = 1; $i < $g_int_number_of_generations + 1; ++$i )
 	echo( '<tr>' . "\n" );
 	echo( '<td>'. $i .'&nbsp;/&nbsp;' . $g_arr_problem_info->max_cross . '</td>' . "\n" );
 	
-	$arr_trait_values = $g_obj_generation_manager->get_parents_trait_values( $g_obj_user->str_username, $g_int_problem_id, $i );
+	$arr_trait_values = $g_obj_generation_manager->get_parents_trait_values( $g_str_student_id, $g_int_problem_id, $i );
 	
 	$dbl_mean_A = 0.0;
 	$dbl_mean_B = 0.0;
@@ -313,6 +315,7 @@ function verify_problem_exists()
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
 		MessageHandler::add_message( MSG_ERROR, 'The Problem does not exist' );
+		return false;
 	}
 	
 	else
@@ -325,6 +328,7 @@ function verify_problem_exists()
 		$res_row = $g_obj_db->fetch( $res_number_of_generations );
 		
 		$g_int_number_of_generations = $res_row->generation_count;
+		return true;
 	}
 }
 

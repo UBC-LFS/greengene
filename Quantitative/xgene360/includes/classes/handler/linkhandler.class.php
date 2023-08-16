@@ -34,7 +34,6 @@ $g_arr_header_links = array(
 
 $g_arr_header_login_links = array(
 	'Help' => URLROOT.'site/help.php#' . htmlspecialchars( basename( $_SERVER['SCRIPT_FILENAME'], ".php" ) ),
-	'Change Password' => URLROOT.'changepassword.php',
 	'LOGOUT' => URLROOT.'logout.php'
 );
 

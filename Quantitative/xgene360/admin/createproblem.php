@@ -141,57 +141,6 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
                     <td colspan="2" height="10">&nbsp;</td>
                   </tr>
                   <tr>
-                    <td>Start Date:</td>
-                    <td>
-<?= PageHandler::generate_month( 'StartDateMonth', $g_int_start_date_month ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_day( 'StartDateDay', $g_int_start_date_day ); ?>
-
-                    &nbsp;
-                    
-<?= PageHandler::generate_year( 'StartDateYear', date( 'Y' ), $g_int_start_date_year ); ?>
-
-                    &nbsp;&nbsp;&nbsp;
-
-<?= PageHandler::generate_hour( 'StartDateHour', $g_int_start_date_hour ); ?>
-
-                    :
-                  
-<?= PageHandler::generate_minute( 'StartDateMinute', $g_int_start_date_minute ); ?>
-
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Due Date:</td>
-                    <td>
-
-<?= PageHandler::generate_month( 'DueDateMonth', $g_int_due_date_month ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_day( 'DueDateDay', $g_int_due_date_day ); ?>
-
-                    &nbsp;
-
-<?= PageHandler::generate_year( 'DueDateYear', date( 'Y' ), $g_int_due_date_year ); ?>
-
-                    &nbsp;&nbsp;&nbsp;
-                  
-<?= PageHandler::generate_hour( 'DueDateHour', $g_int_due_date_hour ); ?>
-
-                    :
-                  
-<?= PageHandler::generate_minute( 'DueDateMinute', $g_int_due_date_minute ); ?>
-
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td colspan="2" height="10">&nbsp;</td>
-                  </tr>
-                  <tr>
                     <td>First Trait Name:</td>
                     <td><input class="longtextinput" type="text" name="TraitAName" id="TraitAName" value="<?= htmlspecialchars( $g_str_trait_A_name ) ?>" onkeyup="livePreview( 'TraitAName', 'TraitAPreview', 'Trait - ', 'First Trait' );" /></td>
                   </tr>
@@ -517,7 +466,7 @@ function on_create_handler()
 			!isset( $dbl_Trait_B_Parent_A_Mean ) || !isset( $dbl_Trait_B_Parent_B_Mean ) ||
 			!isset( $int_Histogram_A_Range ) || !isset( $int_Histogram_B_Range ) ||
 			!isset( $int_offspring_per_cross ) || !isset( $int_max_cross )  || !isset( $int_plants_displayed ) ||
-			!isset( $dbl_range_of_acceptance ) || !isset( $dat_start_date ) || !isset( $date_due_date ) )
+			!isset( $dbl_range_of_acceptance ))
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;

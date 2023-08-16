@@ -424,6 +424,28 @@ class PageHandler
 		
 		return $str_message;
 	}
+
+	/**  Function: string display_users_cwl( $str_message, $arr_cwl )
+	*    ---------------------------------------------------------------- 
+	*    Purpose:           Format the message to display cwl username
+	*    Arguments:         $str_message - string, the prepend message
+	*                       $arr_cwl - array, the list of cwl
+	*
+	*    Returns/Assigns:   The string with list of cwl
+	*/
+	function display_users_cwl( $str_message, $arr_cwl )
+	{
+		$str_message = $str_message . "<ul>";
+		
+		for ( $i = 0; $i < count( $arr_cwl ); ++$i )
+		{
+			$str_message = $str_message . "<li>'" . $arr_cwl[$i] . "'</li>";
+		}
+		
+		$str_message = $str_message . "</ul>";
+		
+		return $str_message;
+	}
 }
 
 ?>

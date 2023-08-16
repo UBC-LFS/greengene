@@ -48,10 +48,10 @@ class Gene
 		
 		$str_gene = stripslashes( $str_gene );
 		
-		for ( $i = 0; $i < strlen( $str_gene ); ++$i )
+		for ( $i = 0; $i < strlen( $str_gene ); $i=$i+2 )
 		{
 			// make sure it's 8 bits per block
-			$tmp_bin_gene = str_pad( base_convert( ord( substr( $str_gene, $i, 1 ) ), 10, 2 ), 8, '0', STR_PAD_LEFT );
+			$tmp_bin_gene = str_pad( base_convert( substr( $str_gene, $i, 2 ) , 16, 2 ), 8, '0', STR_PAD_LEFT );
 			
 			$this->str_gene = $this->str_gene.$tmp_bin_gene;
 		}
@@ -80,7 +80,9 @@ class Gene
 		$this->str_gene = addslashes( $this->str_gene );
 		for ( $i = 0; $i < strlen( $this->str_gene ); $i = $i + 8 )
 		{
-			$tmp_str_result = $tmp_str_result . chr( base_convert( substr( $this->str_gene, $i, 8 ), 2, 10 ) );
+			$data = base_convert( substr($this->str_gene, $i, 8) , 2, 16);
+			$data = str_pad($data, 2, "0", STR_PAD_LEFT);
+			$tmp_str_result = $tmp_str_result .  $data;
 		}
 		
 		return $tmp_str_result;
@@ -109,7 +111,7 @@ class Gene
 	}	
 }
 
-class Trait
+class Traits
 {
 	var $str_name;
 	var $int_number_of_genes;
@@ -154,7 +156,7 @@ class Plant
 	*                       in the first trait
 	*                       $bln_strong_gene1 - int, number of strong
 	*                       genes in the first trait
-	$                       int_number_of_genes2 - int, number of genes
+	*                       int_number_of_genes2 - int, number of genes
 	*                       in the second trait
 	*                       $bln_strong_gene2 - int, number of strong
 	*                       genes in the second trait

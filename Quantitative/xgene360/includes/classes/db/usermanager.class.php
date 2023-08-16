@@ -118,12 +118,14 @@ class UserManager
 /**  Function: boolean create_user
 *    ---------------------------------------------------------------- 
 *    Purpose:           create a new user
-*    Arguments:         user id, course id, user privilege calss, first name, last name, password, student number
+*    Arguments:         user id, course id, user privilege calss, first name, last name
 *                       
 *    Returns/Assigns:   boolean or null
 */
-	function create_user( $str_user_id, $int_course_id, $int_user_privilege, $str_first_name, $str_last_name, $str_password, $int_student_num )
+	function create_user( $str_user_id, $int_user_privilege, $str_first_name, $str_last_name )
 	{
+		// TODO: remove int_course_id - int_course_id is used in greengene Qualitative no longer relevant
+		$int_course_id = 0;
 		$str_sql_query = null;
 		$res_check_if_exists = null;
 		$str_this_user = $this->m_obj_user->str_username;
@@ -158,14 +160,12 @@ class UserManager
 
 				if ( $this->m_obj_db->get_number_of_rows( $res_check_if_exists ) == 0 ) 
 				{
-					$str_sql_query = "INSERT INTO User(UserId, CourseId, PrivilegeLvl, FirstName, LastName, Pwd, StudentNum) "
+					$str_sql_query = "INSERT INTO User(UserId, CourseId, PrivilegeLvl, FirstName, LastName) "
 								   . "VALUES ('" . $this->m_obj_db->format_sql_string( $str_user_id ) . "', "
 								   . $this->m_obj_db->format_sql_string( $int_course_id ) . ", "
 								   . $this->m_obj_db->format_sql_string( $int_user_privilege ) . ", '"
 								   . $this->m_obj_db->format_sql_string( $str_first_name ) . "', '"
-								   . $this->m_obj_db->format_sql_string( $str_last_name ) . "', "
-								   . "Password('" . $this->m_obj_db->format_sql_string( $str_password ) . "'), "
-								   . $this->m_obj_db->format_sql_string( $int_student_num ) . ")";
+								   . $this->m_obj_db->format_sql_string( $str_last_name ) . "')";
 
 					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 					{
@@ -240,7 +240,7 @@ class UserManager
 *                       
 *    Returns/Assigns:   boolean or null
 */
-	function modify_user( $str_user_id, $str_first_name, $str_last_name, $int_student_number )
+	function modify_user( $str_user_id, $str_first_name, $str_last_name)
 	{
 		$str_sql_query = null;
 		$res_check_if_exists = null;
@@ -279,8 +279,7 @@ class UserManager
 				{
 					$str_sql_query = "UPDATE User "
 								   . "SET FirstName = '". $this->m_obj_db->format_sql_string( $str_first_name ) ."', "
-								   . "LastName = '". $this->m_obj_db->format_sql_string( $str_last_name ) . "', "
-								   . "StudentNum = ".  $this->m_obj_db->format_sql_string( $int_student_number ) . " "
+								   . "LastName = '". $this->m_obj_db->format_sql_string( $str_last_name ) . "' "
 								   . "WHERE UserId = '" . $this->m_obj_db->format_sql_string( $str_user_id ) . "'";
 
 					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
@@ -311,7 +310,6 @@ class UserManager
 														   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 														   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
 														   . $this->m_obj_db->format_sql_string( $str_last_name ) . " "
-														   . $this->m_obj_db->format_sql_string( $int_student_number ) 
 														   . " or user "
 														   . $this->m_obj_db->format_sql_string( $str_user_id ) 
 														   . " does not exist" ); 
@@ -333,8 +331,7 @@ class UserManager
 			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 												   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
-												   . $this->m_obj_db->format_sql_string( $str_last_name ) . " "
-												   . $this->m_obj_db->format_sql_string( $int_student_number ) );
+												   . $this->m_obj_db->format_sql_string( $str_last_name ) );
 			return false;
 		}
   
@@ -344,8 +341,7 @@ class UserManager
 			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to modify user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 												   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
-												   . $this->m_obj_db->format_sql_string( $str_last_name ) . " "
-												   . $this->m_obj_db->format_sql_string( $int_student_number ) 
+												   . $this->m_obj_db->format_sql_string( $str_last_name )
 												   . " due to database error" );
 			return false;
 		}
@@ -353,198 +349,9 @@ class UserManager
 		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified user " 
 											   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 											   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
-											   . $this->m_obj_db->format_sql_string( $str_last_name ) . " "
-											   . $this->m_obj_db->format_sql_string( $int_student_number ) );
+											   . $this->m_obj_db->format_sql_string( $str_last_name ));
 		return true;
 	} 
-
-/**  Function: boolean modify_password
-*    ---------------------------------------------------------------- 
-*    Purpose:           modifies the password of a user
-*    Arguments:         user id, password
-*                       
-*    Returns/Assigns:   boolean or null
-*/
-	function modify_password( $str_user_id, $str_password )
-	{
-		$str_sql_query = null;
-		$res_check_if_exists = null;
-		$str_this_user = $this->m_obj_user->str_username;
-		$bln_success = true;
-	  
-		switch ( $this->m_obj_user->int_privilege )
-		{				   
-			case UP_TA:
-			case UP_PROFESSOR:
-			case UP_ADMINISTRATOR:
-			{
-				$str_sql_query = "BEGIN";
-
-				if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
-				{
-					$bln_success = false;
-					break;
-				}
-
-				$res_check_if_exists = $this->view_user( $str_user_id );
-
-				if ( $res_check_if_exists == null )
-				{
-					$str_sql_query = null;
-					break;
-				}
-
-				if ( $res_check_if_exists == false )
-				{
-					$bln_success = false;
-					break;
-				}
-
-				if ( $this->m_obj_db->get_number_of_rows( $res_check_if_exists ) > 0 )
-				{
-					$str_sql_query = "UPDATE User "
-								   . "SET Pwd = Password('" . $this->m_obj_db->format_sql_string( $str_password ) . "') "
-								   . "WHERE UserId = '" . $this->m_obj_db->format_sql_string( $str_user_id ) . "'";
-
-					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
-					{
-						$bln_success = false;
-						break;
-					}
-
-					$str_sql_query = "COMMIT";
-
-					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
-					{
-						$bln_success = false;
-						break;
-					}
-				}
-				else
-				{
-					$str_sql_query = "ROLLBACK";
-
-					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
-					{
-						$bln_success = false;
-						break;
-					}
-
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to modify " 
-														   . $this->m_obj_db->format_sql_string( $str_user_id ) 
-														   . "'s password" 
-														   . " or user "
-														   . $this->m_obj_db->format_sql_string( $str_user_id ) 
-														   . " does not exist" );
-					return false;
-				}
-				break;
-			}
-		}
-
-		if ( $str_this_user == null )
-		{
-			$str_this_user = "<user did not login>";
-		}
-
-		if ( $str_sql_query == null )
-		{
-			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify password of " 
-												   . $this->m_obj_db->format_sql_string( $str_user_id ) );
-			return false;
-		}
-  
-		if ( !$bln_success )
-		{
-			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to modify password of " 
-												   . $this->m_obj_db->format_sql_string( $str_user_id ) 
-												   . " due to database error" );
-			return false;
-		}
-
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified password of " 
-											   . $this->m_obj_db->format_sql_string( $str_user_id ) );
-		return true;
-	}
-
-/**  Function: boolean modify_own_password
-*    ---------------------------------------------------------------- 
-*    Purpose:           modifies the password of the current user
-*    Arguments:         user id, password
-*                       
-*    Returns/Assigns:   boolean or null
-*/
-	function modify_own_password( $str_password )
-	{
-		$str_sql_query = null;
-		$res_check_if_exists = null;
-		$str_this_user = $this->m_obj_user->str_username;
-		$bln_success = true;
-	  
-		switch ( $this->m_obj_user->int_privilege )
-		{
-			case UP_STUDENT:
-			case UP_TA:
-			case UP_PROFESSOR:
-			case UP_ADMINISTRATOR:
-  			{
-				$str_sql_query = "BEGIN";
-
-				if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
-				{
-					$bln_success = false;
-					break;
-				}
-
-				$str_sql_query = "UPDATE User "
-							   . "SET Pwd = Password('" . $this->m_obj_db->format_sql_string( $str_password ) . "') "
-							   . "WHERE UserId = '" . $this->m_obj_db->format_sql_string( $this->m_obj_user->str_username ) . "'";
-
-				if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
-				{
-					$bln_success = false;
-					break;
-				}
-
-				$str_sql_query = "COMMIT";
-
-				if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
-				{
-					$bln_success = false;
-					break;
-				}
-				break;
-			}
-		}
-
-		if ( $str_this_user == null )
-		{
-			$str_this_user = "<user did not login>";
-		}
-
-		if ( $str_sql_query == null )
-		{
-			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify password of " 
-												   . $this->m_obj_db->format_sql_string( $this->m_obj_user->str_username ) );
-			return false;
-		}
-  
-		if ( !$bln_success )
-		{
-			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_usere . " failed to modify password of " 
-												   . $this->m_obj_db->format_sql_string( $this->m_obj_user->str_username ) 
-												   . " due to database error" );
-			return false;
-		}
-
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified password of " 
-											   . $this->m_obj_db->format_sql_string( $this->m_obj_user->str_username ) );
-		return true;
-	}
 
 /**  Function: boolean delete user
 *    ---------------------------------------------------------------- 
@@ -683,6 +490,7 @@ class UserManager
 		return $int_number_of_rows > 0;
 	}
 	
+	// TODO: remove - function  generates username for user but changed to CWL username
 	function autogen_user ( $str_firstName, $str_lastName )
 	{
 		$str_lastName = rtrim( $str_lastName );
@@ -725,7 +533,7 @@ class UserManager
 		return $str_username;
 	}
 	
-	//function 
+	// TODO: remove - generates password for user 
 
 	function autogen_password ( $str_firstName, $str_lastName )
 	{

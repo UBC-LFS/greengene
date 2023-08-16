@@ -115,9 +115,9 @@ if ( $g_bln_is_editable )
     <table class="listing" id="ListOfProfessor">
       <tr>
         <th width="50"><input type="checkbox" id="ProfessorIdSelectionToggle" onclick="xgene360_cu.checkAll( this, 'ProfessorId[]' );" /></th>
+        <th width="150">CWL Username</th>
         <th width="150">First Name</th>
-        <th width="150">Last Name</th>
-        <th>Username</th>
+        <th >Last Name</th>
       </tr>
 		
 <?php
@@ -137,9 +137,9 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_professors ); ++$i )
 
 	echo( '<tr onclick="openProfessorDetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
 	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="ProfessorId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
+	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
 	echo( '</tr>' . "\n" );
 }
 
@@ -147,7 +147,7 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_professors ); ++$i )
 	
     </table>
 
-    <?php if ( $g_obj_db->get_number_of_rows( $res_professors ) != 0 ) { ?><input class="buttoninput" type="submit" name="Command" value="Drop Selected Professors" onclick="return validateDropProfessor();" /><? } ?>
+    <?php if ( $g_obj_db->get_number_of_rows( $res_professors ) != 0 ) { ?><input class="buttoninput" type="submit" name="Command" value="Drop Selected Professors" onclick="return validateDropProfessor();" /><?php } ?>
 
     <br /><br /><br />
 
@@ -155,9 +155,9 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_professors ); ++$i )
     <table class="listing" id="ListOfTA">
       <tr>
         <th width="50"><input type="checkbox" id="TAIdSelectionToggle" onclick="xgene360_cu.checkAll( this, 'TAId[]' );" /></th>
+        <th width="150">CWL Username</th>
         <th width="150">First Name</th>
-        <th width="150">Last Name</th>
-        <th>Username</th>
+        <th >Last Name</th>
       </tr>
       
 <?php
@@ -177,9 +177,9 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
 
 	echo( '<tr onclick="openTADetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );"">' . "\n" );
 	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="TAId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
+	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
 	echo( '</tr>' . "\n" );
 }
 	
@@ -199,8 +199,6 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
     <table class="listing" id="ListOfProblem">
       <tr>
         <th width="200">Problem</th>
-        <th width="200">Start Date</th>
-        <th>Due Date</th>
       </tr>
 		
 <?php
@@ -220,8 +218,6 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
 
 	echo( '<tr onclick="openProblemDetail( \'' . htmlspecialchars( $res_row->problem_id, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->problem_name ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->start_date ) ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->due_date ) ) . '</td>' . "\n" );
 	echo( '</tr>' . "\n" );
 }
 ?>

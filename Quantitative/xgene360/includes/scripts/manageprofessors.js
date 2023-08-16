@@ -40,29 +40,9 @@ function validateCreateProfessorForm()
   xgene360_cu.using( 'form' );
   
   xgene360_cu.form.init( 'ManageProfessorsForm' );
-
-  xgene360_cu.form.addRequiredTextBox( 'FirstName', 'Please enter the \'First Name\'', 20 );
-  xgene360_cu.form.addRequiredTextBox( 'LastName', 'Please enter the \'Last Name\'', 20 );
-
-  xgene360_cu.form.addCustomValidator( passwordValidatorCreate );
+  xgene360_cu.form.addRequiredTextBox( 'CWL Username', 'Please enter the \'CWL Username\'', 20 );
   
   return xgene360_cu.form.validate();
-}
-
-function passwordValidatorCreate()
-{
-  var objPassword = xgene360_cu.Element( 'Password' );
-  var objConfirmPassword = xgene360_cu.Element( 'ConfirmPassword' );
- 
-  if ( objPassword.value != objConfirmPassword.value )
-  {
-    alert( 'Please make sure the password fields match.' );
-    objPassword.focus();
-    
-    return false;
-  }
-  
-  return true;
 }
 
 function validateImportProfessor()
@@ -87,26 +67,7 @@ function validateUpdateProfessorForm()
   xgene360_cu.form.addRequiredTextBox( 'ProfessorFirstName', 'Please enter the \'First Name\'', 20 );
   xgene360_cu.form.addRequiredTextBox( 'ProfessorLastName', 'Please enter the \'Last Name\'', 20 );
   
-  xgene360_cu.form.addCustomValidator( passwordValidatorUpdate );
-  
-  
   return xgene360_cu.form.validate();
-}
-
-function passwordValidatorUpdate()
-{
-  var objPassword = xgene360_cu.Element( 'ProfessorPassword' );
-  var objConfirmPassword = xgene360_cu.Element( 'ProfessorPasswordConfirm' );
- 
-  if ( objPassword.value != objConfirmPassword.value )
-  {
-    alert( 'Please make sure the password fields match.' );
-    objPassword.focus();
-    
-    return false;
-  }
-  
-  return true;
 }
 
 function resetCreateProfessorForm()

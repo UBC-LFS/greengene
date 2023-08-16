@@ -9,6 +9,7 @@ require_once( '../includes/classes/db/studentmanager.class.php' );
 require_once( '../includes/classes/db/coursemanager.class.php' );
 require_once( '../includes/classes/db/problemmanager.class.php' );
 require_once( '../includes/classes/db/assignstudentmanager.class.php' );
+require_once( '../includes/classes/handler/ldaphandler.class.php' );
 
 /*
 * initialize common stuff
@@ -66,8 +67,8 @@ if ( $g_obj_user->int_privilege != UP_TA )
     <table class="format" width="100%">
       <tr>
         <td>
-          <input class="buttoninput" type="button" value="Create New" name="Command"  onclick="displayCreateStudent();"/>&nbsp;
-          <input class="buttoninput" type="button" value="Import List" name="Command"  onclick="displayImportStudent();"/>&nbsp;
+          <input class="buttoninput" type="button" value="Add New" name="Command"  onclick="displayCreateStudent();"/>&nbsp;
+          <input class="buttoninput" type="button" value="Import Class" name="Command"  onclick="displayImportStudent();"/>&nbsp;
           <input class="buttoninput" type="submit" value="Export Selected" name="Command" onclick="return validateStudentSelection();" />&nbsp;    
           <input class="buttoninput" type="submit" value="Delete Selected" name="Command" onclick="return validateDeleteStudent();" />
         </td>
@@ -166,10 +167,10 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
 
       <tr>
         <th width="50"><input type="checkbox" id="UserIdSelectionToggle" onclick="xgene360_cu.checkAll( this, 'StudentId[]' );" /></th>
-        <th width="150">Student Number</th>
+		<th width="150">CWL Username</th>
         <th width="150">First Name</th>
         <th width="150">Last Name</th>
-        <th>Username</th>
+		<th></th>
       </tr>
 
 <?php
@@ -182,10 +183,10 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_students ); ++$i )
 	
 	echo( '<tr onclick="openStudentDetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
 	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="StudentId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->StudentNum ) . '</td>' . "\n" );
+	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
+	echo( '<td> </td>'."\n");
 	echo( '</tr>' . "\n" );
 }
     
@@ -199,8 +200,8 @@ if ( $g_obj_user->int_privilege != UP_TA )
 {
 ?>              
 
-    <input class="buttoninput" type="button" value="Create New" name="Command" onclick="displayCreateStudent();" />&nbsp;
-    <input class="buttoninput" type="button" value="Import List" name="Command" onclick="displayImportStudent();" />&nbsp;
+    <input class="buttoninput" type="button" value="Add New" name="Command" onclick="displayCreateStudent();" />&nbsp;
+    <input class="buttoninput" type="button" value="Import Class" name="Command" onclick="displayImportStudent();" />&nbsp;
     <input class="buttoninput" type="submit" value="Export Selected" name="Command" onclick="return validateStudentSelection();" />&nbsp;
     <input class="buttoninput" type="submit" value="Delete Selected" name="Command" onclick="return validateDeleteStudent();" />
 
@@ -234,49 +235,8 @@ if ( $g_obj_user->int_privilege != UP_TA )
               </tr>
 
               <tr>
-                <td>Student Number:</td>
-                <td><input class="textinput" type="text" name="StudentNumber" id="StudentNumber" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'StudentNumber' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
-              </tr>
-
-              <tr>
-                <td>Username:</td>
+                <td>CWL Username:</td>
                 <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
-              </tr>
-
-              <tr>
-                <td>Password:</td>
-                <td><input class="textinput" type="password" name="Password" id="Password" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
-              </tr>
-
-              <tr>
-                <td>Confirm Password:</td>
-                <td><input class="textinput" type="password" name="ConfirmPassword" id="ConfirmPassword" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
-              </tr>
-
-              <tr>
-                <td colspan="2"><input type="checkbox" name="AllowGreenGene" id="AllowGreenGeneCreate" onclick="enableGreenGeneCourseSelection( this, GreenGeneCourseCreate );" /><label for="AllowGreenGeneCreate" style="font-size: 0.85em;">&nbsp;Allow user to access GreenGene site</label></td>
-              </tr>
-
-              <tr>
-                <td>GreenGene Course:</td>
-                <td>
-                  <select name="GreenGeneCourseCreate" id="GreenGeneCourseCreate" disabled="disabled">
-            
-<?php
-  
-$res_courses = $g_obj_course_manager->view_courses();
-
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-	
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
-}
-
-?>
-          
-                  </select>&nbsp;
-                </td>
               </tr>
 
               <tr>
@@ -295,50 +255,52 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
 
     </div>
 
-    <div id="ImportStudentDiv" style="display: none">
-
+	<div id="ImportStudentDiv" style="display: none">
+	<!--  TODO: change to input field-->
       <br /><br />
 
       <table class="box">
 
         <tr>
-          <th>Import Students</th>
+		  <th>Import Class </th>
         </tr>
 
         <tr>
-          <td>
-            Upload File [<a href="">Help?</a>]<br />
-            <input class="fileinput" type="file" name="ImportStudentFile" id="ImportStudentFile" />
-            <br />
-            <input class="buttoninput" type="submit" name="Command" value="Import" onclick="return validateImportStudent();" />
-          </td>
-        </tr>
+			<td>Course Subject Code</td>
+			<td><input class="textinput" type="text" id="CourseSubjectCode" name="CourseSubjectCode" placeholder="APBI" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSubjectCode' ) ) ?>" ></input></td>
+		</tr>
 
         <tr>
-          <td><input type="checkbox" name="AllowGreenGene" id="AllowGreenGeneCourseImport" onclick="enableGreenGeneCourseSelection( this, 'GreenGeneCourseImport' );" /><label for="AllowGreenGeneCourseImport">&nbsp;Allow user to access GreenGene site</label></td>
-        </tr>
-              
+			<td>Course Number</td>
+			<td><input class="textinput" type="text" id='CourseNumber' name="CourseNumber" placeholder="318" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseNumber' ) ) ?>"></input></td>
+		</tr>
+ 
+		<tr>
+			<td>Course Section</td>
+			<td><input class="textinput" type="text" id='CourseSection' name="CourseSection" placeholder="001" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSection' ) ) ?>"></input></td>
+		</tr>
+   
+		<tr>
+			<td>Year</td>
+			<td><input class="textinput" type="text" id='Year' name="Year" placeholder="2019" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Year' ) ) ?>"></input></td>
+		</tr>
+
         <tr>
-          <td>GreenGene Course:
-            <select name="GreenGeneCourseImport" id="GreenGeneCourseImport" disabled="disabled">
+			<td>Session</td>
+			<td>
+				<select name="Session">
+					<option value="W">Winter</option>
+					<option value="S">Summer</option>
 
-<?php
-  
-$res_courses = $g_obj_course_manager->view_courses();
+				</select>
+			</td>
+		</tr>
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-    
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
-}
-
-?>
-
-            </select>&nbsp;
-          </td>
-        </tr>
-
+		<tr>
+			<td colspan="2" align="right">
+				<input class="buttoninput" type="submit" name="Command" value="Import" onclick="return validateImportStudent();"/>
+			</td>
+		</tr>
       </table>
 
     </div>
@@ -423,41 +385,28 @@ function on_create_handler()
 {
 	global $g_obj_student_manager;
 	
-	$str_user_name = PageHandler::get_post_value( 'Username' );
+	$cwl_username = PageHandler::get_post_value( 'Username' );
 	$str_first_name = PageHandler::get_post_value( 'FirstName' );
 	$str_last_name = PageHandler::get_post_value( 'LastName' );
-	$str_password = PageHandler::get_post_value( 'Password' );
-	$str_password_confirm = PageHandler::get_post_value( 'ConfirmPassword' );
-	$str_student_number = PageHandler::get_post_value( 'StudentNumber' );
-	$int_greengene_course = PageHandler::get_post_value( 'GreenGeneCourseCreate' );
 	
 	// verify the input
-	if ( strlen( $str_user_name ) == 0 || strlen( $str_first_name ) == 0 || strlen( $str_last_name ) == 0 || strlen( $str_password ) == 0 || strlen( $str_student_number ) == 0 )
+	if (strlen( $cwl_username ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
 		return;
 	}
 	
-	if ( $str_password != $str_password_confirm )
-	{
-		MessageHandler::add_message( MSG_FAIL, 'The password does not match' );
-		return;
-	}
+	$str_first_name = !isset($str_first_name) ? " " : $str_first_name;
+	$str_last_name = !isset($str_last_name) ? " " : $str_last_name;
 		
-	if ( empty( $int_greengene_course ) )
+	if ( $g_obj_student_manager->create_user( $cwl_username, UP_STUDENT,  $str_first_name, $str_last_name ) )
 	{
-		$int_greengene_course = 0;
-	}
-
-	
-	if ( $g_obj_student_manager->create_user( $str_user_name, $int_greengene_course, UP_STUDENT,  $str_first_name, $str_last_name, $str_password, $str_student_number ) )
-	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
+		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student with CWL username: ' . $cwl_username);
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to create an account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
+		MessageHandler::add_message( MSG_FAIL, 'Failed to create an account for Student with CWL username: "' .$cwl_username );
 	}
 }
 
@@ -480,34 +429,33 @@ function on_delete_handler()
 		return;
 	}
 	
-	$arr_student_names = $g_obj_student_manager->user_names_list( $arr_student_list );
-	
 	$arr_success = array();
 	$arr_fail = array();
 	
-	for ( $i = 0; $i < count( $arr_student_names ); ++$i )
+	for ( $i = 0; $i < count($arr_student_list); ++$i) 
 	{
-		if ( $g_obj_student_manager->delete_user( $arr_student_names[$i][0] ) )
+		$userId = $arr_student_list[$i];
+		if ( $g_obj_student_manager->delete_user( $userId ) )
 		{
-			array_push( $arr_success, $arr_student_names[$i] );
+			array_push( $arr_success, $userId );
 		}
 		
 		else
 		{
-			array_push( $arr_fail, $arr_student_names[$i] );
-		}
+			array_push( $arr_fail, $userId );
+		}	
 	}
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Successfully deleted', $arr_success );
+		$str_message = PageHandler::display_users_cwl( 'Successfully deleted students with CWL Username', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Failed to delete', $arr_fail );
+		$str_message = PageHandler::display_users_cwl( 'Failed to delete students with CWL Username', $arr_fail );
 		
 		MessageHandler::add_message( MSG_FAIL, $str_message );
 	}
@@ -545,12 +493,12 @@ function on_assign_handler()
 		{
 			if ( $g_obj_assign_student_manager->assign_student_to_course( $arr_student_names[$i][0], $int_selected_course_id ) )
 			{
-				array_push( $arr_success, $arr_student_names[$i] );
+				array_push( $arr_success, $arr_student_names[$i][0] );
 			}
 			
 			else
 			{
-				array_push( $arr_fail, $arr_student_names[$i] );
+				array_push( $arr_fail, $arr_student_names[$i][0] );
 			}
 		}
 	}
@@ -561,26 +509,26 @@ function on_assign_handler()
 		{
 			if ( $g_obj_assign_student_manager->assign_student_to_problem( $arr_student_names[$i][0], $int_selected_problem_id ) )
 			{
-				array_push( $arr_success, $arr_student_names[$i] );
+				array_push( $arr_success, $arr_student_names[$i][0] );
 			}
 			
 			else
 			{
-				array_push( $arr_fail, $arr_student_names[$i] );
+				array_push( $arr_fail, $arr_student_names[$i][0] );
 			}
 		}
 	}
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Successfully assigned', $arr_success );
+		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_id_name( 'Failed to assign', $arr_fail );
+		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
 		
 		MessageHandler::add_message( MSG_FAIL, $str_message );
 	}
@@ -595,30 +543,20 @@ function on_assign_handler()
 */
 function on_import_handler()
 {
-	if ( !isset( $_FILES['ImportStudentFile'] ) )
-	{
-		MessageHandler::add_message( MSG_FAIL, 'Please select a file' );
-	}
-	
-	else
-	{
-		if ( !is_uploaded_file( $_FILES['ImportStudentFile']['tmp_name'] ) )
-		{
-			MessageHandler::add_message( MSG_FAIL, 'The file cannot be retrieved' );
-		}
-	
-		else
-		{
-			$int_greengene_course = PageHandler::get_post_value( 'GreenGeneCourseImport' );
-			
-			if ( empty( $int_greengene_course ) )
-			{
-				$int_greengene_course = 0;
-			}
-			
-			FileHandler::import_student_list( $_FILES['ImportStudentFile']['tmp_name'], $int_greengene_course );
-		}
-	}
+	$courseSubjectCode = PageHandler::get_post_value('CourseSubjectCode');
+	$courseNumber = PageHandler::get_post_value('CourseNumber');
+	$courseSection = PageHandler::get_post_value('CourseSection');
+	$year = PageHandler::get_post_value('Year');
+	$session = PageHandler::get_post_value('Session');
+
+	$payload = ['subjectCode' => $courseSubjectCode,
+			'courseNumber' => $courseNumber,
+			'section' => $courseSection,
+			'year' => $year,
+			'session' => $session]; 
+
+	$result = LDAPHandler::importClassList($payload);
+	LDAPHandler::createUserFromLDAPResult($result);
 }
 
 /**  Function: void on_export_handler()
