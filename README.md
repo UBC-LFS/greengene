@@ -11,7 +11,8 @@ Quantitative - Incomplete
 git clone https://github.com/UBC-LFS/greengene.git
 ```
 
-[Qualitative Set Up Guide](./Qualitative/INSTALL.md)
+Follow the [Qualitative Set Up Guide](./Qualitative/INSTALL.md)
+
 Note: This step can be skipped if a database already exist.
 All you need to do is create a `config.php` file manually inside `Qualitative/includes` using the [config template](./Qualitative/includes/config.php-example) and add the secret variables.
 
