@@ -7,6 +7,7 @@ define('DBNAME', 'replace-with-database-name');
 define('URLROOT', '');
 define('REALROOT', '/path/to/www');
 define('LOGPATH', REALROOT.'/logs/error.log');
+define('LDAP_HOST', 'LDAP Host info');
 define('LDAP_DN', 'uid=user,dn=distinguishedName');
 define('LDAP_PW', 'LDAP account password');
 define('LDAP_LOGIN_HOST', 'some host');

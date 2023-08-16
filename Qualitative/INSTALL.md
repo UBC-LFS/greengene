@@ -28,9 +28,9 @@ This manual will describe the necessary pre-requisites and steps necessary to co
 
 ### 1.2 Requirements
 
-MySQL 3.23+
+MySQL 8+
 Apache web server (any version should work)
-PHP 4.2+ (Apache must have PHP support – either via php_cgi or mod_php)
+PHP 8+ (Apache must have PHP support – either via php_cgi or mod_php)
 
 The above should be pre-installed and working correctly prior to commencing installation.
 
