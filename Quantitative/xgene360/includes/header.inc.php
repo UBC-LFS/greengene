@@ -15,7 +15,7 @@
 
   <head>
 
-    <title>XGene 360 <?php if ( strlen( $g_str_page_title ) ) { echo( "- $g_str_page_title" ); } ?></title>
+    <title>XGene 360 <? if ( strlen( $g_str_page_title ) ) { echo( "- $g_str_page_title" ); } ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="Author" content="Team 7" />
     <meta name="Copyright" content="&copy; 2006 The University of British Columbia" />

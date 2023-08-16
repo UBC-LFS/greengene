@@ -6,22 +6,34 @@
   <h3><a name="_Toc132145326">Login</a></h3> 
   <p>To login to the application:</p> 
   <ol> 
-    <li>Enter a CWL username.</li> 
-    <li>Enter a password associated with the CWL username.</li> 
-    <li>Press the "Login" button.</li> 
+    <li>Enter a username.</li> 
+    <li>Enter a password.</li> 
+    <li>Choose between logging in either XGene 360 or GreenGene.</li> 
+    <li>Press the ‘Login’ button.</li> 
     <li>If the user is valid, the user will log into their account.</li> 
     <li>If the user is not valid, an error message will be produced and the user will be prompted to enter the information again.</li> 
   </ol> 
-  <p>Only users with valid UBC CWL account are allowed to access the application.</p>
-  <p>If user desires to have access to the application, the user will have to contact either a professor or site administrator of the application.</p> 
+  <p>There is an additional option in the login box to login to either XGene 360 or GreenGene. If the user selected the GreenGene radio button, the user should be a valid GreenGene user. By default the user will be logged into XGene 360.</p> 
+  <p>If user desires to create an account, the user will have to contact the administrator of the application.</p> 
   <a name="logout"></a>
   <h3><a name="_Toc132145327">Logout</a></h3> 
   <p>To logout of the application while logged in:</p> 
   <ol> 
-    <li>Click the "LOGOUT" link on the upper-right corner of the page. </li> 
+    <li>Click the ‘LOGOUT’ link on the upper-right corner of the page. </li> 
     <li>The user will be logged out and brought back to the login page.</li> 
   </ol> 
   <p>Note that the user can log out at any time while logged in.</p> 
+  <a name="changepassword"></a>
+  <h3><a name="_Toc132145328">Change Password</a></h3> 
+  <p>Users have the capacity to change their own passwords. To change passwords:</p> 
+  <ol> 
+    <li>Click on the ‘Change Password’ link on the upper-right corner of the page. </li> 
+    <li>Enter the old password.</li> 
+    <li>Enter the new password.</li> 
+    <li>Enter the new password again for confirmation. </li> 
+    <li>Press the ‘Update’ button.</li> 
+  </ol> 
+  <p>If the confirmation does not match, an error message will be produced and the user will be prompted to fill the correct information.</p> 
   <h3><a name="_Toc132145329">Navigation Bar</a></h3> 
   <p>The navigation bar on the top will hold links to relevant pages such as managing courses or viewing problems.</p> 
   <h3><a name="_Toc132145330">Sorting</a></h3> 
@@ -38,29 +50,30 @@
   <h3><a name="_Toc132145333">Viewing Problems Listing</a></h3> 
   <p>To view a list of problems:</p> 
   <ol> 
-    <li>Select "View Problems" on the navigation bar. </li> 
+    <li>Select ‘View Problems’ on the navigation bar. </li> 
   </ol> 
   <h3><a name="_Toc132145334">Viewing Problem Information</a></h3> 
   <p>To view specific information for a problem entry:</p> 
   <p>
-    <li>Left-click on a particular problem entry on the "View Problems" page.</p> 
+    <li>Left-click on a particular problem entry on the ‘View Problems’ page.</p> 
   <p>
     <li>A new page will load with specific problem information.</p> 
   <h3><a name="_Toc132145335">Submitting Completed Problems</a></h3> 
   <p>For students to submit completed problems:</p> 
   <ol>
     <li>View specific information for a particular problem by left-clicking on the problem in a list.</li> 
-    <li>In the problem information, there is an option to submit the problem via the "Submit Solution" buttons. Press the "Submit Solution" button.</li>    <li>A box will appear with fields to fill out. Fill out the fields with answers.</li> 
-    <li>Press the "Submit" button inside the box. </li> 
+    <li>In the problem information, there is an option to submit the problem via the ‘Submit Solution’ buttons. Press the ‘Submit Solution’ button.</li>    <li>A box will appear with fields to fill out. Fill out the fields with answers.</li> 
+    <li>Press the ‘Submit’ button inside the box. </li> 
   </ol>
+  <p>If the problem due date has not passed yet, the submission will succeed. If the due date is passed, the submission will be rejected.</p> 
   <a name="viewsolution"></a>
   <h3><a name="_Toc132145336">Creating New Generation (Breeding)</a></h3> 
   <p>To view a particular generation:</p> 
   <ol>
-    <li>View a particular problem's information by left-clicking on a problem in a list.</li> 
+    <li>View a particular problem’s information by left-clicking on a problem in a list.</li> 
     <li>A list of generations will appear for the problem. Choose the desired generation to view by left-clicking on it.</li>
     <li>Select certain plants by invoking methods described below.</li> 
-    <li>Press the "Cross Highlighted Plants" button.</li>
+    <li>Press the ‘Cross Highlighted Plants’ button.</li>
   </ol> 
   <p>If the breeding history fraction is less or equal to one (i.e. 30/100, 20/25, but not 25/25), then the creation of a new generation is allowed. Clicking on a generation listing will lead to generation pages that allow for the crossing to occur.</p> 
   <p>A generation page consists of:</p> 
@@ -73,18 +86,20 @@
   <p>The student will be able to do the following in order to perform a crossing:</p> 
   <ul>
     <li>Hovering over particular plants on the plant shelf in order to see the measures of each trait for the plant.</li> 
-    <li>Selecting particular plants on the plant shelf to breed by clicking on the particular plant. This must be done in order to successfully perform a cross. Students can also select/deselect plants that have been selected via the histograms by pressing the "Select/Deselect Color Plants" button. Students can also remove plants from the highlighted list by either the information table or clicking on the plant on the plant shelf.</li> 
+    <li>Selecting particular plants on the plant shelf to breed by clicking on the particular plant. This must be done in order to successfully perform a cross. Students can also select/deselect plants that have been selected via the histograms by pressing the ‘Select/Deselect Color Plants’ button. Students can also remove plants from the highlighted list by either the information table or clicking on the plant on the plant shelf.</li> 
     <li>Choosing plants from previous generations by selecting which generation to view. This is done by the dropdown menu on top of the plant shelf.</li> 
     <li>Hovering over particular bars on a histogram in order to see the numbers of plants and ranges represented by the bar.</li> 
     <li>Selecting particular bars on a histogram by clicking on the bar. This will highlight the plants inside the bars on the plant shelf. The student can use Shift and Ctrl to select groups of histogram bars, much like the functional equivalent in a Windows operating system.</li> 
     <li>Selecting particular bars on a histogram by dragging a selection box over the desired bars. This is also similar to the Windows functionality of click-and-dragging a selection box to select several files.</li> 
-    <li>Viewing specific information about highlighted plants. Students will be able to see a highlighted plant's generation and trait measures. There is also information about the mean and variance of the highlighted plants as an aggregate.</li> 
+    <li>Viewing specific information about highlighted plants. Students will be able to see a highlighted plant’s generation and trait measures. There is also information about the mean and variance of the highlighted plants as an aggregate.</li> 
   </ul>
   <h1><a name="_Toc132145337">Page Information</a></h1> 
   <h2><a name="_Toc132145338">General Page Attributes</a></h2> 
   <a name="help"></a>
   <h3><a name="_Toc132145339">Help</a></h3> 
   <p>This link on the upper-right corner will lead to a help page that corresponds with the current page the user is viewing. A help page has information on functions and attributes for the page, as well as access to other help files.</p> 
+  <h3><a name="_Toc132145340">Change Password</a></h3> 
+  <p>This link on the upper-right corner will lead to a page that will allow you to change the password of the user that is logged in. This option does not appear when no account is active.</p> 
   <h3><a name="_Toc132145341">LOGOUT</a></h3> 
   <p>This link on the upper-right corner will allow a logged user to log out of his/her account. After clicking the link, the user will be redirected to the login page. This option does not appear when no account is active.</p> 
   <a name="aboutxgene360"></a>
@@ -97,12 +112,16 @@
   <h3><a name="_Toc132145345">Login Fields</a></h3> 
   <table class="format" width="100%"> 
     <tr> 
-      <td width="200"><p><i>CWL Username</i></p></td> 
-      <td><p>The CWL username associated with each account.</p></td> 
+      <td width="200"><p><i>Username</i></p></td> 
+      <td><p>The unique username associated with each account.</p></td> 
     </tr> 
     <tr> 
       <td><p><i>Password</i></p></td> 
-      <td><p>The password associated with the CWL username entered above.</p></td> 
+      <td><p>The password associated with the username entered above.</p></td> 
+    </tr> 
+    <tr> 
+      <td><p><i>XGene 360/GreenGene radio buttons</i></p></td> 
+      <td><p>This will allow the user to choose whether he/she wants to login to the XGene 360 or GreenGene application. It is assumed that the user has a valid account with the desired login type.</p></td> 
     </tr> 
   </table> 
   <a name="viewproblem"></a>
@@ -121,6 +140,14 @@
     <tr> 
       <td><p><i>Course</i></p></td> 
       <td><p>The course that the problem is associated with.</p></td> 
+    </tr> 
+    <tr> 
+      <td><p><i>Start Date</i></p></td> 
+      <td><p>The starting date for the problem. The problem will not show until the starting date has passed. The month, day, year, hour and minute can be specified.</p></td> 
+    </tr> 
+    <tr> 
+      <td><p><i>Due Date</i></p></td> 
+      <td><p>The due date for the problem. The month, day, year, hour and minute can be specified.</p></td> 
     </tr> 
     <tr> 
       <td><p><i>Breeding History</i></p></td> 

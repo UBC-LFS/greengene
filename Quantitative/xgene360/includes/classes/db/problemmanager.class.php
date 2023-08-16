@@ -12,8 +12,7 @@ class ProblemManager
  * POST: a ProblemManager object has been created with the parameters
  * @param $obj_user, $obj_db
  */
-	// function ProblemManager( $obj_user, $obj_db )
-	function __construct( $obj_user, $obj_db ) 
+	function ProblemManager( $obj_user, $obj_db )
 	{
 	    $this->m_obj_user = $obj_user;
 		$this->m_obj_db = $obj_db;
@@ -341,8 +340,8 @@ class ProblemManager
 							   . $this->m_obj_db->format_sql_string( $dbl_range_of_acceptance ) . ", "
 							   . $this->m_obj_db->format_sql_string( $dbl_trait_A_histogram_range ) . ", "
 							   . $this->m_obj_db->format_sql_string( $dbl_trait_B_histogram_range ) . ", '"
-							   . $this->m_obj_db->format_sql_string( '0000-00-00 00:00:00' ) . "', '"
-							   . $this->m_obj_db->format_sql_string( '9000-00-00 00:00:00' ) . "'); ";
+							   . $this->m_obj_db->format_sql_string( $dat_start_date ) . "', '"
+							   . $this->m_obj_db->format_sql_string( $dat_due_date ) . "'); ";
 							   
 				if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 				{
@@ -402,7 +401,7 @@ class ProblemManager
 	function create_trait( $str_name, $int_number_of_genes, $dbl_parent_A_mean, $dbl_parent_B_mean, $dbl_variance_value )
 	{
 		// create the trait
-		$obj_trait = new Traits;
+		$obj_trait = new Trait;
 		$obj_trait->create( $str_name, $int_number_of_genes, min( $dbl_parent_A_mean, $dbl_parent_B_mean ), max( $dbl_parent_A_mean, $dbl_parent_B_mean ), $dbl_variance_value );
 		
 		return $obj_trait;
@@ -502,7 +501,7 @@ class ProblemManager
 		if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 		{
 			$bln_success = false;
-			return false;
+			break;
 		}
 
 		$str_sql_query = "UPDATE XG_ProblemTraitMadeFor "
@@ -513,7 +512,7 @@ class ProblemManager
 		if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 		{
 			$bln_success = false;
-			return false;
+			break;
 		}
 
 		$str_sql_query = "COMMIT";
@@ -521,7 +520,7 @@ class ProblemManager
 		if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
 		{
 			$bln_success = false;
-			return false;
+			break;
 		}
 
 		if( !$bln_success )
@@ -727,8 +726,8 @@ class ProblemManager
 								. "range_of_acceptance = " . $this->m_obj_db->format_sql_string( $dbl_range_of_acceptance ) . ", "
 								. "trait_A_histogram_range = " . $this->m_obj_db->format_sql_string( $dbl_trait_A_histogram_range ) . ", "
 								. "trait_B_histogram_range = " . $this->m_obj_db->format_sql_string( $dbl_trait_B_histogram_range ) . ", "
-								. "start_date = '" . $this->m_obj_db->format_sql_string( '0000-00-00 00:00:00' ) . "', "
-								. "due_date = '" . $this->m_obj_db->format_sql_string( '9000-00-00 00:00:00' ) . "' "
+								. "start_date = '" . $this->m_obj_db->format_sql_string( $dat_start_date ) . "', "
+								. "due_date = '" . $this->m_obj_db->format_sql_string( $dat_due_date ) . "' "
 								. "WHERE problem_id = " . $this->m_obj_db->format_sql_string(  $int_problem_id );
 							   
 					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
@@ -736,13 +735,7 @@ class ProblemManager
 						$bln_success = false;
 						break;
 					}
-					$str_sql_query = "COMMIT";
-
-					if ( !$this->m_obj_db->query_commit( $str_sql_query ) )
-					{
-						$bln_success = false;
-						break;
-					}	   
+							   
 				if ( $bln_changed )
 				{
 

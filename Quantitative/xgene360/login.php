@@ -82,13 +82,20 @@ require( 'includes/header.inc.php' );
                     <table width="185">
 
                       <tr>
-                        <td width="75">CWL Username:&nbsp;</td>
+                        <td width="75">Username:&nbsp;</td>
                         <td><input class="textinput" type="text" name="UserId" id="UserId" value="<?= PageHandler::get_post_value( 'UserId' ); ?>" size="20" /></td>
                       </tr>
 
                       <tr>
                         <td width="100">Password:&nbsp;</td>
                         <td><input class="textinput" type="password" name="Pwd" id="Pwd" size="20" /></td>
+                      </tr>
+
+                      <tr>
+                        <td colspan="2">
+                          <input type="radio" name="Site" id="SiteXgene360" value="XGene360" checked="checked" onclick="switchSite();" /><label for="SiteXgene360">&nbsp;XGene 360</label>
+                          &nbsp;<input type="radio" name="Site" id="SiteGreenGene" value="GreenGene" onclick="switchSite();" /><label for="SiteGreenGene">&nbsp;GreenGene</label>
+                        </td>
                       </tr>
 
                       <tr>
@@ -168,28 +175,43 @@ function on_login_handler()
 	$obj_db = new DBManager();
 
 	$str_username = PageHandler::get_post_value( 'UserId' );
-  $str_password = PageHandler::get_post_value( 'Pwd' );
-  
-	// authenticate the user
-	$obj_user = LoginManager::authenticate( $str_username, $str_password, $obj_db );
-		
-	// ocassionally purge old lock data
-	$obj_lock = new LockManager( $obj_db );
-	$obj_lock->purge();
-
-	$obj_db->disconnect();
-		
-	if ( $obj_user != null )
+	$str_password = PageHandler::get_post_value( 'Pwd' );
+	$str_site = PageHandler::get_post_Value( 'Site' );
+	
+	if ( strlen( $str_site ) == 0 )
 	{
-		CookieHandler::set_user( $obj_user );
-		PageHandler::redirect_initial_page( $obj_user->int_privilege );
+		MessageHandler::add_message( MSG_FAIL, 'Please specify the site to login' );
+		return;
 	}
+	
+	if ( $str_site == 'XGene360' )
+	{
+		// authenticate the user
+		$obj_user = LoginManager::authenticate( $str_username, $str_password, $obj_db );
+		
+		// ocassionally purge old lock data
+		$obj_lock = new LockManager( $obj_db );
+		$obj_lock->purge();
 
+		$obj_db->disconnect();
+		
+		if ( $obj_user != null )
+		{
+			CookieHandler::set_user( $obj_user );
+			PageHandler::redirect_initial_page( $obj_user->int_privilege );
+		}
+
+		else
+		{		
+			$g_bln_invalid_login = true;
+		}
+	}
+	
 	else
-	{		
-		$g_bln_invalid_login = true;
+	{
+		// login to greengene
+		
 	}
-
 }
 
 ?>

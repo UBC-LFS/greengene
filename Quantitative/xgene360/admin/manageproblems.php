@@ -70,7 +70,9 @@ if ( $g_obj_user->int_privilege != UP_TA )
       <tr>
         <th width="50"><input type="checkbox" id="ProblemIdSelectionToggle" onclick="xgene360_cu.checkAll( this, 'ProblemId[]' );" /></th>
         <th width="150">Problem</th>
-		<th width="100">Course</th>
+        <th width="100">Course</th>
+        <th width="125">Start Date</th>
+        <th width="125">Due Date</th>
         <th colspan="2"># Students<br />(submitted/total)</th>
       </tr>
           
@@ -86,6 +88,8 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
 	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="ProblemId[]" value="' . htmlspecialchars( $res_row->problem_id ) . '" /></td>'."\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->problem_name ) . '</td>'."\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->Name ). '</td>'."\n" );
+	echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->start_date ) ) . '</td>'."\n" );
+	echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->due_date ) ) . '</td>'."\n" );
 	echo( '<td>' . $res_row->submit_count . '/' . htmlspecialchars( $res_row->student_count ) . '<td>&nbsp;<input class="buttoninput" type="button" value="View Submitted" onclick="openSolutions( event, ' . htmlspecialchars( $res_row->problem_id ) . ' );" /></td>'."\n" );
 	echo( '</tr>' . "\n" );
 }

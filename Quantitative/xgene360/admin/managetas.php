@@ -57,7 +57,7 @@ if ( $g_bln_display_content )
     <table class="format" width="100%">
       <tr>
         <td>
-          <input class="buttoninput" type="button" value="Add New" name="Command" onclick="displayCreateTA();" />&nbsp;
+          <input class="buttoninput" type="button" value="Create New" name="Command" onclick="displayCreateTA();" />&nbsp;
           <input class="buttoninput" type="button" value="Import List" name="Command" onclick="displayImportTA();" />&nbsp;
           <input class="buttoninput" type="submit" value="Export Selected" name="Command" onclick="return validateTASelection();" />&nbsp;
           <input class="buttoninput" type="submit" value="Delete Selected" name="Command" onclick="return validateDeleteTA();" />
@@ -92,9 +92,9 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
     <table class="listing" id="ListOfTAs">
       <tr>
         <th width="50"><input type="checkbox" id="UserIdSelectionToggle" onclick="xgene360_cu.checkAll( this, 'TAId[]' );" /></th>
-        <th width="150">CWL Username</th>
         <th width="150">First Name</th>
-        <th >Last Name</th>
+        <th width="150">Last Name</th>
+        <th>Username</th>
       </tr>
 		
 <?php
@@ -107,9 +107,9 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
 
 	echo( '<tr onclick="openTADetail( \'' . htmlspecialchars( $res_row->UserId ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
 	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="TAId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' );
 	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' );
 	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' );
+	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' );
 	echo( '</tr>' );
 }
 	
@@ -117,7 +117,7 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
 
     </table>
 
-    <input class="buttoninput" type="button" value="Add New" name="Command" onclick="displayCreateTA();" />&nbsp;
+    <input class="buttoninput" type="button" value="Create New" name="Command" onclick="displayCreateTA();" />&nbsp;
     <input class="buttoninput" type="button" value="Import List" name="Command" onclick="displayImportTA();" />&nbsp;
     <input class="buttoninput" type="submit" value="Export Selected" name="Command" onclick="return validateTASelection();" />&nbsp;
     <input class="buttoninput" type="submit" value="Delete Selected" name="Command" onclick="return validateDeleteTA();" />
@@ -142,8 +142,40 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
                 <td><input class="textinput" type="text" name="LastName" id="LastName" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'LastName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
               <tr>
-                <td>CWL Username:</td>
+                <td>Username <span style="font-size: 9px;">(Optional)</span>:</td>
                 <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+              </tr>
+              <tr>
+                <td>Password <span style="font-size: 9px;">(Optional)</span>:</td>
+                <td><input class="textinput" type="password" name="Password" id="Password" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+              </tr>
+              <tr>
+                <td>Confirm Password:</td>
+                <td><input class="textinput" type="password" name="ConfirmPassword" id="ConfirmPassword" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+              </tr>
+              <tr>
+                <td colspan="2"><input type="checkbox" name="AllowGreenGene" id="AllowGreenGeneCreate" onclick="enableGreenGeneCourseSelection( this, GreenGeneCourseCreate );" /><label for="AllowGreenGeneCreate" style="font-size: 0.85em;">&nbsp;Allow user to access GreenGene site</label></td>
+              </tr>
+              <tr>
+                <td>GreenGene Course:</td>
+                <td>
+                  <select name="GreenGeneCourseCreate" id="GreenGeneCourseCreate" disabled="disabled">
+            
+<?php
+  
+$res_courses = $g_obj_course_manager->view_courses();
+
+for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
+{
+	$res_row = $g_obj_db->fetch( $res_courses );
+	
+	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
+}
+
+?>
+          
+                  </select>&nbsp;
+                </td>
               </tr>
               <tr>
                 <td colspan="2" align="right">
@@ -175,6 +207,31 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
             <input class="fileinput" type="file" name="ImportTAFile" id="ImportTAFile" />
             <br />
             <input class="buttoninput" type="submit" name="Command" value="Import" onclick="return validateImportTA();" />
+          </td>
+        </tr>
+
+        <tr>
+          <td><input type="checkbox" name="AllowGreenGene" id="AllowGreenGeneCourseImport" onclick="enableGreenGeneCourseSelection( this, 'GreenGeneCourseImport' );" /><label for="AllowGreenGeneCourseImport">&nbsp;Allow user to access GreenGene site</label></td>
+        </tr>
+              
+        <tr>
+          <td>GreenGene Course:
+            <select name="GreenGeneCourseImport" id="GreenGeneCourseImport" disabled="disabled">
+
+<?php
+  
+$res_courses = $g_obj_course_manager->view_courses();
+
+for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
+{
+	$res_row = $g_obj_db->fetch( $res_courses );
+    
+	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
+}
+
+?>
+
+            </select>&nbsp;
           </td>
         </tr>
 
@@ -267,21 +324,42 @@ function on_create_handler()
 	$str_user_name = PageHandler::get_post_value( 'Username' );
 	$str_first_name = PageHandler::get_post_value( 'FirstName' );
 	$str_last_name = PageHandler::get_post_value( 'LastName' );
+	$str_password = PageHandler::get_post_value( 'Password' );
+	$str_password_confirm = PageHandler::get_post_value( 'ConfirmPassword' );
+	$int_greengene_course = PageHandler::get_post_value( 'GreenGeneCourseCreate' );
 
 	// verify the input
-	if ( !isset($str_user_name))
+	if ( !isset( $str_first_name ) || !isset( $str_last_name ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
+		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	
-	$str_first_name = !isset($str_first_name) ? " " : $str_first_name;
-	$str_last_name = !isset($str_last_name) ? " " : $str_last_name;
+	if ( $str_password != $str_password_confirm )
+	{
+		MessageHandler::add_message( MSG_FAIL, 'The password does not match' );
+		return;
+	}
+
+	if ( strlen( $str_user_name ) == 0 )
+	{
+		$str_user_name = $g_obj_ta_manager->autogen_user( $str_first_name, $str_last_name );
+	}
+	
+	if ( strlen( $str_password ) == 0 )
+	{
+		$str_password = $g_obj_ta_manager->autogen_password( $str_first_name, $str_last_name );
+	}
+	
+	if ( empty( $int_greengene_course ) )
+	{
+		$int_greengene_course = 0;
+	}
 	
 	// create a new ta
-	if ( $g_obj_ta_manager->create_user( $str_user_name, UP_TA,  $str_first_name, $str_last_name ) )
+	if ( $g_obj_ta_manager->create_user( $str_user_name, $int_greengene_course, UP_TA,  $str_first_name, $str_last_name, $str_password, 0 ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for TA "' . $str_user_name  );
+		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for TA "' . $str_user_name . '" with password "' . $str_password . '"' );
 	}
 	
 	else
@@ -318,25 +396,25 @@ function on_delete_handler()
 	{
 		if( $g_obj_ta_manager->delete_user( $arr_ta_names[$i][0] ) )
 		{
-			array_push( $arr_success, $arr_ta_names[$i][0] );
+			array_push( $arr_success, $arr_ta_names[$i] );
 		}
 		
 		else
 		{
-			array_push( $arr_fail, $arr_ta_names[$i][0] );
+			array_push( $arr_fail, $arr_ta_names[$i] );
 		}
 	}
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Successfully deleted', $arr_success );
+		$str_message = PageHandler::display_users_id_name( 'Successfully deleted', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Failed to delete', $arr_fail );
+		$str_message = PageHandler::display_users_id_name( 'Failed to delete', $arr_fail );
 		
 		MessageHandler::add_message( MSG_FAIL, $str_message );
 	}
@@ -371,25 +449,25 @@ function on_assign_handler()
 	{
 		if ( $g_obj_assign_ta_manager->assign_TA( $arr_ta_names[$i][0], $int_selected_course_id ) )
 		{
-			array_push( $arr_success, $arr_ta_names[$i][0]);
+			array_push( $arr_success, $arr_ta_names[$i] );
 		}
 		
 		else
 		{
-			array_push( $arr_fail, $arr_ta_names[$i][0]);
+			array_push( $arr_fail, $arr_ta_names[$i] );
 		}
 	}
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
+		$str_message = PageHandler::display_users_id_name( 'Successfully assigned', $arr_success );
 		
 		MessageHandler::add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
+		$str_message = PageHandler::display_users_id_name( 'Failed to assign', $arr_fail );
 		
 		MessageHandler::add_message( MSG_FAIL, $str_message );
 	}
@@ -418,7 +496,14 @@ function on_import_handler()
 		
 		else
 		{
-			FileHandler::import_ta_list( $_FILES['ImportTAFile']['tmp_name']);
+			$int_greengene_course = PageHandler::get_post_value( 'GreenGeneCourseImport' );
+			
+			if ( empty( $int_greengene_course ) )
+			{
+				$int_greengene_course = 0;
+			}
+			
+			FileHandler::import_ta_list( $_FILES['ImportTAFile']['tmp_name'], $int_greengene_course );
 		}
 	}
 }

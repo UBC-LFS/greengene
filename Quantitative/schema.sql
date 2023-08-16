@@ -168,7 +168,7 @@ CREATE TABLE `Trait` (
 
 -- 
 -- Table structure for table `User`
---  TODO: remove password default 
+-- 
 
 CREATE TABLE `User` (
   `UserId` varchar(10) NOT NULL default '',
@@ -176,6 +176,7 @@ CREATE TABLE `User` (
   `PrivilegeLvl` tinyint(3) unsigned NOT NULL default '3',
   `FirstName` varchar(20) NOT NULL default '',
   `LastName` varchar(20) NOT NULL default '',
+  `Pwd` varchar(50) NOT NULL default '',
   `StudentNum` int(8) unsigned default NULL,
   PRIMARY KEY  (`UserId`),
   KEY `LastName` (`LastName`)

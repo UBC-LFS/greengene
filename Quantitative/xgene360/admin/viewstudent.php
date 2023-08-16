@@ -78,10 +78,6 @@ if ( $g_bln_display_content )
         <td>
 
           <table>
-			 <tr>
-				<td>CWL:&nbsp;</td>
-				<td><input class="longtextinput" type="text" size="30" value="<?php echo($g_arr_student_info->UserId)?>" disabled></td>
-			</tr>
             <tr>
               <td>First Name:&nbsp;</td>
               <td> <input class="longtextinput" type="text" name="StudentFirstName" id="StudentFirstName" size="30" value="<?= htmlspecialchars( $g_arr_student_info->FirstName ) ?>" /></td>
@@ -89,6 +85,21 @@ if ( $g_bln_display_content )
             <tr>
               <td>Last Name:&nbsp;</td>
               <td> <input class="longtextinput" type="text" name="StudentLastName" id="StudentLastName" size="30" value="<?= htmlspecialchars( $g_arr_student_info->LastName ) ?>" /></td>
+            </tr>
+            <tr>
+              <td>Student Number:&nbsp;</td>
+              <td> <input class="longtextinput" type="text" name="StudentNumber" id="StudentNumber" size="30" value="<?= htmlspecialchars( $g_arr_student_info->StudentNum ) ?>" /></td>
+            </tr>
+            <tr>
+              <td>New Password&#42;:&nbsp;</td>
+              <td> <input class="longtextinput" type="password" name="StudentPassword" id="StudentPassword" size="30" /></td>
+            </tr>
+            <tr>
+              <td width="160">Confirm New Password:&nbsp;</td>
+              <td><input class="longtextinput" type="password" name="StudentPasswordConfirm" id="StudentPasswordConfirm" /></td>
+            </tr>
+            <tr>
+              <td colspan="2"><div style="font-size: 0.8em">&#42; Leave password fields blank if you do <strong>not</strong> want to change current password.</div></td>
             </tr>
             <tr>
               <td colspan="2" align="right">
@@ -205,6 +216,8 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
         <th><input type="checkbox" id="ProblemIdSelectionToggle" onclick="xgene360_cu.checkAll( this, 'ProblemId[]' );" /></th>
         <th>Problem</th>
         <th>Course</th>
+        <th>Start Date</th>
+        <th>Due Date</th>
         <th>Progress</th>
       </tr>
     
@@ -227,6 +240,8 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
 	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="ProblemId[]" value="' . htmlspecialchars( $res_row->problem_id ) . '" /></td>' . "\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->problem_name ). '</td>' ."\n" );
 	echo( '<td>' . htmlspecialchars( $res_row->Name ) . '</td>' . "\n" );
+	echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->start_date ) ) . '</td>' . "\n" );
+	echo( '<td>' . htmlspecialchars( PageHandler::format_date( $res_row->due_date ) ) . '</td>' . "\n" );
 	echo( '<td><input class="buttoninput" type="button" value="View Progress" onclick="openProgress( event, ' . $res_row->problem_id . ', \'' . $g_str_student_id . '\' );" /></td>' . "\n" );
 	echo( '</tr>' . "\n" );
 }
@@ -337,8 +352,15 @@ function on_update_handler()
 	
 	$str_first_name = PageHandler::get_post_value( 'StudentFirstName' );
 	$str_last_name = PageHandler::get_post_value( 'StudentLastName' );
+	$str_student_number = PageHandler::get_post_value( 'StudentNumber' );
 	
-	if ( $g_obj_student_manager->modify_user( $g_str_student_id, $str_first_name, $str_last_name) )
+	if ( strlen( $str_first_name ) == 0 || strlen( $str_last_name ) == 0 || strlen( $str_student_number ) == 0 )
+	{
+		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		return;
+	}
+	
+	if ( $g_obj_student_manager->modify_user( $g_str_student_id, $str_first_name, $str_last_name, $str_student_number ) )
 	{
 		MessageHandler::add_message( MSG_SUCCESS, 'Successfully updated the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}
@@ -346,6 +368,28 @@ function on_update_handler()
 	else
 	{
 		MessageHandler::add_message( MSG_FAIL, 'Failed to update the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
+	}
+	
+	$str_password = PageHandler::get_post_value( 'StudentPassword' );
+	$str_password_confirm = PageHandler::get_post_value( 'StudentPasswordConfirm' );
+	
+	if ( strlen( $str_password ) != 0 )
+	{
+		if ( $str_password != $str_password_confirm )
+		{
+			MessageHandler::add_message( MSG_FAIL, 'The password does not match' );
+			return;
+		}
+			
+		if ( $g_obj_student_manager->modify_password( $g_str_student_id, $str_password ) )
+		{
+			MessageHandler::add_message( MSG_SUCCESS, "Successfully changed the password" );
+		}
+		
+		else
+		{
+			MessageHandler::add_message( MSG_FAIL, "Failed to change the password" );
+		}
 	}
 	
 	// force to load the updated info
