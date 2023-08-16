@@ -1,7 +1,7 @@
 # Green Gene
 Last updated: Aug 16th, 2023
 
-Qualitative - Tested with PHP 8.1.2
+Qualitative - Tested with PHP 8.1.2<br>
 Quantitative - Incomplete
 
 [User Manual](/docs/greengene_user_manual.pdf)
