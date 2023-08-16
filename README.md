@@ -16,7 +16,7 @@ Follow the [Qualitative Set Up Guide](./Qualitative/INSTALL.md)
 Note: This step can be skipped if a database already exist.
 All you need to do is create a `config.php` file manually inside `Qualitative/includes` using the [config template](./Qualitative/includes/config.php-example) and add the secret variables.
 
-## Updating the database (if a database previously existed)
+## Updating the database (if a database previously existed) - Qualitative
 If a database already exists from a previous version of greengene, the columns will need to be updated. Why?
 Previous versions of mysql automatically created a timestamp for us when creating a new data for certain columns + mysql updated the timestamp for us automatically when the data is modified. Newer versions of mysql require us to specify that we want it to be automatic
 ```
@@ -28,7 +28,7 @@ ALTER TABLE `Cross` MODIFY COLUMN CreationDate TIMESTAMP DEFAULT CURRENT_TIMESTA
 
 Note: we must use `` for Cross because it's a reserved SQL keyword
 
-## Dev notes
+## Dev notes - Qualitative
 Things not tested yet
 - Importing students (requires UBC VPN + info may not be available yet?)
 
