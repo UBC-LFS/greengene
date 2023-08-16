@@ -39,7 +39,7 @@ CREATE TABLE `Cross` (
   `SeedPlantNum` int(10) NOT NULL default '0',
   `SeedGene` varchar(4) NOT NULL default '',
   `GeneSequences` varchar(200) default NULL,
-  `CreationDate` timestamp NOT NULL,
+  `CreationDate` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`CrossNum`,`UserId`)
 ) ENGINE=MyISAM;
 
