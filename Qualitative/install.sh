@@ -144,9 +144,9 @@ define('DBNAME', '$DBNAME');
 define('URLROOT', '$URLROOT');
 define('REALROOT', '`pwd`');
 define('LOGPATH', REALROOT.'/logs/error.log');
-define('LDAP_HOST', $LDAP_HOST);
-define('LDAP_DN', $LDAP_DN);
-define('LDAP_PW', $LDAP_PW);
+define('LDAP_HOST', '$LDAP_HOST');
+define('LDAP_DN', '$LDAP_DN');
+define('LDAP_PW', '$LDAP_PW');
 ?>" > includes/config.php
 
 if [ $? -ne 0 ]; then
