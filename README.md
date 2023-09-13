@@ -36,3 +36,6 @@ Possible flaws:
 - Students cannot be in more than 1 course (will say user already exist when adding the student)
 - TAs or Profs cannot be in more than 1 course (will say user already exist when adding the TA or Prof)
 
+Testing:
+- To disable authentication, go to security.php line 36
+

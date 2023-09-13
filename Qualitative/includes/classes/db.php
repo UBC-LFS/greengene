@@ -17,22 +17,24 @@ class DB
 	 */
 	function __construct() // in php8, constructors must be called like this
 	{
-		$this->m_conn = mysqli_connect(DBHOST, DBUSER, DBPWD);
-		//$this->m_conn = mysql_connect(DBHOST, DBUSER, DBPWD);
-		if($this->m_conn == false)
-		{
-			//Logger::writeLog('MySQL Error (' . mysql_errno() . '): ' . mysql_error());
+		// Create connection
+		$this->m_conn = mysqli_init();
+		if (!$this->m_conn ) {
 			die("Could not connect to MySQL server.");
 		}
 
-		mysqli_select_db($this -> m_conn, DBNAME);
-		//mysql_select_db(DBNAME, $this -> m_conn);
-		if(mysqli_errno($this->m_conn))
-		//if(mysql_errno() != 0)
-		{
-			//Logger::writeLog('MySQL Error (' . mysql_errno() . '): ' . mysql_error());
-			die("Could not select MySQL database.");
+		mysqli_ssl_set($this->m_conn ,
+						SSL_KEY_PATH, 
+						SSL_CERTIFICATE_PATH,
+						SSL_CA_CERTIFICATE_PATH,
+						null,
+						null);
+
+		// MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT is only for dev, because the CN names will be different
+		if (!mysqli_real_connect($this->m_conn , DBHOST, DBUSER, DBPWD, DBNAME, null, null, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT)) {
+			die("Connect Error:  " . mysqli_connect_error());
 		}
+
 	}
 
 	/**
