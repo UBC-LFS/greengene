@@ -31,6 +31,10 @@ This manual will describe the necessary pre-requisites and steps necessary to co
 MySQL 8+
 Apache web server (any version should work)
 PHP 8+ (Apache must have PHP support – either via php_cgi or mod_php)
+LDAP
+```
+sudo apt-get install php-ldap
+```
 
 The above should be pre-installed and working correctly prior to commencing installation.
 

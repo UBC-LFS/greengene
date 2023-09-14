@@ -11,4 +11,9 @@ define('LDAP_HOST', 'LDAP Host info');
 define('LDAP_DN', 'uid=user,dn=distinguishedName');
 define('LDAP_PW', 'LDAP account password');
 define('LDAP_LOGIN_HOST', 'some host');
+
+// SSL
+define('SSL_KEY_PATH', 'FILE PATH TO client-key.pem');
+define('SSL_CERTIFICATE_PATH', 'FILE PATH TO client-cert.pem');
+define('SSL_CA_CERTIFICATE_PATH', 'FILE PATH TO ca-cert.pem');
 ?>
