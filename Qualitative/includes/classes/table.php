@@ -54,6 +54,8 @@ class Table
 	 */
 	function writeHeaders()
 	{
+		echo('<input type="text" id="searchBar" oninput="searchRows()" placeholder="Search..."/>');
+		
 		echo('<tr>');
 		for($i = 0; $i < func_num_args(); $i++)
 			echo('<th>' . func_get_arg($i) . "</th>\n");
@@ -146,3 +148,22 @@ class Table
 }
 
 ?>
+
+
+<script>
+	function searchRows() {
+		searchInput = document.getElementById("searchBar").value;
+
+		rowsZero = document.getElementsByClassName("row0");
+		rowsOne = document.getElementsByClassName("row1");
+		console.log(rowsOne);
+		for (let i=0; i < rowsZero.length; i++) {
+			console.log(rowsZero[i]["innerHTML"])
+		}
+		// searchTable = document.getElementById("searchTable");
+		// for (let i=0; i < table.length; i++) {
+		// 	console.log(table[i]);
+		// }
+		// console.log(searchTable);
+	}
+</script>
