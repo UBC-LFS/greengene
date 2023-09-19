@@ -1194,7 +1194,10 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			$r=ldap_bind($ds, LDAP_DN, LDAP_PW);
 			restore_error_handler();
 
-			if ($r){
+			// var_dump($ds, LDAP_DN, LDAP_PW);
+			// var_dump($r);
+
+			if ($r) {
 				$base_dn = "ou=UBC,ou=ACADEMIC,dc=id,dc=ubc,dc=ca";
 				$filter = "(&(objectClass=*)(cn=".$cn."))";
 
