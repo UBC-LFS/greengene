@@ -1188,11 +1188,15 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$ds = ldap_connect(LDAP_HOST);
 		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
 
+		ldap_start_tls($ds);
+
 		if ($ds) {
 			// remove warning when bind fails
 			set_error_handler(function() {});
 			$r=ldap_bind($ds, LDAP_DN, LDAP_PW);
 			restore_error_handler();
+
+
 
 			// var_dump($ds, LDAP_DN, LDAP_PW);
 			// var_dump($r);
