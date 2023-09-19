@@ -1197,7 +1197,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			restore_error_handler();
 
 
-
 			// var_dump($ds, LDAP_DN, LDAP_PW);
 			// var_dump($r);
 
