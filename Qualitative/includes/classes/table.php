@@ -156,9 +156,23 @@ class Table
 
 		rowsZero = document.getElementsByClassName("row0");
 		rowsOne = document.getElementsByClassName("row1");
-		console.log(rowsOne);
+		// console.log(rowsOne);
 		for (let i=0; i < rowsZero.length; i++) {
-			console.log(rowsZero[i]["innerHTML"])
+			if (rowsZero[i]["innerHTML"].includes(searchInput)) {
+				rowsZero[i].style.display = "table-row";
+			}
+			else {
+				rowsZero[i].style.display = "none";
+			}
+		}
+
+		for (let i=0; i < rowsOne.length; i++) {
+			if (rowsOne[i]["innerHTML"].includes(searchInput)) {
+				rowsOne[i].style.display = "table-row";
+			}
+			else {
+				rowsOne[i].style.display = "none";
+			}
 		}
 		// searchTable = document.getElementById("searchTable");
 		// for (let i=0; i < table.length; i++) {
