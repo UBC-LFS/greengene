@@ -152,13 +152,14 @@ class Table
 
 <script>
 	function searchRows() {
-		searchInput = document.getElementById("searchBar").value;
+		searchInput = document.getElementById("searchBar").value.toLowerCase();
 
 		rowsZero = document.getElementsByClassName("row0");
 		rowsOne = document.getElementsByClassName("row1");
 		// console.log(rowsOne);
 		for (let i=0; i < rowsZero.length; i++) {
-			if (rowsZero[i]["innerHTML"].includes(searchInput)) {
+			// console.log(rowsZero[i].textContent);
+			if (rowsZero[i].textContent.toLowerCase().includes(searchInput)) {
 				rowsZero[i].style.display = "table-row";
 			}
 			else {
@@ -167,7 +168,7 @@ class Table
 		}
 
 		for (let i=0; i < rowsOne.length; i++) {
-			if (rowsOne[i]["innerHTML"].includes(searchInput)) {
+			if (rowsOne[i].textContent.toLowerCase().includes(searchInput)) {
 				rowsOne[i].style.display = "table-row";
 			}
 			else {
