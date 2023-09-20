@@ -14,6 +14,7 @@ class LDAPHandler
 			// remove warning when bind fails
 			set_error_handler(function() {});
 			$r=ldap_bind($ds, LDAP_DN, LDAP_PW);
+			
 			restore_error_handler();
 
 			if ($r){

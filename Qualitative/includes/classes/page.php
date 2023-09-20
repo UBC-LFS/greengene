@@ -31,6 +31,7 @@ class Page
 		$this->m_title = $p_title;
 		$this->m_privilegeLevel = $p_privilegeLevel;
 
+		// var_dump($this->m_user->m_privilegeLvl);
 		if($p_privilegeLevel > 0)
 		{
 			if($p_privilegeLevel == 10 && $this->m_user->m_privilegeLvl != 10)
@@ -38,6 +39,11 @@ class Page
 
 			if($this->m_user->m_privilegeLvl > $p_privilegeLevel)
 				Page::redirect(URLROOT . "/login.php");
+
+			// If user isn't logged in, redirect to login.php
+			if ($this->m_user->m_privilegeLvl == NULL) {
+				Page::redirect(URLROOT . "/login.php");
+			}
 		}
 
 		$this->m_jsIncludes = array();
