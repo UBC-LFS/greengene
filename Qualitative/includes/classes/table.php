@@ -153,12 +153,10 @@ class Table
 <script>
 	function searchRows() {
 		searchInput = document.getElementById("searchBar").value.toLowerCase();
-
 		rowsZero = document.getElementsByClassName("row0");
 		rowsOne = document.getElementsByClassName("row1");
-		// console.log(rowsOne);
+
 		for (let i=0; i < rowsZero.length; i++) {
-			// console.log(rowsZero[i].textContent);
 			if (rowsZero[i].textContent.toLowerCase().includes(searchInput)) {
 				rowsZero[i].style.display = "table-row";
 			}
@@ -175,10 +173,5 @@ class Table
 				rowsOne[i].style.display = "none";
 			}
 		}
-		// searchTable = document.getElementById("searchTable");
-		// for (let i=0; i < table.length; i++) {
-		// 	console.log(table[i]);
-		// }
-		// console.log(searchTable);
 	}
 </script>
