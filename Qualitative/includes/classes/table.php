@@ -32,9 +32,9 @@ class Table
 		$this->m_alternateColours = $p_alternateColours;
 
 		if($p_style != '')
-			echo("<table class=\"$p_style\">\n");
+			echo("<table id='dataTable' class=\"$p_style\">\n");
 		else
-			echo("<table>\n");
+			echo("<table id='dataTable'>\n");
 	}
 
 	/**
@@ -54,7 +54,7 @@ class Table
 	 */
 	function writeHeaders()
 	{
-		echo('<input type="text" id="searchBar" oninput="searchRows()" placeholder="Search..."/>');
+		echo('<input type="text" id="searchBar" oninput="searchRows()" placeholder="Search rows..."/>');
 		
 		echo('<tr>');
 		for($i = 0; $i < func_num_args(); $i++)
@@ -149,16 +149,18 @@ class Table
 
 ?>
 
-
 <script>
 	function searchRows() {
 		searchInput = document.getElementById("searchBar").value.toLowerCase();
 		rowsZero = document.getElementsByClassName("row0");
 		rowsOne = document.getElementsByClassName("row1");
 
+		let numberRowsDisplayed = 0;
+
 		for (let i=0; i < rowsZero.length; i++) {
 			if (rowsZero[i].textContent.toLowerCase().includes(searchInput)) {
 				rowsZero[i].style.display = "table-row";
+				numberRowsDisplayed += 1;
 			}
 			else {
 				rowsZero[i].style.display = "none";
@@ -168,10 +170,28 @@ class Table
 		for (let i=0; i < rowsOne.length; i++) {
 			if (rowsOne[i].textContent.toLowerCase().includes(searchInput)) {
 				rowsOne[i].style.display = "table-row";
+				numberRowsDisplayed += 1;
 			}
 			else {
 				rowsOne[i].style.display = "none";
 			}
 		}
+
+		// If no data is found, display a "No rows found" text
+		if (numberRowsDisplayed == 0) {
+			if (!(document.getElementById("noCoursesFound"))) {
+				dataTable = document.getElementById("dataTable");
+				noCoursesFound = document.createElement("p");
+				noCoursesFound.id = "noCoursesFound";
+				noCoursesFound.textContent = "No rows found";
+				dataTable.appendChild(noCoursesFound);
+			}
+		}
+		else {
+			if (document.getElementById("noCoursesFound")) {
+				dataTable.removeChild(document.getElementById("noCoursesFound"));
+			}
+		}
+
 	}
 </script>
