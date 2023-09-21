@@ -246,7 +246,7 @@ function process_post()
 						
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -271,7 +271,7 @@ function on_create_handler()
 	// verify the input
 	if ( !isset($str_user_name))
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
 		return;
 	}
 	
@@ -281,12 +281,12 @@ function on_create_handler()
 	// create a new ta
 	if ( $g_obj_ta_manager->create_user( $str_user_name, UP_TA,  $str_first_name, $str_last_name ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for TA "' . $str_user_name  );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully created an account for TA "' . $str_user_name  );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to create an account for TA "' . $str_user_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to create an account for TA "' . $str_user_name . '"' );
 	}
 }
 
@@ -305,7 +305,7 @@ function on_delete_handler()
 	
 	if ( $arr_ta_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one TA" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one TA" );
 		return;
 	}
 	
@@ -331,14 +331,14 @@ function on_delete_handler()
 	{
 		$str_message = PageHandler::display_users_cwl( 'Successfully deleted', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
 		$str_message = PageHandler::display_users_cwl( 'Failed to delete', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -358,7 +358,7 @@ function on_assign_handler()
 	
 	if ( $arr_ta_list == null || strlen( $int_selected_course_id ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one TA and select a course" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one TA and select a course" );
 		return;
 	}
 	
@@ -384,14 +384,14 @@ function on_assign_handler()
 	{
 		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
 		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -406,14 +406,14 @@ function on_import_handler()
 {
 	if ( !isset( $_FILES['ImportTAFile'] ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please select a file' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please select a file' );
 	}
 	
 	else
 	{
 		if ( !is_uploaded_file( $_FILES['ImportTAFile']['tmp_name'] ) )
 		{
-			MessageHandler::add_message( MSG_FAIL, 'The file cannot be retrieved' );
+			(new MessageHandler) ->  add_message( MSG_FAIL, 'The file cannot be retrieved' );
 		}
 		
 		else
@@ -436,7 +436,7 @@ function on_export_handler()
 	
 	if ( $arr_ta_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one TA" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one TA" );
 		return;
 	}
 	

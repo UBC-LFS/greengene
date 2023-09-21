@@ -85,17 +85,19 @@
 
                   <?php
                   
+				  $linkHandler = (new LinkHandler);
                   if ( isset( $g_obj_user ) )
                   {          
-                    LinkHandler::populate_menu_items( $g_arr_header_login_links, $g_str_page_title );
+                    // LinkHandler::populate_menu_items( $g_arr_header_login_links, $g_str_page_title );
+					$linkHandler->populate_menu_items( $g_arr_header_login_links, $g_str_page_title );
                     
                     echo( '</ul><p>[ You are logged in as <strong>'.$g_obj_user->str_username.' </strong>]</p>' );
                   }
                   
                   else
                   {
-                    LinkHandler::populate_menu_items( $g_arr_header_links, $g_str_page_title );
-                    
+                    // LinkHandler::populate_menu_items( $g_arr_header_links, $g_str_page_title );
+                    $linkHandler->populate_menu_items( $g_arr_header_links, $g_str_page_title );
                     echo( '</ul>' );
                   }
                     
@@ -139,13 +141,16 @@
               
             <?php
 
-							if ( MessageHandler::has_message( MSG_ERROR ) )
+							// if ( (new MessageHandler) ->  has_message( MSG_ERROR ) )
+							if ((new MessageHandler) -> has_message( MSG_ERROR ))
 							{
 								echo( '<table class="errorbox" style="color: #bb0000; font-weight: bold;">' );
 
-								while ( MessageHandler::has_message( MSG_ERROR ) )
+								// while ( (new MessageHandler) ->  has_message( MSG_ERROR ) )
+								while ( (new MessageHandler) -> has_message( MSG_ERROR ) )
 								{
-									$str_message = MessageHandler::next_message( MSG_ERROR );
+									// $str_message = (new MessageHandler) ->  next_message( MSG_ERROR );
+									$str_message = (new MessageHandler) -> next_message( MSG_ERROR );
 
 									echo( '<tr>' );
 									echo( '<td>'.$str_message.'</td>' );
@@ -159,13 +164,13 @@
 							      
 							else
 							{
-								if ( MessageHandler::has_message( MSG_SUCCESS ) )
+								if ( (new MessageHandler) -> has_message( MSG_ERROR ) )
 								{
 									echo( '<table class="errorbox" style="color: #0000ff; font-weight: bold;">' );
 
-									while ( MessageHandler::has_message( MSG_SUCCESS ) )
+									while ( (new MessageHandler) -> has_message( MSG_ERROR ) )
 									{
-										$str_message = MessageHandler::next_message( MSG_SUCCESS );
+										$str_message = (new MessageHandler) -> next_message( MSG_SUCCESS );
 											      
 										echo( '<tr>' );
 										echo( '<td>'.$str_message.'</td>' );
@@ -175,13 +180,13 @@
 									echo( '</table>' );
 								}
 								
-								if ( MessageHandler::has_message( MSG_FAIL ) )
+								if ( (new MessageHandler) -> has_message( MSG_FAIL ) )
 								{
 									echo( '<table class="errorbox" style="color: #ff0000; font-weight: bold;">' );
 
-									while ( MessageHandler::has_message( MSG_FAIL ) )
+									while ( (new MessageHandler) -> has_message( MSG_FAIL ) )
 									{
-										$str_message = MessageHandler::next_message( MSG_FAIL );
+										$str_message = (new MessageHandler) ->  next_message( MSG_FAIL );
 										          
 										echo( '<tr>' );
 										echo( '<td>'.$str_message.'</td>' );

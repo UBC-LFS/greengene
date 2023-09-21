@@ -144,7 +144,7 @@ function process_post()
 	    
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -166,7 +166,7 @@ function on_delete_handler()
 	
 	if ( $arr_problem_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one problem" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one problem" );
 		return;
 	}
 	
@@ -188,12 +188,12 @@ function on_delete_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully deleted ' . count( $arr_success ) . ' problem(s)' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully deleted ' . count( $arr_success ) . ' problem(s)' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to delete ' . count( $arr_fail ) . ' problem(s)' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to delete ' . count( $arr_fail ) . ' problem(s)' );
 	}
 }
 

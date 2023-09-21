@@ -78,12 +78,12 @@ class AssignProblemManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view students associated with the problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view students associated with the problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed students associated with the problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed students associated with the problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}

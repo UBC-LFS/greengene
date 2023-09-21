@@ -416,7 +416,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -468,7 +468,7 @@ function on_create_handler()
 			!isset( $int_offspring_per_cross ) || !isset( $int_max_cross )  || !isset( $int_plants_displayed ) ||
 			!isset( $dbl_range_of_acceptance ))
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	
@@ -481,12 +481,12 @@ function on_create_handler()
 											  $int_Histogram_A_Range, $int_Histogram_B_Range, $dat_start_date, $date_due_date ) )
 
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created the Problem "' . $str_problem_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully created the Problem "' . $str_problem_name . '"' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to create the Problem "' . $str_problem_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to create the Problem "' . $str_problem_name . '"' );
 	}
 }
 
@@ -505,7 +505,7 @@ function on_copy_handler()
 	
 	if ( !isset( $int_problem_id ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please select a problem' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please select a problem' );
 		return;
 	}
 		
@@ -513,7 +513,7 @@ function on_copy_handler()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'The problem does not exist' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'The problem does not exist' );
 		return;
 	}
 	

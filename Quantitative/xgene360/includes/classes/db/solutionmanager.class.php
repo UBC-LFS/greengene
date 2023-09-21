@@ -45,12 +45,12 @@ class SolutionManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the solution for problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the solution for problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the solution for problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the solution for problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );	  
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
@@ -85,12 +85,12 @@ class SolutionManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the solutions of the students for problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the solutions of the students for problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the solutions of the students for problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the solutions of the students for problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 	  
 		return $this->m_obj_db->query_select( $str_sql_query );
@@ -126,14 +126,14 @@ class SolutionManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the solution of student "
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the solution of student "
 												   . $this->m_obj_db->format_sql_string( $str_student_id )
 												   . "for problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the solution of student "
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the solution of student "
 											   . $this->m_obj_db->format_sql_string( $str_student_id )
 											   . " for problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
@@ -258,7 +258,7 @@ class SolutionManager
 						break;
 					}
 					
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to add solution for problem " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to add solution for problem " 
 														   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 					return false;
 					
@@ -275,7 +275,7 @@ class SolutionManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to add solution for problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to add solution for problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return false;
 		}
@@ -283,12 +283,12 @@ class SolutionManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to add solution for problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to add solution for problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " added solution for problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " added solution for problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );	  
 		return true;
 	}

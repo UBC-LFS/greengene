@@ -113,7 +113,7 @@ class PageHandler
 		
 		$g_str_serial = $g_obj_lock->get_serial();
 
-		$g_obj_user = CookieHandler::get_user();
+		$g_obj_user = (new CookieHandler) -> get_user();
 	}
 	
 	/**  Function: void check_permission()

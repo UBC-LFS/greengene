@@ -220,7 +220,7 @@ function verify_problem_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'The Problem does not exist' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'The Problem does not exist' );
 	}
 	
 	else

@@ -60,14 +60,14 @@ class FileHandler
 		{
 			$str_message = PageHandler::display_users_id_password( 'Successfully created', $arr_success );
 		
-			MessageHandler::add_message( MSG_SUCCESS, $str_message );
+			(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 		}
 		
 		if ( count( $arr_fail ) != 0 )
 		{
 			$str_message = PageHandler::display_users_id_password( 'Failed to create', $arr_fail );
 		
-			MessageHandler::add_message( MSG_FAIL, $str_message );
+			(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 		}
 	}
 	
@@ -164,14 +164,14 @@ class FileHandler
 		{
 			$str_message = PageHandler::display_users_id_password( 'Successfully created', $arr_success );
 		
-			MessageHandler::add_message( MSG_SUCCESS, $str_message );
+			(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 		}
 		
 		if ( count( $arr_fail ) != 0 )
 		{
 			$str_message = PageHandler::display_users_id_password( 'Failed to create', $arr_fail );
 		
-			MessageHandler::add_message( MSG_FAIL, $str_message );
+			(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 		}
 	}
 	
@@ -264,14 +264,14 @@ class FileHandler
 		{
 			$str_message = PageHandler::display_users_id_password( 'Successfully created', $arr_success );
 		
-			MessageHandler::add_message( MSG_SUCCESS, $str_message );
+			(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 		}
 		
 		if ( count( $arr_fail ) != 0 )
 		{
 			$str_message = PageHandler::display_users_id_password( 'Failed to create', $arr_fail );
 		
-			MessageHandler::add_message( MSG_FAIL, $str_message );
+			(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 		}
 	}
 	

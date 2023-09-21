@@ -48,8 +48,8 @@ else
 	$g_int_generation_id = $_GET['GenerationId'];
 }
 
-$g_bln_plants_image_loaded = ( CookieHandler::get_cookie_value( 'PlantsImageLoaded' ) == null );
-CookieHandler::set_cookie_value( 'PlantsImageLoaded', true );
+$g_bln_plants_image_loaded = ( (new CookieHandler) -> get_cookie_value( 'PlantsImageLoaded' ) == null );
+(new CookieHandler) -> set_cookie_value( 'PlantsImageLoaded', true );
 
 verify_problem_exists();
 
@@ -303,7 +303,7 @@ function verify_problem_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, "The Problem does not exist" );	
+		(new MessageHandler) ->  add_message( MSG_ERROR, "The Problem does not exist" );	
 	}
 
 	else
@@ -312,7 +312,7 @@ function verify_problem_exists()
 		
 		if ( $g_obj_db->time() <= $g_arr_problem_info->start_date )
 		{
-			MessageHandler::add_message( MSG_ERROR, "You cannot view this problem yet" );
+			(new MessageHandler) ->  add_message( MSG_ERROR, "You cannot view this problem yet" );
 			return;
 		}
 		
@@ -423,7 +423,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			
 			break;
@@ -446,12 +446,12 @@ function on_cross_handler()
 	
 	if ( empty( $str_selected_plants ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please select at least one plant' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please select at least one plant' );
 	}
 	
 	else if ( $g_int_number_of_generations + 1 > $g_arr_problem_info->max_cross )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'You have reached the maximum number of generations' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'You have reached the maximum number of generations' );
 	}
 	
 	else

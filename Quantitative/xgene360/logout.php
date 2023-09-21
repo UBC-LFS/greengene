@@ -7,7 +7,7 @@
 require_once( 'includes/global.inc.php' );
 
 // destroy user session
-CookieHandler::unset_user( );
+(new CookieHandler) -> unset_user( );
 
 $redirect_delay = 5000;
 

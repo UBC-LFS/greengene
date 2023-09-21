@@ -52,11 +52,11 @@ class ProfessorManager extends UserManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view lists of professors " );
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view lists of professors " );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed lists of professors " );
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed lists of professors " );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
 
@@ -106,12 +106,12 @@ class ProfessorManager extends UserManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view courses associated with professor " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view courses associated with professor " 
 												   . $this->m_obj_db->format_sql_string( $str_professor_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed courses associated with professor " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed courses associated with professor " 
 											   . $this->m_obj_db->format_sql_string( $str_professor_id ) );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}

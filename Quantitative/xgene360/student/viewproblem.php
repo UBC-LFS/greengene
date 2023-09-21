@@ -293,7 +293,7 @@ function verify_problem_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'The Problem does not exist' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'The Problem does not exist' );
 	}
 	
 	else
@@ -302,7 +302,7 @@ function verify_problem_exists()
 		
 		if ( $g_obj_db->time() <= $g_arr_problem_info->start_date )
 		{
-			MessageHandler::add_message( MSG_ERROR, "You cannot view this problem yet" );
+			(new MessageHandler) ->  add_message( MSG_ERROR, "You cannot view this problem yet" );
 			return;
 		}
 		
@@ -419,7 +419,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -453,7 +453,7 @@ function on_submit_handler()
 			empty( $dbl_Trait_A_heritability ) || empty( $dbl_Trait_B_heritability ) || empty( $int_Trait_A_number_of_genes ) ||
 			empty( $int_Trait_B_number_of_genes ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	
@@ -470,12 +470,12 @@ function on_submit_handler()
 													$dbl_Trait_B_Parent_A_Mean,
 													$dbl_Trait_B_Parent_B_Mean ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully submit the solution' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully submit the solution' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to submit the solution' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to submit the solution' );
 	}
 }
 

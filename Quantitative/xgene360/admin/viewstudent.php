@@ -270,7 +270,7 @@ function verify_student_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_student ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'The Student does not exist' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'The Student does not exist' );
 	}
 	
 	else
@@ -317,7 +317,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -340,12 +340,12 @@ function on_update_handler()
 	
 	if ( $g_obj_student_manager->modify_user( $g_str_student_id, $str_first_name, $str_last_name) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully updated the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully updated the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to update the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to update the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}
 	
 	// force to load the updated info
@@ -369,7 +369,7 @@ function on_assign_handler()
 	
 	if ( strlen( $int_selected_course_id == 0 && $int_selected_problem_id == 0 ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select a course or a problem" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select a course or a problem" );
 		return;
 	}
 	
@@ -377,12 +377,12 @@ function on_assign_handler()
 	{
 		if ( $g_obj_assign_student_manager->assign_student_to_course( $g_str_student_id, $int_selected_course_id ) )
 		{
-			MessageHandler::add_message( MSG_SUCCESS, 'Successfully assigned the Student to the Course' );
+			(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully assigned the Student to the Course' );
 		}
 		
 		else
 		{
-			MessageHandler::add_message( MSG_FAIL, 'Failed to assign the Student to the Course' );
+			(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to assign the Student to the Course' );
 		}
 	}
 	
@@ -390,12 +390,12 @@ function on_assign_handler()
 	{
 		if ( $g_obj_assign_student_manager->assign_student_to_problem( $g_str_student_id, $int_selected_problem_id ) )
 		{
-			MessageHandler::add_message( MSG_SUCCESS, 'Successfully assigned the Student to the Problem' );
+			(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully assigned the Student to the Problem' );
 		}
 		
 		else
 		{
-			MessageHandler::add_message( MSG_FAIL, 'Failed to assign the Student to the Problem' );
+			(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to assign the Student to the Problem' );
 		}
 	}
 }
@@ -416,7 +416,7 @@ function on_remove_handler()
 	
 	if ( $arr_problem_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one problem" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one problem" );
 		return;
 	}
 	
@@ -438,12 +438,12 @@ function on_remove_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully removed the Student  from ' . count( $arr_success ) . ' problem(s)' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully removed the Student  from ' . count( $arr_success ) . ' problem(s)' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to remove the Student from ' . count( $arr_fail ) . ' problem(s)' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to remove the Student from ' . count( $arr_fail ) . ' problem(s)' );
 	}
 }
 

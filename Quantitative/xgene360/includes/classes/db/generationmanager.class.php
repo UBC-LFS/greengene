@@ -58,12 +58,12 @@ class GenerationManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the number of generations for problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the number of generations for problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the number of generations for problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the number of generations for problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
@@ -103,12 +103,12 @@ class GenerationManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the plants for problem  " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the plants for problem  " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) . ", initial generation " );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the plants for problem  " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the plants for problem  " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) . ", initial generation " );	  
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
@@ -166,13 +166,13 @@ class GenerationManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the plants for problem  " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the plants for problem  " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) . ", generation "
 												   . $this->m_obj_db->format_sql_string( $int_generation_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the plants for problem  " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the plants for problem  " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) . ", generation "
 											   . $this->m_obj_db->format_sql_string( $int_generation_id ) );	  
 		return $this->m_obj_db->query_select( $str_sql_query );
@@ -254,7 +254,7 @@ class GenerationManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempt to generate the plants for problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempt to generate the plants for problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) . ", generation "
 												   . $this->m_obj_db->format_sql_string( $int_generation_num ) );
 			return false;
@@ -263,14 +263,14 @@ class GenerationManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to generate the plants for problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to generate the plants for problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) . ", generation "
 												   . $this->m_obj_db->format_sql_string( $int_generation_num ) 
 												   . " due to database error" );
 			return false;
 		}
 		
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " generated the plants for problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " generated the plants for problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) . ", generation "
 											   . $this->m_obj_db->format_sql_string( $int_generation_num ) );
 		return true;
@@ -322,12 +322,12 @@ class GenerationManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the genotypes of plants for breeding, problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the genotypes of plants for breeding, problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the genotypes of plants for breeding, problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the genotypes of plants for breeding, problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 		return $arr_plants_genotype;
 	}
@@ -422,7 +422,7 @@ class GenerationManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to select the plants for the next generation, problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to select the plants for the next generation, problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return false;
 		}
@@ -430,13 +430,13 @@ class GenerationManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to select the plants for the next generation, problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to select the plants for the next generation, problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) 
 												   . " due to database error" );
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " selected the plants for the next generation, problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " selected the plants for the next generation, problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 		return true;
 	}
@@ -519,12 +519,12 @@ class GenerationManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the parents' trait values for problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to retrieve the parents' trait values for problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the parents' trait values for problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " retrieved the parents' trait values for problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 		return $arr_parents_trait_values;
 	}	

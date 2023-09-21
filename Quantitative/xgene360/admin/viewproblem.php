@@ -363,7 +363,7 @@ function verify_problem_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'Either the problem does not exist or you do not have permission to see this problem' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'Either the problem does not exist or you do not have permission to see this problem' );
 	}
 	
 	else
@@ -404,7 +404,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -424,7 +424,7 @@ function on_update_handler()
 	
 	if ( !$g_bln_is_editable )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
 		return;
 	}
 	
@@ -461,7 +461,7 @@ function on_update_handler()
 			!isset( $int_offspring_per_cross ) || !isset( $int_max_cross ) || !isset( $int_plants_displayed ) ||
 			!isset( $dbl_range_of_acceptance ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	
@@ -473,12 +473,12 @@ function on_update_handler()
 												 $int_offspring_per_cross, $int_max_cross, $int_plants_displayed, $dbl_range_of_acceptance,
 												 $int_Histogram_A_Range, $int_Histogram_B_Range, $dat_start_date, $date_due_date ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully updated Problem "' . $str_problem_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully updated Problem "' . $str_problem_name . '"' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to update Problem "' . $str_problem_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to update Problem "' . $str_problem_name . '"' );
 	}
 	
 	// force to reload the problem
@@ -499,7 +499,7 @@ function on_remove_handler()
 	
 	if ( !$g_bln_is_editable )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
 		return;
 	}
 	
@@ -507,7 +507,7 @@ function on_remove_handler()
 	
 	if ( $arr_student_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one student" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one student" );
 		return;
 	}
 	
@@ -529,12 +529,12 @@ function on_remove_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully removed ' . count( $arr_success ) . ' student(s) from this problem' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully removed ' . count( $arr_success ) . ' student(s) from this problem' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to remove ' . count( $arr_fail ) . ' student(s) from this problem' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to remove ' . count( $arr_fail ) . ' student(s) from this problem' );
 	}
 }
 

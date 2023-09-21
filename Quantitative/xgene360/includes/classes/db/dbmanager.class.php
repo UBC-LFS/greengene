@@ -9,13 +9,33 @@ class DBManager
 	 * create connection to the sql database
 	 *
 	 */
-	function DBManager()
+	function __construct()
 	{
-	  $this->m_obj_connection = mysqli_connect( DB_SERVER, DB_USERNAME, DB_PASSWORD );
+
+		// Create connection
+		$this->m_obj_connection = mysqli_init();
+		if (!$this->m_obj_connection ) {
+			die("Could not connect to MySQL server.");
+		}
+
+		mysqli_ssl_set($this->m_obj_connection ,
+						SSL_KEY_PATH, 
+						SSL_CERTIFICATE_PATH,
+						SSL_CA_CERTIFICATE_PATH,
+						null,
+						null);
+
+		// MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT is only for dev, because the CN names will be different
+		if (!mysqli_real_connect($this->m_obj_connection , DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME, null, null, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT)) {
+			die("Connect Error:  " . mysqli_connect_error());
+		}
+
+
+	//   $this->m_obj_connection = mysqli_connect( DB_SERVER, DB_USERNAME, DB_PASSWORD );
 	  
 	  if ( $this->m_obj_connection == false )
 	  {
-	    Log::write_log( LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection) );
+	    (new Log) -> write_log( LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection) );
 	    die( "Cannot connect to MySQL server" );
 	  }
 	  
@@ -23,7 +43,7 @@ class DBManager
 		
 		if( mysqli_errno($this->m_obj_connection) != 0 )
 		{
-			Log::write_log( LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection) );
+			(new Log) -> write_log( LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection) );
 			die( "Cannot select MySQL database" );
 		}
 	}
@@ -40,7 +60,7 @@ class DBManager
 	{
 		
 		$tmp_resource = mysqli_query( $this->m_obj_connection, $str_SQL )
-		  or Log::write_log( LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection).'\n'.$str_SQL );
+		  or (new Log) -> write_log( LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection).'\n'.$str_SQL );
 			
 		return $tmp_resource;
 	}
@@ -56,7 +76,7 @@ class DBManager
 	function query_commit( $str_SQL )
 	{
 		$tmp_resource = mysqli_query( $this->m_obj_connection, $str_SQL )
-			or Log::write_log( LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection).'\n'.$str_SQL );
+			or (new Log) -> write_log( LOG_SQL, mysqli_errno($this->m_obj_connection).': '.mysqli_error($this->m_obj_connection).'\n'.$str_SQL );
 		
 		return ( mysqli_errno($this->m_obj_connection) == 0 );
 	}

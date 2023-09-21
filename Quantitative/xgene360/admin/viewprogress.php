@@ -314,7 +314,7 @@ function verify_problem_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'The Problem does not exist' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'The Problem does not exist' );
 		return false;
 	}
 	
@@ -349,7 +349,7 @@ function verify_student_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_student ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'The Student does not exist' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'The Student does not exist' );
 	}
 	
 	else
@@ -462,7 +462,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -484,12 +484,12 @@ function on_reset_progress_handler()
 	if ( !$g_obj_assign_student_manager->unassign_student_from_problem( $g_str_student_id, $g_int_problem_id ) ||
 			!$g_obj_assign_student_manager->assign_student_to_problem( $g_str_student_id, $g_int_problem_id ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to reset the student progress' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to reset the student progress' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully reset the student progress' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully reset the student progress' );
 	}
 }
 

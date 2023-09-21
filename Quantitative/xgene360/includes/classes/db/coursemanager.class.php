@@ -70,11 +70,11 @@ class CourseManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of courses " );
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of courses " );
 			return null;
 		}
 	  
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of courses " );
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of courses " );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
 	
@@ -157,12 +157,12 @@ class CourseManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view course details of " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view course details of " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed course details of " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed course details of " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
@@ -223,12 +223,12 @@ class CourseManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view professors associated with the course " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view professors associated with the course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed professors associated with the course " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed professors associated with the course " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}	
@@ -291,12 +291,12 @@ class CourseManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view tas associated with the course " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view tas associated with the course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 			return null;
 		}
 	  
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed tas associated with the course " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed tas associated with the course " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) );	  
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}	
@@ -362,12 +362,12 @@ class CourseManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view problems associated with the course " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view problems associated with the course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed problems associated with the course " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed problems associated with the course " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}		
@@ -470,7 +470,7 @@ class CourseManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to create course with " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to create course with " 
 												   . $this->m_obj_db->format_sql_string( $str_course_name ) . ", "
 												   . $this->m_obj_db->format_sql_string( $str_course_description ) );
 			return false;
@@ -479,13 +479,13 @@ class CourseManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to create course with " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to create course with " 
 												   . $this->m_obj_db->format_sql_string( $str_course_name ) . ", "
 												   . $this->m_obj_db->format_sql_string( $str_course_description ) );
 			return false;
 		}
 		
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " created a course with " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " created a course with " 
 											   . $this->m_obj_db->format_sql_string( $str_course_name ) . ", "
 											   . $this->m_obj_db->format_sql_string( $str_course_description ) );
 		return true;
@@ -561,7 +561,7 @@ class CourseManager
 						break;
 					}
 					
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to delete course " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to delete course " 
 														   . $this->m_obj_db->format_sql_string( $int_course_id ) 
 														   . " or course " 
 														   . $this->m_obj_db->format_sql_string( $int_course_id ) 
@@ -581,7 +581,7 @@ class CourseManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to delete course " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to delete course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 			return false;
 		}
@@ -589,13 +589,13 @@ class CourseManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete course " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) 
 												   . " due to database error" );
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " deleted course " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " deleted course " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 		return true;
 		
@@ -673,7 +673,7 @@ class CourseManager
 						break;
 					}
 					
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to modify course " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to modify course " 
 														   . $this->m_obj_db->format_sql_string( $int_course_id ) . " with " 
 														   . $this->m_obj_db->format_sql_string( $str_course_name ) . ", " 
 														   . $this->m_obj_db->format_sql_string( $str_course_description ) 
@@ -693,7 +693,7 @@ class CourseManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify course " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) . " with " 
 												   . $this->m_obj_db->format_sql_string( $str_course_name ) . ", " 
 												   . $this->m_obj_db->format_sql_string( $str_course_description ) );
@@ -703,7 +703,7 @@ class CourseManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to modify course " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to modify course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) . " with " 
 												   . $this->m_obj_db->format_sql_string( $str_course_name ) . ", " 
 												   . $this->m_obj_db->format_sql_string( $str_course_description ) 
@@ -711,7 +711,7 @@ class CourseManager
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified course " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified course " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) . " with " 
 											   . $this->m_obj_db->format_sql_string( $str_course_name ) . ", " 
 											   . $this->m_obj_db->format_sql_string( $str_course_description ) );

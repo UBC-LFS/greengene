@@ -197,7 +197,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;	
 		}
@@ -222,19 +222,19 @@ function on_create_handler()
 	// verify the input
 	if ( !isset( $str_course_name ) || !isset( $str_course_description ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	 
 	// process the input
 	if ( $g_obj_course_manager->add_course( $str_course_name, $str_course_description ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created Course "' . $str_course_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully created Course "' . $str_course_name . '"' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to create Course "' . $str_course_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to create Course "' . $str_course_name . '"' );
 	}
 }
 
@@ -253,7 +253,7 @@ function on_delete_handler()
 	
 	if ( $arr_course_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one course" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one course" );
 		return;	
 	}
 	
@@ -275,12 +275,12 @@ function on_delete_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully deleted ' . count( $arr_success ) . ' course(s)' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully deleted ' . count( $arr_success ) . ' course(s)' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to delete ' . count( $arr_fail ) . ' course(s)' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to delete ' . count( $arr_fail ) . ' course(s)' );
 	}
 }
 

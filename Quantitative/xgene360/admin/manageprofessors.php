@@ -256,7 +256,7 @@ function process_post()
 	    
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -281,7 +281,7 @@ function on_create_handler()
 	// verify the input
 	if ( !isset($str_user_name) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
 		return;
 	}
 	
@@ -291,12 +291,12 @@ function on_create_handler()
 	// create a new professor
 	if ( $g_obj_professor_manager->create_user( $str_user_name, UP_PROFESSOR,  $str_first_name, $str_last_name) )
 	{
-			MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Professor "' . $str_user_name );
+			(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully created an account for Professor "' . $str_user_name );
 	}
 
 	else
 	{
-			MessageHandler::add_message( MSG_FAIL, 'Failed to create an account for Professor "' . $str_user_name . '"' );
+			(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to create an account for Professor "' . $str_user_name . '"' );
 	}
 }
 
@@ -315,7 +315,7 @@ function on_delete_handler()
 	
 	if ( $arr_professor_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one professor" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one professor" );
 		return;
 	}
 	
@@ -341,14 +341,14 @@ function on_delete_handler()
 	{
 		$str_message = PageHandler::display_users_cwl( 'Successfully deleted', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
 		$str_message = PageHandler::display_users_cwl( 'Failed to delete', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -368,7 +368,7 @@ function on_assign_handler()
 	
 	if ( !isset( $arr_professor_list ) || !isset( $int_selected_course_id ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one professor and select a course" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one professor and select a course" );
 		return;
 	}
 	
@@ -394,14 +394,14 @@ function on_assign_handler()
 	{
 		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
 		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -416,14 +416,14 @@ function on_import_handler()
 {
 	if ( !isset( $_FILES['ImportProfessorFile'] ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please select a file' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please select a file' );
 	}
 	
 	else
 	{
 		if ( !is_uploaded_file( $_FILES['ImportProfessorFile']['tmp_name'] ) )
 		{
-			MessageHandler::add_message( MSG_FAIL, 'The file cannot be retrieved' );
+			(new MessageHandler) ->  add_message( MSG_FAIL, 'The file cannot be retrieved' );
 		}
 		
 		else
@@ -446,7 +446,7 @@ function on_export_handler()
 	
 	if ( $arr_professor_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one professor" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one professor" );
 		return;
 	}
 	

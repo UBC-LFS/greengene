@@ -142,7 +142,7 @@ class AssignStudentManager
 						break;
 					}
 
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to generate the first generation for " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to generate the first generation for " 
 														. $this->m_obj_db->format_sql_string( $str_student_id ) . ", problem " 
 														. $this->m_obj_db->format_sql_string( $int_problem_id ) );
 					return false;
@@ -159,7 +159,7 @@ class AssignStudentManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to assign student " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to assign student " 
 												   . $this->m_obj_db->format_sql_string( $str_student_id ) . " to the problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return false;
@@ -168,13 +168,13 @@ class AssignStudentManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to generate the first generation for " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to generate the first generation for " 
 												   . $this->m_obj_db->format_sql_string( $str_student_id ) . ", problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " generated the first generation for " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " generated the first generation for " 
 											   . $this->m_obj_db->format_sql_string( $str_student_id ) . ", problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 	  return true;
@@ -295,7 +295,7 @@ class AssignStudentManager
 						break;
 					}
 					
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete the plants of " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete the plants of " 
 														   . $this->m_obj_db->format_sql_string( $str_student_id ) . ", problem " 
 														   . $this->m_obj_db->format_sql_string( $int_problem_id ) 
 														   . ", either the user does not have permission for this operation or the problem does not exist" );
@@ -317,7 +317,7 @@ class AssignStudentManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to unassign student " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to unassign student " 
 												   . $this->m_obj_db->format_sql_string( $str_student_id ) . ", problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) 
 												   . " due to database error" );
@@ -327,14 +327,14 @@ class AssignStudentManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete the plants of " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete the plants of " 
 												   . $this->m_obj_db->format_sql_string( $str_student_id ) . ", problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) 
 												   . " due to database error" );
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " unassigned student " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " unassigned student " 
 											   . $this->m_obj_db->format_sql_string( $str_student_id ) . ", problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 		return true;

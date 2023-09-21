@@ -367,7 +367,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -392,7 +392,7 @@ function on_create_handler()
 	// verify the input
 	if (strlen( $cwl_username ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
 		return;
 	}
 	
@@ -401,12 +401,12 @@ function on_create_handler()
 		
 	if ( $g_obj_student_manager->create_user( $cwl_username, UP_STUDENT,  $str_first_name, $str_last_name ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student with CWL username: ' . $cwl_username);
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully created an account for Student with CWL username: ' . $cwl_username);
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to create an account for Student with CWL username: "' .$cwl_username );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to create an account for Student with CWL username: "' .$cwl_username );
 	}
 }
 
@@ -425,7 +425,7 @@ function on_delete_handler()
 	
 	if ( $arr_student_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one student" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one student" );
 		return;
 	}
 	
@@ -450,14 +450,14 @@ function on_delete_handler()
 	{
 		$str_message = PageHandler::display_users_cwl( 'Successfully deleted students with CWL Username', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
 		$str_message = PageHandler::display_users_cwl( 'Failed to delete students with CWL Username', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -478,7 +478,7 @@ function on_assign_handler()
 	
 	if ( $arr_student_list == null || ( strlen( $int_selected_course_id ) == 0 && strlen( $int_selected_problem_id ) == 0 ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one student and select a course or a problem" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one student and select a course or a problem" );
 		return;
 	}
 	
@@ -523,14 +523,14 @@ function on_assign_handler()
 	{
 		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
 		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -572,7 +572,7 @@ function on_export_handler()
 	
 	if ( $arr_student_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one student" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one student" );
 		return;
 	}
 	

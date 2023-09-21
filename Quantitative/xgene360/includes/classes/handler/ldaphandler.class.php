@@ -74,14 +74,14 @@ class LDAPHandler
 		{
 			$str_message = PageHandler::display_users_cwl( 'Successfully created user with CWL Username', $arr_success );
 		
-			MessageHandler::add_message( MSG_SUCCESS, $str_message );
+			(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 		}
 		
 		if ( count( $arr_fail ) != 0 )
 		{
 			$str_message = PageHandler::display_users_cwl( 'Failed to create user with CWL Username', $arr_fail );
 		
-			MessageHandler::add_message( MSG_FAIL, $str_message );
+			(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 		}
 	}
 

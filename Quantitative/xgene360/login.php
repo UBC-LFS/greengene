@@ -83,7 +83,7 @@ require( 'includes/header.inc.php' );
 
                       <tr>
                         <td width="75">CWL Username:&nbsp;</td>
-                        <td><input class="textinput" type="text" name="UserId" id="UserId" value="<?= PageHandler::get_post_value( 'UserId' ); ?>" size="20" /></td>
+                        <td><input class="textinput" type="text" name="UserId" id="UserId" value="<?= (new PageHandler) -> get_post_value( 'UserId' ); ?>" size="20" /></td>
                       </tr>
 
                       <tr>
@@ -154,7 +154,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -167,11 +167,11 @@ function on_login_handler()
 	
 	$obj_db = new DBManager();
 
-	$str_username = PageHandler::get_post_value( 'UserId' );
-  $str_password = PageHandler::get_post_value( 'Pwd' );
+	$str_username = (new PageHandler) -> get_post_value( 'UserId' );
+  $str_password = (new PageHandler) -> get_post_value( 'Pwd' );
   
 	// authenticate the user
-	$obj_user = LoginManager::authenticate( $str_username, $str_password, $obj_db );
+	$obj_user = (new LoginManager) -> authenticate( $str_username, $str_password, $obj_db );
 		
 	// ocassionally purge old lock data
 	$obj_lock = new LockManager( $obj_db );
@@ -181,8 +181,8 @@ function on_login_handler()
 		
 	if ( $obj_user != null )
 	{
-		CookieHandler::set_user( $obj_user );
-		PageHandler::redirect_initial_page( $obj_user->int_privilege );
+		(new CookieHandler) -> set_user( $obj_user );
+		(new PageHandler) -> redirect_initial_page( $obj_user->int_privilege );
 	}
 
 	else
