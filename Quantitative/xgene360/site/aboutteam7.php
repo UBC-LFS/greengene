@@ -15,8 +15,11 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-// PageHandler::check_permission( array( UP_STUDENT ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_STUDENT ) ); // WAS COMMENTED OUT BEFORE PHP8 MIGRATION
+
+$pageHandler = (new PageHandler);
+$pageHandler -> initialize();
 
 /*
 * required info

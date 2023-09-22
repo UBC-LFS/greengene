@@ -16,7 +16,7 @@ require_once( '../includes/classes/db/generationmanager.class.php' );
 
 $g_str_parent_page = './manageproblems.php';
 
-PageHandler::check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
+$pageHandler -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -27,8 +27,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+$pageHandler = (new PageHandler);
+$pageHandler -> initialize();
+$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_obj_assign_problem_manager = new AssignProblemManager( $g_obj_user, $g_obj_db );
@@ -384,7 +388,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -428,28 +432,28 @@ function on_update_handler()
 		return;
 	}
 	
-	$str_problem_name = PageHandler::get_post_value( 'ProblemName' );
-	$str_problem_description = PageHandler::get_post_value( 'ProblemDescription' );
-	$str_Trait_A_name = PageHandler::get_post_value( 'TraitAName' );
-	$str_Trait_B_name = PageHandler::get_post_value( 'TraitBName' );
-	$str_Trait_A_unit = PageHandler::get_post_value( 'TraitAUnit' );
-	$str_Trait_B_unit = PageHandler::get_post_value( 'TraitBUnit' );
-	$int_Trait_A_number_of_genes = PageHandler::get_post_value( 'TraitANumberOfGenes' );
-	$int_Trait_B_number_of_genes = PageHandler::get_post_value( 'TraitBNumberOfGenes' );
-	$dbl_Trait_A_variance = PageHandler::get_post_value( 'TraitAVariance' );
-	$dbl_Trait_B_variance = PageHandler::get_post_value( 'TraitBVariance' );
-	$dbl_Trait_A_Parent_A_Mean = PageHandler::get_post_value( 'TraitAParent1Mean' );
-	$dbl_Trait_A_Parent_B_Mean = PageHandler::get_post_value( 'TraitAParent2Mean' );
-	$dbl_Trait_B_Parent_A_Mean = PageHandler::get_post_value( 'TraitBParent1Mean' );
-	$dbl_Trait_B_Parent_B_Mean = PageHandler::get_post_value( 'TraitBParent2Mean' );
-	$int_Histogram_A_Range = PageHandler::get_post_value( 'HistogramRangeA' );
-	$int_Histogram_B_Range = PageHandler::get_post_value( 'HistogramRangeB' );
-	$int_offspring_per_cross = PageHandler::get_post_value( 'OffspringPerCross' );
-	$int_max_cross = PageHandler::get_post_value( 'MaxCross' );
-	$int_plants_displayed = PageHandler::get_post_value( 'PlantsDisplayed' );
-	$dbl_range_of_acceptance = PageHandler::get_post_value( 'RangeOfAcceptance' );
-	$dat_start_date = PageHandler::get_post_value( 'StartDate' );
-	$date_due_date  = PageHandler::get_post_value( 'DueDate' );
+	$str_problem_name = $pageHandler -> get_post_value( 'ProblemName' );
+	$str_problem_description = $pageHandler -> get_post_value( 'ProblemDescription' );
+	$str_Trait_A_name = $pageHandler -> get_post_value( 'TraitAName' );
+	$str_Trait_B_name = $pageHandler -> get_post_value( 'TraitBName' );
+	$str_Trait_A_unit = $pageHandler -> get_post_value( 'TraitAUnit' );
+	$str_Trait_B_unit = $pageHandler -> get_post_value( 'TraitBUnit' );
+	$int_Trait_A_number_of_genes = $pageHandler -> get_post_value( 'TraitANumberOfGenes' );
+	$int_Trait_B_number_of_genes = $pageHandler -> get_post_value( 'TraitBNumberOfGenes' );
+	$dbl_Trait_A_variance = $pageHandler -> get_post_value( 'TraitAVariance' );
+	$dbl_Trait_B_variance = $pageHandler -> get_post_value( 'TraitBVariance' );
+	$dbl_Trait_A_Parent_A_Mean = $pageHandler -> get_post_value( 'TraitAParent1Mean' );
+	$dbl_Trait_A_Parent_B_Mean = $pageHandler -> get_post_value( 'TraitAParent2Mean' );
+	$dbl_Trait_B_Parent_A_Mean = $pageHandler -> get_post_value( 'TraitBParent1Mean' );
+	$dbl_Trait_B_Parent_B_Mean = $pageHandler -> get_post_value( 'TraitBParent2Mean' );
+	$int_Histogram_A_Range = $pageHandler -> get_post_value( 'HistogramRangeA' );
+	$int_Histogram_B_Range = $pageHandler -> get_post_value( 'HistogramRangeB' );
+	$int_offspring_per_cross = $pageHandler -> get_post_value( 'OffspringPerCross' );
+	$int_max_cross = $pageHandler -> get_post_value( 'MaxCross' );
+	$int_plants_displayed = $pageHandler -> get_post_value( 'PlantsDisplayed' );
+	$dbl_range_of_acceptance = $pageHandler -> get_post_value( 'RangeOfAcceptance' );
+	$dat_start_date = $pageHandler -> get_post_value( 'StartDate' );
+	$date_due_date  = $pageHandler -> get_post_value( 'DueDate' );
 	
 	if ( !isset( $str_problem_name ) || !isset( $str_problem_description ) || !isset( $str_Trait_A_name ) ||
 			!isset( $str_Trait_B_name ) || !isset( $str_Trait_A_unit ) || !isset( $str_Trait_B_unit ) ||
@@ -503,7 +507,7 @@ function on_remove_handler()
 		return;
 	}
 	
-	$arr_student_list = PageHandler::get_post_value( 'StudentId' );	
+	$arr_student_list = $pageHandler -> get_post_value( 'StudentId' );	
 	
 	if ( $arr_student_list == null )
 	{

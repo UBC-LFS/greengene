@@ -15,7 +15,7 @@ require_once( '../includes/classes/db/generationmanager.class.php' );
 
 $g_str_parent_page = './viewproblems.php';
 
-PageHandler::check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
+$pageHandler -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -26,8 +26,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_STUDENT ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_STUDENT ) );
+
+$pageHandler = (new PageHandler);
+$pageHandler -> initialize();
+$pageHandler -> check_permission( array( UP_STUDENT ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_obj_generation_manager = new GenerationManager( $g_obj_user, $g_obj_db );
@@ -408,7 +412,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
 	{
 		$command = $_POST['Command'];
 	  
@@ -442,7 +446,7 @@ function on_cross_handler()
 {
 	global $g_obj_problem_manager, $g_obj_generation_manager, $g_int_problem_id, $g_int_generation_id, $g_arr_problem_info, $g_obj_db, $g_obj_user, $g_int_number_of_generations;
 	
-	$str_selected_plants = PageHandler::get_post_value( 'SelectedPlants' );
+	$str_selected_plants = $pageHandler -> get_post_value( 'SelectedPlants' );
 	
 	if ( empty( $str_selected_plants ) )
 	{

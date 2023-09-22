@@ -18,8 +18,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+$pageHandler = (new PageHandler);
+$pageHandler -> initialize();
+$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_ta_manager = new TAManager( $g_obj_user, $g_obj_db );
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
@@ -135,15 +139,15 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
             <table>
               <tr>
                 <td width="125">First Name:</td>
-                <td><input class="textinput" type="text" name="FirstName" id="FirstName" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'FirstName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="FirstName" id="FirstName" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'FirstName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
               <tr>
                 <td>Last Name:</td>
-                <td><input class="textinput" type="text" name="LastName" id="LastName" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'LastName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="LastName" id="LastName" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'LastName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
               <tr>
                 <td>CWL Username:</td>
-                <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
               <tr>
                 <td colspan="2" align="right">
@@ -208,7 +212,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -264,9 +268,9 @@ function on_create_handler()
 {
 	global $g_obj_ta_manager;
 	
-	$str_user_name = PageHandler::get_post_value( 'Username' );
-	$str_first_name = PageHandler::get_post_value( 'FirstName' );
-	$str_last_name = PageHandler::get_post_value( 'LastName' );
+	$str_user_name = $pageHandler -> get_post_value( 'Username' );
+	$str_first_name = $pageHandler -> get_post_value( 'FirstName' );
+	$str_last_name = $pageHandler -> get_post_value( 'LastName' );
 
 	// verify the input
 	if ( !isset($str_user_name))
@@ -301,7 +305,7 @@ function on_delete_handler()
 {
 	global $g_obj_ta_manager;
 	
-	$arr_ta_list = PageHandler::get_post_value( 'TAId' );
+	$arr_ta_list = $pageHandler -> get_post_value( 'TAId' );
 	
 	if ( $arr_ta_list == null )
 	{
@@ -329,14 +333,14 @@ function on_delete_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Successfully deleted', $arr_success );
+		$str_message = $pageHandler -> display_users_cwl( 'Successfully deleted', $arr_success );
 		
 		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Failed to delete', $arr_fail );
+		$str_message = $pageHandler -> display_users_cwl( 'Failed to delete', $arr_fail );
 		
 		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
@@ -353,8 +357,8 @@ function on_assign_handler()
 {
 	global $g_obj_ta_manager, $g_obj_assign_ta_manager;
 	
-	$arr_ta_list = PageHandler::get_post_value( 'TAId' );	
-	$int_selected_course_id = PageHandler::get_post_value( 'SelectedCourse' );
+	$arr_ta_list = $pageHandler -> get_post_value( 'TAId' );	
+	$int_selected_course_id = $pageHandler -> get_post_value( 'SelectedCourse' );
 	
 	if ( $arr_ta_list == null || strlen( $int_selected_course_id ) == 0 )
 	{
@@ -382,14 +386,14 @@ function on_assign_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
+		$str_message = $pageHandler -> display_users_cwl( 'Successfully assigned', $arr_success );
 		
 		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
+		$str_message = $pageHandler -> display_users_cwl( 'Failed to assign', $arr_fail );
 		
 		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
@@ -432,7 +436,7 @@ function on_import_handler()
 */
 function on_export_handler()
 {
-	$arr_ta_list = PageHandler::get_post_value( 'TAId' );
+	$arr_ta_list = $pageHandler -> get_post_value( 'TAId' );
 	
 	if ( $arr_ta_list == null )
 	{

@@ -15,7 +15,7 @@ require_once( '../includes/classes/db/assigntamanager.class.php' );
 
 $g_str_parent_page = './managecourses.php';
 
-PageHandler::check_necessary_id( array( 'CourseId' ), $g_str_parent_page );
+$pageHandler -> check_necessary_id( array( 'CourseId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -26,8 +26,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+$pageHandler = (new PageHandler);
+$pageHandler -> initialize();
+$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
 $g_obj_assign_professor_manager = new AssignProfessorManager( $g_obj_user, $g_obj_db );
@@ -279,7 +283,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -329,8 +333,8 @@ function on_update_handler()
 		return;
 	}
 	
-	$str_course_name = PageHandler::get_post_value( 'CourseName' );
-	$str_course_description = PageHandler::get_post_value( 'CourseDescription' );
+	$str_course_name = $pageHandler -> get_post_value( 'CourseName' );
+	$str_course_description = $pageHandler -> get_post_value( 'CourseDescription' );
 	
 	// verify the input
 	if ( !isset( $str_course_name ) || !isset( $str_course_description ) )
@@ -371,7 +375,7 @@ function on_drop_selected_professors_handler()
 		return;
 	}
 	
-	$arr_professor_list = PageHandler::get_post_value( 'ProfessorId' );
+	$arr_professor_list = $pageHandler -> get_post_value( 'ProfessorId' );
 	
 	if ( $arr_professor_list == null )
 	{
@@ -424,7 +428,7 @@ function on_drop_selected_tas_handler()
 		return;
 	}
 	
-	$arr_ta_list = PageHandler::get_post_value( 'TAId' );
+	$arr_ta_list = $pageHandler -> get_post_value( 'TAId' );
 	
 	if ( $arr_ta_list == null )
 	{

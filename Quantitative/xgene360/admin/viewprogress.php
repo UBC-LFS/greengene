@@ -17,8 +17,8 @@ require_once( '../includes/classes/db/assignstudentmanager.class.php' );
 
 $g_str_parent_page = './managestudents.php';
 
-PageHandler::check_necessary_id( array( 'StudentId' ), $g_str_parent_page );
-PageHandler::check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
+$pageHandler -> check_necessary_id( array( 'StudentId' ), $g_str_parent_page );
+$pageHandler -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -29,8 +29,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+$pageHandler = (new PageHandler);
+$pageHandler -> initialize();
+$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_obj_student_manager = new StudentManager( $g_obj_user, $g_obj_db );
@@ -123,7 +127,7 @@ else
 ?>
             <tr>
               <td>Handin Date:</td>
-              <td><?= PageHandler::format_date( $res_row->hand_in_date ) ?></td>
+              <td><?= $pageHandler -> format_date( $res_row->hand_in_date ) ?></td>
             </tr>
             
             <tr>
@@ -258,14 +262,14 @@ for ( $i = 1; $i < $g_int_number_of_generations + 1; ++$i )
 			$dbl_sd_A = sqrt( $dbl_sd_A );
 			$dbl_sd_B = sqrt( $dbl_sd_B );
 			
-			$str_sd_A = PageHandler::format_precision( $dbl_sd_A, 3 );
-			$str_sd_B = PageHandler::format_precision( $dbl_sd_B, 3 );
+			$str_sd_A = $pageHandler -> format_precision( $dbl_sd_A, 3 );
+			$str_sd_B = $pageHandler -> format_precision( $dbl_sd_B, 3 );
 		}
 	}
 	
-	echo( '<td>' . PageHandler::format_precision( $dbl_mean_A, 3 ) . '</td>' . "\n" );
+	echo( '<td>' . $pageHandler -> format_precision( $dbl_mean_A, 3 ) . '</td>' . "\n" );
 	echo( '<td>' . $str_sd_A . '</td>' . "\n" );
-	echo( '<td>' . PageHandler::format_precision( $dbl_mean_B, 3 ) . '</td>' . "\n" );
+	echo( '<td>' . $pageHandler -> format_precision( $dbl_mean_B, 3 ) . '</td>' . "\n" );
 	echo( '<td>' . $str_sd_B . '</td>' . "\n" );
 	echo( '<td><div style="padding: 5px 0px;"><div id="histogramA' . $i . '"></div></div></td>' . "\n" );
 	echo( '<td><div style="padding: 5px 0px;"><div id="histogramB' . $i . '"></div></div></td>' . "\n" );
@@ -448,7 +452,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 		  

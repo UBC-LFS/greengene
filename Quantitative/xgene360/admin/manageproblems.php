@@ -16,8 +16,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+$pageHandler = (new PageHandler);
+$pageHandler -> initialize();
+$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_str_script_block = "xgene360_cu.using( 'sortabletable' )";
@@ -130,7 +134,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -162,7 +166,8 @@ function on_delete_handler()
 {
 	global $g_obj_problem_manager;
 	
-	$arr_problem_list = PageHandler::get_post_value( 'ProblemId' );
+	// $arr_problem_list = PageHandler::get_post_value( 'ProblemId' );
+	$arr_problem_list = $pageHandler -> get_post_value( 'ProblemId' );
 	
 	if ( $arr_problem_list == null )
 	{
