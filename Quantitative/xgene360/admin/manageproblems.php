@@ -82,18 +82,20 @@ if ( $g_obj_user->int_privilege != UP_TA )
 
 $res_problems = $g_obj_problem_manager->view_problems();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_problems );
 
-	echo( '<tr onclick="openProblemDetail( \'' . htmlspecialchars( $res_row->problem_id, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
-	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="ProblemId[]" value="' . htmlspecialchars( $res_row->problem_id ) . '" /></td>'."\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->problem_name ) . '</td>'."\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->Name ). '</td>'."\n" );
-	echo( '<td>' . $res_row->submit_count . '/' . htmlspecialchars( $res_row->student_count ) . '<td>&nbsp;<input class="buttoninput" type="button" value="View Submitted" onclick="openSolutions( event, ' . htmlspecialchars( $res_row->problem_id ) . ' );" /></td>'."\n" );
-	echo( '</tr>' . "\n" );
+if ($res_problems != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_problems );
+
+		echo( '<tr onclick="openProblemDetail( \'' . htmlspecialchars( $res_row->problem_id, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
+		echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="ProblemId[]" value="' . htmlspecialchars( $res_row->problem_id ) . '" /></td>'."\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->problem_name ) . '</td>'."\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->Name ). '</td>'."\n" );
+		echo( '<td>' . $res_row->submit_count . '/' . htmlspecialchars( $res_row->student_count ) . '<td>&nbsp;<input class="buttoninput" type="button" value="View Submitted" onclick="openSolutions( event, ' . htmlspecialchars( $res_row->problem_id ) . ' );" /></td>'."\n" );
+		echo( '</tr>' . "\n" );
+	}
 }
-  
 ?>
                  
     </table>

@@ -75,15 +75,19 @@ if ( $g_obj_user->int_privilege != UP_TA )
 
 $res_courses = $g_obj_course_manager->view_courses();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-	
-	echo( '<tr onclick="openCourseDetail( \'' . htmlspecialchars( $res_row->CourseId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
-	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="CourseId[]" value="' . htmlspecialchars( $res_row->CourseId ) . '" /></td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->Name ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->Description ) .'</td>' . "\n" );
-	echo( '</tr>' . "\n" );
+// var_dump($res_courses);
+
+if ($res_courses != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_courses );
+		
+		echo( '<tr onclick="openCourseDetail( \'' . htmlspecialchars( $res_row->CourseId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
+		echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="CourseId[]" value="' . htmlspecialchars( $res_row->CourseId ) . '" /></td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->Name ) . '</td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->Description ) .'</td>' . "\n" );
+		echo( '</tr>' . "\n" );
+	}
 }
     
 ?>

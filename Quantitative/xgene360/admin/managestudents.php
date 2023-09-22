@@ -115,11 +115,14 @@ echo( '<option value="">&nbsp;</option>' );
 
 $res_courses = $g_obj_course_manager->view_courses();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-	
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;&nbsp;&nbsp;&nbsp;' . htmlspecialchars( $res_row->Name ) . '</option>' . "\n" );
+
+if ($res_courses != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_courses );
+		
+		echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;&nbsp;&nbsp;&nbsp;' . htmlspecialchars( $res_row->Name ) . '</option>' . "\n" );
+	}
 }
 
 ?>
@@ -139,13 +142,14 @@ echo( '<option value="">&nbsp;</option>' );
 
 $res_problems = $g_obj_problem_manager->view_problems();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_problems );
-	
-	echo( '<option value="' . htmlspecialchars( $res_row->problem_id ) . '">&nbsp;' . htmlspecialchars( $res_row->problem_name ) . '&nbsp;</option>' . "\n" );
+if ($res_problems != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_problems );
+		
+		echo( '<option value="' . htmlspecialchars( $res_row->problem_id ) . '">&nbsp;' . htmlspecialchars( $res_row->problem_name ) . '&nbsp;</option>' . "\n" );
+	}
 }
-
 ?>
 
                 </select>
@@ -181,19 +185,22 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
 
 $res_students = $g_obj_student_manager->view_students();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_students ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_students );
-	
-	echo( '<tr onclick="openStudentDetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
-	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="StudentId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
-	echo( '<td> </td>'."\n");
-	echo( '</tr>' . "\n" );
+
+if ($res_students != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_students ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_students );
+		
+		echo( '<tr onclick="openStudentDetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
+		echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="StudentId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
+		echo( '<td> </td>'."\n");
+		echo( '</tr>' . "\n" );
+	}
 }
-    
+
 ?>  
               
     </table>

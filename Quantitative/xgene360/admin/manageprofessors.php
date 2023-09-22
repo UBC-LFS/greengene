@@ -79,11 +79,13 @@ echo( '<option>&nbsp;</option>' );
 
 $res_courses = $g_obj_course_manager->view_courses();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-	
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
+if ($res_courses != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_courses );
+		
+		echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;' . htmlspecialchars( $res_row->Name ) . '&nbsp;</option>'."\n" );
+	}
 }
 
 ?>
@@ -108,18 +110,20 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
 
 $res_professors = $g_obj_professor_manager->view_professors();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_professors ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_professors );
-	
-	echo( '<tr onclick="openProfessorDetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
-	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="ProfessorId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
-	echo( '</tr>' . "\n" );
+if ($res_professors != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_professors ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_professors );
+		
+		echo( '<tr onclick="openProfessorDetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
+		echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="ProfessorId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
+		echo( '</tr>' . "\n" );
+	}
 }
-    
+
 ?>
 
     </table>

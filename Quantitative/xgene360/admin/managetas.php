@@ -77,13 +77,15 @@ echo( '<option value="">&nbsp;</option>' );
 
 $res_courses = $g_obj_course_manager->view_courses();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
 
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . htmlspecialchars( $res_row->Name ) . '</option>'."\n" );
+if ($res_courses != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_courses );
+
+		echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . htmlspecialchars( $res_row->Name ) . '</option>'."\n" );
+	}
 }
-
 ?>
 
            </select>
@@ -105,18 +107,19 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
 
 $res_tas = $g_obj_ta_manager->view_tas();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_tas );
+if ($res_tas != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_tas );
 
-	echo( '<tr onclick="openTADetail( \'' . htmlspecialchars( $res_row->UserId ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
-	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="TAId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' );
-	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' );
-	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' );
-	echo( '</tr>' );
+		echo( '<tr onclick="openTADetail( \'' . htmlspecialchars( $res_row->UserId ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
+		echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="TAId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' );
+		echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' );
+		echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' );
+		echo( '</tr>' );
+	}
 }
-	
 ?>
 
     </table>
