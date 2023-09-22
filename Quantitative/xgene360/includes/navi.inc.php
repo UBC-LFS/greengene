@@ -9,7 +9,7 @@
 	{
 		echo( '<ul class="horizontalmenu">' );
 		
-		LinkHandler::populate_menu_items( $g_arr_nav_links, $g_str_page_title ); 
+		(new LinkHandler) ->populate_menu_items( $g_arr_nav_links, $g_str_page_title ); 
 
 		echo( '</ul>' );
 	}

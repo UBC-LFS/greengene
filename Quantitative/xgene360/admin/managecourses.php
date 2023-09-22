@@ -16,8 +16,9 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+$pageHandler = (new PageHandler);
+$pageHandler -> initialize();
+$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
 
@@ -124,14 +125,14 @@ if ( $g_obj_user->int_privilege != UP_TA )
             
               <tr>
                 <td width="75">Name:</td>
-                <td><input class="textinput" type="text" name="CourseName" id="CourseName" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="CourseName" id="CourseName" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'CourseName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
               
               <tr>
                 <td style="vertical-align: top">Description:</td>
                 <td>
-                  <textarea class="textareainput" name="CourseDescription" id="CourseDescription" cols="60" rows="10" onkeydown="xgene360_cu.countText( 'CourseDescription', 'CourseDescriptionLetterCount', 250 );" onkeyup="xgene360_cu.countText( 'CourseDescription', 'CourseDescriptionLetterCount', 250 );"><?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Username' ) ) ?></textarea><br />
-                  <input readonly="readonly" class="smallnumberinput" type="text" name="CourseDescriptionLetterCount" id="CourseDescriptionLetterCount" size="3" value="<?= 250 - strlen( PageHandler::write_post_value_if_failed( 'CourseName' ) ) ?>" />&nbsp;characters left
+                  <textarea class="textareainput" name="CourseDescription" id="CourseDescription" cols="60" rows="10" onkeydown="xgene360_cu.countText( 'CourseDescription', 'CourseDescriptionLetterCount', 250 );" onkeyup="xgene360_cu.countText( 'CourseDescription', 'CourseDescriptionLetterCount', 250 );"><?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'Username' ) ) ?></textarea><br />
+                  <input readonly="readonly" class="smallnumberinput" type="text" name="CourseDescriptionLetterCount" id="CourseDescriptionLetterCount" size="3" value="<?= 250 - strlen( $pageHandler -> write_post_value_if_failed( 'CourseName' ) ) ?>" />&nbsp;characters left
                 </td>
               </tr>
 
@@ -177,7 +178,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
 	{ 
 		$str_command = $_POST['Command'];
 
@@ -216,8 +217,8 @@ function on_create_handler()
 	global $g_obj_course_manager;
 	
 	// create a new course
-	$str_course_name = PageHandler::get_post_value( 'CourseName' );
-	$str_course_description = PageHandler::get_post_value( 'CourseDescription' );
+	$str_course_name = $pageHandler -> get_post_value( 'CourseName' );
+	$str_course_description = $pageHandler -> get_post_value( 'CourseDescription' );
 	
 	// verify the input
 	if ( !isset( $str_course_name ) || !isset( $str_course_description ) )
@@ -249,7 +250,7 @@ function on_delete_handler()
 {
 	global $g_obj_course_manager;
 	
-	$arr_course_list = PageHandler::get_post_value( 'CourseId' );
+	$arr_course_list = $pageHandler -> get_post_value( 'CourseId' );
 	
 	if ( $arr_course_list == null )
 	{
