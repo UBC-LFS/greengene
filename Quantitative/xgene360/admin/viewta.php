@@ -15,7 +15,7 @@ require_once( '../includes/classes/db/assigntamanager.class.php' );
 
 $g_str_parent_page = './managetas.php';
 
-$pageHandler -> check_necessary_id( array( 'TAId' ), $g_str_parent_page );
+(new PageHandler) -> check_necessary_id( array( 'TAId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff

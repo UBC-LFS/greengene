@@ -15,7 +15,7 @@ require_once( '../includes/classes/db/assignprofessormanager.class.php' );
 
 $g_str_parent_page = './manageprofessors.php';
 
-$pageHandler -> check_necessary_id( array( 'ProfessorId' ), $g_str_parent_page );
+(new PageHandler) -> check_necessary_id( array( 'ProfessorId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff

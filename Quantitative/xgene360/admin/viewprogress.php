@@ -17,8 +17,8 @@ require_once( '../includes/classes/db/assignstudentmanager.class.php' );
 
 $g_str_parent_page = './managestudents.php';
 
-$pageHandler -> check_necessary_id( array( 'StudentId' ), $g_str_parent_page );
-$pageHandler -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
+(new PageHandler) -> check_necessary_id( array( 'StudentId' ), $g_str_parent_page );
+(new PageHandler) -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff

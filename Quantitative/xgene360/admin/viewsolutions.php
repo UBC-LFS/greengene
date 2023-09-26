@@ -14,7 +14,7 @@ require_once( '../includes/classes/db/problemmanager.class.php' );
 
 $g_str_parent_page = './manageproblems.php';
 
-$pageHandler -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
+(new PageHandler) -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff

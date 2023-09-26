@@ -14,7 +14,7 @@ class StudentManager extends UserManager
  * POST: a StudentManager object has been created with the parameters
  * @param $obj_user, $obj_db
  */
-	function StudentManager( $obj_user, $obj_db )
+	function __construct( $obj_user, $obj_db )
 	{
 	    $this->m_obj_user = $obj_user;
 		$this->m_obj_db = $obj_db;

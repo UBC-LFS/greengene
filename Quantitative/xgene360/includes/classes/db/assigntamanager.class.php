@@ -11,7 +11,7 @@ class AssignTAManager
 	 * POST: TA object is constructed
 	 * @param string $p_userId
 	 */
-	function AssignTAManager( $obj_user, $obj_db )
+	function __construct( $obj_user, $obj_db )
 	{
 	  	$this->m_obj_user = $obj_user;
 		$this->m_obj_db = $obj_db;

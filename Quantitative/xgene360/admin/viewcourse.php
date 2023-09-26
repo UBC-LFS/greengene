@@ -15,7 +15,8 @@ require_once( '../includes/classes/db/assigntamanager.class.php' );
 
 $g_str_parent_page = './managecourses.php';
 
-$pageHandler -> check_necessary_id( array( 'CourseId' ), $g_str_parent_page );
+// var_dump(array('CourseId'), $g_str_parent_page);
+(new PageHandler) -> check_necessary_id( array( 'CourseId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
