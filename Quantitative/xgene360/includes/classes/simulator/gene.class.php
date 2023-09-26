@@ -204,7 +204,7 @@ class Plant
 	*/
 	function calculate_trait( $obj_trait, $obj_gene )
 	{
-		return Simulation::generate_normal_random( $obj_trait->dbl_base_value + $obj_gene->get_number_of_strong_genes() * $obj_trait->dbl_capital_value, $obj_trait->dbl_variance_value );
+		return (new Simulation) -> generate_normal_random( $obj_trait->dbl_base_value + $obj_gene->get_number_of_strong_genes() * $obj_trait->dbl_capital_value, $obj_trait->dbl_variance_value );
 	}
 }
 	

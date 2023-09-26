@@ -29,8 +29,8 @@ $g_obj_user = null;
 // PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $pageHandler = (new PageHandler);
-$pageHandler -> initialize();
-$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_solution_manager = new SolutionManager( $g_obj_user, $g_obj_db );
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
@@ -174,7 +174,7 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $g_res_student_solutions ); ++
 	echo( '<td style="border-bottom: 0px;">' . compare_result( $g_arr_problem_info->trait_A_h2, $res_solution->trait_A_h2 ) . '</td>' . "\n" );
 	echo( '<td style="border-bottom: 0px;">' . compare_result( $g_arr_problem_info->trait_A_number_of_genes, $res_solution->trait_A_number_of_genes ) . '</td>' . "\n" );
 	echo( '<td style="border-bottom: 0px;">&nbsp;</td>' . "\n" );
-	echo( '<td style="border-bottom: 0px;">' . htmlspecialchars( $pageHandler -> format_date( $res_solution->hand_in_date ) ) . '</td>' . "\n" );
+	echo( '<td style="border-bottom: 0px;">' . htmlspecialchars( (new PageHandler) -> format_date( $res_solution->hand_in_date ) ) . '</td>' . "\n" );
 	echo( '</tr>' . "\n" );
 	
 	echo( '<tr>' . "\n" );
@@ -250,8 +250,8 @@ function compare_result( $dbl_answer, $dbl_answer_from_student )
 	$dbl_lower_range = $dbl_answer - $dbl_range;
 	$dbl_upper_range = $dbl_answer + $dbl_range;
 	
-	$dbl_formatted_answer = $pageHandler -> format_precision( (double)$dbl_answer_from_student, 2 );
-	$dbl_formatted_range = $pageHandler -> format_precision( ( (double)$dbl_answer_from_student - (double)$dbl_answer ) / (double)$dbl_answer, 2 ) * 100;
+	$dbl_formatted_answer = (new PageHandler) -> format_precision( (double)$dbl_answer_from_student, 2 );
+	$dbl_formatted_range = (new PageHandler) -> format_precision( ( (double)$dbl_answer_from_student - (double)$dbl_answer ) / (double)$dbl_answer, 2 ) * 100;
 	
 	if ( $dbl_answer_from_student >= $dbl_lower_range && $dbl_answer_from_student <= $dbl_upper_range )
 	{

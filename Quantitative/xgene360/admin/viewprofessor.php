@@ -30,8 +30,8 @@ $g_obj_user = null;
 // PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR ) );
 
 $pageHandler = (new PageHandler);
-$pageHandler -> initialize();
-$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR ) );
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR ) );
 
 $g_obj_professor_manager = new ProfessorManager( $g_obj_user, $g_obj_db );
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
@@ -245,7 +245,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 
@@ -289,8 +289,8 @@ function on_update_handler()
 {
 	global $g_obj_professor_manager, $g_str_professor_id;
 	
-	$str_first_name = $pageHandler -> get_post_value( 'ProfessorFirstName' );
-	$str_last_name = $pageHandler -> get_post_value( 'ProfessorLastName' );
+	$str_first_name = (new PageHandler) -> get_post_value( 'ProfessorFirstName' );
+	$str_last_name = (new PageHandler) -> get_post_value( 'ProfessorLastName' );
 	
 	if ( strlen( $str_first_name ) == 0 || strlen( $str_last_name ) == 0 )
 	{
@@ -324,7 +324,7 @@ function on_assign_handler()
 {
 	global $g_obj_assign_professor_manager, $g_str_professor_id;
 	
-	$int_selected_course_id = $pageHandler -> get_post_value( 'SelectedCourse' );
+	$int_selected_course_id = (new PageHandler) -> get_post_value( 'SelectedCourse' );
 	
 	if ( strlen( $int_selected_course_id ) == 0 )
 	{
@@ -355,7 +355,7 @@ function on_remove_handler()
 {
 	global $g_obj_assign_professor_manager, $g_str_professor_id;
 	
-	$arr_course_list = $pageHandler -> get_post_value( 'CourseId' );	
+	$arr_course_list = (new PageHandler) -> get_post_value( 'CourseId' );	
 	
 	if ( $arr_course_list == null )
 	{

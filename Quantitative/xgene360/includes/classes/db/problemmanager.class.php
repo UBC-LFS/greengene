@@ -431,11 +431,12 @@ class ProblemManager
 		$obj_plant_B = new Plant;
 		$obj_plant_B->create( $int_trait_A_number_of_genes, !$bln_stronger_gene_A, $int_trait_B_number_of_genes, !$bln_stronger_gene_B );
 
+		$simulaion = new Simulation;
 		// create F1 generation
-		$arr_new_generation = Simulation::cross_plants( array( $obj_plant_A, $obj_plant_B ), $int_number_of_progeny_per_cross );
+		$arr_new_generation = $simulaion -> cross_plants( array( $obj_plant_A, $obj_plant_B ), $int_number_of_progeny_per_cross );
 
 		// create F2 generation
-		$arr_new_generation = Simulation::cross_plants( array( $arr_new_generation[0] ), $int_number_of_progeny_per_cross );
+		$arr_new_generation = $simulaion -> cross_plants( array( $arr_new_generation[0] ), $int_number_of_progeny_per_cross );
 		
 		$obj_generation_manager = new GenerationManager( $this->m_obj_user, $this->m_obj_db );
 

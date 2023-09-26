@@ -24,8 +24,8 @@ $g_obj_user = null;
 // PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $pageHandler = (new PageHandler);
-$pageHandler -> initialize();
-$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_student_manager = new StudentManager( $g_obj_user, $g_obj_db );
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
@@ -237,17 +237,17 @@ if ( $g_obj_user->int_privilege != UP_TA )
 
               <tr>
                 <td width="125">First Name:</td>
-                <td><input class="textinput" type="text" name="FirstName" id="FirstName" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'FirstName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="FirstName" id="FirstName" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'FirstName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
 
               <tr>
                 <td>Last Name:</td>
-                <td><input class="textinput" type="text" name="LastName" id="LastName" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'LastName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="LastName" id="LastName" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'LastName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
 
               <tr>
                 <td>CWL Username:</td>
-                <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
 
               <tr>
@@ -278,22 +278,22 @@ if ( $g_obj_user->int_privilege != UP_TA )
 
         <tr>
 			<td>Course Subject Code</td>
-			<td><input class="textinput" type="text" id="CourseSubjectCode" name="CourseSubjectCode" placeholder="APBI" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'CourseSubjectCode' ) ) ?>" ></input></td>
+			<td><input class="textinput" type="text" id="CourseSubjectCode" name="CourseSubjectCode" placeholder="APBI" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'CourseSubjectCode' ) ) ?>" ></input></td>
 		</tr>
 
         <tr>
 			<td>Course Number</td>
-			<td><input class="textinput" type="text" id='CourseNumber' name="CourseNumber" placeholder="318" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'CourseNumber' ) ) ?>"></input></td>
+			<td><input class="textinput" type="text" id='CourseNumber' name="CourseNumber" placeholder="318" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'CourseNumber' ) ) ?>"></input></td>
 		</tr>
  
 		<tr>
 			<td>Course Section</td>
-			<td><input class="textinput" type="text" id='CourseSection' name="CourseSection" placeholder="001" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'CourseSection' ) ) ?>"></input></td>
+			<td><input class="textinput" type="text" id='CourseSection' name="CourseSection" placeholder="001" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'CourseSection' ) ) ?>"></input></td>
 		</tr>
    
 		<tr>
 			<td>Year</td>
-			<td><input class="textinput" type="text" id='Year' name="Year" placeholder="2019" value="<?= htmlspecialchars( $pageHandler -> write_post_value_if_failed( 'Year' ) ) ?>"></input></td>
+			<td><input class="textinput" type="text" id='Year' name="Year" placeholder="2019" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'Year' ) ) ?>"></input></td>
 		</tr>
 
         <tr>
@@ -340,7 +340,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -396,9 +396,9 @@ function on_create_handler()
 {
 	global $g_obj_student_manager;
 	
-	$cwl_username = $pageHandler -> get_post_value( 'Username' );
-	$str_first_name = $pageHandler -> get_post_value( 'FirstName' );
-	$str_last_name = $pageHandler -> get_post_value( 'LastName' );
+	$cwl_username = (new PageHandler) -> get_post_value( 'Username' );
+	$str_first_name = (new PageHandler) -> get_post_value( 'FirstName' );
+	$str_last_name = (new PageHandler) -> get_post_value( 'LastName' );
 	
 	// verify the input
 	if (strlen( $cwl_username ) == 0 )
@@ -432,7 +432,7 @@ function on_delete_handler()
 {
 	global $g_obj_student_manager;
 	
-	$arr_student_list = $pageHandler -> get_post_value( 'StudentId' );
+	$arr_student_list = (new PageHandler) -> get_post_value( 'StudentId' );
 	
 	if ( $arr_student_list == null )
 	{
@@ -459,14 +459,14 @@ function on_delete_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = $pageHandler -> display_users_cwl( 'Successfully deleted students with CWL Username', $arr_success );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Successfully deleted students with CWL Username', $arr_success );
 		
 		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = $pageHandler -> display_users_cwl( 'Failed to delete students with CWL Username', $arr_fail );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Failed to delete students with CWL Username', $arr_fail );
 		
 		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
@@ -483,9 +483,9 @@ function on_assign_handler()
 {
 	global $g_obj_student_manager, $g_obj_assign_student_manager;
 	
-	$arr_student_list = $pageHandler -> get_post_value( 'StudentId' );
-	$int_selected_course_id = $pageHandler -> get_post_value( 'SelectedCourse' );
-	$int_selected_problem_id = $pageHandler -> get_post_value( 'SelectedProblem' );
+	$arr_student_list = (new PageHandler) -> get_post_value( 'StudentId' );
+	$int_selected_course_id = (new PageHandler) -> get_post_value( 'SelectedCourse' );
+	$int_selected_problem_id = (new PageHandler) -> get_post_value( 'SelectedProblem' );
 	
 	if ( $arr_student_list == null || ( strlen( $int_selected_course_id ) == 0 && strlen( $int_selected_problem_id ) == 0 ) )
 	{
@@ -532,14 +532,14 @@ function on_assign_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = $pageHandler -> display_users_cwl( 'Successfully assigned', $arr_success );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Successfully assigned', $arr_success );
 		
 		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = $pageHandler -> display_users_cwl( 'Failed to assign', $arr_fail );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Failed to assign', $arr_fail );
 		
 		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
@@ -554,11 +554,11 @@ function on_assign_handler()
 */
 function on_import_handler()
 {
-	$courseSubjectCode = $pageHandler -> get_post_value('CourseSubjectCode');
-	$courseNumber = $pageHandler -> get_post_value('CourseNumber');
-	$courseSection = $pageHandler -> get_post_value('CourseSection');
-	$year = $pageHandler -> get_post_value('Year');
-	$session = $pageHandler -> get_post_value('Session');
+	$courseSubjectCode = (new PageHandler) -> get_post_value('CourseSubjectCode');
+	$courseNumber = (new PageHandler) -> get_post_value('CourseNumber');
+	$courseSection = (new PageHandler) -> get_post_value('CourseSection');
+	$year = (new PageHandler) -> get_post_value('Year');
+	$session = (new PageHandler) -> get_post_value('Session');
 
 	$payload = ['subjectCode' => $courseSubjectCode,
 			'courseNumber' => $courseNumber,
@@ -579,7 +579,7 @@ function on_import_handler()
 */
 function on_export_handler()
 {
-	$arr_student_list = $pageHandler -> get_post_value( 'StudentId' );
+	$arr_student_list = (new PageHandler) -> get_post_value( 'StudentId' );
 	
 	if ( $arr_student_list == null )
 	{

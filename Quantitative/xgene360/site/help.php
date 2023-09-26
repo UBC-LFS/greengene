@@ -25,8 +25,8 @@ $g_obj_user = null;
 // PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA, UP_STUDENT ) );
 
 $pageHandler = (new PageHandler);
-$pageHandler -> initialize();
-$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA, UP_STUDENT ) );
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA, UP_STUDENT ) );
 
 /*
 * set header stuff

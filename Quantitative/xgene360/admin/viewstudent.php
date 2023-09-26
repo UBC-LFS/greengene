@@ -32,8 +32,8 @@ $g_obj_user = null;
 // PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $pageHandler = (new PageHandler);
-$pageHandler -> initialize();
-$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_student_manager = new StudentManager( $g_obj_user, $g_obj_db );
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
@@ -296,7 +296,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 		  
@@ -340,8 +340,8 @@ function on_update_handler()
 {
 	global $g_obj_student_manager, $g_str_student_id;
 	
-	$str_first_name = $pageHandler -> get_post_value( 'StudentFirstName' );
-	$str_last_name = $pageHandler -> get_post_value( 'StudentLastName' );
+	$str_first_name = (new PageHandler) -> get_post_value( 'StudentFirstName' );
+	$str_last_name = (new PageHandler) -> get_post_value( 'StudentLastName' );
 	
 	if ( $g_obj_student_manager->modify_user( $g_str_student_id, $str_first_name, $str_last_name) )
 	{
@@ -369,8 +369,8 @@ function on_assign_handler()
 {
 	global $g_obj_assign_student_manager, $g_str_student_id;
 	
-	$int_selected_course_id = $pageHandler -> get_post_value( 'SelectedCourse' );
-	$int_selected_problem_id = $pageHandler -> get_post_value( 'SelectedProblem' );
+	$int_selected_course_id = (new PageHandler) -> get_post_value( 'SelectedCourse' );
+	$int_selected_problem_id = (new PageHandler) -> get_post_value( 'SelectedProblem' );
 	
 	if ( strlen( $int_selected_course_id == 0 && $int_selected_problem_id == 0 ) )
 	{
@@ -417,7 +417,7 @@ function on_remove_handler()
 {
 	global $g_obj_assign_student_manager, $g_str_student_id;
 	
-	$arr_problem_list = $pageHandler -> get_post_value( 'ProblemId' );	
+	$arr_problem_list = (new PageHandler) -> get_post_value( 'ProblemId' );	
 	
 	if ( $arr_problem_list == null )
 	{

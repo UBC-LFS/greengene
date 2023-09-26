@@ -19,7 +19,7 @@ $g_obj_user = null;
 // PageHandler::check_permission( array( UP_STUDENT ) ); // WAS COMMENTED OUT BEFORE PHP8 MIGRATION
 
 $pageHandler = (new PageHandler);
-$pageHandler -> initialize();
+(new PageHandler) -> initialize();
 
 /*
 * required info

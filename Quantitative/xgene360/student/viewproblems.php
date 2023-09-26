@@ -21,8 +21,8 @@ $g_obj_user = null;
 // PageHandler::check_permission( array( UP_STUDENT ) );
 
 $pageHandler = (new PageHandler);
-$pageHandler -> initialize();
-$pageHandler -> check_permission( array( UP_STUDENT ) );
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_STUDENT ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_obj_generation_manager = new GenerationManager( $g_obj_user, $g_obj_db );

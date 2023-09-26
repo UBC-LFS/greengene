@@ -31,8 +31,8 @@ $g_obj_user = null;
 // PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $pageHandler = (new PageHandler);
-$pageHandler -> initialize();
-$pageHandler -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
 $g_obj_assign_professor_manager = new AssignProfessorManager( $g_obj_user, $g_obj_db );
@@ -284,7 +284,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( $pageHandler -> get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -334,8 +334,8 @@ function on_update_handler()
 		return;
 	}
 	
-	$str_course_name = $pageHandler -> get_post_value( 'CourseName' );
-	$str_course_description = $pageHandler -> get_post_value( 'CourseDescription' );
+	$str_course_name = (new PageHandler) -> get_post_value( 'CourseName' );
+	$str_course_description = (new PageHandler) -> get_post_value( 'CourseDescription' );
 	
 	// verify the input
 	if ( !isset( $str_course_name ) || !isset( $str_course_description ) )
@@ -376,7 +376,7 @@ function on_drop_selected_professors_handler()
 		return;
 	}
 	
-	$arr_professor_list = $pageHandler -> get_post_value( 'ProfessorId' );
+	$arr_professor_list = (new PageHandler) -> get_post_value( 'ProfessorId' );
 	
 	if ( $arr_professor_list == null )
 	{
@@ -429,7 +429,7 @@ function on_drop_selected_tas_handler()
 		return;
 	}
 	
-	$arr_ta_list = $pageHandler -> get_post_value( 'TAId' );
+	$arr_ta_list = (new PageHandler) -> get_post_value( 'TAId' );
 	
 	if ( $arr_ta_list == null )
 	{
