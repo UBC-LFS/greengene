@@ -483,7 +483,7 @@ function on_cross_handler()
 			array_push( $arr_parent_plants, $obj_plant );
 		}
 		
-		$arr_new_generation = Simulation::cross_plants( $arr_parent_plants, $g_arr_problem_info->number_of_displayed_plants );
+		$arr_new_generation = (new Simulation) -> cross_plants( $arr_parent_plants, $g_arr_problem_info->number_of_displayed_plants );
 		
 		$obj_trait_A = $g_obj_problem_manager->create_trait( $g_arr_problem_info->trait_A_name, $g_arr_problem_info->trait_A_number_of_genes, 
 																$g_arr_problem_info->trait_A_parent_A_mean, $g_arr_problem_info->trait_A_parent_B_mean, $g_arr_problem_info->trait_A_var );

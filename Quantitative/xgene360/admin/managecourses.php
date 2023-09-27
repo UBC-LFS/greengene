@@ -222,7 +222,7 @@ function on_create_handler()
 	$str_course_name = (new PageHandler) -> get_post_value( 'CourseName' );
 	$str_course_description = (new PageHandler) -> get_post_value( 'CourseDescription' );
 	
-	var_dump($str_course_name, $str_course_description);
+	// var_dump($str_course_name, $str_course_description);
 
 
 	// verify the input

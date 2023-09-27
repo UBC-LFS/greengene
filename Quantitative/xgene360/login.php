@@ -172,7 +172,7 @@ function on_login_handler()
   
 	// authenticate the user
 	$obj_user = (new LoginManager) -> authenticate( $str_username, $str_password, $obj_db );
-		
+
 	// ocassionally purge old lock data
 	$obj_lock = new LockManager( $obj_db );
 	$obj_lock->purge();
