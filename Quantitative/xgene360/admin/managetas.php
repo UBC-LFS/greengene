@@ -425,7 +425,7 @@ function on_import_handler()
 		
 		else
 		{
-			FileHandler::import_ta_list( $_FILES['ImportTAFile']['tmp_name']);
+			(new FileHandler) -> import_ta_list( $_FILES['ImportTAFile']['tmp_name']);
 		}
 	}
 }
@@ -449,7 +449,7 @@ function on_export_handler()
 	
 	else
 	{
-		FileHandler::export_ta_list( $arr_ta_list );
+		(new FileHandler) -> export_ta_list( $arr_ta_list );
 	}
 }
 

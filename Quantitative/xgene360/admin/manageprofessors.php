@@ -436,7 +436,7 @@ function on_import_handler()
 		
 		else
 		{
-			FileHandler::import_professor_list( $_FILES['ImportProfessorFile']['tmp_name']);
+			(new FileHandler) -> import_professor_list( $_FILES['ImportProfessorFile']['tmp_name']);
 		}
 	}
 }
@@ -460,7 +460,7 @@ function on_export_handler()
 	
 	else
 	{
-		FileHandler::export_professor_list( $arr_professor_list );
+		(new FileHandler) -> export_professor_list( $arr_professor_list );
 	}
 }
 

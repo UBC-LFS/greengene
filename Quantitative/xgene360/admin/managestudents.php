@@ -566,8 +566,9 @@ function on_import_handler()
 			'year' => $year,
 			'session' => $session]; 
 
-	$result = LDAPHandler::importClassList($payload);
-	LDAPHandler::createUserFromLDAPResult($result);
+	$LDAPHandler = new LDAPHandler;
+	$result = $LDAPHandler -> importClassList($payload);
+	$LDAPHandler -> createUserFromLDAPResult($result);
 }
 
 /**  Function: void on_export_handler()
@@ -589,7 +590,7 @@ function on_export_handler()
 	
 	else
 	{
-		FileHandler::export_student_list( $arr_student_list );
+		(new FileHandler) -> export_student_list( $arr_student_list );
 	}
 }
 
