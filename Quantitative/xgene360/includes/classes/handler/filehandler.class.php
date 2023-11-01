@@ -58,14 +58,14 @@ class FileHandler
 		
 		if ( count( $arr_success ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_password( 'Successfully created', $arr_success );
+			$str_message = (new PageHandler) -> display_users_id_password( 'Successfully created', $arr_success );
 		
 			(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 		}
 		
 		if ( count( $arr_fail ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_password( 'Failed to create', $arr_fail );
+			$str_message = (new PageHandler) -> display_users_id_password( 'Failed to create', $arr_fail );
 		
 			(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 		}
@@ -162,14 +162,14 @@ class FileHandler
 		
 		if ( count( $arr_success ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_password( 'Successfully created', $arr_success );
+			$str_message = (new PageHandler) -> display_users_id_password( 'Successfully created', $arr_success );
 		
 			(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 		}
 		
 		if ( count( $arr_fail ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_password( 'Failed to create', $arr_fail );
+			$str_message = (new PageHandler) -> display_users_id_password( 'Failed to create', $arr_fail );
 		
 			(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 		}
@@ -262,14 +262,14 @@ class FileHandler
 		
 		if ( count( $arr_success ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_password( 'Successfully created', $arr_success );
+			$str_message = (new PageHandler) -> display_users_id_password( 'Successfully created', $arr_success );
 		
 			(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 		}
 		
 		if ( count( $arr_fail ) != 0 )
 		{
-			$str_message = PageHandler::display_users_id_password( 'Failed to create', $arr_fail );
+			$str_message = (new PageHandler) -> display_users_id_password( 'Failed to create', $arr_fail );
 		
 			(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 		}
