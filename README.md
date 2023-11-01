@@ -60,9 +60,6 @@ define('SSL_CERTIFICATE_PATH', 'FILE PATH TO client-cert.pem');
 define('SSL_CA_CERTIFICATE_PATH', 'FILE PATH TO ca-cert.pem');
 ```
 
-Possible flaws:
-- Importing profs or tas from a .csv file will result in an error if a prof/ta already exist
-
 Testing:
 - To disable authentication, go to loginmanager.class.php line 39
 
