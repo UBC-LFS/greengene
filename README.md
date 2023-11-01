@@ -2,7 +2,7 @@
 Last updated: Aug 16th, 2023
 
 Qualitative - Tested with PHP 8.1.2<br>
-Quantitative - Tested with PHP 8.1.2 (WIP - not launched yet)
+Quantitative - Tested with PHP 8.1.2 (Ready to launch)
 
 For a full description of what this project does and for instructions on using it, check out the [user manual](/docs/greengene_user_manual.pdf)!
 
