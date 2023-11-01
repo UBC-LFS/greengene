@@ -52,7 +52,7 @@ class MessageHandler
 	{
 		global $g_arr_messages;
 
-		if ( MessageHandler::has_message( $int_message_type ) )
+		if ( (new MessageHandler) ->  has_message( $int_message_type ) )
 		{
 			return array_pop( $g_arr_messages[$int_message_type] );
 		}

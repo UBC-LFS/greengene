@@ -16,7 +16,8 @@ require_once( '../includes/classes/db/assignstudentmanager.class.php' );
 
 $g_str_parent_page = './managestudents.php';
 
-PageHandler::check_necessary_id( array( 'StudentId' ), $g_str_parent_page );
+// (new PageHandler) -> check_necessary_id( array( 'StudentId' ), $g_str_parent_page );
+(new PageHandler)-> check_necessary_id( array( 'StudentId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -27,8 +28,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_student_manager = new StudentManager( $g_obj_user, $g_obj_db );
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
@@ -270,7 +275,7 @@ function verify_student_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_student ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'The Student does not exist' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'The Student does not exist' );
 	}
 	
 	else
@@ -291,7 +296,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 		  
@@ -317,7 +322,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -335,17 +340,17 @@ function on_update_handler()
 {
 	global $g_obj_student_manager, $g_str_student_id;
 	
-	$str_first_name = PageHandler::get_post_value( 'StudentFirstName' );
-	$str_last_name = PageHandler::get_post_value( 'StudentLastName' );
+	$str_first_name = (new PageHandler) -> get_post_value( 'StudentFirstName' );
+	$str_last_name = (new PageHandler) -> get_post_value( 'StudentLastName' );
 	
 	if ( $g_obj_student_manager->modify_user( $g_str_student_id, $str_first_name, $str_last_name) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully updated the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully updated the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to update the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to update the account for Student "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}
 	
 	// force to load the updated info
@@ -364,12 +369,12 @@ function on_assign_handler()
 {
 	global $g_obj_assign_student_manager, $g_str_student_id;
 	
-	$int_selected_course_id = PageHandler::get_post_value( 'SelectedCourse' );
-	$int_selected_problem_id = PageHandler::get_post_value( 'SelectedProblem' );
+	$int_selected_course_id = (new PageHandler) -> get_post_value( 'SelectedCourse' );
+	$int_selected_problem_id = (new PageHandler) -> get_post_value( 'SelectedProblem' );
 	
 	if ( strlen( $int_selected_course_id == 0 && $int_selected_problem_id == 0 ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select a course or a problem" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select a course or a problem" );
 		return;
 	}
 	
@@ -377,12 +382,12 @@ function on_assign_handler()
 	{
 		if ( $g_obj_assign_student_manager->assign_student_to_course( $g_str_student_id, $int_selected_course_id ) )
 		{
-			MessageHandler::add_message( MSG_SUCCESS, 'Successfully assigned the Student to the Course' );
+			(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully assigned the Student to the Course' );
 		}
 		
 		else
 		{
-			MessageHandler::add_message( MSG_FAIL, 'Failed to assign the Student to the Course' );
+			(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to assign the Student to the Course' );
 		}
 	}
 	
@@ -390,12 +395,12 @@ function on_assign_handler()
 	{
 		if ( $g_obj_assign_student_manager->assign_student_to_problem( $g_str_student_id, $int_selected_problem_id ) )
 		{
-			MessageHandler::add_message( MSG_SUCCESS, 'Successfully assigned the Student to the Problem' );
+			(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully assigned the Student to the Problem' );
 		}
 		
 		else
 		{
-			MessageHandler::add_message( MSG_FAIL, 'Failed to assign the Student to the Problem' );
+			(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to assign the Student to the Problem' );
 		}
 	}
 }
@@ -412,11 +417,11 @@ function on_remove_handler()
 {
 	global $g_obj_assign_student_manager, $g_str_student_id;
 	
-	$arr_problem_list = PageHandler::get_post_value( 'ProblemId' );	
+	$arr_problem_list = (new PageHandler) -> get_post_value( 'ProblemId' );	
 	
 	if ( $arr_problem_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one problem" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one problem" );
 		return;
 	}
 	
@@ -438,12 +443,12 @@ function on_remove_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully removed the Student  from ' . count( $arr_success ) . ' problem(s)' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully removed the Student  from ' . count( $arr_success ) . ' problem(s)' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to remove the Student from ' . count( $arr_fail ) . ' problem(s)' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to remove the Student from ' . count( $arr_fail ) . ' problem(s)' );
 	}
 }
 

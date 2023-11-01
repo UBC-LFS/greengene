@@ -15,7 +15,7 @@ require_once( '../includes/classes/db/solutionmanager.class.php' );
 
 $g_str_parent_page = './viewproblems.php';
 
-PageHandler::check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
+(new PageHandler) -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -26,8 +26,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_STUDENT ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_STUDENT ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_STUDENT ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_obj_generation_manager = new GenerationManager( $g_obj_user, $g_obj_db );
@@ -152,14 +156,14 @@ for ( $i = 1; $i < $g_int_number_of_generations + 1; ++$i )
 			$dbl_sd_A = sqrt( $dbl_sd_A );
 			$dbl_sd_B = sqrt( $dbl_sd_B );
 			
-			$str_sd_A = PageHandler::format_precision( $dbl_sd_A, 3 );
-			$str_sd_B = PageHandler::format_precision( $dbl_sd_B, 3 );
+			$str_sd_A = (new PageHandler) -> format_precision( $dbl_sd_A, 3 );
+			$str_sd_B = (new PageHandler) -> format_precision( $dbl_sd_B, 3 );
 		}
 	}
 	
-	echo( '<td>' . PageHandler::format_precision( $dbl_mean_A, 3 ) . '</td>' . "\n" );
+	echo( '<td>' . (new PageHandler) -> format_precision( $dbl_mean_A, 3 ) . '</td>' . "\n" );
 	echo( '<td>' . $str_sd_A . '</td>' . "\n" );
-	echo( '<td>' . PageHandler::format_precision( $dbl_mean_B, 3 ) . '</td>' . "\n" );
+	echo( '<td>' . (new PageHandler) -> format_precision( $dbl_mean_B, 3 ) . '</td>' . "\n" );
 	echo( '<td>' . $str_sd_B . '</td>' . "\n" );
 	echo( '<td><div style="padding: 5px 0px;"><div id="histogramA'. $i .'"	></div></div></td>' . "\n" );
 	echo( '<td><div style="padding: 5px 0px;"><div id="histogramB'. $i .'"></div></div></td>' . "\n" );
@@ -293,7 +297,7 @@ function verify_problem_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'The Problem does not exist' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'The Problem does not exist' );
 	}
 	
 	else
@@ -302,7 +306,7 @@ function verify_problem_exists()
 		
 		if ( $g_obj_db->time() <= $g_arr_problem_info->start_date )
 		{
-			MessageHandler::add_message( MSG_ERROR, "You cannot view this problem yet" );
+			(new MessageHandler) ->  add_message( MSG_ERROR, "You cannot view this problem yet" );
 			return;
 		}
 		
@@ -405,7 +409,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -419,7 +423,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -437,23 +441,23 @@ function on_submit_handler()
 {
 	global $g_obj_db, $g_int_problem_id, $g_obj_solution_manager, $g_arr_problem_info;
 
-	$dbl_Trait_A_Parent_A_Mean = PageHandler::get_post_value( 'TraitAParent1Mean' );
-	$dbl_Trait_A_Parent_B_Mean = PageHandler::get_post_value( 'TraitAParent2Mean' );
-	$dbl_Trait_B_Parent_A_Mean = PageHandler::get_post_value( 'TraitBParent1Mean' );
-	$dbl_Trait_B_Parent_B_Mean = PageHandler::get_post_value( 'TraitBParent2Mean' );
-	$dbl_Trait_A_variance = PageHandler::get_post_value( 'TraitAVariance' );
-	$dbl_Trait_B_variance = PageHandler::get_post_value( 'TraitBVariance' );
-	$dbl_Trait_A_heritability = PageHandler::get_post_value( 'TraitAHeritability' );
-	$dbl_Trait_B_heritability = PageHandler::get_post_value( 'TraitBHeritability' );
-	$int_Trait_A_number_of_genes = PageHandler::get_post_value( 'TraitANumberOfGenes' );
-	$int_Trait_B_number_of_genes = PageHandler::get_post_value( 'TraitBNumberOfGenes' );
+	$dbl_Trait_A_Parent_A_Mean = (new PageHandler) -> get_post_value( 'TraitAParent1Mean' );
+	$dbl_Trait_A_Parent_B_Mean = (new PageHandler) -> get_post_value( 'TraitAParent2Mean' );
+	$dbl_Trait_B_Parent_A_Mean = (new PageHandler) -> get_post_value( 'TraitBParent1Mean' );
+	$dbl_Trait_B_Parent_B_Mean = (new PageHandler) -> get_post_value( 'TraitBParent2Mean' );
+	$dbl_Trait_A_variance = (new PageHandler) -> get_post_value( 'TraitAVariance' );
+	$dbl_Trait_B_variance = (new PageHandler) -> get_post_value( 'TraitBVariance' );
+	$dbl_Trait_A_heritability = (new PageHandler) -> get_post_value( 'TraitAHeritability' );
+	$dbl_Trait_B_heritability = (new PageHandler) -> get_post_value( 'TraitBHeritability' );
+	$int_Trait_A_number_of_genes = (new PageHandler) -> get_post_value( 'TraitANumberOfGenes' );
+	$int_Trait_B_number_of_genes = (new PageHandler) -> get_post_value( 'TraitBNumberOfGenes' );
 	
 	if ( empty( $dbl_Trait_A_Parent_A_Mean ) || empty( $dbl_Trait_A_Parent_B_Mean ) || empty( $dbl_Trait_B_Parent_A_Mean ) ||
 			empty( $dbl_Trait_B_Parent_B_Mean ) || empty( $dbl_Trait_A_variance ) || empty( $dbl_Trait_B_variance ) ||
 			empty( $dbl_Trait_A_heritability ) || empty( $dbl_Trait_B_heritability ) || empty( $int_Trait_A_number_of_genes ) ||
 			empty( $int_Trait_B_number_of_genes ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	
@@ -470,12 +474,12 @@ function on_submit_handler()
 													$dbl_Trait_B_Parent_A_Mean,
 													$dbl_Trait_B_Parent_B_Mean ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully submit the solution' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully submit the solution' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to submit the solution' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to submit the solution' );
 	}
 }
 

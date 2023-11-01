@@ -16,7 +16,7 @@ require_once( '../includes/classes/db/generationmanager.class.php' );
 
 $g_str_parent_page = './manageproblems.php';
 
-PageHandler::check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
+(new PageHandler) -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -27,8 +27,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_obj_assign_problem_manager = new AssignProblemManager( $g_obj_user, $g_obj_db );
@@ -363,7 +367,7 @@ function verify_problem_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'Either the problem does not exist or you do not have permission to see this problem' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'Either the problem does not exist or you do not have permission to see this problem' );
 	}
 	
 	else
@@ -384,7 +388,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -404,7 +408,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -424,32 +428,32 @@ function on_update_handler()
 	
 	if ( !$g_bln_is_editable )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
 		return;
 	}
 	
-	$str_problem_name = PageHandler::get_post_value( 'ProblemName' );
-	$str_problem_description = PageHandler::get_post_value( 'ProblemDescription' );
-	$str_Trait_A_name = PageHandler::get_post_value( 'TraitAName' );
-	$str_Trait_B_name = PageHandler::get_post_value( 'TraitBName' );
-	$str_Trait_A_unit = PageHandler::get_post_value( 'TraitAUnit' );
-	$str_Trait_B_unit = PageHandler::get_post_value( 'TraitBUnit' );
-	$int_Trait_A_number_of_genes = PageHandler::get_post_value( 'TraitANumberOfGenes' );
-	$int_Trait_B_number_of_genes = PageHandler::get_post_value( 'TraitBNumberOfGenes' );
-	$dbl_Trait_A_variance = PageHandler::get_post_value( 'TraitAVariance' );
-	$dbl_Trait_B_variance = PageHandler::get_post_value( 'TraitBVariance' );
-	$dbl_Trait_A_Parent_A_Mean = PageHandler::get_post_value( 'TraitAParent1Mean' );
-	$dbl_Trait_A_Parent_B_Mean = PageHandler::get_post_value( 'TraitAParent2Mean' );
-	$dbl_Trait_B_Parent_A_Mean = PageHandler::get_post_value( 'TraitBParent1Mean' );
-	$dbl_Trait_B_Parent_B_Mean = PageHandler::get_post_value( 'TraitBParent2Mean' );
-	$int_Histogram_A_Range = PageHandler::get_post_value( 'HistogramRangeA' );
-	$int_Histogram_B_Range = PageHandler::get_post_value( 'HistogramRangeB' );
-	$int_offspring_per_cross = PageHandler::get_post_value( 'OffspringPerCross' );
-	$int_max_cross = PageHandler::get_post_value( 'MaxCross' );
-	$int_plants_displayed = PageHandler::get_post_value( 'PlantsDisplayed' );
-	$dbl_range_of_acceptance = PageHandler::get_post_value( 'RangeOfAcceptance' );
-	$dat_start_date = PageHandler::get_post_value( 'StartDate' );
-	$date_due_date  = PageHandler::get_post_value( 'DueDate' );
+	$str_problem_name = (new PageHandler) -> get_post_value( 'ProblemName' );
+	$str_problem_description = (new PageHandler) -> get_post_value( 'ProblemDescription' );
+	$str_Trait_A_name = (new PageHandler) -> get_post_value( 'TraitAName' );
+	$str_Trait_B_name = (new PageHandler) -> get_post_value( 'TraitBName' );
+	$str_Trait_A_unit = (new PageHandler) -> get_post_value( 'TraitAUnit' );
+	$str_Trait_B_unit = (new PageHandler) -> get_post_value( 'TraitBUnit' );
+	$int_Trait_A_number_of_genes = (new PageHandler) -> get_post_value( 'TraitANumberOfGenes' );
+	$int_Trait_B_number_of_genes = (new PageHandler) -> get_post_value( 'TraitBNumberOfGenes' );
+	$dbl_Trait_A_variance = (new PageHandler) -> get_post_value( 'TraitAVariance' );
+	$dbl_Trait_B_variance = (new PageHandler) -> get_post_value( 'TraitBVariance' );
+	$dbl_Trait_A_Parent_A_Mean = (new PageHandler) -> get_post_value( 'TraitAParent1Mean' );
+	$dbl_Trait_A_Parent_B_Mean = (new PageHandler) -> get_post_value( 'TraitAParent2Mean' );
+	$dbl_Trait_B_Parent_A_Mean = (new PageHandler) -> get_post_value( 'TraitBParent1Mean' );
+	$dbl_Trait_B_Parent_B_Mean = (new PageHandler) -> get_post_value( 'TraitBParent2Mean' );
+	$int_Histogram_A_Range = (new PageHandler) -> get_post_value( 'HistogramRangeA' );
+	$int_Histogram_B_Range = (new PageHandler) -> get_post_value( 'HistogramRangeB' );
+	$int_offspring_per_cross = (new PageHandler) -> get_post_value( 'OffspringPerCross' );
+	$int_max_cross = (new PageHandler) -> get_post_value( 'MaxCross' );
+	$int_plants_displayed = (new PageHandler) -> get_post_value( 'PlantsDisplayed' );
+	$dbl_range_of_acceptance = (new PageHandler) -> get_post_value( 'RangeOfAcceptance' );
+	$dat_start_date = (new PageHandler) -> get_post_value( 'StartDate' );
+	$date_due_date  = (new PageHandler) -> get_post_value( 'DueDate' );
 	
 	if ( !isset( $str_problem_name ) || !isset( $str_problem_description ) || !isset( $str_Trait_A_name ) ||
 			!isset( $str_Trait_B_name ) || !isset( $str_Trait_A_unit ) || !isset( $str_Trait_B_unit ) ||
@@ -461,7 +465,7 @@ function on_update_handler()
 			!isset( $int_offspring_per_cross ) || !isset( $int_max_cross ) || !isset( $int_plants_displayed ) ||
 			!isset( $dbl_range_of_acceptance ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	
@@ -473,12 +477,12 @@ function on_update_handler()
 												 $int_offspring_per_cross, $int_max_cross, $int_plants_displayed, $dbl_range_of_acceptance,
 												 $int_Histogram_A_Range, $int_Histogram_B_Range, $dat_start_date, $date_due_date ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully updated Problem "' . $str_problem_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully updated Problem "' . $str_problem_name . '"' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to update Problem "' . $str_problem_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to update Problem "' . $str_problem_name . '"' );
 	}
 	
 	// force to reload the problem
@@ -499,15 +503,15 @@ function on_remove_handler()
 	
 	if ( !$g_bln_is_editable )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
 		return;
 	}
 	
-	$arr_student_list = PageHandler::get_post_value( 'StudentId' );	
+	$arr_student_list = (new PageHandler) -> get_post_value( 'StudentId' );	
 	
 	if ( $arr_student_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one student" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one student" );
 		return;
 	}
 	
@@ -529,12 +533,12 @@ function on_remove_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully removed ' . count( $arr_success ) . ' student(s) from this problem' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully removed ' . count( $arr_success ) . ' student(s) from this problem' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to remove ' . count( $arr_fail ) . ' student(s) from this problem' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to remove ' . count( $arr_fail ) . ' student(s) from this problem' );
 	}
 }
 

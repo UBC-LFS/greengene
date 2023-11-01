@@ -15,7 +15,7 @@ require_once( '../includes/classes/db/generationmanager.class.php' );
 
 $g_str_parent_page = './viewproblems.php';
 
-PageHandler::check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
+(new PageHandler) -> check_necessary_id( array( 'ProblemId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -26,8 +26,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_STUDENT ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_STUDENT ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_STUDENT ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_obj_generation_manager = new GenerationManager( $g_obj_user, $g_obj_db );
@@ -48,8 +52,8 @@ else
 	$g_int_generation_id = $_GET['GenerationId'];
 }
 
-$g_bln_plants_image_loaded = ( CookieHandler::get_cookie_value( 'PlantsImageLoaded' ) == null );
-CookieHandler::set_cookie_value( 'PlantsImageLoaded', true );
+$g_bln_plants_image_loaded = ( (new CookieHandler) -> get_cookie_value( 'PlantsImageLoaded' ) == null );
+(new CookieHandler) -> set_cookie_value( 'PlantsImageLoaded', true );
 
 verify_problem_exists();
 
@@ -303,7 +307,7 @@ function verify_problem_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, "The Problem does not exist" );	
+		(new MessageHandler) ->  add_message( MSG_ERROR, "The Problem does not exist" );	
 	}
 
 	else
@@ -312,7 +316,7 @@ function verify_problem_exists()
 		
 		if ( $g_obj_db->time() <= $g_arr_problem_info->start_date )
 		{
-			MessageHandler::add_message( MSG_ERROR, "You cannot view this problem yet" );
+			(new MessageHandler) ->  add_message( MSG_ERROR, "You cannot view this problem yet" );
 			return;
 		}
 		
@@ -408,7 +412,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$command = $_POST['Command'];
 	  
@@ -423,7 +427,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			
 			break;
@@ -442,16 +446,16 @@ function on_cross_handler()
 {
 	global $g_obj_problem_manager, $g_obj_generation_manager, $g_int_problem_id, $g_int_generation_id, $g_arr_problem_info, $g_obj_db, $g_obj_user, $g_int_number_of_generations;
 	
-	$str_selected_plants = PageHandler::get_post_value( 'SelectedPlants' );
+	$str_selected_plants = (new PageHandler) -> get_post_value( 'SelectedPlants' );
 	
 	if ( empty( $str_selected_plants ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please select at least one plant' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please select at least one plant' );
 	}
 	
 	else if ( $g_int_number_of_generations + 1 > $g_arr_problem_info->max_cross )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'You have reached the maximum number of generations' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'You have reached the maximum number of generations' );
 	}
 	
 	else
@@ -479,7 +483,7 @@ function on_cross_handler()
 			array_push( $arr_parent_plants, $obj_plant );
 		}
 		
-		$arr_new_generation = Simulation::cross_plants( $arr_parent_plants, $g_arr_problem_info->number_of_displayed_plants );
+		$arr_new_generation = (new Simulation) -> cross_plants( $arr_parent_plants, $g_arr_problem_info->number_of_displayed_plants );
 		
 		$obj_trait_A = $g_obj_problem_manager->create_trait( $g_arr_problem_info->trait_A_name, $g_arr_problem_info->trait_A_number_of_genes, 
 																$g_arr_problem_info->trait_A_parent_A_mean, $g_arr_problem_info->trait_A_parent_B_mean, $g_arr_problem_info->trait_A_var );

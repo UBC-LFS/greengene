@@ -4,7 +4,7 @@ class LockManager
 {
 	var $m_obj_db = null;
 	
-	function LockManager( $obj_db ) {
+	function __construct( $obj_db ) {
 		$this->m_obj_db = $obj_db;
 	}
 	

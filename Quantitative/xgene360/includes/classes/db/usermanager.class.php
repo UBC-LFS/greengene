@@ -12,7 +12,7 @@ class UserManager
  * POST: a UserManager object has been created with the parameters
  * @param $obj_user, $obj_db
  */
-	function UserManager( $obj_user, $obj_db )
+	function __construct( $obj_user, $obj_db )
 	{
 		$this->m_obj_user = $obj_user;
 		$this->m_obj_db = $obj_db;
@@ -107,11 +107,11 @@ class UserManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the user details of " . $this->m_obj_db->format_sql_string( $str_user_id ) );
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the user details of " . $this->m_obj_db->format_sql_string( $str_user_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the user details of " . $this->m_obj_db->format_sql_string( $str_user_id ) );
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the user details of " . $this->m_obj_db->format_sql_string( $str_user_id ) );
   		return $this->m_obj_db->query_select( $str_sql_query );
 	}
 	
@@ -191,7 +191,7 @@ class UserManager
 						break;
 					}
 
-					Log::write_log_with_ip( LOG_TRANSACTION, $this->m_obj_db->format_sql_string( $str_user_id ) . " "
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $this->m_obj_db->format_sql_string( $str_user_id ) . " "
 														   . " already exists");
 					return false;														   
 				}
@@ -208,7 +208,7 @@ class UserManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to create user " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to create user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) . ", "
 												   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
 												   . $this->m_obj_db->format_sql_string( $str_last_name ) );
@@ -218,7 +218,7 @@ class UserManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to create user " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to create user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) . ", "
 												   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
 												   . $this->m_obj_db->format_sql_string( $str_last_name ) 
@@ -226,7 +226,7 @@ class UserManager
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " created user " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " created user " 
 											   . $this->m_obj_db->format_sql_string( $str_user_id ) . ", "
 											   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
 											   . $this->m_obj_db->format_sql_string( $str_last_name ) );
@@ -306,7 +306,7 @@ class UserManager
 						break;
 					}
 
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to modify " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to modify " 
 														   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 														   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
 														   . $this->m_obj_db->format_sql_string( $str_last_name ) . " "
@@ -328,7 +328,7 @@ class UserManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify user " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 												   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
 												   . $this->m_obj_db->format_sql_string( $str_last_name ) );
@@ -338,7 +338,7 @@ class UserManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to modify user " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to modify user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 												   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
 												   . $this->m_obj_db->format_sql_string( $str_last_name )
@@ -346,7 +346,7 @@ class UserManager
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified user " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified user " 
 											   . $this->m_obj_db->format_sql_string( $str_user_id ) . " with "
 											   . $this->m_obj_db->format_sql_string( $str_first_name ) . " "
 											   . $this->m_obj_db->format_sql_string( $str_last_name ));
@@ -423,7 +423,7 @@ class UserManager
 						break;
 					}
 
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to delete user " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to delete user " 
 														   . $this->m_obj_db->format_sql_string( $str_user_id ) 
 														   . " or user "
 														   . $this->m_obj_db->format_sql_string( $str_user_id ) 
@@ -442,7 +442,7 @@ class UserManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to delete user " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to delete user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) );
 			return false;
 		}
@@ -450,13 +450,13 @@ class UserManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete user " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete user " 
 												   . $this->m_obj_db->format_sql_string( $str_user_id ) 
 												   . " due to database error" );
 			return false;
 		}
 		
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " deleted user " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " deleted user " 
 											   . $this->m_obj_db->format_sql_string( $str_user_id ) );
 		return true;
 	}

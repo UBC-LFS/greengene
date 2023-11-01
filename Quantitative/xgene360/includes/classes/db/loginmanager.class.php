@@ -33,10 +33,15 @@ class LoginManager
 		}
 		
 		// authenticate - check with ldap directory
-		if (!self::ldap_login($str_username, $str_password)) 
+
+		// TEST , TESTING LOGIN , SEPT 27TH 2023
+		// To disable login auth with LDAP, comment out this entire if block
+		if (!self::ldap_login($str_username, $str_password))  
 		{
 			return null;
 		}
+		// TEST , TESTING LOGIN , SEPT 27TH 2023 ^^^
+	
 
 		// fetch user information
 		$res_row = $obj_db->fetch( $res_query );

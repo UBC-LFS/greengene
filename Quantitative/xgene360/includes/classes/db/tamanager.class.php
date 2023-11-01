@@ -14,7 +14,7 @@ class TAManager extends UserManager
  * POST: a TAManager object has been created with the parameters
  * @param $obj_user, $obj_db
  */
-	function TAManager( $obj_user, $obj_db )
+	function __construct( $obj_user, $obj_db )
 	{
 	    $this->m_obj_user = $obj_user;
 		$this->m_obj_db = $obj_db;
@@ -52,11 +52,11 @@ class TAManager extends UserManager
 
         if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of tas " );
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of tas " );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of tas " );
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of tas " );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
 
@@ -94,12 +94,12 @@ class TAManager extends UserManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of courses associated with ta " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of courses associated with ta " 
 												   . $this->m_obj_db->format_sql_string( $str_ta_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of courses associated with ta " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of courses associated with ta " 
 											   . $this->m_obj_db->format_sql_string( $str_ta_id ) );	  
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}

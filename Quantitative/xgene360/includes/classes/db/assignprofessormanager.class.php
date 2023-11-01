@@ -11,7 +11,7 @@ class AssignProfessorManager
 	 * POST: TA object is constructed
 	 * @param string $p_userId
 	 */
-	function AssignProfessorManager( $obj_user, $obj_db ) 
+	function __construct( $obj_user, $obj_db ) 
 	{
 	  	$this->m_obj_user = $obj_user;
 		$this->m_obj_db = $obj_db;
@@ -94,7 +94,7 @@ class AssignProfessorManager
 						break;
 					}
 					
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to assign " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to assign " 
 															. $this->m_obj_db->format_sql_string( $str_prof_id ) . " to the course " 
 															. $this->m_obj_db->format_sql_string( $int_course_id ) 
 															. ", either the course does not exist or user does not have permission for this operation" );
@@ -116,7 +116,7 @@ class AssignProfessorManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to assign " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to assign " 
 												   . $this->m_obj_db->format_sql_string( $str_prof_id ) . " to the course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 			return false;
@@ -125,14 +125,14 @@ class AssignProfessorManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to assign " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to assign " 
 												   . $this->m_obj_db->format_sql_string( $str_prof_id ) . " to the course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) 
 												   . " due to database error" );
 			return false;
 		}
 	
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " assigned " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " assigned " 
 											   . $this->m_obj_db->format_sql_string( $str_prof_id ) . " to the course " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) );		
 		return true;
@@ -208,7 +208,7 @@ class AssignProfessorManager
 						break;
 					}
 					
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to unassign " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to unassign " 
 														. $this->m_obj_db->format_sql_string( $str_prof_id ) . " from the course " 
 														. $this->m_obj_db->format_sql_string( $int_course_id ) 
 														. " due to database error" );
@@ -226,7 +226,7 @@ class AssignProfessorManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to unassign " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to unassign " 
 												   . $this->m_obj_db->format_sql_string( $str_prof_id ) . " from the course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 			return false;
@@ -236,14 +236,14 @@ class AssignProfessorManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to unassign " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to unassign " 
 												   . $this->m_obj_db->format_sql_string( $str_prof_id ) . " from the course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) 
 												   . " due to database error" );
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " unassigned " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " unassigned " 
 											   . $this->m_obj_db->format_sql_string( $str_prof_id ) . " from the course " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 		return true;

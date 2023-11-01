@@ -14,7 +14,7 @@ class StudentManager extends UserManager
  * POST: a StudentManager object has been created with the parameters
  * @param $obj_user, $obj_db
  */
-	function StudentManager( $obj_user, $obj_db )
+	function __construct( $obj_user, $obj_db )
 	{
 	    $this->m_obj_user = $obj_user;
 		$this->m_obj_db = $obj_db;
@@ -67,11 +67,11 @@ class StudentManager extends UserManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of students " );
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of students " );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of students " );
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of students " );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
 
@@ -129,12 +129,12 @@ class StudentManager extends UserManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view problems associated with student " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view problems associated with student " 
 												   . $this->m_obj_db->format_sql_string( $str_student_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed problems associated with student " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed problems associated with student " 
 											   . $this->m_obj_db->format_sql_string( $str_student_id ) );	  
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}

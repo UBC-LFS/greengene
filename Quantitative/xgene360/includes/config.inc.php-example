@@ -11,4 +11,9 @@ define('LDAP_HOST', 'someone');
 define('LDAP_DN', 'uid=something');
 define('LDAP_PW', 'password');
 define('LDAP_LOGIN_HOST', 'ldaps://eldapdccons.id.ubc.ca');
+
+// SSL
+define('SSL_KEY_PATH', '/etc/mysql/ssl/client-key.pem');
+define('SSL_CERTIFICATE_PATH', '/etc/mysql/ssl/client-cert.pem');
+define('SSL_CA_CERTIFICATE_PATH', '/etc/mysql/ssl/ca-cert.pem');
 ?>

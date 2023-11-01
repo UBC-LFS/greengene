@@ -20,7 +20,7 @@
 
               <?php
                 
-              LinkHandler::populate_menu_items( $g_arr_footer_links, $g_str_page_title ); 
+              (new LinkHandler) -> populate_menu_items( $g_arr_footer_links, $g_str_page_title ); 
                 
               ?>
 

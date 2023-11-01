@@ -11,7 +11,7 @@ class AssignTAManager
 	 * POST: TA object is constructed
 	 * @param string $p_userId
 	 */
-	function AssignTAManager( $obj_user, $obj_db )
+	function __construct( $obj_user, $obj_db )
 	{
 	  	$this->m_obj_user = $obj_user;
 		$this->m_obj_db = $obj_db;
@@ -92,7 +92,7 @@ class AssignTAManager
 						break;
 					}
 					
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to assign ta " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to assign ta " 
 														   . $this->m_obj_db->format_sql_string( $str_ta_id ) . " to course " 
 														   . $this->m_obj_db->format_sql_string( $int_course_id ) 
 														   . ", either the ta or the course does not exists or user does not have permission for this operation" );
@@ -113,7 +113,7 @@ class AssignTAManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to assign ta " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to assign ta " 
 												   . $this->m_obj_db->format_sql_string( $str_ta_id ) . " to course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) );	
 			return false;
@@ -122,14 +122,14 @@ class AssignTAManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to assign ta " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to assign ta " 
 												   . $this->m_obj_db->format_sql_string( $str_ta_id ) . " to course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) 
 												   . " due to database error" );
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " assigned ta " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " assigned ta " 
 											   . $this->m_obj_db->format_sql_string( $str_ta_id ) . " to course " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 		return true;
@@ -205,7 +205,7 @@ class AssignTAManager
 						break;
 					}
 
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to unassign ta " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to unassign ta " 
 														   . $this->m_obj_db->format_sql_string( $str_ta_id ) . " from course " 
 														   . $this->m_obj_db->format_sql_string( $int_course_id ) 
 														   . ", either the ta or the course does not exists or user does not have permission for this operation" );
@@ -223,7 +223,7 @@ class AssignTAManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to unassign ta " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to unassign ta " 
 												   . $this->m_obj_db->format_sql_string( $str_ta_id ) . " from course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 			return false;
@@ -232,14 +232,14 @@ class AssignTAManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to unassign ta " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to unassign ta " 
 												   . $this->m_obj_db->format_sql_string( $str_ta_id ) . " from course " 
 												   . $this->m_obj_db->format_sql_string( $int_course_id ) 
 												   . " due to database error" );
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " unassigned ta " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " unassigned ta " 
 											   . $this->m_obj_db->format_sql_string( $str_ta_id ) . " from course " 
 											   . $this->m_obj_db->format_sql_string( $int_course_id ) );
 		return true;

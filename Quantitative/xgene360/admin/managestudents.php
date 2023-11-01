@@ -20,8 +20,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_student_manager = new StudentManager( $g_obj_user, $g_obj_db );
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
@@ -111,11 +115,14 @@ echo( '<option value="">&nbsp;</option>' );
 
 $res_courses = $g_obj_course_manager->view_courses();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
-	
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;&nbsp;&nbsp;&nbsp;' . htmlspecialchars( $res_row->Name ) . '</option>' . "\n" );
+
+if ($res_courses != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_courses );
+		
+		echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;&nbsp;&nbsp;&nbsp;' . htmlspecialchars( $res_row->Name ) . '</option>' . "\n" );
+	}
 }
 
 ?>
@@ -135,13 +142,14 @@ echo( '<option value="">&nbsp;</option>' );
 
 $res_problems = $g_obj_problem_manager->view_problems();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_problems );
-	
-	echo( '<option value="' . htmlspecialchars( $res_row->problem_id ) . '">&nbsp;' . htmlspecialchars( $res_row->problem_name ) . '&nbsp;</option>' . "\n" );
+if ($res_problems != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_problems );
+		
+		echo( '<option value="' . htmlspecialchars( $res_row->problem_id ) . '">&nbsp;' . htmlspecialchars( $res_row->problem_name ) . '&nbsp;</option>' . "\n" );
+	}
 }
-
 ?>
 
                 </select>
@@ -177,19 +185,22 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
 
 $res_students = $g_obj_student_manager->view_students();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_students ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_students );
-	
-	echo( '<tr onclick="openStudentDetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
-	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="StudentId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
-	echo( '<td> </td>'."\n");
-	echo( '</tr>' . "\n" );
+
+if ($res_students != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_students ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_students );
+		
+		echo( '<tr onclick="openStudentDetail( \'' . htmlspecialchars( $res_row->UserId, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
+		echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="StudentId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' . "\n" );
+		echo( '<td> </td>'."\n");
+		echo( '</tr>' . "\n" );
+	}
 }
-    
+
 ?>  
               
     </table>
@@ -226,17 +237,17 @@ if ( $g_obj_user->int_privilege != UP_TA )
 
               <tr>
                 <td width="125">First Name:</td>
-                <td><input class="textinput" type="text" name="FirstName" id="FirstName" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'FirstName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="FirstName" id="FirstName" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'FirstName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
 
               <tr>
                 <td>Last Name:</td>
-                <td><input class="textinput" type="text" name="LastName" id="LastName" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'LastName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="LastName" id="LastName" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'LastName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
 
               <tr>
                 <td>CWL Username:</td>
-                <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
 
               <tr>
@@ -267,22 +278,22 @@ if ( $g_obj_user->int_privilege != UP_TA )
 
         <tr>
 			<td>Course Subject Code</td>
-			<td><input class="textinput" type="text" id="CourseSubjectCode" name="CourseSubjectCode" placeholder="APBI" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSubjectCode' ) ) ?>" ></input></td>
+			<td><input class="textinput" type="text" id="CourseSubjectCode" name="CourseSubjectCode" placeholder="APBI" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'CourseSubjectCode' ) ) ?>" ></input></td>
 		</tr>
 
         <tr>
 			<td>Course Number</td>
-			<td><input class="textinput" type="text" id='CourseNumber' name="CourseNumber" placeholder="318" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseNumber' ) ) ?>"></input></td>
+			<td><input class="textinput" type="text" id='CourseNumber' name="CourseNumber" placeholder="318" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'CourseNumber' ) ) ?>"></input></td>
 		</tr>
  
 		<tr>
 			<td>Course Section</td>
-			<td><input class="textinput" type="text" id='CourseSection' name="CourseSection" placeholder="001" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'CourseSection' ) ) ?>"></input></td>
+			<td><input class="textinput" type="text" id='CourseSection' name="CourseSection" placeholder="001" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'CourseSection' ) ) ?>"></input></td>
 		</tr>
    
 		<tr>
 			<td>Year</td>
-			<td><input class="textinput" type="text" id='Year' name="Year" placeholder="2019" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Year' ) ) ?>"></input></td>
+			<td><input class="textinput" type="text" id='Year' name="Year" placeholder="2019" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'Year' ) ) ?>"></input></td>
 		</tr>
 
         <tr>
@@ -329,7 +340,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -367,7 +378,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -385,14 +396,14 @@ function on_create_handler()
 {
 	global $g_obj_student_manager;
 	
-	$cwl_username = PageHandler::get_post_value( 'Username' );
-	$str_first_name = PageHandler::get_post_value( 'FirstName' );
-	$str_last_name = PageHandler::get_post_value( 'LastName' );
+	$cwl_username = (new PageHandler) -> get_post_value( 'Username' );
+	$str_first_name = (new PageHandler) -> get_post_value( 'FirstName' );
+	$str_last_name = (new PageHandler) -> get_post_value( 'LastName' );
 	
 	// verify the input
 	if (strlen( $cwl_username ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
 		return;
 	}
 	
@@ -401,12 +412,12 @@ function on_create_handler()
 		
 	if ( $g_obj_student_manager->create_user( $cwl_username, UP_STUDENT,  $str_first_name, $str_last_name ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for Student with CWL username: ' . $cwl_username);
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully created an account for Student with CWL username: ' . $cwl_username);
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to create an account for Student with CWL username: "' .$cwl_username );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to create an account for Student with CWL username: "' .$cwl_username );
 	}
 }
 
@@ -421,11 +432,11 @@ function on_delete_handler()
 {
 	global $g_obj_student_manager;
 	
-	$arr_student_list = PageHandler::get_post_value( 'StudentId' );
+	$arr_student_list = (new PageHandler) -> get_post_value( 'StudentId' );
 	
 	if ( $arr_student_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one student" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one student" );
 		return;
 	}
 	
@@ -448,16 +459,16 @@ function on_delete_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Successfully deleted students with CWL Username', $arr_success );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Successfully deleted students with CWL Username', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Failed to delete students with CWL Username', $arr_fail );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Failed to delete students with CWL Username', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -472,13 +483,13 @@ function on_assign_handler()
 {
 	global $g_obj_student_manager, $g_obj_assign_student_manager;
 	
-	$arr_student_list = PageHandler::get_post_value( 'StudentId' );
-	$int_selected_course_id = PageHandler::get_post_value( 'SelectedCourse' );
-	$int_selected_problem_id = PageHandler::get_post_value( 'SelectedProblem' );
+	$arr_student_list = (new PageHandler) -> get_post_value( 'StudentId' );
+	$int_selected_course_id = (new PageHandler) -> get_post_value( 'SelectedCourse' );
+	$int_selected_problem_id = (new PageHandler) -> get_post_value( 'SelectedProblem' );
 	
 	if ( $arr_student_list == null || ( strlen( $int_selected_course_id ) == 0 && strlen( $int_selected_problem_id ) == 0 ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one student and select a course or a problem" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one student and select a course or a problem" );
 		return;
 	}
 	
@@ -521,16 +532,16 @@ function on_assign_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Successfully assigned', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Failed to assign', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -543,11 +554,11 @@ function on_assign_handler()
 */
 function on_import_handler()
 {
-	$courseSubjectCode = PageHandler::get_post_value('CourseSubjectCode');
-	$courseNumber = PageHandler::get_post_value('CourseNumber');
-	$courseSection = PageHandler::get_post_value('CourseSection');
-	$year = PageHandler::get_post_value('Year');
-	$session = PageHandler::get_post_value('Session');
+	$courseSubjectCode = (new PageHandler) -> get_post_value('CourseSubjectCode');
+	$courseNumber = (new PageHandler) -> get_post_value('CourseNumber');
+	$courseSection = (new PageHandler) -> get_post_value('CourseSection');
+	$year = (new PageHandler) -> get_post_value('Year');
+	$session = (new PageHandler) -> get_post_value('Session');
 
 	$payload = ['subjectCode' => $courseSubjectCode,
 			'courseNumber' => $courseNumber,
@@ -555,8 +566,9 @@ function on_import_handler()
 			'year' => $year,
 			'session' => $session]; 
 
-	$result = LDAPHandler::importClassList($payload);
-	LDAPHandler::createUserFromLDAPResult($result);
+	$LDAPHandler = new LDAPHandler;
+	$result = $LDAPHandler -> importClassList($payload);
+	$LDAPHandler -> createUserFromLDAPResult($result);
 }
 
 /**  Function: void on_export_handler()
@@ -568,17 +580,17 @@ function on_import_handler()
 */
 function on_export_handler()
 {
-	$arr_student_list = PageHandler::get_post_value( 'StudentId' );
+	$arr_student_list = (new PageHandler) -> get_post_value( 'StudentId' );
 	
 	if ( $arr_student_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one student" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one student" );
 		return;
 	}
 	
 	else
 	{
-		FileHandler::export_student_list( $arr_student_list );
+		(new FileHandler) -> export_student_list( $arr_student_list );
 	}
 }
 

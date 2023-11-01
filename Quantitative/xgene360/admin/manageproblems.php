@@ -16,8 +16,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_str_script_block = "xgene360_cu.using( 'sortabletable' )";
@@ -78,18 +82,20 @@ if ( $g_obj_user->int_privilege != UP_TA )
 
 $res_problems = $g_obj_problem_manager->view_problems();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_problems );
 
-	echo( '<tr onclick="openProblemDetail( \'' . htmlspecialchars( $res_row->problem_id, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
-	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="ProblemId[]" value="' . htmlspecialchars( $res_row->problem_id ) . '" /></td>'."\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->problem_name ) . '</td>'."\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->Name ). '</td>'."\n" );
-	echo( '<td>' . $res_row->submit_count . '/' . htmlspecialchars( $res_row->student_count ) . '<td>&nbsp;<input class="buttoninput" type="button" value="View Submitted" onclick="openSolutions( event, ' . htmlspecialchars( $res_row->problem_id ) . ' );" /></td>'."\n" );
-	echo( '</tr>' . "\n" );
+if ($res_problems != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_problems ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_problems );
+
+		echo( '<tr onclick="openProblemDetail( \'' . htmlspecialchars( $res_row->problem_id, ENT_QUOTES ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
+		echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="ProblemId[]" value="' . htmlspecialchars( $res_row->problem_id ) . '" /></td>'."\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->problem_name ) . '</td>'."\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->Name ). '</td>'."\n" );
+		echo( '<td>' . $res_row->submit_count . '/' . htmlspecialchars( $res_row->student_count ) . '<td>&nbsp;<input class="buttoninput" type="button" value="View Submitted" onclick="openSolutions( event, ' . htmlspecialchars( $res_row->problem_id ) . ' );" /></td>'."\n" );
+		echo( '</tr>' . "\n" );
+	}
 }
-  
 ?>
                  
     </table>
@@ -130,7 +136,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -144,7 +150,7 @@ function process_post()
 	    
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -162,11 +168,12 @@ function on_delete_handler()
 {
 	global $g_obj_problem_manager;
 	
-	$arr_problem_list = PageHandler::get_post_value( 'ProblemId' );
+	// $arr_problem_list = PageHandler::get_post_value( 'ProblemId' );
+	$arr_problem_list = (new PageHandler) -> get_post_value( 'ProblemId' );
 	
 	if ( $arr_problem_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one problem" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one problem" );
 		return;
 	}
 	
@@ -188,12 +195,12 @@ function on_delete_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully deleted ' . count( $arr_success ) . ' problem(s)' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully deleted ' . count( $arr_success ) . ' problem(s)' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to delete ' . count( $arr_fail ) . ' problem(s)' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to delete ' . count( $arr_fail ) . ' problem(s)' );
 	}
 }
 

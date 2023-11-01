@@ -24,8 +24,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR ) );
 
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
@@ -350,36 +354,36 @@ function get_problem_values()
 	
 	else
 	{
-		$g_str_problem_name = PageHandler::write_post_value_if_failed( 'ProblemName' );
-		$g_str_problem_description = PageHandler::write_post_value_if_failed( 'ProblemDescription' );
-		$g_int_start_date_month = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'StartDateMonth' ) : date( 'n' );
-		$g_int_start_date_day = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'StartDateDay' ) : date( 'j' );
-		$g_int_start_date_year = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'StartDateYear' ) : date( 'Y' );
-		$g_int_start_date_hour = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'StartDateHour' ) : 0;
-		$g_int_start_date_minute = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'StartDateMinute' ) : 0;
-		$g_int_due_date_month = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'DueDateMonth' ) : date( 'n' );
-		$g_int_due_date_day = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'DueDateDay' ) : date( 'j' ) + 1;
-		$g_int_due_date_year = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'DueDateYear' ) : date( 'Y' );
-		$g_int_due_date_hour = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'DueDateHour' ) : 0;
-		$g_int_due_date_minute = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'DueDateMinute' ) : 0;
-		$g_str_trait_A_name = PageHandler::write_post_value_if_failed( 'TraitAName' );
-		$g_str_trait_B_name = PageHandler::write_post_value_if_failed( 'TraitBName' );
-		$g_int_max_cross = PageHandler::write_post_value_if_failed( 'MaxCross' );
-		$g_int_offspring_per_cross = PageHandler::write_post_value_if_failed( 'OffspringPerCross' );
-		$g_int_plants_displayed = PageHandler::write_post_value_if_failed( 'PlantsDisplayed' );
-		$g_dbl_range_of_acceptance = PageHandler::write_post_value_if_failed( 'RangeOfAcceptance' );
-		$g_dbl_trait_A_parent_1_mean = PageHandler::write_post_value_if_failed( 'TraitAParent1Mean' );
-		$g_dbl_trait_A_parent_2_mean = PageHandler::write_post_value_if_failed( 'TraitAParent2Mean' );
-		$g_dbl_trait_B_parent_1_mean = PageHandler::write_post_value_if_failed( 'TraitBParent1Mean' );
-		$g_dbl_trait_B_parent_2_mean = PageHandler::write_post_value_if_failed( 'TraitBParent2Mean' );
-		$g_dbl_trait_A_variance = PageHandler::write_post_value_if_failed( 'TraitAVariance' );
-		$g_dbl_trait_B_variance = PageHandler::write_post_value_if_failed( 'TraitBVariance' );
-		$g_int_trait_A_number_of_genes = PageHandler::write_post_value_if_failed( 'TraitANumberOfGenes' );
-		$g_int_trait_B_number_of_genes = PageHandler::write_post_value_if_failed( 'TraitBNumberOfGenes' );
-		$g_str_trait_A_unit = PageHandler::write_post_value_if_failed( 'TraitAUnit' );
-		$g_str_trait_B_unit = PageHandler::write_post_value_if_failed( 'TraitBUnit' );
-		$g_int_histogram_A_range = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'HistogramRangeA' ) : 5;
-		$g_int_histogram_B_range = $g_bln_fail ? PageHandler::write_post_value_if_failed( 'HistogramRangeB' ) : 5;
+		$g_str_problem_name = (new PageHandler) -> write_post_value_if_failed( 'ProblemName' );
+		$g_str_problem_description = (new PageHandler) -> write_post_value_if_failed( 'ProblemDescription' );
+		$g_int_start_date_month = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'StartDateMonth' ) : date( 'n' );
+		$g_int_start_date_day = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'StartDateDay' ) : date( 'j' );
+		$g_int_start_date_year = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'StartDateYear' ) : date( 'Y' );
+		$g_int_start_date_hour = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'StartDateHour' ) : 0;
+		$g_int_start_date_minute = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'StartDateMinute' ) : 0;
+		$g_int_due_date_month = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'DueDateMonth' ) : date( 'n' );
+		$g_int_due_date_day = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'DueDateDay' ) : date( 'j' ) + 1;
+		$g_int_due_date_year = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'DueDateYear' ) : date( 'Y' );
+		$g_int_due_date_hour = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'DueDateHour' ) : 0;
+		$g_int_due_date_minute = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'DueDateMinute' ) : 0;
+		$g_str_trait_A_name = (new PageHandler) -> write_post_value_if_failed( 'TraitAName' );
+		$g_str_trait_B_name = (new PageHandler) -> write_post_value_if_failed( 'TraitBName' );
+		$g_int_max_cross = (new PageHandler) -> write_post_value_if_failed( 'MaxCross' );
+		$g_int_offspring_per_cross = (new PageHandler) -> write_post_value_if_failed( 'OffspringPerCross' );
+		$g_int_plants_displayed = (new PageHandler) -> write_post_value_if_failed( 'PlantsDisplayed' );
+		$g_dbl_range_of_acceptance = (new PageHandler) -> write_post_value_if_failed( 'RangeOfAcceptance' );
+		$g_dbl_trait_A_parent_1_mean = (new PageHandler) -> write_post_value_if_failed( 'TraitAParent1Mean' );
+		$g_dbl_trait_A_parent_2_mean = (new PageHandler) -> write_post_value_if_failed( 'TraitAParent2Mean' );
+		$g_dbl_trait_B_parent_1_mean = (new PageHandler) -> write_post_value_if_failed( 'TraitBParent1Mean' );
+		$g_dbl_trait_B_parent_2_mean = (new PageHandler) -> write_post_value_if_failed( 'TraitBParent2Mean' );
+		$g_dbl_trait_A_variance = (new PageHandler) -> write_post_value_if_failed( 'TraitAVariance' );
+		$g_dbl_trait_B_variance = (new PageHandler) -> write_post_value_if_failed( 'TraitBVariance' );
+		$g_int_trait_A_number_of_genes = (new PageHandler) -> write_post_value_if_failed( 'TraitANumberOfGenes' );
+		$g_int_trait_B_number_of_genes = (new PageHandler) -> write_post_value_if_failed( 'TraitBNumberOfGenes' );
+		$g_str_trait_A_unit = (new PageHandler) -> write_post_value_if_failed( 'TraitAUnit' );
+		$g_str_trait_B_unit = (new PageHandler) -> write_post_value_if_failed( 'TraitBUnit' );
+		$g_int_histogram_A_range = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'HistogramRangeA' ) : 5;
+		$g_int_histogram_B_range = $g_bln_fail ? (new PageHandler) -> write_post_value_if_failed( 'HistogramRangeB' ) : 5;
 	}
 }
 
@@ -396,7 +400,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 		
@@ -416,7 +420,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -434,29 +438,29 @@ function on_create_handler()
 {
 	global $g_int_problem_id, $g_obj_problem_manager;
 	
-	$str_problem_name = PageHandler::get_post_value( 'ProblemName' );
-	$str_problem_description = PageHandler::get_post_value( 'ProblemDescription' );
-	$int_course_id = PageHandler::get_post_value( 'CourseId' );
-	$str_Trait_A_name = PageHandler::get_post_value( 'TraitAName' );
-	$str_Trait_B_name = PageHandler::get_post_value( 'TraitBName' );
-	$str_Trait_A_unit = PageHandler::get_post_value( 'TraitAUnit' );
-	$str_Trait_B_unit = PageHandler::get_post_value( 'TraitBUnit' );
-	$int_Trait_A_number_of_genes = PageHandler::get_post_value( 'TraitANumberOfGenes' );
-	$int_Trait_B_number_of_genes = PageHandler::get_post_value( 'TraitBNumberOfGenes' );
-	$dbl_Trait_A_variance = PageHandler::get_post_value( 'TraitAVariance' );
-	$dbl_Trait_B_variance = PageHandler::get_post_value( 'TraitBVariance' );
-	$dbl_Trait_A_Parent_A_Mean = PageHandler::get_post_value( 'TraitAParent1Mean' );
-	$dbl_Trait_A_Parent_B_Mean = PageHandler::get_post_value( 'TraitAParent2Mean' );
-	$dbl_Trait_B_Parent_A_Mean = PageHandler::get_post_value( 'TraitBParent1Mean' );
-	$dbl_Trait_B_Parent_B_Mean = PageHandler::get_post_value( 'TraitBParent2Mean' );
-	$int_Histogram_A_Range = PageHandler::get_post_value( 'HistogramRangeA' );
-	$int_Histogram_B_Range = PageHandler::get_post_value( 'HistogramRangeB' );
-	$int_offspring_per_cross = PageHandler::get_post_value( 'OffspringPerCross' );
-	$int_max_cross = PageHandler::get_post_Value( 'MaxCross' );
-	$int_plants_displayed = PageHandler::get_post_value( 'PlantsDisplayed' );
-	$dbl_range_of_acceptance = PageHandler::get_post_value( 'RangeOfAcceptance' );
-	$dat_start_date = PageHandler::get_post_value( 'StartDate' );
-	$date_due_date  = PageHandler::get_post_value( 'DueDate' );
+	$str_problem_name = (new PageHandler) -> get_post_value( 'ProblemName' );
+	$str_problem_description = (new PageHandler) -> get_post_value( 'ProblemDescription' );
+	$int_course_id = (new PageHandler) -> get_post_value( 'CourseId' );
+	$str_Trait_A_name = (new PageHandler) -> get_post_value( 'TraitAName' );
+	$str_Trait_B_name = (new PageHandler) -> get_post_value( 'TraitBName' );
+	$str_Trait_A_unit = (new PageHandler) -> get_post_value( 'TraitAUnit' );
+	$str_Trait_B_unit = (new PageHandler) -> get_post_value( 'TraitBUnit' );
+	$int_Trait_A_number_of_genes = (new PageHandler) -> get_post_value( 'TraitANumberOfGenes' );
+	$int_Trait_B_number_of_genes = (new PageHandler) -> get_post_value( 'TraitBNumberOfGenes' );
+	$dbl_Trait_A_variance = (new PageHandler) -> get_post_value( 'TraitAVariance' );
+	$dbl_Trait_B_variance = (new PageHandler) -> get_post_value( 'TraitBVariance' );
+	$dbl_Trait_A_Parent_A_Mean = (new PageHandler) -> get_post_value( 'TraitAParent1Mean' );
+	$dbl_Trait_A_Parent_B_Mean = (new PageHandler) -> get_post_value( 'TraitAParent2Mean' );
+	$dbl_Trait_B_Parent_A_Mean = (new PageHandler) -> get_post_value( 'TraitBParent1Mean' );
+	$dbl_Trait_B_Parent_B_Mean = (new PageHandler) -> get_post_value( 'TraitBParent2Mean' );
+	$int_Histogram_A_Range = (new PageHandler) -> get_post_value( 'HistogramRangeA' );
+	$int_Histogram_B_Range = (new PageHandler) -> get_post_value( 'HistogramRangeB' );
+	$int_offspring_per_cross = (new PageHandler) -> get_post_value( 'OffspringPerCross' );
+	$int_max_cross = (new PageHandler) -> get_post_Value( 'MaxCross' );
+	$int_plants_displayed = (new PageHandler) -> get_post_value( 'PlantsDisplayed' );
+	$dbl_range_of_acceptance = (new PageHandler) -> get_post_value( 'RangeOfAcceptance' );
+	$dat_start_date = (new PageHandler) -> get_post_value( 'StartDate' );
+	$date_due_date  = (new PageHandler) -> get_post_value( 'DueDate' );
 	
 	if ( !isset( $str_problem_name ) || !isset( $str_problem_description ) || !isset( $int_course_id ) ||
 			!isset( $str_Trait_A_name ) || !isset( $str_Trait_B_name ) || !isset( $str_Trait_A_unit ) || !isset( $str_Trait_B_unit ) ||
@@ -468,7 +472,7 @@ function on_create_handler()
 			!isset( $int_offspring_per_cross ) || !isset( $int_max_cross )  || !isset( $int_plants_displayed ) ||
 			!isset( $dbl_range_of_acceptance ))
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	
@@ -481,12 +485,12 @@ function on_create_handler()
 											  $int_Histogram_A_Range, $int_Histogram_B_Range, $dat_start_date, $date_due_date ) )
 
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created the Problem "' . $str_problem_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully created the Problem "' . $str_problem_name . '"' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to create the Problem "' . $str_problem_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to create the Problem "' . $str_problem_name . '"' );
 	}
 }
 
@@ -501,11 +505,11 @@ function on_copy_handler()
 {
 	global $g_obj_db, $g_obj_problem_manager, $g_arr_problem_info;
 	
-	$int_problem_id = PageHandler::get_post_value( 'CopyProblem' );
+	$int_problem_id = (new PageHandler) -> get_post_value( 'CopyProblem' );
 	
 	if ( !isset( $int_problem_id ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please select a problem' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please select a problem' );
 		return;
 	}
 		
@@ -513,7 +517,7 @@ function on_copy_handler()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_problem ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'The problem does not exist' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'The problem does not exist' );
 		return;
 	}
 	

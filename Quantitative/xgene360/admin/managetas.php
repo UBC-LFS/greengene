@@ -18,8 +18,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_ta_manager = new TAManager( $g_obj_user, $g_obj_db );
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
@@ -73,13 +77,15 @@ echo( '<option value="">&nbsp;</option>' );
 
 $res_courses = $g_obj_course_manager->view_courses();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_courses );
 
-	echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . htmlspecialchars( $res_row->Name ) . '</option>'."\n" );
+if ($res_courses != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_courses );
+
+		echo( '<option value="' . htmlspecialchars( $res_row->CourseId ) . '">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . htmlspecialchars( $res_row->Name ) . '</option>'."\n" );
+	}
 }
-
 ?>
 
            </select>
@@ -101,18 +107,19 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_courses ); ++$i )
 
 $res_tas = $g_obj_ta_manager->view_tas();
 
-for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
-{
-	$res_row = $g_obj_db->fetch( $res_tas );
+if ($res_tas != NULL) { // added condition - prevents error if no courses available (added during PHP8 migration)
+	for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
+	{
+		$res_row = $g_obj_db->fetch( $res_tas );
 
-	echo( '<tr onclick="openTADetail( \'' . htmlspecialchars( $res_row->UserId ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
-	echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="TAId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
-	echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' );
-	echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' );
-	echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' );
-	echo( '</tr>' );
+		echo( '<tr onclick="openTADetail( \'' . htmlspecialchars( $res_row->UserId ) . '\' );" onmouseover="hightlightSelectedRow( this, true );" onmouseout="hightlightSelectedRow( this, false );">' . "\n" );
+		echo( '<td onmouseover="xgene360_cu.stopPropagation( event );" onclick="xgene360_cu.stopPropagation( event );"><input type="checkbox" name="TAId[]" value="' . htmlspecialchars( $res_row->UserId ) . '" /></td>' . "\n" );
+		echo( '<td>' . htmlspecialchars( $res_row->UserId ) . '</td>' );
+		echo( '<td>' . htmlspecialchars( $res_row->FirstName ) . '</td>' );
+		echo( '<td>' . htmlspecialchars( $res_row->LastName ) . '</td>' );
+		echo( '</tr>' );
+	}
 }
-	
 ?>
 
     </table>
@@ -135,15 +142,15 @@ for ( $i = 0; $i < $g_obj_db->get_number_of_rows( $res_tas ); ++$i )
             <table>
               <tr>
                 <td width="125">First Name:</td>
-                <td><input class="textinput" type="text" name="FirstName" id="FirstName" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'FirstName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="FirstName" id="FirstName" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'FirstName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
               <tr>
                 <td>Last Name:</td>
-                <td><input class="textinput" type="text" name="LastName" id="LastName" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'LastName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="LastName" id="LastName" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'LastName' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
               <tr>
                 <td>CWL Username:</td>
-                <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( PageHandler::write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
+                <td><input class="textinput" type="text" name="Username" id="Username" value="<?= htmlspecialchars( (new PageHandler) -> write_post_value_if_failed( 'Username' ) ) ?>" onkeypress="xgene360_cu.checkDefaultSubmitButton( event, 'CommandCreate' );" /></td>
               </tr>
               <tr>
                 <td colspan="2" align="right">
@@ -208,7 +215,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -246,7 +253,7 @@ function process_post()
 						
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -264,14 +271,14 @@ function on_create_handler()
 {
 	global $g_obj_ta_manager;
 	
-	$str_user_name = PageHandler::get_post_value( 'Username' );
-	$str_first_name = PageHandler::get_post_value( 'FirstName' );
-	$str_last_name = PageHandler::get_post_value( 'LastName' );
+	$str_user_name = (new PageHandler) -> get_post_value( 'Username' );
+	$str_first_name = (new PageHandler) -> get_post_value( 'FirstName' );
+	$str_last_name = (new PageHandler) -> get_post_value( 'LastName' );
 
 	// verify the input
 	if ( !isset($str_user_name))
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter a valid CWL Username' );
 		return;
 	}
 	
@@ -281,12 +288,12 @@ function on_create_handler()
 	// create a new ta
 	if ( $g_obj_ta_manager->create_user( $str_user_name, UP_TA,  $str_first_name, $str_last_name ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully created an account for TA "' . $str_user_name  );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully created an account for TA "' . $str_user_name  );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to create an account for TA "' . $str_user_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to create an account for TA "' . $str_user_name . '"' );
 	}
 }
 
@@ -301,11 +308,11 @@ function on_delete_handler()
 {
 	global $g_obj_ta_manager;
 	
-	$arr_ta_list = PageHandler::get_post_value( 'TAId' );
+	$arr_ta_list = (new PageHandler) -> get_post_value( 'TAId' );
 	
 	if ( $arr_ta_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one TA" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one TA" );
 		return;
 	}
 	
@@ -329,16 +336,16 @@ function on_delete_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Successfully deleted', $arr_success );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Successfully deleted', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Failed to delete', $arr_fail );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Failed to delete', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -353,12 +360,12 @@ function on_assign_handler()
 {
 	global $g_obj_ta_manager, $g_obj_assign_ta_manager;
 	
-	$arr_ta_list = PageHandler::get_post_value( 'TAId' );	
-	$int_selected_course_id = PageHandler::get_post_value( 'SelectedCourse' );
+	$arr_ta_list = (new PageHandler) -> get_post_value( 'TAId' );	
+	$int_selected_course_id = (new PageHandler) -> get_post_value( 'SelectedCourse' );
 	
 	if ( $arr_ta_list == null || strlen( $int_selected_course_id ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one TA and select a course" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one TA and select a course" );
 		return;
 	}
 	
@@ -382,16 +389,16 @@ function on_assign_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Successfully assigned', $arr_success );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Successfully assigned', $arr_success );
 		
-		MessageHandler::add_message( MSG_SUCCESS, $str_message );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, $str_message );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		$str_message = PageHandler::display_users_cwl( 'Failed to assign', $arr_fail );
+		$str_message = (new PageHandler) -> display_users_cwl( 'Failed to assign', $arr_fail );
 		
-		MessageHandler::add_message( MSG_FAIL, $str_message );
+		(new MessageHandler) ->  add_message( MSG_FAIL, $str_message );
 	}
 }
 
@@ -406,19 +413,19 @@ function on_import_handler()
 {
 	if ( !isset( $_FILES['ImportTAFile'] ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please select a file' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please select a file' );
 	}
 	
 	else
 	{
 		if ( !is_uploaded_file( $_FILES['ImportTAFile']['tmp_name'] ) )
 		{
-			MessageHandler::add_message( MSG_FAIL, 'The file cannot be retrieved' );
+			(new MessageHandler) ->  add_message( MSG_FAIL, 'The file cannot be retrieved' );
 		}
 		
 		else
 		{
-			FileHandler::import_ta_list( $_FILES['ImportTAFile']['tmp_name']);
+			(new FileHandler) -> import_ta_list( $_FILES['ImportTAFile']['tmp_name']);
 		}
 	}
 }
@@ -432,17 +439,17 @@ function on_import_handler()
 */
 function on_export_handler()
 {
-	$arr_ta_list = PageHandler::get_post_value( 'TAId' );
+	$arr_ta_list = (new PageHandler) -> get_post_value( 'TAId' );
 	
 	if ( $arr_ta_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one TA" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one TA" );
 		return;
 	}
 	
 	else
 	{
-		FileHandler::export_ta_list( $arr_ta_list );
+		(new FileHandler) -> export_ta_list( $arr_ta_list );
 	}
 }
 

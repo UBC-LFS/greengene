@@ -15,7 +15,7 @@ require_once( '../includes/classes/db/assignprofessormanager.class.php' );
 
 $g_str_parent_page = './manageprofessors.php';
 
-PageHandler::check_necessary_id( array( 'ProfessorId' ), $g_str_parent_page );
+(new PageHandler) -> check_necessary_id( array( 'ProfessorId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -26,8 +26,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR ) );
 
 $g_obj_professor_manager = new ProfessorManager( $g_obj_user, $g_obj_db );
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
@@ -220,7 +224,7 @@ function verify_professor_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_professor ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'The Professor does not exist' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'The Professor does not exist' );
 	}
 	
 	else
@@ -241,7 +245,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 
@@ -267,7 +271,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;
 		}
@@ -285,23 +289,23 @@ function on_update_handler()
 {
 	global $g_obj_professor_manager, $g_str_professor_id;
 	
-	$str_first_name = PageHandler::get_post_value( 'ProfessorFirstName' );
-	$str_last_name = PageHandler::get_post_value( 'ProfessorLastName' );
+	$str_first_name = (new PageHandler) -> get_post_value( 'ProfessorFirstName' );
+	$str_last_name = (new PageHandler) -> get_post_value( 'ProfessorLastName' );
 	
 	if ( strlen( $str_first_name ) == 0 || strlen( $str_last_name ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	
 	if ( $g_obj_professor_manager->modify_user( $g_str_professor_id, $str_first_name, $str_last_name) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully updated the account for Professor "' . $str_first_name . ' ' . $str_last_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully updated the account for Professor "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to update the account for Professor "' . $str_first_name . ' ' . $str_last_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to update the account for Professor "' . $str_first_name . ' ' . $str_last_name . '"' );
 	}
 	
 	// force to load updated info
@@ -320,22 +324,22 @@ function on_assign_handler()
 {
 	global $g_obj_assign_professor_manager, $g_str_professor_id;
 	
-	$int_selected_course_id = PageHandler::get_post_value( 'SelectedCourse' );
+	$int_selected_course_id = (new PageHandler) -> get_post_value( 'SelectedCourse' );
 	
 	if ( strlen( $int_selected_course_id ) == 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select a course" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select a course" );
 		return;
 	}
 	
 	if ( $g_obj_assign_professor_manager->assign_professor( $g_str_professor_id, $int_selected_course_id ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully assigned the Professor to the Course' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully assigned the Professor to the Course' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to assign the Professor to the Course' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to assign the Professor to the Course' );
 	}
 }
 
@@ -351,11 +355,11 @@ function on_remove_handler()
 {
 	global $g_obj_assign_professor_manager, $g_str_professor_id;
 	
-	$arr_course_list = PageHandler::get_post_value( 'CourseId' );	
+	$arr_course_list = (new PageHandler) -> get_post_value( 'CourseId' );	
 	
 	if ( $arr_course_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one professor" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one professor" );
 		return;
 	}
 	
@@ -377,12 +381,12 @@ function on_remove_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully removed the Professor from ' . count( $arr_success ) . ' course(s)' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully removed the Professor from ' . count( $arr_success ) . ' course(s)' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to remove the Professor from ' . count( $arr_fail ) . ' course(s)' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to remove the Professor from ' . count( $arr_fail ) . ' course(s)' );
 	}
 }
 

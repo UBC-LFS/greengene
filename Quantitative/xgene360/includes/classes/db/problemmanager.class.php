@@ -12,7 +12,7 @@ class ProblemManager
  * POST: a ProblemManager object has been created with the parameters
  * @param $obj_user, $obj_db
  */
-	function ProblemManager( $obj_user, $obj_db )
+	function __construct( $obj_user, $obj_db )
 	{
 	    $this->m_obj_user = $obj_user;
 		$this->m_obj_db = $obj_db;
@@ -131,11 +131,11 @@ class ProblemManager
 
 		if ( $str_sql_query == null )
 		{ 
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of problems " );
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view a list of problems " );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of problems " );
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed a list of problems " );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
 
@@ -265,12 +265,12 @@ class ProblemManager
 
 		if ( $str_sql_query == null )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the details of problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to view the details of problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return null;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the details of problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " viewed the details of problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 		return $this->m_obj_db->query_select( $str_sql_query );
 	}
@@ -371,7 +371,7 @@ class ProblemManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to add problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to add problem " 
 												   . $this->m_obj_db->format_sql_string( $str_problem_name ) );
 			return false;
 		}
@@ -379,7 +379,7 @@ class ProblemManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to add problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to add problem " 
 												   . $this->m_obj_db->format_sql_string( $str_problem_name ) 
 												   . " due to database error" );
 			return false;
@@ -387,7 +387,7 @@ class ProblemManager
 		
 
 		
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " created the problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " created the problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) . " " 
 											   . $this->m_obj_db->format_sql_string( $str_problem_name ) );
 
@@ -431,17 +431,18 @@ class ProblemManager
 		$obj_plant_B = new Plant;
 		$obj_plant_B->create( $int_trait_A_number_of_genes, !$bln_stronger_gene_A, $int_trait_B_number_of_genes, !$bln_stronger_gene_B );
 
+		$simulaion = new Simulation;
 		// create F1 generation
-		$arr_new_generation = Simulation::cross_plants( array( $obj_plant_A, $obj_plant_B ), $int_number_of_progeny_per_cross );
+		$arr_new_generation = $simulaion -> cross_plants( array( $obj_plant_A, $obj_plant_B ), $int_number_of_progeny_per_cross );
 
 		// create F2 generation
-		$arr_new_generation = Simulation::cross_plants( array( $arr_new_generation[0] ), $int_number_of_progeny_per_cross );
+		$arr_new_generation = $simulaion -> cross_plants( array( $arr_new_generation[0] ), $int_number_of_progeny_per_cross );
 		
 		$obj_generation_manager = new GenerationManager( $this->m_obj_user, $this->m_obj_db );
 
 		if ( !$obj_generation_manager->set_array_generation( $int_problem_id, $obj_trait_A, $obj_trait_B, $arr_new_generation, 0 ) )
 		{
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to create the initial plants" 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to create the initial plants" 
 												   . " due to database error" );
 			return false;
 		}
@@ -526,7 +527,7 @@ class ProblemManager
 		if( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to compute heritability values" 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to compute heritability values" 
 												   . " due to database error" );
 			return false;
 		}
@@ -603,7 +604,7 @@ class ProblemManager
 						break;
 					}
 
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to modify problem " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to modify problem " 
 														   . $this->m_obj_db->format_sql_string( $int_problem_id ) 
 														   . " or problem does not exist" );
 					return false;
@@ -622,7 +623,7 @@ class ProblemManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to delete " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to delete " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return false;
 		}
@@ -630,13 +631,13 @@ class ProblemManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to delete " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) 
 												   . " due to database error." );
 			return false;
 		}
 		
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " deleted " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " deleted " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 		return true;
 		
@@ -843,7 +844,7 @@ class ProblemManager
 						break;
 					}
 
-					Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to modify problem  " 
+					(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " does not have permission to modify problem  " 
 														   . $this->m_obj_db->format_sql_string( $int_problem_id ) 
 														   . " or problem does not exist");
 
@@ -863,7 +864,7 @@ class ProblemManager
 		if ( $str_sql_query == null )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " attempted to modify " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 			return null;
 		}
@@ -871,13 +872,13 @@ class ProblemManager
 		if ( !$bln_success )
 		{
 			$this->m_obj_db->query_commit( "ROLLBACK" );
-			Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to modify problem " 
+			(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " failed to modify problem " 
 												   . $this->m_obj_db->format_sql_string( $int_problem_id ) 
 												   . " due to database error");
 			return false;
 		}
 
-		Log::write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified problem " 
+		(new Log) -> write_log_with_ip( LOG_TRANSACTION, $str_this_user . " modified problem " 
 											   . $this->m_obj_db->format_sql_string( $int_problem_id ) );
 		return true;
 	}

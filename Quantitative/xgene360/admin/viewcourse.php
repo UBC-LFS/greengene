@@ -15,7 +15,8 @@ require_once( '../includes/classes/db/assigntamanager.class.php' );
 
 $g_str_parent_page = './managecourses.php';
 
-PageHandler::check_necessary_id( array( 'CourseId' ), $g_str_parent_page );
+// var_dump(array('CourseId'), $g_str_parent_page);
+(new PageHandler) -> check_necessary_id( array( 'CourseId' ), $g_str_parent_page );
 
 /*
 * initialize common stuff
@@ -26,8 +27,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_ADMINISTRATOR, UP_PROFESSOR, UP_TA ) );
 
 $g_obj_course_manager = new CourseManager( $g_obj_user, $g_obj_db );
 $g_obj_assign_professor_manager = new AssignProfessorManager( $g_obj_user, $g_obj_db );
@@ -258,7 +263,7 @@ function verify_course_exists()
 	
 	if ( $g_obj_db->get_number_of_rows( $res_course ) == 0 )
 	{
-		MessageHandler::add_message( MSG_ERROR, 'The course does not exist' );
+		(new MessageHandler) ->  add_message( MSG_ERROR, 'The course does not exist' );
 	}
 	
 	else
@@ -279,7 +284,7 @@ function process_post()
 {
 	global $g_obj_lock;
 	
-	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( PageHandler::get_post_value( 'SerialId' ) ) )
+	if ( isset( $_POST['Command'] ) && $g_obj_lock->page_lock( (new PageHandler) -> get_post_value( 'SerialId' ) ) )
 	{
 		$str_command = $_POST['Command'];
 	  
@@ -305,7 +310,7 @@ function process_post()
 			
 			default:
 			{
-				MessageHandler::add_message( MSG_ERROR, "Unknown Command" );
+				(new MessageHandler) ->  add_message( MSG_ERROR, "Unknown Command" );
 			}
 			break;	
 		}
@@ -325,28 +330,28 @@ function on_update_handler()
 	
 	if ( !$g_bln_is_editable )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
 		return;
 	}
 	
-	$str_course_name = PageHandler::get_post_value( 'CourseName' );
-	$str_course_description = PageHandler::get_post_value( 'CourseDescription' );
+	$str_course_name = (new PageHandler) -> get_post_value( 'CourseName' );
+	$str_course_description = (new PageHandler) -> get_post_value( 'CourseDescription' );
 	
 	// verify the input
 	if ( !isset( $str_course_name ) || !isset( $str_course_description ) )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Please enter the necessary information' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Please enter the necessary information' );
 		return;
 	}
 	
 	if ( $g_obj_course_manager->modify_course( $g_int_course_id, $str_course_name, $str_course_description ) )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully updated Course "' . $str_course_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully updated Course "' . $str_course_name . '"' );
 	}
 	
 	else
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to update Course "' . $str_course_name . '"' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to update Course "' . $str_course_name . '"' );
 	}
 	
 	// force to update the course
@@ -367,15 +372,15 @@ function on_drop_selected_professors_handler()
 	
 	if ( !$g_bln_is_editable )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
 		return;
 	}
 	
-	$arr_professor_list = PageHandler::get_post_value( 'ProfessorId' );
+	$arr_professor_list = (new PageHandler) -> get_post_value( 'ProfessorId' );
 	
 	if ( $arr_professor_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one professor" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one professor" );
 		return;	
 	}
 	
@@ -397,12 +402,12 @@ function on_drop_selected_professors_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully removed ' . count( $arr_success ) . ' professor(s)' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully removed ' . count( $arr_success ) . ' professor(s)' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to remove ' . count( $arr_fail ) . ' professor(s)' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to remove ' . count( $arr_fail ) . ' professor(s)' );
 	}
 }
 
@@ -420,15 +425,15 @@ function on_drop_selected_tas_handler()
 	
 	if ( !$g_bln_is_editable )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'You do not have permission to perform this operation' );
 		return;
 	}
 	
-	$arr_ta_list = PageHandler::get_post_value( 'TAId' );
+	$arr_ta_list = (new PageHandler) -> get_post_value( 'TAId' );
 	
 	if ( $arr_ta_list == null )
 	{
-		MessageHandler::add_message( MSG_FAIL, "Please select at least one TA" );
+		(new MessageHandler) ->  add_message( MSG_FAIL, "Please select at least one TA" );
 		return;	
 	}
 	
@@ -450,12 +455,12 @@ function on_drop_selected_tas_handler()
 	
 	if ( count( $arr_success ) != 0 )
 	{
-		MessageHandler::add_message( MSG_SUCCESS, 'Successfully removed ' . count( $arr_success ) . ' TA(s)' );
+		(new MessageHandler) ->  add_message( MSG_SUCCESS, 'Successfully removed ' . count( $arr_success ) . ' TA(s)' );
 	}
 	
 	if ( count( $arr_fail ) != 0 )
 	{
-		MessageHandler::add_message( MSG_FAIL, 'Failed to remove ' . count( $arr_fail ) . ' TA(s)' );
+		(new MessageHandler) ->  add_message( MSG_FAIL, 'Failed to remove ' . count( $arr_fail ) . ' TA(s)' );
 	}
 }
 

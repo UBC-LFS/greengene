@@ -27,7 +27,7 @@ class Log
 	*/
 	function write_log_with_ip( $log_type, $str_message )
 	{
-		$str_formatted_message = sprintf( "[%s] [%s] %s\r", date( 'Y-m-d H:i:s' ), log::get_IP(), $str_message );
+		$str_formatted_message = sprintf( "[%s] [%s] %s\r", date( 'Y-m-d H:i:s' ), (new Log) -> get_IP(), $str_message );
 
 		error_log( $str_formatted_message, 3, $log_type); 
 	}

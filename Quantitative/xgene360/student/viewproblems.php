@@ -17,8 +17,12 @@ $g_obj_lock = null;
 $g_str_serial = null;
 $g_obj_user = null;
 
-PageHandler::initialize();
-PageHandler::check_permission( array( UP_STUDENT ) );
+// PageHandler::initialize();
+// PageHandler::check_permission( array( UP_STUDENT ) );
+
+$pageHandler = (new PageHandler);
+(new PageHandler) -> initialize();
+(new PageHandler) -> check_permission( array( UP_STUDENT ) );
 
 $g_obj_problem_manager = new ProblemManager( $g_obj_user, $g_obj_db );
 $g_obj_generation_manager = new GenerationManager( $g_obj_user, $g_obj_db );
