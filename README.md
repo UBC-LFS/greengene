@@ -2,7 +2,7 @@
 Last updated: Aug 16th, 2023
 
 Qualitative - Tested with PHP 8.1.2<br>
-Quantitative - Tested with PHP 8.1.2 (WIP - not launched yet)
+Quantitative - Tested with PHP 8.1.2 (Ready to launch)
 
 For a full description of what this project does and for instructions on using it, check out the [user manual](/docs/greengene_user_manual.pdf)!
 
@@ -59,9 +59,6 @@ define('SSL_KEY_PATH', 'FILE PATH TO client-key.pem');
 define('SSL_CERTIFICATE_PATH', 'FILE PATH TO client-cert.pem');
 define('SSL_CA_CERTIFICATE_PATH', 'FILE PATH TO ca-cert.pem');
 ```
-
-Possible flaws:
-- Importing profs or tas from a .csv file will result in an error if a prof/ta already exist
 
 Testing:
 - To disable authentication, go to loginmanager.class.php line 39
