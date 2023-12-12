@@ -46,7 +46,7 @@ echo "OKAY."
 
 echo "STEP 3. Relative URL to installation."
 echo "Examples:"
-echo "   https://https://dev-greengene.landfood.ubc.ca"
+echo "   https://dev-greengene.landfood.ubc.ca"
 echo "   https://192.168.0.18"
 echo
 echo "Enter relative URL:"
@@ -109,7 +109,7 @@ read LDAP_HOST
 echo "LDAP HOST entered: $LDAP_HOST"
 echo
 echo "Example LDAP DN(Distinguished Name):"
-echo "   uid=lfs-svc-greengene,ou=forestry.ubc.ca,dc=id,dc=ubc,dc=ca"
+echo "   uid=lfs-svc-greengene,ou=forestry,dc=ubc,dc=ca"
 echo 
 echo "Enter LDAP DN for the Service Account: "
 read LDAP_DN 
@@ -147,6 +147,12 @@ define('LOGPATH', REALROOT.'/logs/error.log');
 define('LDAP_HOST', '$LDAP_HOST');
 define('LDAP_DN', '$LDAP_DN');
 define('LDAP_PW', '$LDAP_PW');
+
+// SSL
+define('SSL_KEY_PATH', '');
+define('SSL_CERTIFICATE_PATH', '');
+define('SSL_CA_CERTIFICATE_PATH', '');
+
 ?>" > includes/config.php
 
 if [ $? -ne 0 ]; then
@@ -177,7 +183,7 @@ echo
 echo
 echo
 
-echo "Installation complete! You are now ready to begin using GreenGene."
+echo "Installation complete! Please include your SSL certificates into config.php. Afterwards, you can begin using GreenGene."
 echo "A few things to remember:"
 echo "  * all of the settings you entered (except the admin user password) may be modified in the file: "
 echo "     `pwd`/includes/config.php"
