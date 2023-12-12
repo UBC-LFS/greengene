@@ -27,6 +27,11 @@ define('SSL_CERTIFICATE_PATH', 'FILE PATH TO client-cert.pem');
 define('SSL_CA_CERTIFICATE_PATH', 'FILE PATH TO ca-cert.pem');
 ```
 
+## Updating the super admin
+```
+UPDATE User SET PrivilegeLvl=10 WHERE UserId='YOUR CWL';
+```
+
 ## Updating the database (if a database previously existed) - Qualitative
 If a database already exists from a previous version of greengene, the columns will need to be updated. Why?
 Previous versions of mysql automatically created a timestamp for us when creating a new data for certain columns + mysql updated the timestamp for us automatically when the data is modified. Newer versions of mysql require us to specify that we want it to be automatic
