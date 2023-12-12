@@ -103,7 +103,10 @@ class Table
 	 */
 	function writeHeaders()
 	{
-		echo('<input type="text" id="searchBar" oninput="searchRows()" placeholder="Search rows..."/>');
+		// do not display search bar for create problems page (it contains 3 "Gene" headers, results in 3 non-functional search bars)
+		if (!(str_contains(func_get_arg($i), "Gene"))) {
+			echo('<input type="text" id="searchBar" oninput="searchRows()" placeholder="Search rows..."/>');
+		}
 		
 		echo('<tr>');
 		for($i = 0; $i < func_num_args(); $i++)
