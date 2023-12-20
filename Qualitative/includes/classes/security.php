@@ -32,8 +32,8 @@ class Security
 		if ($g_db -> getNumRows($rs) == 1)
 		{
 
-			if (self::ldap_login($p_userId, $p_pwd)) {
-			// if (true) { // does not authenciate password - testing purposes
+			// if (self::ldap_login($p_userId, $p_pwd)) {
+			if (true) { // does not authenciate password - testing purposes
 
 				$row = $g_db -> fetch($rs);
 				// $row -> PrivilegeLvl = 1; // TESTING

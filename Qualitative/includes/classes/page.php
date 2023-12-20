@@ -109,19 +109,23 @@ class Page
 		switch($p_user->m_privilegeLvl)
 		{
 			case 10:
-				Page::redirect('siteadmin/viewcourses.php');
+				Page::redirect('admin/selectcourse.php');
+				// Page::redirect('siteadmin/viewcourses.php');
 				break;
 
 			case 1:
-				Page::redirect('admin/viewproblemlist.php');
+				Page::redirect('admin/selectcourse.php');
+				// Page::redirect('admin/viewproblemlist.php');
 				break;
 
 			case 2:
-				Page::redirect('admin/viewstudentlist.php');
+				Page::redirect('admin/selectcourse.php');
+				// Page::redirect('admin/viewstudentlist.php');
 				break;
 
 			case 3:
-				Page::redirect('student/viewprogeny.php');
+				Page::redirect('admin/selectcourse.php');
+				// Page::redirect('student/viewprogeny.php');
 				break;
 		}
 	}
