@@ -36,12 +36,18 @@ class Security
 			if (true) { // does not authenciate password - testing purposes
 
 				$row = $g_db -> fetch($rs);
+
+				// defaults to first privilege level
+				$row -> PrivilegeLvl = explode(',', $row -> PrivilegeLvl)[0];
+
+				var_dump($row->PrivilegeLvl);
 				// $row -> PrivilegeLvl = 1; // TESTING
 				switch ($row -> PrivilegeLvl){
 					case 10:
 					$user = new MasterAdmin($p_userId);
 					break;
 					case 1:
+					var_dump("sssh");
 					$user = new Administrator($p_userId);
 					break;
 					case 2:

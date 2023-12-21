@@ -19,6 +19,12 @@ $page->writeHeader();
 
 
 
+// render table with courses the user is in
+$user = (new Security) -> getUser();
+var_dump($user);
+
+
+
 $page->handleErrors();
 
 

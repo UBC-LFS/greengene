@@ -36,9 +36,17 @@ class User
 
 		$row = $g_db->fetch($recordset);
 
+		// Convert CourseId & PrivilegeLvl to arrays
+		$this->m_courseArray = explode(',', $row->CourseId);
+		$this->m_PrivilegeLvlArray = explode(',', $row->PrivilegeLvl);
+
 		$this->m_userId = $p_userId;
 		$this->m_firstName = $row->FirstName;
 		$this->m_lastName =  $row->LastName;
+		// initalized default course
+		// $this->m_privilegeLvl = $m_PrivilegeLvlArray[0];
+		// $this->m_courseId = $m_courseArray[0];
+
 		$this->m_privilegeLvl = $row->PrivilegeLvl;
 		$this->m_courseId = $row->CourseId;
 
