@@ -18,43 +18,25 @@ $page = new Page($user, 'Select Courses', 1);
 $page->writeHeader();
 
 
-
 // render table with courses the user is in
 $user = (new Security) -> getUser();
 $courseIDs = $user->m_courseArray;
-// var_dump($userId);
-?>
 
-<?php
-echo('
-    <table class="listing" id="ListOfStudents">
+$table = new Table(3);
 
-    <tr>
-    <th width="150">Name</th>
-    <th width="150">Description</th>
-    <th width="150">Select Course</th>
-    </tr>
-');
-?>
+$table->writeHeaders("Name","Description","Select Course");
 
-<?php
 for ($i = 0; $i < count($courseIDs); $i++) {
 
     $courseInfo = $user->getCourse($courseIDs[$i]);
+    $button = "<button >Select</button>";
 
-    echo("
-        <tr>
-            <td>$courseInfo->Name</td>
-            <td>$courseInfo->Description</td>
-            <td><button>Select</button></td>
-        </tr>
-    ");
+    $table->writeRow($courseInfo->Name, $courseInfo->Description, $button);
 }
 
-echo("</table>");
-?>
+// echo("</table>");
 
-<?php
+$table->flush();
 
 $page->handleErrors();
 
