@@ -43,12 +43,13 @@ class User
 		$this->m_userId = $p_userId;
 		$this->m_firstName = $row->FirstName;
 		$this->m_lastName =  $row->LastName;
-		// initalized default course
-		// $this->m_privilegeLvl = $m_PrivilegeLvlArray[0];
-		// $this->m_courseId = $m_courseArray[0];
 
-		$this->m_privilegeLvl = $row->PrivilegeLvl;
-		$this->m_courseId = $row->CourseId;
+		// initalized default course
+		$this->m_privilegeLvl = $this->m_PrivilegeLvlArray[0];
+		$this->m_courseId = $this->m_courseArray[0];
+
+		// $this->m_privilegeLvl = $row->PrivilegeLvl;
+		// $this->m_courseId = $row->CourseId;
 
 		// Get course name/description
 		$sqlQuery = "SELECT Name, Description
@@ -61,6 +62,32 @@ class User
 		$this->m_courseDescription = $row->Description;
 	}
 
+
+
+	/**
+	 * Get course record for specific course
+	 *
+	 * @param int $p_courseId course Id
+	 * @return recordset
+	 */
+	function getCourse($p_courseId)
+	{	
+		global $g_db;
+
+		$result = $g_db->querySelect("SELECT Name, Description
+			FROM Course
+			WHERE CourseId=$p_courseId");
+
+		if($g_db->getNumRows($result) != 1)
+		{
+			(new UserError) -> addError(907);
+			return false;
+		}
+		
+		$row = $g_db->fetch($result);
+
+		return $row;
+	}
 
 }
 ?>

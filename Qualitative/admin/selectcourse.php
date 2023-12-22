@@ -21,8 +21,15 @@ $page->writeHeader();
 
 // render table with courses the user is in
 $user = (new Security) -> getUser();
-var_dump($user);
+$courseIDs = $user->m_courseArray;
+// var_dump($userId);
+for ($i = 0; $i < count($courseIDs); $i++) {
 
+    $courseInfo = $user->getCourse($courseIDs[$i]);
+
+    echo("<p>$courseInfo->Name, $courseInfo->Description</p>");
+
+}
 
 
 $page->handleErrors();
