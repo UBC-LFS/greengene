@@ -32,7 +32,7 @@ echo('
     <tr>
     <th width="150">Name</th>
     <th width="150">Description</th>
-    <th width="150">Actions</th>
+    <th width="150">Select Course</th>
     </tr>
 ');
 ?>
@@ -46,9 +46,9 @@ for ($i = 0; $i < count($courseIDs); $i++) {
         <tr>
             <td>$courseInfo->Name</td>
             <td>$courseInfo->Description</td>
+            <td><button>Select</button></td>
         </tr>
     ");
-
 }
 
 echo("</table>");
