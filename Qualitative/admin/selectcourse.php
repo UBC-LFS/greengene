@@ -29,8 +29,7 @@ $table->writeHeaders("Name","Description","Select Course");
 for ($i = 0; $i < count($courseIDs); $i++) {
 
     $courseInfo = $user->getCourse($courseIDs[$i]);
-    $button = "<button >Select</button>";
-
+    $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('viewproblemlist.php?course=$i');\">";
     $table->writeRow($courseInfo->Name, $courseInfo->Description, $button);
 }
 
