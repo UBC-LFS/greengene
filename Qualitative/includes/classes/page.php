@@ -27,16 +27,49 @@ class Page
 	// function Page($p_user, $p_title, $p_privilegeLevel)
 	function __construct($p_user, $p_title, $p_privilegeLevel)
 	{
+		global $g_db;
+
+		$courseIndex = NULL; // set default course ID
+		// Get the course index from the URL
+		if (isset($_GET['course'])) {
+			$courseIndex = $_GET['course'];
+			$p_user->m_privilegeLvl = $p_user->m_PrivilegeLvlArray[$courseIndex];
+			$p_user->m_courseId = $p_user->m_courseArray[$courseIndex];
+
+			// Get course name/description
+			if ($courseIndex == NULL) {
+				$p_user->m_courseName = "";
+				$p_user->m_courseDescription = "";
+			} else {
+				$sqlQuery = "SELECT Name, Description
+				FROM Course
+				WHERE CourseId = '".$g_db->sqlString($p_user->m_courseId)."'";
+				$recordset = $g_db->querySelect($sqlQuery);
+	
+				$row = $g_db->fetch($recordset);
+
+				$p_user->m_courseName = $row->Name;
+				$p_user->m_courseDescription = $row->Description;
+			}
+
+		}
+
+		// var_dump($courseIndex);
+
+
 		$this->m_user = $p_user;
 		$this->m_title = $p_title;
 		$this->m_privilegeLevel = $p_privilegeLevel;
 
 		// var_dump($this->m_user->m_privilegeLvl);
+		
+
 		if($p_privilegeLevel > 0)
 		{
 			if($p_privilegeLevel == 10 && $this->m_user->m_privilegeLvl != 10)
 				Page::redirect(URLROOT . "/login.php");
 
+			// If user's privilege level is less than the one needed, make them relogin (higher = less power)
 			if($this->m_user->m_privilegeLvl > $p_privilegeLevel)
 				Page::redirect(URLROOT . "/login.php");
 
@@ -106,28 +139,29 @@ class Page
 	function redirectInitial($p_user)
 	{
 		// $p_user->m_privilegeLvl = 1; // testing purposes
-		switch($p_user->m_privilegeLvl)
-		{
-			case 10:
-				Page::redirect('admin/selectcourse.php');
-				// Page::redirect('siteadmin/viewcourses.php');
-				break;
+		Page::redirect('admin/selectcourse.php');
+		// switch($p_user->m_privilegeLvl)
+		// {
+		// 	case 10:
+		// 		Page::redirect('admin/selectcourse.php');
+		// 		// Page::redirect('siteadmin/viewcourses.php');
+		// 		break;
 
-			case 1:
-				Page::redirect('admin/selectcourse.php');
-				// Page::redirect('admin/viewproblemlist.php');
-				break;
+		// 	case 1:
+		// 		Page::redirect('admin/selectcourse.php');
+		// 		// Page::redirect('admin/viewproblemlist.php');
+		// 		break;
 
-			case 2:
-				Page::redirect('admin/selectcourse.php');
-				// Page::redirect('admin/viewstudentlist.php');
-				break;
+		// 	case 2:
+		// 		Page::redirect('admin/selectcourse.php');
+		// 		// Page::redirect('admin/viewstudentlist.php');
+		// 		break;
 
-			case 3:
-				Page::redirect('admin/selectcourse.php');
-				// Page::redirect('student/viewprogeny.php');
-				break;
-		}
+		// 	case 3:
+		// 		Page::redirect('admin/selectcourse.php');
+		// 		// Page::redirect('student/viewprogeny.php');
+		// 		break;
+		// }
 	}
 
 	/**
@@ -301,6 +335,7 @@ END;
 	function writeHeader()
 	{
 		$root = URLROOT;
+	
 		$imgroot = "$root/includes/images";
 
 		$userName = $this->m_userActor->m_firstName . ' ' . $this->m_userActor->m_lastName;
@@ -323,6 +358,9 @@ END;
 			case 10:
 				$userType = 'Site Administrator';
 				$helpURL = Page::getHelpURL('siteadmin');
+				break;
+			default:
+				$userType = '';
 				break;
 		}
 

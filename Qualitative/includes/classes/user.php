@@ -27,6 +27,16 @@ class User
 	{
 		global $g_db;
 
+
+
+		$courseIndex = NULL; // set default course ID
+		// Get the course index from the URL
+		if (isset($_GET['course'])) {
+			$courseIndex = $_GET['course'];
+		}
+
+		// var_dump($courseIndex);
+
 		// Get user information
 		$sqlQuery = "SELECT FirstName,LastName,PrivilegeLvl,CourseId
 				FROM User
@@ -45,8 +55,13 @@ class User
 		$this->m_lastName =  $row->LastName;
 
 		// initalized default course
-		$this->m_privilegeLvl = $this->m_PrivilegeLvlArray[0];
-		$this->m_courseId = $this->m_courseArray[0];
+		if ($courseIndex == NULL) {
+			$this->m_privilegeLvl = $this->m_PrivilegeLvlArray[0];
+			$this->m_courseId = $this->m_courseArray[0];
+		} else {
+			$this->m_privilegeLvl = $this->m_PrivilegeLvlArray[$courseIndex];
+			$this->m_courseId = $this->m_courseArray[$courseIndex];
+		}
 
 		// $this->m_privilegeLvl = $row->PrivilegeLvl;
 		// $this->m_courseId = $row->CourseId;
@@ -58,8 +73,14 @@ class User
 		$recordset = $g_db->querySelect($sqlQuery);
 
 		$row = $g_db->fetch($recordset);
-		$this->m_courseName = $row->Name;
-		$this->m_courseDescription = $row->Description;
+
+		if ($courseIndex == NULL) {
+			$this->m_courseName = "";
+			$this->m_courseDescription = "";
+		} else {
+			$this->m_courseName = $row->Name;
+			$this->m_courseDescription = $row->Description;
+		}
 	}
 
 

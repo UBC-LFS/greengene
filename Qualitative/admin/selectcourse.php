@@ -11,8 +11,8 @@ $user = (new Security)->getUser(); // php8
 // DATABASE CONNECTION
 $g_db = new DB();
 
-// PAGE CREATION LOGIC
-$page = new Page($user, 'Select Courses', 1);
+// PAGE CREATION LOGIC, the 10 means anyone with privilege level 10 or lower can access page
+$page = new Page($user, 'Select Courses', 3);
 
 // write page header, including toolbar
 $page->writeHeader();
@@ -29,7 +29,31 @@ $table->writeHeaders("Name","Description","Select Course");
 for ($i = 0; $i < count($courseIDs); $i++) {
 
     $courseInfo = $user->getCourse($courseIDs[$i]);
-    $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('viewproblemlist.php?course=$i');\">";
+
+    switch($user->m_privilegeLvl)
+    {
+        // Do we want admins to have more access?
+        case 10:
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('viewproblemlist.php?course=$i');\">";
+            // Page::redirect('siteadmin/viewcourses.php');
+            break;
+
+        case 1:
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('viewproblemlist.php?course=$i');\">";
+            // Page::redirect('admin/viewproblemlist.php');
+            break;
+
+        case 2:
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('viewstudentlist.php?course=$i');\">";
+            // Page::redirect('admin/viewstudentlist.php');
+            break;
+
+        case 3:
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('student/viewprogeny.php?course=$i');\">";
+            // Page::redirect('student/viewprogeny.php');
+            break;
+    }
+
     $table->writeRow($courseInfo->Name, $courseInfo->Description, $button);
 }
 

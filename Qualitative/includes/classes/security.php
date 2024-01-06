@@ -47,7 +47,6 @@ class Security
 					$user = new MasterAdmin($p_userId);
 					break;
 					case 1:
-					var_dump("sssh");
 					$user = new Administrator($p_userId);
 					break;
 					case 2:
