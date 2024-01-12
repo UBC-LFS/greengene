@@ -15,7 +15,7 @@ $g_db = new DB();
 $page = new Page($user, 'Select Courses', 3);
 
 // write page header, including toolbar
-$page->writeHeader();
+$page->writeHeader("SelectCourses");
 
 
 // render table with courses the user is in
@@ -29,6 +29,8 @@ $table->writeHeaders("Name","Description","Select Course");
 for ($i = 0; $i < count($courseIDs); $i++) {
 
     $courseInfo = $user->getCourse($courseIDs[$i]);
+
+    // var_dump($courseInfo);
 
     switch($user->m_privilegeLvl)
     {
@@ -49,7 +51,7 @@ for ($i = 0; $i < count($courseIDs); $i++) {
             break;
 
         case 3:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('student/viewprogeny.php?course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('../student/viewprogeny.php?course=$i');\">";
             // Page::redirect('student/viewprogeny.php');
             break;
     }
