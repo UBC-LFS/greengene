@@ -62,6 +62,7 @@ class DB
 	function queryCommit($p_SQL)
 	{
 		$l_resource = mysqli_query($this -> m_conn, $p_SQL );
+
 		//$l_resource = mysql_query($p_SQL, $this -> m_conn)
 			//or Logger::writeLog('MySQL Commit Error (' . mysql_errno() . '): ' . mysql_error() . "\n$p_SQL");
 		if (mysqli_errno($this->m_conn) == 0)

@@ -509,19 +509,53 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		global $g_db;
 		$default_courseId = $this->m_courseId;
 
-		//check user's two entries of password
-		$sql_query =	"INSERT INTO User
-			(UserId, FirstName, LastName, CourseId, PrivilegeLvl)
-			VALUES ('". $g_db->sqlString($p_userId) ."',
-				'". $g_db->sqlString($p_firstName) ."',
-				'". $g_db->sqlString($p_lastName) ."',
-				$default_courseId,
-				$p_privilegeLvl)";
+		// Check to see if user already exist
+		$result = $g_db->querySelect("SELECT UserId
+		FROM User
+		WHERE UserId='" . $g_db->sqlString($p_userId). "'");
+
+		if($g_db->getNumRows($result) != 0)
+		{
+			// Adding pre-existing user to a course
+
+			$result = $g_db->querySelect("SELECT CourseId, PrivilegeLvl
+				FROM User
+				WHERE UserId='" . $g_db->sqlString($p_userId) . "'");
+			$row = $g_db->fetch($result);
+			// Update current course ID and privilege level
+
+			if (str_contains($row->CourseId, $default_courseId)) {
+				(new UserError) -> addError(305);
+				return false;
+			}
+
+			$updatedCourseID = strval($row->CourseId) . "," . strval($default_courseId);
+			$updatedPrivilegeLvl = strval($row->PrivilegeLvl) . "," . strval($p_privilegeLvl);
+			$sql_query = "UPDATE User 
+				SET CourseId='$updatedCourseID', 
+				PrivilegeLvl='$updatedPrivilegeLvl'
+				WHERE UserId='$p_userId'";
+		}
+
+		else {
+			//check user's two entries of password
+			$sql_query =	"INSERT INTO User
+				(UserId, FirstName, LastName, CourseId, PrivilegeLvl)
+				VALUES ('". $g_db->sqlString($p_userId) ."',
+					'". $g_db->sqlString($p_firstName) ."',
+					'". $g_db->sqlString($p_lastName) ."',
+					$default_courseId,
+					$p_privilegeLvl)";
+		}
+
+
 		if( !$g_db->queryCommit($sql_query) )
 		{
 			(new UserError) -> addError(707);
 			return false;
 		}
+
+
 		return true;
 	}
 

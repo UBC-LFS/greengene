@@ -71,14 +71,32 @@ class TA extends User
 			WHERE UserId='" . $g_db->sqlString($p_userId) . "'");
 		if($g_db->getNumRows($result) != 0)
 		{
-			(new UserError) -> addError(305);
-			return false;
+			// Adding pre-existing user to a course
+		
+			$result = $g_db->querySelect("SELECT CourseId, PrivilegeLvl
+				FROM User
+				WHERE UserId='" . $g_db->sqlString($p_userId) . "'");
+			$row = $g_db->fetch($result);
+			// Update current course ID and privilege level
+
+			if (str_contains($row->CourseId, $default_courseId)) {
+				(new UserError) -> addError(305);
+				return false;
+			}
+
+			$updatedCourseID = strval($row->CourseId) . "," . strval($default_courseId);
+			$updatedPrivilegeLvl = strval($row->PrivilegeLvl) . "," . strval($privilege_lvl);
+			$sql_query = "UPDATE User 
+				SET CourseId='$updatedCourseID', 
+				PrivilegeLvl='$updatedPrivilegeLvl'
+				WHERE UserId='$p_userId'";
 		}
 		// ^^
-
-		$sql_query =	"INSERT ".
-						"INTO User (UserId,CourseId,PrivilegeLvl,FirstName,LastName) ".
-						"VALUES (" . $record_row_values . ")";
+		else {
+			$sql_query =	"INSERT ".
+							"INTO User (UserId,CourseId,PrivilegeLvl,FirstName,LastName) ".
+							"VALUES (" . $record_row_values . ")";
+		}
 
 		if ($g_db->queryCommit($sql_query)!=true)
 		{
