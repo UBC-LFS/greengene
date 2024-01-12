@@ -64,8 +64,9 @@ class Page
 		// var_dump($this->m_user->m_privilegeLvl);
 		
 
-		if($p_privilegeLevel > 0)
+		if($p_privilegeLevel > 0 && $this->m_user->m_privilegeLvl != 10)
 		{
+			// Allow site admins to access anypage
 			if($p_privilegeLevel == 10 && $this->m_user->m_privilegeLvl != 10)
 				Page::redirect(URLROOT . "/login.php");
 
@@ -332,36 +333,40 @@ END;
 	/**
 	 * Writes standard page header and toolbar
 	 */
-	function writeHeader()
+	function writeHeader($pageName=NULL)
 	{
 		$root = URLROOT;
-	
+
 		$imgroot = "$root/includes/images";
 
 		$userName = $this->m_userActor->m_firstName . ' ' . $this->m_userActor->m_lastName;
-		$courseText = $this->m_user->m_courseName . ' ' . $this->m_user->m_courseDescription;
+		$courseText = "";
 
-		switch($this->m_userActor->m_privilegeLvl)
-		{
-			case 1:
-				$userType = 'Professor';
-				$helpURL = Page::getHelpURL('admin');
-				break;
-			case 2:
-				$userType = 'TA';
-				$helpURL = Page::getHelpURL('admin');
-				break;
-			case 3:
-				$userType = 'Student';
-				$helpURL = Page::getHelpURL('student');
-				break;
-			case 10:
-				$userType = 'Site Administrator';
-				$helpURL = Page::getHelpURL('siteadmin');
-				break;
-			default:
-				$userType = '';
-				break;
+		if ($pageName != 'SelectCourses') {
+			$courseText = $this->m_user->m_courseName . ' ' . $this->m_user->m_courseDescription;
+
+			switch($this->m_userActor->m_privilegeLvl)
+			{
+				case 1:
+					$userType = 'Professor';
+					$helpURL = Page::getHelpURL('admin');
+					break;
+				case 2:
+					$userType = 'TA';
+					$helpURL = Page::getHelpURL('admin');
+					break;
+				case 3:
+					$userType = 'Student';
+					$helpURL = Page::getHelpURL('student');
+					break;
+				case 10:
+					$userType = 'Site Administrator';
+					$helpURL = Page::getHelpURL('siteadmin');
+					break;
+				default:
+					$userType = '';
+					break;
+			}
 		}
 
 		$load = (!empty($this->m_onLoadFunction) ? "onLoad=\"$this->m_onLoadFunction\"" : "");
@@ -421,10 +426,13 @@ END;
 	<td colspan="2"><img src="$imgroot/bordertrim.gif" height="3" width="100%" alt="border trim"></td>
 </tr>
 <tr class="toolbarRow" style="background:url('$imgroot/lightborder.gif');">
+END;
+if ($pageName != 'SelectCourses') {
+	echo <<<END
 	<td class="toolbar">
 END;
-
 			// now write menus
+		
 			switch($this->m_userActor->m_privilegeLvl)
 			{
 				case 10:
@@ -447,6 +455,9 @@ END;
 		<a href="$helpURL" target="_blank">Help<img src="$imgroot/help.gif" width="13" height="13" alt="Help"></a>&nbsp;
 		<a href="$printURL" target="_blank">Printer Friendly<img src="$imgroot/printer.gif" width="13" height="13" alt="Printer Friendly"></a>
 	</td>
+	END;
+		}
+	echo <<<END
 </tr>
 </form>
 </table>
@@ -454,6 +465,7 @@ END;
 </div>
 END;
 		}
+		
 
 		if(!isset($_GET['print']) || $_GET['print'] =! 'true')
 			echo("<div id=\"bodyContentOut\" style=\"background:url('$imgroot/innerbackground.gif');\">");
