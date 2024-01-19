@@ -664,30 +664,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			OR PrivilegeLvl LIKE '%2%'
 			ORDER BY UserId");
 
-		// double check that the PrivilegeLvl is for this course
-		if ($result) {
-			while ($row = $g_db->fetch($result)) {
-				$courseIdArray = explode(',', $row->CourseId);
-				$privilegeLevelArray = explode(',', $row->PrivilegeLvl);
-
-				$indexOfCourse = array_search($this->m_courseId, $courseIdArray);
-				if (!($privilegeLevelArray[$indexOfCourse] == 1 || $privilegeLevelArray[$indexOfCourse] == 2)) {
-					var_dump($row);
-					unset($row);
-				}
-			}
-		}
-
-		// $courseIdArray = explode(',', $row->CourseId);
-		// $privilegeLevelArray = explode(',', $row->PrivilegeLvl);
-
-		// $indexOfCourse = array_search($this->m_courseId, $courseIdArray);
-		// if ($privilegeLevelArray[$indexOfCourse] == 1 || $privilegeLevelArray[$indexOfCourse] == 2) {
-		// 	var_dump($row->UserId);
-		// 	var_dump($row->UserId);
-		// }
-	
-		var_dump("need to vertify if user belongs to that priv level");
 
 		return $result;
 	}

@@ -45,18 +45,29 @@ $studentTable->writeHeaders('', 'CWL Username', 'First Name', 'Last Name', 'Assi
 // iterate through each row, and get the information
 while($row = $g_db->fetch($recordset))
 {
-	if(empty($row->Name))
-		$problem = 'Not Assigned';
-	else
-		$problem = "<a href=\"viewproblem.php?studentId=$row->UserId\">$row->Name</a>";
+	// Ensures user's privilege level is for this course 
+	$courseIdArray = explode(',', $row->CourseId);
 
-	$studentTable->writeRow("<input type=\"checkbox\" name=\"del_student[]\" value=\"$row->UserId\">",
-		$row->UserId,
-		$row->FirstName,
-		$row->LastName,
-		$problem,
-		"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifystudent.php?studentId=$row->UserId');\">
-		<input type=\"button\" value=\"Assign Problem\" onClick=\"goUrl('selectproblem.php?studentId=$row->UserId');\">");
+	$privilegeLevelArray = explode(',', $row->PrivilegeLvl);
+
+	// User courseID = courseID we are looking for
+	$indexOfCourse = array_search($user->m_courseId, $courseIdArray);
+	
+	if ($privilegeLevelArray[$indexOfCourse] == 3) {
+
+		if(empty($row->Name))
+			$problem = 'Not Assigned';
+		else
+			$problem = "<a href=\"viewproblem.php?studentId=$row->UserId\">$row->Name</a>";
+
+		$studentTable->writeRow("<input type=\"checkbox\" name=\"del_student[]\" value=\"$row->UserId\">",
+			$row->UserId,
+			$row->FirstName,
+			$row->LastName,
+			$problem,
+			"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifystudent.php?studentId=$row->UserId');\">
+			<input type=\"button\" value=\"Assign Problem\" onClick=\"goUrl('selectproblem.php?studentId=$row->UserId');\">");
+	}
 }
 $studentTable->flush();
 
