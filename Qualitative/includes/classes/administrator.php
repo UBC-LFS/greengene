@@ -657,11 +657,37 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	{
 		global $g_db;
 
-		$result = $g_db->querySelect("SELECT UserId, FirstName, LastName, PrivilegeLvl
+		$result = $g_db->querySelect("SELECT UserId, FirstName, LastName, CourseId, PrivilegeLvl
 			FROM User
-			WHERE CourseId=$this->m_courseId
-			AND PrivilegeLvl IN (1, 2)
+			WHERE CourseId LIKE '%$this->m_courseId%'
+			AND PrivilegeLvl LIKE '%1%'
+			OR PrivilegeLvl LIKE '%2%'
 			ORDER BY UserId");
+
+		// double check that the PrivilegeLvl is for this course
+		if ($result) {
+			while ($row = $g_db->fetch($result)) {
+				$courseIdArray = explode(',', $row->CourseId);
+				$privilegeLevelArray = explode(',', $row->PrivilegeLvl);
+
+				$indexOfCourse = array_search($this->m_courseId, $courseIdArray);
+				if (!($privilegeLevelArray[$indexOfCourse] == 1 || $privilegeLevelArray[$indexOfCourse] == 2)) {
+					var_dump($row);
+					unset($row);
+				}
+			}
+		}
+
+		// $courseIdArray = explode(',', $row->CourseId);
+		// $privilegeLevelArray = explode(',', $row->PrivilegeLvl);
+
+		// $indexOfCourse = array_search($this->m_courseId, $courseIdArray);
+		// if ($privilegeLevelArray[$indexOfCourse] == 1 || $privilegeLevelArray[$indexOfCourse] == 2) {
+		// 	var_dump($row->UserId);
+		// 	var_dump($row->UserId);
+		// }
+	
+		var_dump("need to vertify if user belongs to that priv level");
 
 		return $result;
 	}

@@ -941,10 +941,10 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$sql_query = "SELECT a.UserId, a.CourseId, a.PrivilegeLvl, a.FirstName, a.LastName, b.Name
 				FROM User a
 				LEFT JOIN StudentProblem b ON a.UserId=b.UserId
-				WHERE CourseId=$default_courseId
-				AND PrivilegeLvl=3
+				WHERE CourseId LIKE '%$default_courseId%'
+				AND PrivilegeLvl LIKE '%3%'
 				ORDER BY UserId";
-
+	
 		return $g_db->querySelect($sql_query);
 	}
 

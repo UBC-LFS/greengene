@@ -48,14 +48,30 @@ $table->writeHeaders('', 'CWL Username', 'First Name', 'Last Name', 'User Type',
 
 $priv = array(1 => 'Professor', 2 => 'TA');
 
+var_dump("filtering");
+
 while($row = $g_db->fetch($users))
 {
-	$table->writeRow("<input type=\"checkbox\" name=\"delUser[]\" value=\"$row->UserId\">",
-		$row->UserId,
-		$row->FirstName,
-		$row->LastName,
-		$priv[$row->PrivilegeLvl],
-		"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifyadmin.php?userId=$row->UserId');\">");
+	// $courseIdArray = explode(',', $row->CourseId);
+
+	// var_dump($courseIdArray);
+
+	// $privilegeLevelArray = explode(',', $row->PrivilegeLvl);
+
+	// var_dump($privilegeLevelArray);
+
+	// $indexOfCourse = array_search($this->m_courseId, $courseIdArray);
+	
+	// var_dump($indexOfCourse);
+
+	// if ($privilegeLevelArray[$indexOfCourse] == 1 || $privilegeLevelArray[$indexOfCourse] == 2) {
+		$table->writeRow("<input type=\"checkbox\" name=\"delUser[]\" value=\"$row->UserId\">",
+			$row->UserId,
+			$row->FirstName,
+			$row->LastName,
+			$priv[$row->PrivilegeLvl],
+			"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifyadmin.php?userId=$row->UserId');\">");
+	// }
 }
 $table->flush();
 
