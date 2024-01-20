@@ -207,9 +207,39 @@ class TA extends User
 	function deleteStudent($p_userId)
 	{
 		global $g_db;
-		$sql_query = 	"DELETE ".
-						"FROM User ".
-						"	WHERE UserId = '". $g_db->sqlString($p_userId) . "'";
+
+		// If user is in multiple courses
+		$sql_query = "SELECT UserId, CourseId, PrivilegeLvl FROM User WHERE UserId='". $p_userId . "'";
+		
+		$result = $g_db->querySelect($sql_query);
+		$userData = $g_db->fetch($result);
+
+		$courseIdArray = explode(',', $userData->CourseId);
+		$privilegeLevelArray = explode(',', $userData->PrivilegeLvl);
+
+		// if length of both array > 1
+		if (count($courseIdArray) > 1 && count($privilegeLevelArray) > 1) {
+			// User courseID = courseID we are looking for
+			$indexOfCourse = array_search($this->m_courseId, $courseIdArray);
+			// remove a specific element
+			unset($courseIdArray[$indexOfCourse]);
+			unset($privilegeLevelArray[$indexOfCourse]);
+			$updatedCourseID = implode(",", $courseIdArray);
+			$updatedPrivilegeLvl = implode(",", $privilegeLevelArray);
+			// update the sql query
+			$sql_query = "UPDATE User 
+				SET CourseId='$updatedCourseID', 
+				PrivilegeLvl='$updatedPrivilegeLvl'
+				WHERE UserId='$p_userId'";
+		}
+
+		// else
+		else {
+			// If user is only in one course
+			$sql_query = 	"DELETE ".
+			"FROM User ".
+			"	WHERE UserId = '". $g_db->sqlString($p_userId) . "'";
+		}
 
 		if ($g_db->queryCommit($sql_query)!= true)
 		{
