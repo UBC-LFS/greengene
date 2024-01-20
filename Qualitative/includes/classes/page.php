@@ -452,6 +452,8 @@ END;
 			echo <<<END
 	</td>
 	<td class="iconLinks">
+		<a href="/admin/selectcourse.php">Switch Courses</a>
+
 		<a href="$helpURL" target="_blank">Help<img src="$imgroot/help.gif" width="13" height="13" alt="Help"></a>&nbsp;
 		<a href="$printURL" target="_blank">Printer Friendly<img src="$imgroot/printer.gif" width="13" height="13" alt="Printer Friendly"></a>
 	</td>
