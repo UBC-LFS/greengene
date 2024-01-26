@@ -578,13 +578,25 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			return false;
 		}
 
-		if($g_db->queryCommit("UPDATE User
+		// If user is in multiple courses
+		$sql_query = "SELECT UserId, CourseId, PrivilegeLvl FROM User WHERE UserId='". $p_userId . "'";
+		
+		$result = $g_db->querySelect($sql_query);
+		$userData = $g_db->fetch($result);
+
+		$courseIdArray = explode(',', $userData->CourseId);
+		$privilegeLevelArray = explode(',', $userData->PrivilegeLvl);
+		$indexOfCourse = array_search($this->m_courseId, $courseIdArray);
+		$privilegeLevelArray[$indexOfCourse] = $p_privilegeLvl;
+		$updatedPrivilegeLvl = implode(",", $privilegeLevelArray);
+
+		$query = "UPDATE User
 			SET FirstName='" . $g_db->sqlString($p_firstName) . "',
 			LastName='" . $g_db->sqlString($p_lastName) . "',
-			PrivilegeLvl=$p_privilegeLvl
-			WHERE CourseId=$this->m_courseId
-			AND PrivilegeLvl IN (1,2)
-			AND UserId='" . $g_db->sqlString($p_userId) . "'") != true)
+			PrivilegeLvl= '$updatedPrivilegeLvl'
+			WHERE UserId='" . $g_db->sqlString($p_userId) . "'";
+
+		if($g_db->queryCommit($query) != true)
 		{
 			(new UserError) -> addError(714);
 			return false;

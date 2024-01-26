@@ -63,7 +63,7 @@ while($row = $g_db->fetch($users))
 			$row->UserId,
 			$row->FirstName,
 			$row->LastName,
-			$priv[$row->PrivilegeLvl],
+			$priv[$privilegeLevelArray[$indexOfCourse]],
 			"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifyadmin.php?userId=$row->UserId');\">");
 	}
 }
