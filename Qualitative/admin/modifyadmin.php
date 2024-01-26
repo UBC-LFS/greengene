@@ -99,7 +99,17 @@ elseif(empty($formaction))
 		$userData = $g_db->fetch($userRs);
 		$FirstName = $userData->FirstName;
 		$LastName = $userData->LastName;
-		$PrivilegeLvl = $userData->PrivilegeLvl;
+
+		$sql_query = "SELECT UserId, CourseId, PrivilegeLvl FROM User WHERE UserId='". $userId . "'";
+		
+		$result = $g_db->querySelect($sql_query);
+		$userData = $g_db->fetch($result);
+
+		$courseIdArray = explode(',', $userData->CourseId);
+		$privilegeLevelArray = explode(',', $userData->PrivilegeLvl);
+		$indexOfCourse = array_search($user->m_courseId, $courseIdArray);
+
+		$PrivilegeLvl = $privilegeLevelArray[$indexOfCourse];
 	}
 }
 
