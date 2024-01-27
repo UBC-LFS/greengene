@@ -702,8 +702,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$result = $g_db->querySelect("SELECT UserId, FirstName, LastName, CourseId, PrivilegeLvl
 			FROM User
 			WHERE CourseId LIKE '%$this->m_courseId%'
-			AND PrivilegeLvl LIKE '%1%'
-			OR PrivilegeLvl LIKE '%2%'
+			AND ((PrivilegeLvl LIKE '%1%'
+			OR PrivilegeLvl LIKE '%2%'))
 			ORDER BY UserId");
 
 

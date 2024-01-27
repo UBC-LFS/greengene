@@ -192,23 +192,35 @@ class MasterAdmin extends User
 			return false;
 		}
 
-		$result = $g_db->querySelect("SELECT UserId
+		$result = $g_db->querySelect("SELECT UserId, CourseId, PrivilegeLvl
 			FROM User
 			WHERE UserId='" . $g_db->sqlString($p_userId) . "'");
 		if($g_db->getNumRows($result) != 0)
 		{
-			// UserError::addError(305);
-			(new UserError) -> addError(305);
-			return false;
+			// user already exists
+			$row = $g_db->fetch($result);
+			// Update current course ID and privilege level
+
+			$updatedCourseID = strval($row->CourseId) . "," . strval($p_courseId);
+			$updatedPrivilegeLvl = strval($row->PrivilegeLvl) . "," . strval($p_privilegeLvl);
+			$sql_query = "UPDATE User 
+				SET CourseId='$updatedCourseID', 
+				PrivilegeLvl='$updatedPrivilegeLvl'
+				WHERE UserId='$p_userId'";
+			// (new UserError) -> addError(305);
+			// return false;
+		}
+		else {
+			$sql_query = "INSERT INTO User
+				(UserId, CourseId, PrivilegeLvl, FirstName, LastName)
+				VALUES('" . $g_db->sqlString($p_userId) . "',
+				$p_courseId,
+				$p_privilegeLvl,
+				'" . $g_db->sqlString($p_firstName) . "',
+				'" . $g_db->sqlString($p_lastName) . "')";
 		}
 
-		if($g_db->queryCommit("INSERT INTO User
-			(UserId, CourseId, PrivilegeLvl, FirstName, LastName)
-			VALUES('" . $g_db->sqlString($p_userId) . "',
-			$p_courseId,
-			$p_privilegeLvl,
-			'" . $g_db->sqlString($p_firstName) . "',
-			'" . $g_db->sqlString($p_lastName) . "')") != true)
+		if($g_db->queryCommit($sql_query) != true)
 		{
 			// UserError::addError(901);
 			(new UserError) -> addError(901);
