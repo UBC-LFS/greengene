@@ -61,7 +61,9 @@ for ($i = 0; $i < count($courseIDs); $i++) {
     if ($user->m_privilegeLvl != 10) {
         $table->writeRow($courseInfo->Name, $courseInfo->Description, $button);
     }
-    $table->writeRow("Site Admin View", "Modify course details and admins", $button);
+    else {
+        $table->writeRow("Site Admin View", "Modify course details and admins", $button);
+    }
 }
 
 // echo("</table>");
