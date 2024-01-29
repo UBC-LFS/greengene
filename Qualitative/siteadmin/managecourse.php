@@ -86,7 +86,7 @@ elseif($formaction == 'deleteuser')
 
 	if(isset($delUser) && count($delUser) > 0)
 		foreach($delUser as $userId)
-			$user->deleteManagementUser($userId);
+			$user->deleteManagementUser($userId, $courseId);
 }
 
 // write page header, including toolbar
@@ -138,11 +138,20 @@ if(!empty($courseId))
 
 	while($row = $g_db->fetch($users))
 	{
+
+		// Ensures user's privilege level is for this course 
+		$courseIdArray = explode(',', $row->CourseId);
+
+		$privilegeLevelArray = explode(',', $row->PrivilegeLvl);
+
+		// User courseID = courseID we are looking for
+		$indexOfCourse = array_search($user->m_courseId, $courseIdArray);
+
 		$table->writeRow("<input type=\"checkbox\" name=\"delUser[]\" value=\"$row->UserId\">",
 			$row->UserId,
 			$row->FirstName,
 			$row->LastName,
-			$priv[$row->PrivilegeLvl],
+			$priv[$privilegeLevelArray[$indexOfCourse]],
 			"<input type=\"button\" value=\"Modify\" onClick=\"goUrl('modifyadmin.php?userId=$row->UserId&courseId=$courseId');\">");
 	}
 	$table->flush();

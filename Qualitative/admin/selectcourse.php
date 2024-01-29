@@ -28,7 +28,9 @@ $table->writeHeaders("Name","Description","Select Course");
 
 for ($i = 0; $i < count($courseIDs); $i++) {
 
-    $courseInfo = $user->getCourse($courseIDs[$i]);
+    if ($user->m_privilegeLvl != 10) {
+        $courseInfo = $user->getCourse($courseIDs[$i]);
+    }
 
     // var_dump($courseInfo);
 
@@ -36,7 +38,7 @@ for ($i = 0; $i < count($courseIDs); $i++) {
     {
         // Do we want admins to have more access?
         case 10:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('viewproblemlist.php?course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('../siteadmin/viewcourses.php');\">";
             // Page::redirect('siteadmin/viewcourses.php');
             break;
 
@@ -56,7 +58,10 @@ for ($i = 0; $i < count($courseIDs); $i++) {
             break;
     }
 
-    $table->writeRow($courseInfo->Name, $courseInfo->Description, $button);
+    if ($user->m_privilegeLvl != 10) {
+        $table->writeRow($courseInfo->Name, $courseInfo->Description, $button);
+    }
+    $table->writeRow("Site Admin View", "Modify course details and admins", $button);
 }
 
 // echo("</table>");

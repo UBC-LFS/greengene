@@ -297,12 +297,45 @@ class MasterAdmin extends User
 	 * @param string $p_userId admin UserId
 	 * @return bool
 	 */
-	function deleteManagementUser($p_userId)
+	function deleteManagementUser($p_userId, $p_courseId)
 	{
 		global $g_db;
 
-		if($g_db->queryCommit("DELETE FROM User
-			WHERE UserId='" . $g_db->sqlString($p_userId) . "'") != true)
+		// If user is in multiple courses
+		$sql_query = "SELECT UserId, CourseId, PrivilegeLvl FROM User WHERE UserId='". $p_userId . "'";
+		
+		$result = $g_db->querySelect($sql_query);
+		$userData = $g_db->fetch($result);
+
+		$courseIdArray = explode(',', $userData->CourseId);
+		$privilegeLevelArray = explode(',', $userData->PrivilegeLvl);
+
+		// if length of both array > 1
+		if (count($courseIdArray) > 1 && count($privilegeLevelArray) > 1) {
+			// User courseID = courseID we are looking for
+
+			$indexOfCourse = array_search($p_courseId, $courseIdArray);
+			// remove a specific element
+			unset($courseIdArray[$indexOfCourse]);
+			unset($privilegeLevelArray[$indexOfCourse]);
+			$updatedCourseID = implode(",", $courseIdArray);
+			$updatedPrivilegeLvl = implode(",", $privilegeLevelArray);
+			// update the sql query
+			$sql_query = "UPDATE User 
+				SET CourseId='$updatedCourseID', 
+				PrivilegeLvl='$updatedPrivilegeLvl'
+				WHERE UserId='$p_userId'";
+		}
+
+		// else
+		else {
+			// If user is only in one course
+			$sql_query = "DELETE FROM User
+			WHERE UserId = '". $g_db->sqlString($p_userId) . "'";
+		}
+
+
+		if(! $g_db->queryCommit($sql_query))
 		{
 			// UserError::addError(909);
 			(new UserError) -> addError(909);
@@ -322,11 +355,19 @@ class MasterAdmin extends User
 	{
 		global $g_db;
 
-		$result = $g_db->querySelect("SELECT UserId, FirstName, LastName, PrivilegeLvl
+		// $result = $g_db->querySelect("SELECT UserId, FirstName, LastName, PrivilegeLvl
+		// 	FROM User
+		// 	WHERE CourseId=$p_courseId
+		// 	AND PrivilegeLvl IN (1, 2)
+		// 	ORDER BY UserId");
+
+		$result = $g_db->querySelect("SELECT UserId, FirstName, LastName, CourseId, PrivilegeLvl
 			FROM User
-			WHERE CourseId=$p_courseId
-			AND PrivilegeLvl IN (1, 2)
+			WHERE CourseId LIKE '%$p_courseId%'
+			AND ((PrivilegeLvl LIKE '%1%'
+			OR PrivilegeLvl LIKE '%2%'))
 			ORDER BY UserId");
+
 
 		return $result;
 	}
