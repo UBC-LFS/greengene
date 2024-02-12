@@ -457,6 +457,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				$epistasisCode = "NULL";
 			}
 
+			
+
 			$record_row_values = "'" . $g_db->sqlString($p_userId) . "'," . $p_masterProblemId . ",0,'". $g_db->sqlString($row->Description) . "','" . $g_db->sqlString($row->Name) . "'," .
 								 $row->GMU1_2 . "," . $row->GMU2_3 . ",'" . $g_db->sqlString($row->TraitOrder) . "'," . $epistasisCode . ",'" .
 								 $g_db->sqlString($row->Trait1Name) . "','"  . $g_db->sqlString($row->Trait1AAPhenoName) . "','" .
@@ -968,13 +970,15 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		global $g_db;
 
 		$default_courseId = $this->m_courseId;
-		$sql_query = "SELECT a.UserId, a.CourseId, a.PrivilegeLvl, a.FirstName, a.LastName, b.Name
+		$sql_query = "SELECT a.UserId, a.CourseId, a.PrivilegeLvl, a.FirstName, a.LastName, b.Name, b.CourseId
 				FROM User a
-				LEFT JOIN StudentProblem b ON a.UserId=b.UserId
-				WHERE CourseId LIKE '%$default_courseId%'
-				AND PrivilegeLvl LIKE '%3%'
+				LEFT JOIN StudentProblem b ON (a.UserId=b.UserId
+				AND b.CourseId='%$default_courseId%')
+				WHERE a.CourseId LIKE '%$default_courseId%'
+				AND PrivilegeLvl LIKE '%3%' 
 				ORDER BY UserId";
 	
+		// var_dump($sql_query);
 		return $g_db->querySelect($sql_query);
 	}
 

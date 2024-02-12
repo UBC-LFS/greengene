@@ -63,6 +63,7 @@ echo("<p>Assigning Problem for Student: $student->m_firstName $student->m_lastNa
 $problemTable = new Table(4, true, false);
 $problemTable->writeHeaders('Name', 'Descriptions', 'Last Modified', '');
 
+
 while($row = $g_db->fetch($recordset))
 {
 	$problemDesc = $row->Description;

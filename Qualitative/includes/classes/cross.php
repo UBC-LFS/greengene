@@ -177,10 +177,20 @@ class Cross
 
 		$firstSequence = sizeof($sequenceGroups) == 1 ? $sequenceGroups[0] : NULL;
 
+		// var_dump($g_db);
+		var_dump("courseID not in this");
+
+		// get courseId from function arg?
+		// get courseId from URL?
+		$user = (new Security) -> getUser();
+		// var_dump($user->m_courseId);
+
+		// return false;
+
 		$success = $g_db->queryCommit("INSERT INTO `Cross` (CrossNum, UserId,
 										         PollenCrossNum, PollenPlantNum, PollenGene,
 										         SeedCrossNum, SeedPlantNum, SeedGene,
-											     GeneSequences)
+											     GeneSequences, CourseId)
 							VALUES ('" . $g_db->sqlString($p_crossNum)			. "', '" .
 										 $g_db->sqlString($p_userId)			. "', '" .
 										 $g_db->sqlString($p_pollenCrossNum)	. "', '" .
@@ -189,7 +199,8 @@ class Cross
 										 $g_db->sqlString($p_seedCrossNum)		. "', '" .
 										 $g_db->sqlString($p_seedPlantNum)		. "', '" .
 										 $g_db->sqlString($seed)				. "', '" .
-										 $g_db->sqlString($firstSequence)		. "')");
+										 $g_db->sqlString($firstSequence)		. "', '" .
+										 $user->m_courseId . "')");
 
 		if ($success && is_null($firstSequence))    // Requires LongerGeneSequences
         {

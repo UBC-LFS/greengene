@@ -30,6 +30,9 @@ if(isset($_POST['deleteAll'])) {
 	$user->deleteAllStudents();
 }
 
+
+var_dump("Did adding courseid and courseid as a key break anything?");
+
 // retrieve the list of problems associated with the user's courseId
 $recordset = $user->getStudents();
 
@@ -42,9 +45,12 @@ $studentTable = new Table(6, true, true);
 
 $studentTable->writeHeaders('', 'CWL Username', 'First Name', 'Last Name', 'Assigned Problem', '');
 
+// var_dump($row = $g_db->fetch($recordset));
+
 // iterate through each row, and get the information
 while($row = $g_db->fetch($recordset))
 {
+	var_dump($row->CourseId);
 	// Ensures user's privilege level is for this course 
 	$courseIdArray = explode(',', $row->CourseId);
 
@@ -54,6 +60,9 @@ while($row = $g_db->fetch($recordset))
 	$indexOfCourse = array_search($user->m_courseId, $courseIdArray);
 	
 	if ($privilegeLevelArray[$indexOfCourse] == 3) {
+		// var_dump("Testing to see if correct problem displays");
+		// var_dump($row->Name);
+
 
 		if(empty($row->Name))
 			$problem = 'Not Assigned';
