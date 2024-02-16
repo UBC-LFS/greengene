@@ -31,10 +31,11 @@ if(isset($_POST['deleteAll'])) {
 }
 
 
-var_dump("Did adding courseid and courseid as a key break anything?");
+// var_dump("Did adding courseid and courseid as a key break anything?");
 
 // retrieve the list of problems associated with the user's courseId
 $recordset = $user->getStudents();
+
 
 $page->handleErrors();
 
@@ -47,10 +48,15 @@ $studentTable->writeHeaders('', 'CWL Username', 'First Name', 'Last Name', 'Assi
 
 // var_dump($row = $g_db->fetch($recordset));
 
+// var_dump("Bug, row->courseId is NULL, why are student course ids not showing up?");
+
 // iterate through each row, and get the information
+
+// var_dump($recordset);
+
 while($row = $g_db->fetch($recordset))
 {
-	var_dump($row->CourseId);
+	// var_dump($row);
 	// Ensures user's privilege level is for this course 
 	$courseIdArray = explode(',', $row->CourseId);
 
@@ -59,10 +65,18 @@ while($row = $g_db->fetch($recordset))
 	// User courseID = courseID we are looking for
 	$indexOfCourse = array_search($user->m_courseId, $courseIdArray);
 	
+	// echo '<pre>';
+
+	// 	var_dump($row);
+	// 	var_dump($row->CourseId);
+	// 	var_dump($courseIdArray);
+	// 	var_dump($user->m_courseId);
+	// 	var_dump($indexOfCourse);
+	// echo '</pre>';
+
 	if ($privilegeLevelArray[$indexOfCourse] == 3) {
 		// var_dump("Testing to see if correct problem displays");
 		// var_dump($row->Name);
-
 
 		if(empty($row->Name))
 			$problem = 'Not Assigned';

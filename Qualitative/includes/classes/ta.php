@@ -467,17 +467,19 @@ while (list($recordIndex,$recordValue) = each($temp)){
 								 $g_db->sqlString($row->Trait2AbPhenoName) . "','" . $g_db->sqlString($row->Trait2bAPhenoName) . "','" . $g_db->sqlString($row->Trait2bbPhenoName) . "','" .
 								 $g_db->sqlString($row->Trait3Name) .  "','" . $g_db->sqlString($row->Trait3AAPhenoName) . "','" .
 								 $g_db->sqlString($row->Trait3AbPhenoName) . "','" . $g_db->sqlString($row->Trait3bAPhenoName) . "','" . $g_db->sqlString($row->Trait3bbPhenoName) . "'," .
-								 $row->ProgenyPerMating . "," . $row->MaxProgeny . " ";
+								 $row->ProgenyPerMating . "," . $row->MaxProgeny . "," .
+								 $this->m_courseId . " ";
 
 			$sql_query = 	"INSERT ".
 							"INTO StudentProblem(UserId,MasterProblemId,Modified,Description,Name,GMU1_2,GMU2_3,TraitOrder,EpistasisCode,".
 							"Trait1Name,Trait1AAPhenoName,Trait1AbPhenoName,Trait1bAPhenoName,Trait1bbPhenoName,".
 							"Trait2Name,Trait2AAPhenoName,Trait2AbPhenoName,Trait2bAPhenoName,Trait2bbPhenoName,".
 							"Trait3Name,Trait3AAPhenoName,Trait3AbPhenoName,Trait3bAPhenoName,Trait3bbPhenoName,".
-						 	"ProgenyPerMating,MaxProgeny) ".
+						 	"ProgenyPerMating,MaxProgeny,CourseId) ".
 						 	"VALUES (" . $record_row_values . ")";
 
 //echo "SQL query is <br>" . $sql_query . "<p>";
+
 
 			if ($g_db->queryCommit($sql_query)!=true)
 			{
@@ -970,14 +972,30 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		global $g_db;
 
 		$default_courseId = $this->m_courseId;
-		$sql_query = "SELECT a.UserId, a.CourseId, a.PrivilegeLvl, a.FirstName, a.LastName, b.Name, b.CourseId
-				FROM User a
-				LEFT JOIN StudentProblem b ON (a.UserId=b.UserId
-				AND b.CourseId='%$default_courseId%')
-				WHERE a.CourseId LIKE '%$default_courseId%'
-				AND PrivilegeLvl LIKE '%3%' 
-				ORDER BY UserId";
+		// $sql_query = "SELECT a.UserId, a.CourseId, a.PrivilegeLvl, a.FirstName, a.LastName, b.Name, b.CourseId
+		// 		FROM User a
+		// 		LEFT JOIN StudentProblem b ON (a.UserId=b.UserId
+		// 		AND b.CourseId='%$default_courseId%')
+		// 		WHERE a.CourseId LIKE '%$default_courseId%'
+		// 		AND PrivilegeLvl LIKE '%3%' 
+		// 		ORDER BY UserId";
 	
+		// var_dump("testing JOIN TABLE");
+
+		// var_dump("if student has no problem assigned, it's not being displayed");
+
+		// Find students, but only get their StudentProblem Data if the CourseId matches
+		$sql_query = "SELECT a.UserId, a.CourseId, a.PrivilegeLvl, a.FirstName, a.LastName, b.Name
+				-- BY CASE
+				-- 	WHEN b.CourseId='%$default_courseId%' THEN b.Name
+				-- 	ELSE b.Name
+				-- END AS b.Name
+				FROM User a
+				LEFT JOIN StudentProblem b ON (a.UserId=b.UserId AND b.CourseId LIKE '%$default_courseId%')
+				WHERE a.CourseId LIKE '%$default_courseId%'
+				AND PrivilegeLvl LIKE '%3%'
+				ORDER BY UserId";
+
 		// var_dump($sql_query);
 		return $g_db->querySelect($sql_query);
 	}
@@ -993,10 +1011,12 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function getStudent($p_userId)
 	{
 		global $g_db;
+
 		$sql_query = 	"SELECT UserId,CourseId,PrivilegeLvl,FirstName,LastName".
 		 				" FROM User ".
 		 				"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND PrivilegeLvl = 3";
 
+		
 		return $g_db->querySelect($sql_query);
 	}
 
