@@ -187,20 +187,26 @@ class Cross
 
 		// return false;
 
-		$success = $g_db->queryCommit("INSERT INTO `Cross` (CrossNum, UserId,
-										         PollenCrossNum, PollenPlantNum, PollenGene,
-										         SeedCrossNum, SeedPlantNum, SeedGene,
-											     GeneSequences, CourseId)
-							VALUES ('" . $g_db->sqlString($p_crossNum)			. "', '" .
-										 $g_db->sqlString($p_userId)			. "', '" .
-										 $g_db->sqlString($p_pollenCrossNum)	. "', '" .
-										 $g_db->sqlString($p_pollenPlantNum)	. "', '" .
-										 $g_db->sqlString($pollen)				. "', '" .
-										 $g_db->sqlString($p_seedCrossNum)		. "', '" .
-										 $g_db->sqlString($p_seedPlantNum)		. "', '" .
-										 $g_db->sqlString($seed)				. "', '" .
-										 $g_db->sqlString($firstSequence)		. "', '" .
-										 $user->m_courseId . "')");
+		$sql_query = "INSERT INTO `Cross` (CrossNum, UserId,
+								PollenCrossNum, PollenPlantNum, PollenGene,
+								SeedCrossNum, SeedPlantNum, SeedGene,
+								GeneSequences, CourseId)
+						VALUES ('" . $g_db->sqlString($p_crossNum)			. "', '" .
+						$g_db->sqlString($p_userId)			. "', '" .
+						$g_db->sqlString($p_pollenCrossNum)	. "', '" .
+						$g_db->sqlString($p_pollenPlantNum)	. "', '" .
+						$g_db->sqlString($pollen)				. "', '" .
+						$g_db->sqlString($p_seedCrossNum)		. "', '" .
+						$g_db->sqlString($p_seedPlantNum)		. "', '" .
+						$g_db->sqlString($seed)				. "', '" .
+						$g_db->sqlString($firstSequence)		. "', '" .
+						$user->m_courseId . "')";
+
+		var_dump("stuck modifying cross");
+
+		var_dump($sql_query);
+
+		$success = $g_db->queryCommit($sql_query);
 
 		if ($success && is_null($firstSequence))    // Requires LongerGeneSequences
         {

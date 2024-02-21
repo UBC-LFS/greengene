@@ -563,6 +563,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			{
 				$epistasisCode = "NULL";
 			}
+
 			$sql_query = 	"UPDATE StudentProblem ".
 							"SET MasterProblemId = " . $p_masterProblemId . ",".
 							"	 Modified = 0," .
@@ -589,9 +590,10 @@ while (list($recordIndex,$recordValue) = each($temp)){
 							"	 Trait3bbPhenoName = '" . $g_db->sqlString($row->Trait3bbPhenoName) . "'," .
 							"	 ProgenyPerMating = " . $row->ProgenyPerMating . "," .
 							" 	 MaxProgeny = ". $row->MaxProgeny .
-							"		WHERE UserId = '" . $g_db->sqlString($p_userId) . "'";
+							"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND CourseId = '$this->m_courseId'";
 
 			//echo "SQL QUERY..<br>" . $sql_query . "<p>";
+
 
 			if ($g_db->queryCommit($sql_query)!=true)
 			{
@@ -1040,7 +1042,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 					 "Trait3Name,Trait3AAPhenoName,Trait3AbPhenoName,Trait3bAPhenoName,Trait3bbPhenoName,".
 					 "ProgenyPerMating,MaxProgeny ".
 					 "FROM StudentProblem ".
-						"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "'";
+						"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND CourseId = '$this->m_courseId'";
 
 		return $g_db->querySelect($sql_query);
 	}
