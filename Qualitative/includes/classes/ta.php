@@ -175,7 +175,7 @@ class TA extends User
 							"SET ProgenyPerMating = " . $p_progenyPerMating . ",".
 							"	 MaxProgeny = " . $p_maxProgeny . ",".
 							"	 Modified=1".
-							"		WHERE UserId = '" . $g_db->sqlString($p_userId) . "'";
+							"		WHERE UserId = '" . $g_db->sqlString($p_userId) ."'" . "AND CourseId='" . $this->m_courseId . "'";
 
 				//echo "<p> DEBUGGING: $sql_query";
 
@@ -252,14 +252,14 @@ class TA extends User
 		// let's check to see if an entry even exist first
 		$sql_query = 	"SELECT UserId ".
 						"FROM StudentProblem ".
-						"	WHERE UserId = '". $g_db->sqlString($p_userId) . "'";
+						"	WHERE UserId = '". $g_db->sqlString($p_userId) . "'" . "AND CourseId='" . $this->m_courseId . "'";
 
 		$recordset = $g_db->querySelect($sql_query);
 		if ( !empty($recordset) )
 		{
 			$sql_query = 	"DELETE ".
 							"FROM StudentProblem ".
-							"	WHERE UserId = '". $g_db->sqlString($p_userId) . "'";
+							"	WHERE UserId = '". $g_db->sqlString($p_userId) . "'" . "AND CourseId='" . $this->m_courseId . "'";
 
 			if ($g_db->queryCommit($sql_query)!= true)
 			{
@@ -414,8 +414,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$sqlQuery = "UPDATE `StudentProblem`
 						 SET `ModificationDate` = NOW( ) ,
 						`ProgenyGenerated` = ". $p_currProgGenerated.
-						 " WHERE `UserId` = '". $g_db->sqlString($p_userId) ."'" ;
-
+						"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND CourseId = '$this->m_courseId'";
 
 		//echo "<p> DEBUGGING STATEMENT (UPDATEPROGENY GENERATED FUNCTION)".$sqlQuery;
 
@@ -590,7 +589,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 							"	 Trait3bbPhenoName = '" . $g_db->sqlString($row->Trait3bbPhenoName) . "'," .
 							"	 ProgenyPerMating = " . $row->ProgenyPerMating . "," .
 							" 	 MaxProgeny = ". $row->MaxProgeny .
-							"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND CourseId = '$this->m_courseId'";
+							"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "'" . " AND CourseId = '$this->m_courseId'";
 
 			//echo "SQL QUERY..<br>" . $sql_query . "<p>";
 
@@ -678,6 +677,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	{
 		global $g_db;
 
+		$cross = new Cross($this->m_traitOrder, $this->m_traitNames, $this->m_phenoNames);
+
 		//check the progeny values
 		if (! TA::validProgenyValues($p_progenyPerMating, $p_maxProgeny)) {
 			return false;
@@ -721,7 +722,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 								 $g_db->sqlString($p_trait2AbName) . "','" . $g_db->sqlString($p_trait2bAName) . "','" . $g_db->sqlString($p_trait2bbName) . "','" .
 								 $g_db->sqlString($p_trait3Name) .  "','" . $g_db->sqlString($p_trait3AAName) . "','" .
 								 $g_db->sqlString($p_trait3AbName) . "','" . $g_db->sqlString($p_trait3bAName) . "','" . $g_db->sqlString($p_trait3bbName) . "'," .
-								 $p_progenyPerMating . "," . $p_maxProgeny . " ";
+								 $p_progenyPerMating . "," . $p_maxProgeny . "," .
+								 $this->m_courseId . " ";
 
 
 			$sql_query = 	"INSERT ".
@@ -729,7 +731,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 							"Trait1Name,Trait1AAPhenoName,Trait1AbPhenoName,Trait1bAPhenoName,Trait1bbPhenoName,".
 							"Trait2Name,Trait2AAPhenoName,Trait2AbPhenoName,Trait2bAPhenoName,Trait2bbPhenoName,".
 							"Trait3Name,Trait3AAPhenoName,Trait3AbPhenoName,Trait3bAPhenoName,Trait3bbPhenoName,".
-						 	"ProgenyPerMating,MaxProgeny) ".
+						 	"ProgenyPerMating,MaxProgeny,CourseId) ".
 						 	"VALUES (" . $record_row_values . ")";
 		}
 		else
@@ -742,14 +744,15 @@ while (list($recordIndex,$recordValue) = each($temp)){
 								 $g_db->sqlString($p_trait2AbName) . "','" . $g_db->sqlString($p_trait2bAName) . "','" . $g_db->sqlString($p_trait2bbName) . "','" .
 								 $g_db->sqlString($p_trait3Name) .  "','" . $g_db->sqlString($p_trait3AAName) . "','" .
 								 $g_db->sqlString($p_trait3AbName) . "','" . $g_db->sqlString($p_trait3bAName) . "','" . $g_db->sqlString($p_trait3bbName) . "'," .
-								 $p_progenyPerMating . "," . $p_maxProgeny . " ";
+								 $p_progenyPerMating . "," . $p_maxProgeny . "," .
+								 $this->m_courseId . " ";
 
 			$sql_query = 	"INSERT ".
 							"INTO StudentProblem(UserId,MasterProblemId,Modified,Description,Name,GMU1_2,GMU2_3,TraitOrder,".
 							"Trait1Name,Trait1AAPhenoName,Trait1AbPhenoName,Trait1bAPhenoName,Trait1bbPhenoName,".
 							"Trait2Name,Trait2AAPhenoName,Trait2AbPhenoName,Trait2bAPhenoName,Trait2bbPhenoName,".
 							"Trait3Name,Trait3AAPhenoName,Trait3AbPhenoName,Trait3bAPhenoName,Trait3bbPhenoName,".
-						 	"ProgenyPerMating,MaxProgeny) ".
+						 	"ProgenyPerMating,MaxProgeny,CourseId) ".
 						 	"VALUES (" . $record_row_values . ")";
 		}
 
@@ -769,12 +772,12 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$db_success = false;
 		if ($p_epistasisCode != -1)
 		{
-			$db_success = Cross::generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
+			$db_success = $cross->generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
 		                       	   $p_gmu1_2, $p_gmu2_3, $p_progenyPerMating, 1);
 		}
 		else
 		{
-			$db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
+			$db_success = $cross->generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
 		                       	   $p_gmu1_2, $p_gmu2_3, $p_progenyPerMating, 1);
 		}
 
@@ -823,6 +826,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	function reassignModifiedProblem($p_userId, $p_masterProblemId,$p_description, $p_name, $p_gmu1_2, $p_gmu2_3, $p_traitOrder, $p_epistasisCode, $p_arrPhenotypeNames, $p_arrPhenotypes, $p_progenyPerMating, $p_maxProgeny)
 	{
 		global $g_db;
+
+		$cross = new Cross($this->m_traitOrder, $this->m_traitNames, $this->m_phenoNames);
 
 		//check the progeny values
 		if (! TA::validProgenyValues($p_progenyPerMating, $p_maxProgeny)) {
@@ -881,8 +886,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 							"	 Trait3bbPhenoName = '" . $g_db->sqlString($p_trait3bbName) . "'," .
 							"	 ProgenyPerMating = " . $p_progenyPerMating . "," .
 							" 	 MaxProgeny = ". $p_maxProgeny .
-							"		WHERE UserId = '" . $g_db->sqlString($p_userId) . "'";
-		}
+							"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND CourseId = '$this->m_courseId'";
+						}
 		else
 		{
 			$sql_query = 	"UPDATE StudentProblem ".
@@ -911,8 +916,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 							"	 Trait3bbPhenoName = '" . $g_db->sqlString($p_trait3bbName) . "'," .
 							"	 ProgenyPerMating = " . $p_progenyPerMating . "," .
 							" 	 MaxProgeny = ". $p_maxProgeny .
-							"		WHERE UserId = '" . $g_db->sqlString($p_userId) . "'";
-		}
+							"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND CourseId = '$this->m_courseId'";
+						}
 
 		if ($g_db->queryCommit($sql_query)!=true)
 		{
@@ -933,12 +938,12 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$db_success = false;
 		if ($p_epistasisCode != -1)
 		{
-			$db_success = Cross::generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
+			$db_success = $cross->generateProgeny($p_userId, 0, 1,'1111', 0, 1, '1111',
 		                       	   $p_gmu1_2, $p_gmu2_3, $p_progenyPerMating, 1);
 		}
 		else
 		{
-			$db_success = Cross::generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
+			$db_success = $cross->generateProgeny($p_userId, 0, 1,'111 ', 0, 1, '111 ',
 		                       	   $p_gmu1_2, $p_gmu2_3, $p_progenyPerMating, 1);
 		}
 
