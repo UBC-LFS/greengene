@@ -40,7 +40,7 @@ CREATE TABLE `Cross` (
   `SeedGene` varchar(4) NOT NULL default '',
   `GeneSequences` varchar(200) default NULL,
   `CreationDate` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  'CourseId' int(10) unsigned NOT NULL default '0',
+  `CourseId` int(10) NOT NULL default '0',
   PRIMARY KEY  (`CrossNum`,`UserId`, `CourseId`)
 );
 

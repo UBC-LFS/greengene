@@ -40,7 +40,7 @@ class Security
 				// defaults to first privilege level
 				$row -> PrivilegeLvl = explode(',', $row -> PrivilegeLvl)[0];
 
-				var_dump($row->PrivilegeLvl);
+				// var_dump($row->PrivilegeLvl);
 				// $row -> PrivilegeLvl = 1; // TESTING
 				switch ($row -> PrivilegeLvl){
 					case 10:

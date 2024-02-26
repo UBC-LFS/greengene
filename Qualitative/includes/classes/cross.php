@@ -178,7 +178,7 @@ class Cross
 		$firstSequence = sizeof($sequenceGroups) == 1 ? $sequenceGroups[0] : NULL;
 
 		// var_dump($g_db);
-		var_dump("courseID not in this");
+		// var_dump("courseID not in this");
 
 		// get courseId from function arg?
 		// get courseId from URL?
@@ -202,9 +202,9 @@ class Cross
 						$g_db->sqlString($firstSequence)		. "', '" .
 						$user->m_courseId . "')";
 
-		var_dump("stuck modifying cross");
+		// var_dump("stuck modifying cross");
 
-		var_dump($sql_query);
+		// var_dump($sql_query);
 
 		$success = $g_db->queryCommit($sql_query);
 

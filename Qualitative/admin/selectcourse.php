@@ -53,7 +53,7 @@ for ($i = 0; $i < count($courseIDs); $i++) {
             break;
 
         case 3:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('../student/viewprogeny.php?course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('../student/viewprogeny.php?_userId=$user->m_userId&course=$i');\">";
             // Page::redirect('student/viewprogeny.php');
             break;
     }
