@@ -346,10 +346,11 @@ class Student extends User
 				$sqlQuery = "UPDATE `StudentProblem` 
 							 SET `ModificationDate` = NOW( ) ,
 							`ProgenyGenerated` = ". $this->m_progenyGenerated .
-							 " WHERE `UserId` = '". $g_db->sqlString($this->m_userId) ." AND CourseId='" . $this->m_courseId . "'";
+							 " WHERE `UserId` = '". $g_db->sqlString($this->m_userId) . "'" . " AND CourseId='" . $this->m_courseId . "'";
 
 				//echo "<p>DEBUGGING (performCross) SQL Query: ".$sqlQuery;
 				
+
 				$db_success = $g_db->queryCommit($sqlQuery);
 				
 				//echo "<p> DB SUCCESS : ".$db_success;
