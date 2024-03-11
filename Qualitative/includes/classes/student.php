@@ -30,53 +30,6 @@ class Student extends User
 		// parent::User($p_userId);
 		parent::__construct($p_userId);
 		global $g_db;
-
-// 		// Get Student Problem
-// 		$sqlQuery = "SELECT Name, Description, GMU1_2, GMU2_3, TraitOrder,
-// 						Trait1Name, Trait1AAPhenoName, Trait1AbPhenoName, Trait1bAPhenoName, Trait1bbPhenoName,
-// 						Trait2Name, Trait2AAPhenoName, Trait2AbPhenoName, Trait2bAPhenoName, Trait2bbPhenoName,
-// 						Trait3Name, Trait3AAPhenoName, Trait3AbPhenoName, Trait3bAPhenoName, Trait3bbPhenoName,
-// 						ProgenyPerMating, MaxProgeny, ProgenyGenerated
-// 					FROM StudentProblem
-// 					WHERE UserId='" . $g_db->sqlString($p_userId) . "'" . "AND CourseId='" . $this->m_courseId . "'";
-// 		$studentRecord = $g_db->querySelect($sqlQuery);
-
-// //		echo "debugging: query:" . $g_db -> getNumRows($studentRecord);
-
-
-// 		var_dump($sqlQuery);
-
-// 		$problem = $g_db -> fetch($studentRecord);
-
-// 		if (is_object($problem)) {
-// 		$this->m_cropName = $problem -> Name;
-// 		$this->m_description = $problem -> Description;
-// 		$this->m_gmu12 = $problem -> GMU1_2;
-// 		$this->m_gmu23 = $problem -> GMU2_3;
-// 		$this->m_traitOrder = $problem -> TraitOrder;
-
-// 		$this->m_traitNames = array($problem->Trait1Name,
-//                                     $problem->Trait2Name,
-//                                     $problem->Trait3Name);
-
-//         $this->m_phenoNames = array(array($problem->Trait1AAPhenoName,
-//                                           $problem->Trait1AbPhenoName,
-//                                           $problem->Trait1bAPhenoName,
-//                                           $problem->Trait1bbPhenoName),
-//                                     array($problem->Trait2AAPhenoName,
-//                                           $problem->Trait2AbPhenoName,
-//                                           $problem->Trait2bAPhenoName,
-//                                           $problem->Trait2bbPhenoName),
-//                                     array($problem->Trait3AAPhenoName,
-//                                           $problem->Trait3AbPhenoName,
-//                                           $problem->Trait3bAPhenoName,
-//                                           $problem->Trait3bbPhenoName));
-
-//         $this->m_progenyPerMating = $problem->ProgenyPerMating;
-//         $this->m_maxProgeny = $problem->MaxProgeny;
-//         $this->m_progenyGenerated = $problem->ProgenyGenerated;
-// 		//echo "<p>Student $this->m_userId created! Prog per mating = $this->m_progenyPerMating";
-// 		}
 	}
 
 

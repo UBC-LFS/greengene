@@ -95,7 +95,7 @@ $page->writeHeader();
 // DATA LOGIC
 if(!empty($courseId))
 {
-	$course = $user->getCourse($courseId);
+	$course = $user->getCourseData($courseId);
 	$users = $user->getManagementUsers($courseId);
 }
 

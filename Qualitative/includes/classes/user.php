@@ -27,7 +27,7 @@ class User
 	{
 		global $g_db;
 
-
+		var_dump($p_userId);
 
 		$courseIndex = NULL; // set default course ID
 		// Get the course index from the URL
@@ -36,6 +36,8 @@ class User
 		}
 
 		// var_dump($courseIndex);
+
+		var_dump($g_db->sqlString($p_userId));
 
 		// Get user information
 		$sqlQuery = "SELECT FirstName,LastName,PrivilegeLvl,CourseId
@@ -94,6 +96,13 @@ class User
 	function getCourse($p_courseId)
 	{	
 		global $g_db;
+
+		if ($p_courseId == 0) {
+			return false;
+		}
+
+		// var_dump("running getCourse");
+		// var_dump($p_courseId);
 
 		$result = $g_db->querySelect("SELECT Name, Description
 			FROM Course

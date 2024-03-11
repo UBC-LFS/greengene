@@ -155,7 +155,7 @@ class MasterAdmin extends User
 	 * @param int $p_courseId course Id
 	 * @return recordset
 	 */
-	function getCourse($p_courseId)
+	function getCourseData($p_courseId)
 	{
 		global $g_db;
 

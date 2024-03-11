@@ -6,6 +6,7 @@ require_once('../includes/global.php');
 // - get user object
 
 // $user = (new Security) -> getUser();
+
 $user = (new Security)->getUser(); // php8
 
 // DATABASE CONNECTION
@@ -17,6 +18,13 @@ $page = new Page($user, 'Manage Problem Templates', 1);
 // write page header, including toolbar
 $page->writeHeader();
 
+var_dump($user);
+
+var_dump($_SERVER['PHP_SELF']);
+
+var_dump("It is making this user a masteradmin instead of administrator in getUser()");
+
+
 if(isset($_POST['del_prob'])) {
 	$delProblem = $_POST['del_prob'];
 	if(count($delProblem) > 0)
@@ -26,6 +34,7 @@ if(isset($_POST['del_prob'])) {
 
 // retrieve the list of problems associated with the user's courseId
 $recordset = $user->getProblems();
+
 $page->handleErrors();
 
 // Start the form

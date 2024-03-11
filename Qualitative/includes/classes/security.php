@@ -44,7 +44,14 @@ class Security
 				// $row -> PrivilegeLvl = 1; // TESTING
 				switch ($row -> PrivilegeLvl){
 					case 10:
+					// if MasterAdmin is acting like a Administrator, give it the Administrator role
+					
+					// if (str_contains($_SERVER['PHP_SELF'], '/admin')) {
+					// 	$user = new Administrator($p_userId);
+					// } else {
 					$user = new MasterAdmin($p_userId);
+					// }
+					
 					break;
 					case 1:
 					$user = new Administrator($p_userId);
@@ -95,6 +102,21 @@ class Security
 	{
 		if ($p_checkSession && isset($_SESSION['userSession']))
 		{
+			// // let master admin act as a prof
+			// if ($_SESSION['userSession']->m_privilegeLvl == 10 And str_contains($_SERVER['PHP_SELF'], '/admin') And (!str_contains($_SERVER['PHP_SELF'], 'selectcourse'))) {
+			// 	// var_dump("testing");
+			// 	var_dump($_SESSION['userSession']->m_userId);
+
+			// 	var_dump("error in security.php getUser");
+
+			// 	$user = new Administrator($_SESSION['userSession']->m_userId);
+			// 	$_SESSION['userSession'] = $user;
+				
+			// 	var_dump("does return break it?");
+
+			// 	return $user;
+			// }
+
 			return $_SESSION['userSession'];
 		}
 		return false;

@@ -24,7 +24,7 @@ echo("<div>");
 echo("<p>Course: </p>");
 $table = new Table(2);
 $table->writeHeaders('Course Name', 'Course Description');
-$course = $user->getCourse($courseId);
+$course = $user->getCourseData($courseId);
 $row =  $g_db->fetch($course);
 $table->writeRow($row->Name, $row->Description);
 $table->flush();
