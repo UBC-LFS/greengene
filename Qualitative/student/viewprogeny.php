@@ -2,10 +2,15 @@
 require_once('../includes/global.php');
 
 // DATABASE CONNECTION
+// $g_db = new DB();
+
+// // SESSION
+// $user = (new Security) -> getUser();
+
 $g_db = new DB();
 
-// SESSION
-$user = (new Security) -> getUser();
+$user = (new Security)->getUserClass($_GET['course']); // php8
+
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'View Progeny', 3);

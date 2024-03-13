@@ -7,10 +7,10 @@ require_once('../includes/global.php');
 
 // $user = (new Security) -> getUser();
 
-$user = (new Security)->getUser(); // php8
-
 // DATABASE CONNECTION
 $g_db = new DB();
+
+$user = (new Security)->getUserClass($_GET['course']); // php8
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'Manage Problem Templates', 1);

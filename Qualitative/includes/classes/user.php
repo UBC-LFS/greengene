@@ -35,9 +35,9 @@ class User
 			$courseIndex = $_GET['course'];
 		}
 
-		// var_dump($courseIndex);
+		var_dump($courseIndex);
 
-		var_dump($g_db->sqlString($p_userId));
+		// var_dump($g_db->sqlString($p_userId));
 
 		// Get user information
 		$sqlQuery = "SELECT FirstName,LastName,PrivilegeLvl,CourseId

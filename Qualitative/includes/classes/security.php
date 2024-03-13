@@ -23,7 +23,7 @@ class Security
 	function login($p_userId, $p_pwd)
 	{	
 		global $g_db;
-		$SQL = "SELECT PrivilegeLvl
+		$SQL = "SELECT *
 				FROM User
 				WHERE UserId='".$g_db -> sqlString($p_userId)."'";
 		$rs = $g_db -> querySelect($SQL);
@@ -37,40 +37,45 @@ class Security
 
 				$row = $g_db -> fetch($rs);
 
+				$row->m_courseArray = explode(',', $row->CourseId);
+				$row->m_PrivilegeLvlArray = explode(',', $row->PrivilegeLvl);
+
 				// defaults to first privilege level
-				$row -> PrivilegeLvl = explode(',', $row -> PrivilegeLvl)[0];
+				// $row -> PrivilegeLvl = explode(',', $row -> PrivilegeLvl)[0];
 
-				// var_dump($row->PrivilegeLvl);
-				// $row -> PrivilegeLvl = 1; // TESTING
-				switch ($row -> PrivilegeLvl){
-					case 10:
-					// if MasterAdmin is acting like a Administrator, give it the Administrator role
-					
-					// if (str_contains($_SERVER['PHP_SELF'], '/admin')) {
-					// 	$user = new Administrator($p_userId);
-					// } else {
-					$user = new MasterAdmin($p_userId);
-					// }
-					
-					break;
-					case 1:
-					$user = new Administrator($p_userId);
-					break;
-					case 2:
-					$user = new TA($p_userId);
-					break;
-					case 3:
-					$user = new Student($p_userId);
-					break;
-					default:
-					echo "Unknown user privilege level.";
-					exit;
-				}
 
-				$_SESSION['userSession'] = $user;
-				//create session variable
+				/*
+					Solution for selecting the corect user class.
+					Don't set privilege level yet. Do not define user
+					Make a seperate function for defining the user once they select a course
+					The select course page should just display courses their privilegeArray includes
+				*/
+
+
+				// switch ($row -> PrivilegeLvl){
+				// 	case 10:
+				// 	$user = new MasterAdmin($p_userId);	
+				// 	break;
+				// 	case 1:
+				// 	$user = new Administrator($p_userId);
+				// 	break;
+				// 	case 2:
+				// 	$user = new TA($p_userId);
+				// 	break;
+				// 	case 3:
+				// 	$user = new Student($p_userId);
+				// 	break;
+				// 	default:
+				// 	echo "Unknown user privilege level.";
+				// 	exit;
+				// }
+
+				// $_SESSION['userSession'] = $user;
+				// //create session variable
 				
-				return $user;
+				// return $user;
+				$_SESSION['userId'] = $row;
+				return true;
 			}
 		}
 		return false;
@@ -92,6 +97,22 @@ class Security
 		return false;
 	}
 
+
+	/**
+	 * getUserTempData: returns a cwl, list of courses and privilege levels for select course
+	 * PRE: a valid userId data
+	 * POST: return false if session does not exist, return user if session does exist
+	 * @return user
+	 */
+	function getUserTempData()
+	{
+		if (isset($_SESSION['userId']))
+		{
+			return $_SESSION['userId'];
+		}
+		return false;
+	}
+
 	/**
 	 * getUser: Login method will take in user name and password check account existance and return user object.
 	 * PRE: a valid user session data
@@ -102,24 +123,50 @@ class Security
 	{
 		if ($p_checkSession && isset($_SESSION['userSession']))
 		{
-			// // let master admin act as a prof
-			// if ($_SESSION['userSession']->m_privilegeLvl == 10 And str_contains($_SERVER['PHP_SELF'], '/admin') And (!str_contains($_SERVER['PHP_SELF'], 'selectcourse'))) {
-			// 	// var_dump("testing");
-			// 	var_dump($_SESSION['userSession']->m_userId);
-
-			// 	var_dump("error in security.php getUser");
-
-			// 	$user = new Administrator($_SESSION['userSession']->m_userId);
-			// 	$_SESSION['userSession'] = $user;
-				
-			// 	var_dump("does return break it?");
-
-			// 	return $user;
-			// }
-
 			return $_SESSION['userSession'];
 		}
 		return false;
+	}
+
+	function getUserClass($courseIndex) {
+		$tempUser = $this->getUserTempData();
+		if ($tempUser) {
+
+			$p_userId = $tempUser->UserId;
+		
+			$tempUser->m_courseArray = explode(',', $row->CourseId);
+			$tempUser->m_PrivilegeLvlArray = explode(',', $row->PrivilegeLvl);
+
+			// Set
+			$tempUser -> CourseId = explode(',', $tempUser -> PrivilegeLvl)[$courseIndex];
+			$tempUser -> PrivilegeLvl = explode(',', $tempUser -> PrivilegeLvl)[$courseIndex];
+
+			// var_dump($tempUser);
+
+			switch ($tempUser -> PrivilegeLvl){
+				case 10:
+				$user = new MasterAdmin($p_userId);	
+				break;
+				case 1:
+				$user = new Administrator($p_userId);
+				break;
+				case 2:
+				$user = new TA($p_userId);
+				break;
+				case 3:
+				$user = new Student($p_userId);
+				break;
+				default:
+				echo "Unknown user privilege level.";
+				exit;
+			}
+
+			$_SESSION['userSession'] = $user;
+			//create session variable
+					
+			return $user;
+		}
+	return false;
 	}
 
 	/**

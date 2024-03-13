@@ -51,7 +51,6 @@ class Page
 				$p_user->m_courseName = $row->Name;
 				$p_user->m_courseDescription = $row->Description;
 			}
-
 		}
 
 		// var_dump($courseIndex);
@@ -137,10 +136,10 @@ class Page
 	 *
 	 * @param User $p_user User object representing current user
 	 */
-	function redirectInitial($p_user)
+	function redirectInitial()
 	{
 		// $p_user->m_privilegeLvl = 1; // testing purposes
-		Page::redirect('admin/selectcourse.php');
+		Page::redirect('selectcourse.php');
 		// switch($p_user->m_privilegeLvl)
 		// {
 		// 	case 10:
@@ -452,7 +451,7 @@ END;
 			echo <<<END
 	</td>
 	<td class="iconLinks">
-		<a href="/admin/selectcourse.php">Switch Courses</a>
+		<a href="/selectcourse.php">Switch Courses</a>
 
 		<a href="$helpURL" target="_blank">Help<img src="$imgroot/help.gif" width="13" height="13" alt="Help"></a>&nbsp;
 		<a href="$printURL" target="_blank">Printer Friendly<img src="$imgroot/printer.gif" width="13" height="13" alt="Printer Friendly"></a>

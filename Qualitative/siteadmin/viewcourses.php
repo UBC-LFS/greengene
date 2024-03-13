@@ -2,13 +2,18 @@
 require_once('../includes/global.php');
 
 // DATABASE CONNECTION
-$g_db = new DB();
+// $g_db = new DB();
 
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
 // $user = (new Security) -> getUser();
-$user = (new Security)->getUser();
+// $user = (new Security)->getUser();
+
+$g_db = new DB();
+
+$user = (new Security)->getUserClass($_GET['course']); // php8
+
 
 // PAGE CREATION LOGIC
 $page = new Page($user, 'Manage Courses', 10);

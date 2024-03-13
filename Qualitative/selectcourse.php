@@ -1,25 +1,36 @@
 <?php
-require_once('../includes/global.php');
+require_once('includes/global.php');
 
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
 
 // $user = (new Security) -> getUser();
-$user = (new Security)->getUser(); // php8
+// $user = (new Security)->getUser(); // php8
 
 // DATABASE CONNECTION
 $g_db = new DB();
 
+$user = (new Security) -> getUserTempData();
+// initalize the lowest user permission level
+$user = new Student($user->UserId);
+
+// If unknown privilege level, clear session??
+
+
+
 // PAGE CREATION LOGIC, the 10 means anyone with privilege level 10 or lower can access page
-$page = new Page($user, 'Select Courses', 3);
+$page = new Page($user, 'Select Courses', 0);
 
 // write page header, including toolbar
 $page->writeHeader("SelectCourses");
 
 
 // render table with courses the user is in
-$user = (new Security) -> getUser();
+
+
+// var_dump($user);
+
 $courseIDs = $user->m_courseArray;
 
 $table = new Table(3);
@@ -45,24 +56,24 @@ for ($i = 0; $i < count($courseIDs); $i++) {
     {
         // Do we want admins to have more access?
         case 10:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"changeUserClass($user->m_PrivilegeLvlArray[$i], '../siteadmin/viewcourses.php');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/siteadmin/viewcourses.php?course=$i');\">";
             // $button = "<input type=\"button\" value=\"Select\" name=\"$i\">";
 
             // Page::redirect('siteadmin/viewcourses.php');
             break;
 
         case 1:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"changeUserClass($user->m_PrivilegeLvlArray[$i], 'viewproblemlist.php?course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/admin/viewproblemlist.php?course=$i');\">";
             // Page::redirect('admin/viewproblemlist.php');
             break;
 
         case 2:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"changeUserClass($user->m_PrivilegeLvlArray[$i], 'viewstudentlist.php?course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/admin/viewstudentlist.php?course=$i');\">";
             // Page::redirect('admin/viewstudentlist.php');
             break;
 
         case 3:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"changeUserClass($user->m_PrivilegeLvlArray[$i], '../student/viewprogeny.php?_userId=$user->m_userId&course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/student/viewprogeny.php?_userId=$user->m_userId&course=$i');\">";
             // Page::redirect('student/viewprogeny.php');
             break;
     }
