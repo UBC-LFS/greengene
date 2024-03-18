@@ -6,6 +6,7 @@ require_once('../includes/global.php');
 // - get user object
 $user = (new Security) -> getUser();
 
+
 // PAGE CREATION LOGIC
 $page = new Page($user, 'Assign Problem Page', 1);
 

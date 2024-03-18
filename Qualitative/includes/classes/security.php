@@ -39,41 +39,7 @@ class Security
 
 				$row->m_courseArray = explode(',', $row->CourseId);
 				$row->m_PrivilegeLvlArray = explode(',', $row->PrivilegeLvl);
-
-				// defaults to first privilege level
-				// $row -> PrivilegeLvl = explode(',', $row -> PrivilegeLvl)[0];
-
-
-				/*
-					Solution for selecting the corect user class.
-					Don't set privilege level yet. Do not define user
-					Make a seperate function for defining the user once they select a course
-					The select course page should just display courses their privilegeArray includes
-				*/
-
-
-				// switch ($row -> PrivilegeLvl){
-				// 	case 10:
-				// 	$user = new MasterAdmin($p_userId);	
-				// 	break;
-				// 	case 1:
-				// 	$user = new Administrator($p_userId);
-				// 	break;
-				// 	case 2:
-				// 	$user = new TA($p_userId);
-				// 	break;
-				// 	case 3:
-				// 	$user = new Student($p_userId);
-				// 	break;
-				// 	default:
-				// 	echo "Unknown user privilege level.";
-				// 	exit;
-				// }
-
-				// $_SESSION['userSession'] = $user;
-				// //create session variable
-				
-				// return $user;
+		
 				$_SESSION['userId'] = $row;
 				return true;
 			}
@@ -97,6 +63,10 @@ class Security
 		return false;
 	}
 
+
+	function clearUserClass() {
+		$_SESSION['userSession'] = NULL;
+	}
 
 	/**
 	 * getUserTempData: returns a cwl, list of courses and privilege levels for select course
@@ -130,19 +100,19 @@ class Security
 
 	function getUserClass($courseIndex) {
 		$tempUser = $this->getUserTempData();
-		if ($tempUser) {
 
+		if ($_SESSION['userSession']) {
+			return $_SESSION['userSession'];
+		}
+
+		if ($tempUser) {
 			$p_userId = $tempUser->UserId;
 		
-			$tempUser->m_courseArray = explode(',', $row->CourseId);
-			$tempUser->m_PrivilegeLvlArray = explode(',', $row->PrivilegeLvl);
+			// set new course id and privilege level
+			$tempUser -> CourseId = ($tempUser -> m_courseArray)[$courseIndex];
+			$tempUser -> PrivilegeLvl = ($tempUser -> m_PrivilegeLvlArray)[$courseIndex];
 
-			// Set
-			$tempUser -> CourseId = explode(',', $tempUser -> PrivilegeLvl)[$courseIndex];
-			$tempUser -> PrivilegeLvl = explode(',', $tempUser -> PrivilegeLvl)[$courseIndex];
-
-			// var_dump($tempUser);
-
+			// make class
 			switch ($tempUser -> PrivilegeLvl){
 				case 10:
 				$user = new MasterAdmin($p_userId);	

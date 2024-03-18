@@ -11,6 +11,7 @@ require_once('includes/global.php');
 // DATABASE CONNECTION
 $g_db = new DB();
 
+$user = (new Security) -> clearUserClass();
 $user = (new Security) -> getUserTempData();
 // initalize the lowest user permission level
 $user = new Student($user->UserId);

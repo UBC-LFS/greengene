@@ -18,13 +18,6 @@ $page = new Page($user, 'Manage Problem Templates', 1);
 // write page header, including toolbar
 $page->writeHeader();
 
-var_dump($user);
-
-var_dump($_SERVER['PHP_SELF']);
-
-var_dump("It is making this user a masteradmin instead of administrator in getUser()");
-
-
 if(isset($_POST['del_prob'])) {
 	$delProblem = $_POST['del_prob'];
 	if(count($delProblem) > 0)
