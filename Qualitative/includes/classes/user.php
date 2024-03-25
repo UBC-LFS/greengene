@@ -27,7 +27,7 @@ class User
 	{
 		global $g_db;
 
-		var_dump($p_userId);
+		// var_dump($p_userId);
 
 		$courseIndex = NULL; // set default course ID
 		// Get the course index from the URL
@@ -35,7 +35,7 @@ class User
 			$courseIndex = $_GET['course'];
 		}
 
-		var_dump($courseIndex);
+		// var_dump($courseIndex);
 
 		// var_dump($g_db->sqlString($p_userId));
 

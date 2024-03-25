@@ -1089,10 +1089,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 	 * @return recordset
 	 */
 	function getProblems()
-	{
-
-		var_dump("running getProblems from TA");
-		
+	{		
 		global $g_db;
 		$default_courseId = $this->m_courseId;
 		//$default_courseId = 4;

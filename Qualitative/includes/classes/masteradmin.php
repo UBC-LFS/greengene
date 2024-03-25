@@ -45,6 +45,14 @@ class MasterAdmin extends User
 
 		$courseId = $g_db->getLastInsertId();
 
+		// make all siteadmins a prof in this course
+		$siteAdmins = $this->getSiteAdmins(); // gets the list of site admins
+		// for each siteadmin, make them a prof
+		while($row = $g_db->fetch($siteAdmins)) {
+			
+			$this->createManagementUser($row->UserId, $row->FirstName, $row->LastName, $courseId, 1);
+		}
+
 		if($this->createManagementUser($p_userId, $p_firstName, $p_lastName, $courseId, 1) != true)
 		{
 			return false;
@@ -69,20 +77,30 @@ class MasterAdmin extends User
 		$g_db->queryCommit("DELETE FROM MasterProblem
 			WHERE CourseId=$p_courseId");
 
+		// get users from that course
+		// need to fix this to work with multiple courses
+		// $users = $g_db->querySelect("SELECT UserId
+		// 	FROM User
+		// 	WHERE CourseId=$p_courseId");
+
+		// SQL command for getting all users who are in that course
 		$users = $g_db->querySelect("SELECT UserId
 			FROM User
-			WHERE CourseId=$p_courseId");
+			WHERE CourseId LIKE '%$p_courseId%'");
 
+
+		// INSTEAD OF WHERE USERID = , ALSO DO A COURSEID =
 		while($row = $g_db->fetch($users))
 		{
 			$userId = $g_db->sqlString($row->UserId);
 			$g_db->queryCommit("DELETE FROM StudentProblem
-				WHERE UserId='$userId'");
+				WHERE UserId='$userId' AND CourseId='$p_courseId'");
 			$g_db->queryCommit("DELETE FROM `Cross`
-				WHERE UserId='$userId'");
+				WHERE UserId='$userId' AND CourseId='$p_courseId'");
 			$g_db->queryCommit("DELETE FROM LongerGeneSequences
-				WHERE UserId='$userId'");
+				WHERE UserId='$userId' AND CourseId='$p_courseId'");
 		}
+		
 
 		$traits = $g_db->querySelect("SELECT TraitId
 			FROM Trait
@@ -95,8 +113,13 @@ class MasterAdmin extends User
 		$g_db->queryCommit("DELETE FROM Trait
 			WHERE CourseId=$p_courseId");
 
-		$g_db->queryCommit("DELETE FROM User
-			WHERE CourseId=$p_courseId");
+		// need to fix this so that it only deletes the course and privilege level
+		// $g_db->queryCommit("DELETE FROM User
+		// 	WHERE CourseId=$p_courseId");
+
+		$this->deleteManagementUser($userId, $p_courseId);
+
+
 
 		// finally delete the course
 		if($g_db->queryCommit("DELETE FROM Course " .
@@ -368,6 +391,18 @@ class MasterAdmin extends User
 			OR PrivilegeLvl LIKE '%2%'))
 			ORDER BY UserId");
 
+
+		return $result;
+	}
+
+	function getSiteAdmins()
+	{
+		global $g_db;
+
+		$result = $g_db->querySelect("SELECT UserId, FirstName, LastName, CourseId, PrivilegeLvl
+			FROM User
+			WHERE PrivilegeLvl LIKE '%0%'
+			ORDER BY UserId");
 
 		return $result;
 	}

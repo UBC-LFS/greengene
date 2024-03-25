@@ -82,6 +82,7 @@ if ($formaction == "createproblem")
 		// UserError::addError(754);
 		(new UserError) -> addError(754);		
 	}
+	
 	determineDominance($inputRadio0,0,&$arrPhenotypes);
 
 	$inputRadio1 = $_POST['radio1'];

@@ -55,6 +55,7 @@ CREATE TABLE `LongerGeneSequences` (
   `UserId` varchar(10) NOT NULL default '',
   `CrossNum` int(10) unsigned NOT NULL default '0',
   `GeneSequences` varchar(200) NOT NULL default '',
+  `CourseId` int(10) NOT NULL default '0',
   PRIMARY KEY  (`SequencesId`)
 );
 
