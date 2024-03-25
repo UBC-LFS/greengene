@@ -12,10 +12,8 @@ class MasterAdmin extends User
 	 *
 	 * @param string $p_userId UserId
 	 */
-	// function MasterAdmin($p_userId)
 	function __construct($p_userId)
 	{
-		// parent::User($p_userId); 
 		parent::__construct($p_userId);
 	}
 
@@ -77,11 +75,6 @@ class MasterAdmin extends User
 		$g_db->queryCommit("DELETE FROM MasterProblem
 			WHERE CourseId=$p_courseId");
 
-		// get users from that course
-		// need to fix this to work with multiple courses
-		// $users = $g_db->querySelect("SELECT UserId
-		// 	FROM User
-		// 	WHERE CourseId=$p_courseId");
 
 		// SQL command for getting all users who are in that course
 		$users = $g_db->querySelect("SELECT UserId
@@ -112,10 +105,6 @@ class MasterAdmin extends User
 
 		$g_db->queryCommit("DELETE FROM Trait
 			WHERE CourseId=$p_courseId");
-
-		// need to fix this so that it only deletes the course and privilege level
-		// $g_db->queryCommit("DELETE FROM User
-		// 	WHERE CourseId=$p_courseId");
 
 		$this->deleteManagementUser($userId, $p_courseId);
 
@@ -230,8 +219,7 @@ class MasterAdmin extends User
 				SET CourseId='$updatedCourseID', 
 				PrivilegeLvl='$updatedPrivilegeLvl'
 				WHERE UserId='$p_userId'";
-			// (new UserError) -> addError(305);
-			// return false;
+		
 		}
 		else {
 			$sql_query = "INSERT INTO User
@@ -245,7 +233,6 @@ class MasterAdmin extends User
 
 		if($g_db->queryCommit($sql_query) != true)
 		{
-			// UserError::addError(901);
 			(new UserError) -> addError(901);
 			return false;
 		}
@@ -268,7 +255,6 @@ class MasterAdmin extends User
 
 		if($p_privilegeLvl != 1 && $p_privilegeLvl != 2)
 		{
-			// UserError::addError(910);
 			(new UserError) -> addError(910);
 			return false;
 		}
@@ -279,7 +265,6 @@ class MasterAdmin extends User
 			PrivilegeLvl=$p_privilegeLvl
 			WHERE UserId='" . $g_db->sqlString($p_userId) . "'") != true)
 		{
-			// UserError::addError(904);
 			(new UserError) -> addError(904);
 			return false;
 		}
@@ -306,7 +291,6 @@ class MasterAdmin extends User
 			WHERE PrivilegeLvl=10
 			AND UserId='" . $g_db->sqlString($p_userId) . "'") != true)
 		{
-			// UserError::addError(904);
 			(new UserError) -> addError(904);
 			return false;
 		}
@@ -360,7 +344,6 @@ class MasterAdmin extends User
 
 		if(! $g_db->queryCommit($sql_query))
 		{
-			// UserError::addError(909);
 			(new UserError) -> addError(909);
 			return false;
 		}
@@ -378,11 +361,6 @@ class MasterAdmin extends User
 	{
 		global $g_db;
 
-		// $result = $g_db->querySelect("SELECT UserId, FirstName, LastName, PrivilegeLvl
-		// 	FROM User
-		// 	WHERE CourseId=$p_courseId
-		// 	AND PrivilegeLvl IN (1, 2)
-		// 	ORDER BY UserId");
 
 		$result = $g_db->querySelect("SELECT UserId, FirstName, LastName, CourseId, PrivilegeLvl
 			FROM User
@@ -424,7 +402,6 @@ class MasterAdmin extends User
 
 		if($g_db->getNumRows($result) != 1)
 		{
-			// UserError::addError(906);
 			(new UserError) -> addError(906);
 			return false;
 		}

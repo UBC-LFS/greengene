@@ -25,7 +25,6 @@ $page->handleErrors();
 
 if (empty($studentRecordset))
 {
-	// UserError::addError(654);
 	(new UserError) -> addError(654);
 }
 else

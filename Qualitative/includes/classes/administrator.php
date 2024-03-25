@@ -16,10 +16,8 @@ class Administrator extends TA
 	 * POST: TA object is constructed
 	 * @param string $p_userId
 	 */
-	// function Administrator($p_userId)
 	function __construct($p_userId)
 	{
-		// parent::TA($p_userId);
 		parent::__construct($p_userId);
 	}
 
@@ -57,7 +55,6 @@ class Administrator extends TA
 						"VALUES ('". $default_courseId . "','" . $name . "')";
 		if(! $g_db->queryCommit($sql_query) )
 		{
-			// UserError::addError(701);
 			(new UserError) -> addError(701);
 			return false;
 		}
@@ -89,7 +86,6 @@ class Administrator extends TA
 						"VALUES ('" . $p_traitId . "','" . $p_phenotype . "')";
 		if(! $g_db->queryCommit($sql_query) )
 		{
-			// UserError::addError(702);
 			(new UserError) -> addError(702);
 			return false;
 		}
@@ -112,7 +108,6 @@ class Administrator extends TA
 						"	WHERE PhenotypeId = '" . $p_phenotypeId ."'";
 		if(! $g_db->queryCommit($sql_query) )
 		{
-			// UserError::addError(703);
 			(new UserError) -> addError(703);
 			return false;
 		}
@@ -141,7 +136,6 @@ class Administrator extends TA
 		if( (! $g_db->queryCommit($sql_query) ) ||
 			(! $g_db->queryCommit($sql_query2) ) )
 		{
-			// UserError::addError(704);
 			(new UserError) -> addError(704);
 			return false;
 		}
@@ -156,13 +150,11 @@ class Administrator extends TA
 	 {
 	 		if ($p_progenyPerMating < 0)
 			{
-				// UserError::addError(751);
 				(new UserError) -> addError(751);
 				return false;
 			}
 			if ($p_maxProgeny < 0)
 			{
-				// UserError::addError(752);
 				(new UserError) -> addError(752);
 				return false;
 			}
@@ -170,7 +162,6 @@ class Administrator extends TA
 			//check to make sure that maxprogeny is NOT < progpermating
 			if ($p_maxProgeny < $p_progenyPerMating)
 			{
-				// UserError::addError(765);
 				(new UserError) -> addError(765);
 				return false;
 			}
@@ -436,7 +427,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 		if (! $g_db->queryCommit($sql_query) )
 		{
-			// UserError::addError(716);
 			(new UserError) -> addError(716);
 			return false;
 		}
@@ -446,7 +436,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 						"	SET Modified=2".
 						"   WHERE MasterProblemId=".$g_db->sqlString($p_problemId)))
 		{
-			// UserError::addError(717);
 			(new UserError) -> addError(717);
 			return false;
 		}

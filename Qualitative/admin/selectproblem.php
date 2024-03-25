@@ -25,12 +25,10 @@ if(isset($_GET['problemId']))
 	{
 		if( !$user->assignProblem($studentId,$_GET['problemId']) )
 		{
-			// UserError::addError(763);
 			(new UserError) -> addError(763);
 		}
 		else
 		{
-			//$page->redirect("viewstudent.php?studentId=".$studentId);
 			$page->redirect("viewstudentlist.php");
 		}
 	}
@@ -38,12 +36,10 @@ if(isset($_GET['problemId']))
 	{
 		if( !$user->reassignProblem($studentId,$_GET['problemId']))
 		{
-			// UserError::addError(763);
 			(new UserError) -> addError(763);
 		}
 		else
 		{
-			//$page->redirect("viewstudent.php?studentId=".$studentId);
 			$page->redirect("viewstudentlist.php");
 		}
 	}

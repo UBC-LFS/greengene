@@ -4,7 +4,6 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-// $user = (new Security) -> getUser();
 $user = (new Security) -> getUser();
 
 $userId = $user->m_userId;
@@ -38,7 +37,6 @@ $page -> setOnLoad("loadData();");
 // DATABASE CONNECTION
 $g_db = new DB();
 
-//$admin = new Administrator($userId);
 $showProblemForm = false;
 $showProblemSummary = false;
 
@@ -102,7 +100,6 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	$inputProblemName = $_POST['problemname'];
 	if (empty($inputProblemName))
 	{
-		// UserError::addError(750);
 		(new UserError) -> addError(750);
 	}
 
@@ -111,13 +108,11 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	$inputProgenyPerMating = $_POST['progpermating'];
 	if ($inputProgenyPerMating < 1)
 	{
-		// UserError::addError(751);
 		(new UserError) -> addError(751);
 	}
 	$inputMaxProgeny = $_POST['totalprogeny'];
 	if ($inputMaxProgeny < 1)
 	{
-		// UserError::addError(752);
 		(new UserError) -> addError(752);
 	}
 	$inputTrait0 = $_POST['trait0'];
@@ -127,7 +122,6 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 
 	if ($inputTrait0 == -1 || $inputTrait1 == -1 || $inputTrait2 == -1)
 	{
-		// UserError::addError(753);
 		(new UserError) -> addError(753);
 	}
 
@@ -158,7 +152,6 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	
 	if ($inputLinkdist_01 < 0 || $inputLinkdist_12 < 0)
 	{
-		// UserError::addError(758);
 		(new UserError) -> addError(758);
 	}
 	// get trait orders
@@ -187,7 +180,6 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 		{
 			//echo "going into assignProblem";
 
-			// if (UserError::hasError() == 0)
 			if ((new UserError()) -> hasError() == 0)
 			{
 				if ($problemEqual != true)
@@ -204,7 +196,6 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 				}
 			}
 
-			// if (UserError::hasError() == 0)
 			if ((new UserError()) -> hasError() == 0)
 			{
 				$page->redirect("viewstudentlist.php");
@@ -212,7 +203,6 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 		}
 		else
 		{
-			// if (UserError::hasError() == 0)
 			if ((new UserError()) -> hasError() == 0)
 			{
 				if ($problemEqual != true)
@@ -229,10 +219,8 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 				}
 			}
 
-			// if (UserError::hasError() == 0)
 			if ((new UserError()) -> hasError() == 0)
 			{
-				//$page->redirect("viewstudent.php?studentId=".$studentId);
 				//wrapUp("viewstudentlist.php");
 				$page->redirect("viewstudentlist.php");
 			}
@@ -242,7 +230,6 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 	// Modify the Problem
 	else
 	{
-		// if (UserError::hasError() == 0)
 		if ((new UserError()) -> hasError() == 0)
 		{
 			if ($problemEqual != true)
@@ -255,7 +242,6 @@ if ($formaction == "modifyproblem" || $formaction == "assignproblem")
 			}
 		}
 
-		// if (UserError::hasError() == 0)
 		if ((new UserError()) -> hasError() == 0)
 		{
 			//problem summary
@@ -330,14 +316,10 @@ else
 			}
 			else
 			{
-				// UserError::addError(653);
 				(new UserError) -> addError(653);
 			}
 		}
 	}
-//	// write page header, including toolbar
-	//$page->writeHeader();
-	//$page->handleErrors();
 }
 
 // write page header, including toolbar
@@ -405,7 +387,6 @@ else if ($showProblemSummary == true)
 
 <?php
 // display any errors
-//$page->handleErrors();
 
 // write main footer and close database connection
 $page->writeFooter();
@@ -796,7 +777,6 @@ function determineDominance($p_isDominance,$p_traitNumber,$p_arrPhenotypes)
 
 		if (empty($AATrait) || empty($bbTrait))
 		{
-			// UserError::addError(756);
 			(new UserError) -> addError(756);
 			return false;
 		}
@@ -810,7 +790,6 @@ function determineDominance($p_isDominance,$p_traitNumber,$p_arrPhenotypes)
 	$bbTrait = $_POST['pheno'.$p_traitNumber.'2'];
 	if (empty($AATrait) || empty($bbTrait) || empty($mixedTrait) )
 	{
-		// UserError::addError(757);
 		(new UserError) -> addError(757);
 		return false;
 	}
@@ -829,7 +808,6 @@ function determineEpistasis($p_epistasisValue, $p_traitNumber, $p_arrPhenotypes)
 	{
 		if (empty($_POST['pheno2'.$i]))
 		{
-			// UserError::addError(760);
 			(new UserError) -> addError(760);
 			return false;
 		}

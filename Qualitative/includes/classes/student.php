@@ -24,10 +24,8 @@ class Student extends User
      *
      * @param string $p_userId userID of a student (userId must be in the StudentProblem table)
      */
-	// function Student($p_userId)
 	function __construct($p_userId)
 	{
-		// parent::User($p_userId);
 		parent::__construct($p_userId);
 		global $g_db;
 	}
@@ -52,10 +50,6 @@ class Student extends User
 		$studentRecord = $g_db->querySelect($sqlQuery);
 
 //		echo "debugging: query:" . $g_db -> getNumRows($studentRecord);
-
-
-		// var_dump("TESTING NEW FUNCTION");
-		// var_dump($sqlQuery);
 
 		$problem = $g_db -> fetch($studentRecord);
 
@@ -132,15 +126,6 @@ class Student extends User
 				FROM `Cross`
 				WHERE UserId='" . $g_db->sqlString($this->m_userId) . "'" . "AND CourseId='" . $this->m_courseId . "'";
 
-		
-		// var_dump("Works if user is in 1 course, once added to 2nd course, it displays the problem for the 2nd course instead");
-		// var_dump("assign problem page also displaying problem from other courses");
-
-		// var_dump("FOUND ERROR: When we assign a problem to a student in another course, it deletes the previous problem!");
-
-		// var_dump($sql);
-		// var_dump("Testing course ID grab");
-
 		if ($p_crossNum == 'Latest')				// Find latest cross number
 			$p_crossNum = $this->getCrossCount();
 
@@ -155,11 +140,7 @@ class Student extends User
 			$sql .= "AND CrossNum=" . $this->getCrossCount();	// Use latest
 		}
 
-		// var_dump($sql);
-
 		$crossRecord = $g_db->querySelect($sql);
-
-		// var_dump($crossRecord);
 
 		$crossData = new Cross($this->m_traitOrder, $this->m_traitNames, $this->m_phenoNames);
 
@@ -233,9 +214,6 @@ class Student extends User
 				FROM `Cross`
 				WHERE (UserId='" . $g_db->sqlString($this->m_userId) . "'
 				AND (CrossNum=$p_pollenCrossNum OR CrossNum=$p_seedCrossNum) AND CourseId='" . $this->m_courseId . "')";
-
-
-		// var_dump($sqlQuery);
 
 		$geneRecord = $g_db->querySelect($sqlQuery);
 

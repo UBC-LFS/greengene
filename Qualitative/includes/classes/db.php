@@ -87,7 +87,6 @@ class DB
 	function fetch($p_resource)
 	{
 		return mysqli_fetch_object($p_resource);
-		//return mysql_fetch_object($p_resource);
 	}
 
 	 /**
@@ -100,7 +99,6 @@ class DB
 	function getNumRows($p_resource)
 	{
 		return mysqli_num_rows($p_resource);
-		//return mysql_num_rows($p_resource);
 	}
 
 	 /**
@@ -112,7 +110,6 @@ class DB
 	function getRowsAffected()
 	{
 		return mysqli_affected_rows($this -> m_conn);
-		//return mysql_affected_rows($this -> m_conn);
 	}
 
 	 /**
@@ -128,16 +125,13 @@ class DB
 		// if (get_magic_quotes_gpc())
 		if (false)
 			return mysqli_real_escape_string($this->m_conn, stripslashes($p_string));
-			//return mysql_real_escape_string(stripslashes($p_string));
 		return mysqli_real_escape_string($this->m_conn,$p_string);
-		//return mysql_real_escape_string($p_string);
 	}
 
 
 	function getLastInsertId()
 	{
 		return mysqli_insert_id($this -> m_conn);
-		//return mysql_insert_id();
 	}
 
 	 /**
@@ -148,7 +142,6 @@ class DB
 	function disconnect()
 	{
 		mysqli_close($this -> m_conn);
-		//mysql_close($this -> m_conn);
 	}
 }
 ?>

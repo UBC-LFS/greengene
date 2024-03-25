@@ -35,7 +35,6 @@ class CrossView
 	 *
 	 * @param Cross $p_cross Cross information
 	 */
-    // function CrossView($p_cross)
 	function __construct($p_cross)
     {
         $this->m_cross = $p_cross;	// Store Cross object
@@ -173,28 +172,21 @@ class CrossView
 					$this->m_phenoNames[$this->m_trait1Idx][$curCross['PollenGene'][$this->m_trait1Idx]],
 					$this->m_phenoNames[$this->m_trait2Idx][$curCross['PollenGene'][$this->m_trait2Idx]],
 					$this->m_phenoNames[$this->m_trait3Idx][$curCross['PollenGene'][$this->m_trait3Idx]]);
-					// $this->m_phenoNames[$this->m_trait1Idx][$curCross[PollenGene]{$this->m_trait1Idx}],
-					// $this->m_phenoNames[$this->m_trait2Idx][$curCross[PollenGene]{$this->m_trait2Idx}],
-					// $this->m_phenoNames[$this->m_trait3Idx][$curCross[PollenGene]{$this->m_trait3Idx}]);
+
 
 				// write seed
 				$curCross['SeedGene'][2] = $this->translateEpistasis($curCross['SeedGene'], 2);
-				// $curCross[SeedGene]{2} = $this->translateEpistasis($curCross[SeedGene], 2);
-				// $this->translateEpistasis($curCross[SeedGene], 2);
+
 				$seedCrossNum = $curCross['SeedCrossNum'];
 				$seedPlantNum = $curCross['SeedPlantNum'];
-				// $seedCrossNum = $curCross[SeedCrossNum];
-				// $seedPlantNum = $curCross[SeedPlantNum];
-
+			
 				$table->writeRow("Seed:
 					<a href=\"viewprogeny.php?_userId=$userId&cross=$seedCrossNum#$seedCrossNum-$seedPlantNum\">Plant $seedPlantNum</a> of
 					<a href=\"viewprogeny.php?_userId=$userId&cross=$seedCrossNum#$seedCrossNum\">Cross $seedCrossNum</a>",
 					$this->m_phenoNames[$this->m_trait1Idx][$curCross['SeedGene'][$this->m_trait1Idx]],
 					$this->m_phenoNames[$this->m_trait2Idx][$curCross['SeedGene'][$this->m_trait2Idx]],
 					$this->m_phenoNames[$this->m_trait3Idx][$curCross['SeedGene'][$this->m_trait3Idx]]);
-					// $this->m_phenoNames[$this->m_trait1Idx][$curCross[SeedGene]{$this->m_trait1Idx}],
-					// $this->m_phenoNames[$this->m_trait2Idx][$curCross[SeedGene]{$this->m_trait2Idx}],
-					// $this->m_phenoNames[$this->m_trait3Idx][$curCross[SeedGene]{$this->m_trait3Idx}]);
+
 				$table->flush();
 			}
 

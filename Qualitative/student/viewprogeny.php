@@ -2,11 +2,6 @@
 require_once('../includes/global.php');
 
 // DATABASE CONNECTION
-// $g_db = new DB();
-
-// // SESSION
-// $user = (new Security) -> getUser();
-
 $g_db = new DB();
 
 $user = (new Security)->getUserClass($_GET['course']); // php8
@@ -131,10 +126,6 @@ else
 
 	$student->getStudentProblem($_GET['_userId']);
 
-	// var_dump("data is wrong because student data only retrieves itself once when we login");
-	// var_dump($student);
-	// var_dump("when we select a course, the course id properly changes, is it something to do with selecting course?");
-
 	if($student->getCropName() == '')
 		(new UserError) -> addError(401);
 
@@ -148,15 +139,9 @@ else
 	// handle errors
 	$page->handleErrors();
 
-	// move this up top later?
-	// $student = new Student($_GET['_userId']);
-
 	$cropName = $student->getCropName();
 	$cropDesc = $student->getProblemDescription();
 
-
-	// var_dump("student data is incorrect");
-	// var_dump($student);
 
 	if($student->getCropName() != '')
 	{

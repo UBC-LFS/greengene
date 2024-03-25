@@ -21,7 +21,6 @@ if(isset($_POST['formaction'])) {
 	$formaction = $_POST['formaction'];
 }
 
-//$ta = new TA($userId);
 $showStudentForm = false;
 
 // variables for form logic
@@ -50,7 +49,6 @@ if ($formaction == "createstudent")
 
 	if (empty($inputUserId) )
 	{
-		// UserError::addError(650);
 		(new UserError) -> addError(650);
 	}
 	else

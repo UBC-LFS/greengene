@@ -13,10 +13,8 @@ class TA extends User
 	 * POST: TA object is constructed
 	 * @param string $p_userId
 	 */
-	// function TA($p_userId)
 	function __construct($p_userId)
 	{
-		// parent::User($p_userId);
 		parent::__construct($p_userId);
 	}
 
@@ -690,7 +688,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$p_trait3Name = $p_arrPhenotypeNames[2];
 
 		$phenotypeArray = array();
-		//TA::assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
 
 		$p_trait1AAName = $phenotypeArray[0][0];
 		$p_trait1AbName = $phenotypeArray[0][1];
@@ -840,8 +837,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$p_trait3Name = $p_arrPhenotypeNames[2];
 
 		$phenotypeArray = array();
-		//TA::assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
-		//$phenotypeArray = TA::assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, &$phenotypeArray);
+
 		$p_trait1AAName = $phenotypeArray[0][0];
 		$p_trait1AbName = $phenotypeArray[0][1];
 		$p_trait1bAName = $phenotypeArray[0][2];
@@ -979,18 +975,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		global $g_db;
 
 		$default_courseId = $this->m_courseId;
-		// $sql_query = "SELECT a.UserId, a.CourseId, a.PrivilegeLvl, a.FirstName, a.LastName, b.Name, b.CourseId
-		// 		FROM User a
-		// 		LEFT JOIN StudentProblem b ON (a.UserId=b.UserId
-		// 		AND b.CourseId='%$default_courseId%')
-		// 		WHERE a.CourseId LIKE '%$default_courseId%'
-		// 		AND PrivilegeLvl LIKE '%3%' 
-		// 		ORDER BY UserId";
-	
-		// var_dump("testing JOIN TABLE");
-
-		// var_dump("if student has no problem assigned, it's not being displayed");
-
+		
 		// Find students, but only get their StudentProblem Data if the CourseId matches
 		$sql_query = "SELECT a.UserId, a.CourseId, a.PrivilegeLvl, a.FirstName, a.LastName, b.Name
 				-- BY CASE
@@ -1003,7 +988,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				AND PrivilegeLvl LIKE '%3%'
 				ORDER BY UserId";
 
-		// var_dump($sql_query);
 		return $g_db->querySelect($sql_query);
 	}
 
@@ -1274,10 +1258,6 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			set_error_handler(function() {});
 			$r=ldap_bind($ds, LDAP_DN, LDAP_PW);
 			restore_error_handler();
-
-
-			// var_dump($ds, LDAP_DN, LDAP_PW);
-			// var_dump($r);
 
 			if ($r) {
 				$base_dn = "ou=UBC,ou=ACADEMIC,dc=id,dc=ubc,dc=ca";

@@ -182,8 +182,6 @@ function on_login_handler()
 	if ( $obj_user != null )
 	{
 		(new CookieHandler) -> set_user( $obj_user );
-    // var_dump($obj_user);
-    // var_dump($obj_user->int_privilege);
 		(new PageHandler) -> redirect_initial_page( $obj_user->int_privilege );
 	}
 

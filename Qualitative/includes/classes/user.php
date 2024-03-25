@@ -22,22 +22,15 @@ class User
 	 *
 	 * @param string $p_userId User Id of user to construct object for
 	 */
-	// function User($p_userId)
 	function __construct($p_userId)
 	{
 		global $g_db;
-
-		// var_dump($p_userId);
 
 		$courseIndex = NULL; // set default course ID
 		// Get the course index from the URL
 		if (isset($_GET['course'])) {
 			$courseIndex = $_GET['course'];
 		}
-
-		// var_dump($courseIndex);
-
-		// var_dump($g_db->sqlString($p_userId));
 
 		// Get user information
 		$sqlQuery = "SELECT FirstName,LastName,PrivilegeLvl,CourseId
@@ -64,9 +57,6 @@ class User
 			$this->m_privilegeLvl = $this->m_PrivilegeLvlArray[$courseIndex];
 			$this->m_courseId = $this->m_courseArray[$courseIndex];
 		}
-
-		// $this->m_privilegeLvl = $row->PrivilegeLvl;
-		// $this->m_courseId = $row->CourseId;
 
 		// Get course name/description
 		$sqlQuery = "SELECT Name, Description
@@ -100,9 +90,6 @@ class User
 		if ($p_courseId == 0) {
 			return false;
 		}
-
-		// var_dump("running getCourse");
-		// var_dump($p_courseId);
 
 		$result = $g_db->querySelect("SELECT Name, Description
 			FROM Course

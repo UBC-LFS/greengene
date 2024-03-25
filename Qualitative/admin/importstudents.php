@@ -34,7 +34,6 @@ if ($formaction == "import") {
             $user->createStudent($studentUserId[$i] ," " ," ");
         }
     }
-    // Page::redirect("viewstudentlist.php");
     $page -> redirect("viewstudentlist.php");
 }
  

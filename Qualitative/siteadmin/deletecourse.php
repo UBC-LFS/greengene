@@ -1,7 +1,6 @@
 <?php
 require_once('../includes/global.php');
 
-// $user = (new Security) -> getUser();
 $user = (new Security) -> getUser(); // PHP 8
 $page = new Page($user, 'Delete Course', 10);
 $g_db = new DB();
@@ -14,7 +13,6 @@ $page->handleErrors();
 
 if ($formaction != null ) {
         $user->deleteCourse($formaction);
-        // Page::redirect('viewcourses.php');
         $page -> redirect('viewcourses.php');
 }
 

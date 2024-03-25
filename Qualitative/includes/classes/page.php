@@ -24,7 +24,6 @@ class Page
 	 * @param string $p_title Page title
 	 * @param int $p_privilegeLevel privilege level required to access page.
 	 */
-	// function Page($p_user, $p_title, $p_privilegeLevel)
 	function __construct($p_user, $p_title, $p_privilegeLevel)
 	{
 		global $g_db;
@@ -53,15 +52,10 @@ class Page
 			}
 		}
 
-		// var_dump($courseIndex);
-
-
 		$this->m_user = $p_user;
 		$this->m_title = $p_title;
 		$this->m_privilegeLevel = $p_privilegeLevel;
 
-		// var_dump($this->m_user->m_privilegeLvl);
-		
 
 		if($p_privilegeLevel > 0 && $this->m_user->m_privilegeLvl != 10)
 		{
@@ -138,30 +132,7 @@ class Page
 	 */
 	function redirectInitial()
 	{
-		// $p_user->m_privilegeLvl = 1; // testing purposes
 		Page::redirect('selectcourse.php');
-		// switch($p_user->m_privilegeLvl)
-		// {
-		// 	case 10:
-		// 		Page::redirect('admin/selectcourse.php');
-		// 		// Page::redirect('siteadmin/viewcourses.php');
-		// 		break;
-
-		// 	case 1:
-		// 		Page::redirect('admin/selectcourse.php');
-		// 		// Page::redirect('admin/viewproblemlist.php');
-		// 		break;
-
-		// 	case 2:
-		// 		Page::redirect('admin/selectcourse.php');
-		// 		// Page::redirect('admin/viewstudentlist.php');
-		// 		break;
-
-		// 	case 3:
-		// 		Page::redirect('admin/selectcourse.php');
-		// 		// Page::redirect('student/viewprogeny.php');
-		// 		break;
-		// }
 	}
 
 	/**

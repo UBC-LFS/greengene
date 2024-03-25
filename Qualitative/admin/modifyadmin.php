@@ -32,7 +32,6 @@ if($formaction == 'adduser')
 
 	if($_POST['UserId'] == '')
 	{
-		// UserError::addError(302);
 		(new UserError) -> addError(302);
 		$formOk = false;
 	}
@@ -42,7 +41,6 @@ if($formaction == 'adduser')
 		$_POST['LastName'],
 		$_POST['PrivilegeLvl']) == true)
 	{
-		// Page::redirect("viewadminlist.php");
 		$page -> redirect("viewadminlist.php");
 	}
 
@@ -63,7 +61,6 @@ elseif($formaction == 'saveuser')
 		$_POST['LastName'],
 		$_POST['PrivilegeLvl']) == true)
 	{
-		// Page::redirect("viewadminlist.php");
 		$page -> redirect("viewadminlist.php");
 	}
 

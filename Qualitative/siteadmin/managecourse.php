@@ -7,7 +7,6 @@ $g_db = new DB();
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-// $user = (new Security) -> getUser();
 $user = (new Security)->getUser(); // php8
 
 
@@ -55,7 +54,6 @@ if($formaction == 'addcourse')
 			$_POST['FirstName'],
 			$_POST['LastName']);
 		if($newCourseId != false)
-			// Page::redirect("managecourse.php?courseId=$newCourseId");
 			$page -> redirect("managecourse.php?courseId=$newCourseId");
 	}
 }
@@ -74,7 +72,6 @@ elseif($formaction == 'savecourse')
 
 	if($formOk == true && $user->modifyCourse($courseId, $_POST['CourseName'], $_POST['CourseDescription']) == true)
 	{
-		// Page::redirect("viewcourses.php");
 		$page -> redirect("viewcourses.php");
 	}
 }

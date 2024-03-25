@@ -1,14 +1,11 @@
 <?php
 require_once('includes/global.php');
 
-// $user = Security::getUser(false);
 $security = new Security(); // new way of initalizing class
 $user = $security -> getUser(false);
 
 // initalize new Page
 $pageObj = new Page($user, 'GreenGene Login', 0);
-// initalize new userError
-// $userErrorObj = new UserError();
 
 if(!empty($user))
 {
@@ -28,7 +25,6 @@ if(!empty($_POST['UserId']) && !empty($_POST['Pwd']))
 	else // LOGIN accepted
 	{
 		$g_db->disconnect();
-		// var_dump("login successful");
 		$pageObj->redirectInitial();
 	}
 }

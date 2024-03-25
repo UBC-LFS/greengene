@@ -4,7 +4,6 @@ require_once('../includes/global.php');
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-// $user = (new Security) -> getUser();
 $user = (new Security()) -> getUser();
 
 // DATABASE CONNECTION

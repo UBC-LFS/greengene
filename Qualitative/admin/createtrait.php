@@ -2,7 +2,6 @@
 require_once('../includes/global.php');
 
 // SESSION
-// $user = (new Security) -> getUser();
 $user = (new Security()) -> getUser();
 
 // PAGE CREATION LOGIC
@@ -15,7 +14,6 @@ if(!empty($_POST['traitName']))
 {
 	$traitId = $user->createTrait($_POST['traitName']);
 	if($traitId != false)
-		// Page::redirect("modifytrait.php?traitId=$traitId");
 		$page -> redirect("modifytrait.php?traitId=$traitId");
 }
 

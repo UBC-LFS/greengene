@@ -23,7 +23,6 @@ class Cross
      * @param string[] $p_traitNames Names of traits, keyed to trait number
      * @param string[][] $p_phenoNames 2D array of phenotype names, keyed to trait number
      */
-    // function Cross($p_traitOrder, $p_traitNames, $p_phenoNames)
 	function __construct($p_traitOrder, $p_traitNames, $p_phenoNames)
     {
         $this->m_traitOrder = $p_traitOrder;
@@ -177,15 +176,7 @@ class Cross
 
 		$firstSequence = sizeof($sequenceGroups) == 1 ? $sequenceGroups[0] : NULL;
 
-		// var_dump($g_db);
-		// var_dump("courseID not in this");
-
-		// get courseId from function arg?
-		// get courseId from URL?
 		$user = (new Security) -> getUser();
-		// var_dump($user->m_courseId);
-
-		// return false;
 
 		$sql_query = "INSERT INTO `Cross` (CrossNum, UserId,
 								PollenCrossNum, PollenPlantNum, PollenGene,
@@ -201,10 +192,6 @@ class Cross
 						$g_db->sqlString($seed)				. "', '" .
 						$g_db->sqlString($firstSequence)		. "', '" .
 						$user->m_courseId . "')";
-
-		// var_dump("stuck modifying cross");
-
-		// var_dump($sql_query);
 
 		$success = $g_db->queryCommit($sql_query);
 

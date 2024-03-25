@@ -7,7 +7,6 @@ $g_db = new DB();
 // SESSION
 // - check session (session hander should redirect user if not logged in)
 // - get user object
-// $user = (new Security) -> getUser();
 $user = (new Security)->getUser(); // php8
 
 // PAGE CREATION LOGIC
@@ -45,7 +44,6 @@ if($formaction == 'saveuser')
 		$user->m_lastName = $_POST['LastName'];
 		$_SESSION['userSession'] = $user;
 
-		// Page::redirect("myaccount.php");
 		$page -> redirect("myaccount.php");
 	}
 
