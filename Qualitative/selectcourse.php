@@ -29,7 +29,30 @@ $table = new Table(3);
 
 $table->writeHeaders("Name","Description","Select Course");
 
+// if only in 1 course, skip the select pages page
+if (count($user->m_PrivilegeLvlArray) == 1) {
+    switch($user->m_PrivilegeLvlArray[0])
+    {
+        case 10:
+            $url = '/siteadmin/viewcourses.php?course=0';
+            break;
+        case 1:
+            $url = '/admin/viewproblemlist.php?course=0';
+            break;
 
+        case 2:
+            $url = '/admin/viewstudentlist.php?course=0';
+            break;
+
+        case 3:
+            $url = "/student/viewprogeny.php?_userId=$user->m_userId&course=0";
+            break;
+    }
+
+    $page -> redirect($url);
+}
+
+// if in multiple courses, display table
 for ($i = 0; $i < count($courseIDs); $i++) {
     $courseInfo = $user->getCourse($courseIDs[$i]);
   
