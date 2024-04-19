@@ -92,6 +92,7 @@ class MasterAdmin extends User
 				WHERE UserId='$userId' AND CourseId='$p_courseId'");
 			$g_db->queryCommit("DELETE FROM LongerGeneSequences
 				WHERE UserId='$userId' AND CourseId='$p_courseId'");
+			$this->deleteManagementUser($userId, $p_courseId);
 		}
 		
 
@@ -105,10 +106,6 @@ class MasterAdmin extends User
 
 		$g_db->queryCommit("DELETE FROM Trait
 			WHERE CourseId=$p_courseId");
-
-		$this->deleteManagementUser($userId, $p_courseId);
-
-
 
 		// finally delete the course
 		if($g_db->queryCommit("DELETE FROM Course " .
@@ -421,7 +418,7 @@ class MasterAdmin extends User
 
 		$sql = "SELECT * 
 			FROM User
-			WHERE CourseId = $course";
+			WHERE CourseId LIKE '%$course%'";
 		$result = $g_db->querySelect($sql);
 
 		return $result;
