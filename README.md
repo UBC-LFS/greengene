@@ -54,6 +54,10 @@ Testing:
 
 # Quantitative - xgene360
 
+```
+php -S localhost:8000 -t Quantitative
+```
+
 ## Dev notes - Quantitative
 Run `Quantitative/install.sh` to set up the config file
 
