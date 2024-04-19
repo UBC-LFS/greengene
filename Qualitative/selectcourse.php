@@ -34,18 +34,18 @@ if (count($user->m_PrivilegeLvlArray) == 1) {
     switch($user->m_PrivilegeLvlArray[0])
     {
         case 10:
-            $url = '/siteadmin/viewcourses.php?course=0';
+            $url = "/siteadmin/viewcourses.php?course=$courseIDs[0]";
             break;
         case 1:
-            $url = '/admin/viewproblemlist.php?course=0';
+            $url = "/admin/viewproblemlist.php?course=$courseIDs[0]";
             break;
 
         case 2:
-            $url = '/admin/viewstudentlist.php?course=0';
+            $url = "/admin/viewstudentlist.php?course=$courseIDs[0]";
             break;
 
         case 3:
-            $url = "/student/viewprogeny.php?_userId=$user->m_userId&course=0";
+            $url = "/student/viewprogeny.php?_userId=$user->m_userId&course=$courseIDs[0]";
             break;
     }
 
@@ -55,23 +55,22 @@ if (count($user->m_PrivilegeLvlArray) == 1) {
 // if in multiple courses, display table
 for ($i = 0; $i < count($courseIDs); $i++) {
     $courseInfo = $user->getCourse($courseIDs[$i]);
-  
     switch($user->m_PrivilegeLvlArray[$i])
     {
         case 10:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/siteadmin/viewcourses.php?course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/siteadmin/viewcourses.php?course=$courseIDs[$i]');\">";
             break;
 
         case 1:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/admin/viewproblemlist.php?course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/admin/viewproblemlist.php?course=$courseIDs[$i]');\">";
             break;
 
         case 2:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/admin/viewstudentlist.php?course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/admin/viewstudentlist.php?course=$courseIDs[$i]');\">";
             break;
 
         case 3:
-            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/student/viewprogeny.php?_userId=$user->m_userId&course=$i');\">";
+            $button = "<input type=\"button\" value=\"Select\" onClick=\"goUrl('/student/viewprogeny.php?_userId=$user->m_userId&course=$courseIDs[$i]');\">";
             break;
     }
 

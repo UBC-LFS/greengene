@@ -28,15 +28,19 @@ class Page
 	{
 		global $g_db;
 
-		$courseIndex = NULL; // set default course ID
+		$courseID = NULL; // set default course ID
 		// Get the course index from the URL
 		if (isset($_GET['course'])) {
-			$courseIndex = $_GET['course'];
+
+			$courseID = $_GET['course'];
+			$courseIndex = array_search($courseID, $p_user->m_courseArray);
+
 			$p_user->m_privilegeLvl = $p_user->m_PrivilegeLvlArray[$courseIndex];
-			$p_user->m_courseId = $p_user->m_courseArray[$courseIndex];
+			$p_user->m_courseId = $courseID;
+
 
 			// Get course name/description
-			if ($courseIndex == NULL) {
+			if ($courseID == NULL) {
 				$p_user->m_courseName = "";
 				$p_user->m_courseDescription = "";
 			} else {
