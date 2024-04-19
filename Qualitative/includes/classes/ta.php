@@ -831,12 +831,17 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			return false;
 		}
 
+
 		// determine the traitnames
 		$p_trait1Name = $p_arrPhenotypeNames[0];
 		$p_trait2Name = $p_arrPhenotypeNames[1];
 		$p_trait3Name = $p_arrPhenotypeNames[2];
 
 		$phenotypeArray = array();
+
+		// Fixes bug where phenotypes don't display for modified problems: 2024-04-18
+		$phenotypeArray = $this->assignPhenotypeLogic($p_epistasisCode, $p_arrPhenotypes, $phenotypeArray);
+		// ^^
 
 		$p_trait1AAName = $phenotypeArray[0][0];
 		$p_trait1AbName = $phenotypeArray[0][1];
@@ -914,6 +919,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 							" 	 MaxProgeny = ". $p_maxProgeny .
 							"	WHERE UserId = '" . $g_db->sqlString($p_userId) . "' AND CourseId = '$this->m_courseId'";
 						}
+
 
 		if ($g_db->queryCommit($sql_query)!=true)
 		{
