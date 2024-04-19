@@ -33,12 +33,16 @@ while($row = $g_db->fetch($recordset))
 	else
 		$problem = "<a href=\"viewproblem.php?studentId=$row->UserId\">$row->Name</a>";
 
+
+	$courseIdArray = explode(',', $row->CourseId);
+	$indexOfCourse = array_search($user->m_courseId, $courseIdArray);
+
 	$studentTable->writeRow($row->UserId,
 		$row->FirstName,
 		$row->LastName,
 		$problem,
 		"<input type=\"button\" value=\"View Progress\" onClick=\"goUrl('" . URLROOT .
-		"/student/viewprogeny.php?_userId=$row->UserId');\">");
+		"/student/viewprogeny.php?_userId=$row->UserId&course=$indexOfCourse');\">");
 }
 
 $studentTable->flush();
