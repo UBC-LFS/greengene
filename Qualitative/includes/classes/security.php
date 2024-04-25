@@ -98,7 +98,7 @@ class Security
 		return false;
 	}
 
-	function getUserClass($courseIndex) {
+	function getUserClass($courseID) {
 		$tempUser = $this->getUserTempData();
 
 		if ($_SESSION['userSession']) {
@@ -109,7 +109,8 @@ class Security
 			$p_userId = $tempUser->UserId;
 		
 			// set new course id and privilege level
-			$tempUser -> CourseId = ($tempUser -> m_courseArray)[$courseIndex];
+			$courseIndex = array_search($courseID, $tempUser->m_courseArray);
+			$tempUser -> CourseId = $courseID;
 			$tempUser -> PrivilegeLvl = ($tempUser -> m_PrivilegeLvlArray)[$courseIndex];
 
 			// make class
