@@ -42,8 +42,10 @@ while($row = $g_db->fetch($recordset))
 		$row->LastName,
 		$problem,
 		"<input type=\"button\" value=\"View Progress\" onClick=\"goUrl('" . URLROOT .
-		"/student/viewprogeny.php?_userId=$row->UserId&course=$indexOfCourse');\">");
-}
+		// "/student/viewprogeny.php?_userId=$row->UserId&course=$indexOfCourse');\">");
+		"/student/viewprogeny.php?_userId=$row->UserId&course=$user->m_courseId');\">");
+
+	}
 
 $studentTable->flush();
 

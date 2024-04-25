@@ -156,7 +156,12 @@ class Page
 		// if logged in user is not the student, create a new userActor
 		if($this->m_user->m_userId != $p_userId)
 			$this->m_userActor = new Student($p_userId);
+		
+			$courseID = $_GET['course'];
+			$courseIndex = array_search($courseID, $this->m_userActor->m_courseArray);
 
+			$this->m_userActor->m_privilegeLvl = $this->m_userActor->m_PrivilegeLvlArray[$courseIndex];
+			$this->m_userActor->m_courseId = $courseID;
 		// if this is null ^, something wrong with student class
 
 		return $this->m_userActor;

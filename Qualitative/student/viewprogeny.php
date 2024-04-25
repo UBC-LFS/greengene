@@ -6,7 +6,6 @@ $g_db = new DB();
 
 $user = (new Security)->getUserClass($_GET['course']); // php8
 
-
 // PAGE CREATION LOGIC
 $page = new Page($user, 'View Progeny', 3);
 

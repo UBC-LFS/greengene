@@ -47,6 +47,7 @@ class Student extends User
 						ProgenyPerMating, MaxProgeny, ProgenyGenerated
 					FROM StudentProblem
 					WHERE UserId='" . $g_db->sqlString($p_userId) . "'" . "AND CourseId='" . $this->m_courseId . "'";
+		
 		$studentRecord = $g_db->querySelect($sqlQuery);
 
 //		echo "debugging: query:" . $g_db -> getNumRows($studentRecord);
