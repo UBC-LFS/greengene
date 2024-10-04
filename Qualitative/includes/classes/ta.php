@@ -1195,7 +1195,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			restore_error_handler();
 
 			if ($r) {
-				$filter = "(&(objectClass=*)(cn=student))";
+				$filter = "(&(objectClass=*)(cn=students))";
 				$sr = ldap_search($ds, LDAP_BASE_DN, $filter);
 				$info = ldap_get_entries($ds, $sr);
 				$uniquemember = $info[0]['uniquemember'];
