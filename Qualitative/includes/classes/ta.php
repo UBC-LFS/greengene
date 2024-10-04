@@ -1183,13 +1183,11 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 	function importClassList($payload) {
 		$result = [];
-		$cn = self::getCommonName($payload);
+		// $cn = self::getCommonName($payload);
 
 		$ds = ldap_connect(LDAP_HOST);
 		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
-
 		ldap_start_tls($ds);
-
 		if ($ds) {
 			// remove warning when bind fails
 			set_error_handler(function() {});
@@ -1197,8 +1195,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			restore_error_handler();
 
 			if ($r) {
-				$filter = "(&(objectClass=*)(cn=".$cn."))";
-
+				$filter = "(&(objectClass=*)(cn=student))";
 				$sr = ldap_search($ds, LDAP_BASE_DN, $filter);
 				$info = ldap_get_entries($ds, $sr);
 				$uniquemember = $info[0]['uniquemember'];
