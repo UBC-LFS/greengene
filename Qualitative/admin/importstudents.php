@@ -41,11 +41,11 @@ if ($formaction == "import") {
 echo "<form action=\"".htmlentities($_SERVER['PHP_SELF'])."\" method=\"post\">";
 echo "<input type=\"hidden\" name=\"formaction\" value=\"import\">";
 $table = new Table(2, false, true);
-$table->writeRow('Course Subject Code', "<input required type=\"text\" name=\"subjectCode\" maxlength=\"4\" placeholder=\"APBI\">");
+$table->writeRow('Course Subject Code', "<input required type=\"text\" name=\"subjectCode\" maxlength=\"6\" placeholder=\"APBI_V\">");
 $table->writeRow('Course Number', "<input required type=\"text\" name=\"courseNumber\" maxlength=\"4\" placeholder=\"318\">");
 $table->writeRow('Course Section', "<input requiredtype=\"text\" name=\"section\" maxlength=\"4\" placeholder=\"001\">");
 $table->writeRow('Year', "<input required type=\"number\" name=\"year\" maxlength=\"4\" placeholder=\"2019\">");
-$table->writeRow('Session', "<select name=\"session\"> <option value=\"W\">Winter</option> <option value=\"S\">Summer</option></select>");
+$table->writeRow('Session', "<select name=\"session\"> <option value=\"W1\">Winter 1</option> <option value=\"W2\">Winter 2</option> <option value=\"SS\">Summer</option></select>");
 $table->flush();
 echo '<br/>';
 echo '<input type="submit" value="import">';
