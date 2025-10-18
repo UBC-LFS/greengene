@@ -1183,7 +1183,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 
 	function importClassList($payload) {
 		$result = [];
-		$cn = self::getCommonName($payload);
+		$ou = self::getOU($payload);
 
 		$ds = ldap_connect(LDAP_HOST);
 		ldap_set_option($ds, LDAP_OPT_NETWORK_TIMEOUT, 3);
@@ -1201,8 +1201,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			// var_dump($r);
 
 			if ($r) {
-				$base_dn = "ou=UBC,ou=ACADEMIC,dc=id,dc=ubc,dc=ca";
-				$filter = "(&(objectClass=*)(cn=".$cn."))";
+				$base_dn = "$ou.LDAP_BASE_DN";
+				$filter = "(&(objectClass=*)(cn=students))";
 
 				$sr=ldap_search($ds, $base_dn, $filter);
 				$info = ldap_get_entries($ds, $sr);
@@ -1221,12 +1221,12 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		return $result;
 	}
 
-	function getCommonName($payload) {
+	function getOU($payload) {
 		$result = "";
-		$result = $payload['subjectCode']."_";
-		$result = $result.$payload['courseNumber']."_";
-		$result = $result.$payload['section']."_";
-		$result = $result.$payload['year'].$payload['session'];
+		$result = "ou=".$payload['subjectCode']." ".$payload['courseNumber']." ".$payload['section'];
+		$result = $result.",ou=".$payload['subjectCode']." ".$payload['courseNumber'];
+		$result = $result.",ou=V".$payload['year'];
+        $result = $result.",ou=".$payload['subjectCode'].",";
 		return $result;
 	}
 
