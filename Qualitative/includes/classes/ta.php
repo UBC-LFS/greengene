@@ -1204,6 +1204,8 @@ while (list($recordIndex,$recordValue) = each($temp)){
 				$base_dn = "$ou.LDAP_BASE_DN";
 				$filter = "(&(objectClass=*)(cn=students))";
 
+                file_put_contents("/tmp/base_dn.log", $base_dn);
+
 				$sr=ldap_search($ds, $base_dn, $filter);
 				$info = ldap_get_entries($ds, $sr);
 				$uniquemember = $info[0]['uniquemember'];
