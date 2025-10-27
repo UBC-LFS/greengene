@@ -1201,7 +1201,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 			// var_dump($r);
 
 			if ($r) {
-				$base_dn = "$ou.LDAP_BASE_DN";
+				$base_dn = "$ou".LDAP_BASE_DN;
 				$filter = "(&(objectClass=*)(cn=students))";
 
                 file_put_contents("/tmp/base_dn.log", $base_dn);
@@ -1227,7 +1227,7 @@ while (list($recordIndex,$recordValue) = each($temp)){
 		$result = "";
 		$result = "ou=".$payload['subjectCode']." ".$payload['courseNumber']." ".$payload['section'];
 		$result = $result.",ou=".$payload['subjectCode']." ".$payload['courseNumber'];
-		$result = $result.",ou=V".$payload['year'];
+		$result = $result.",ou=V".$payload['year'].$payload['session'];
         $result = $result.",ou=".$payload['subjectCode'].",";
 		return $result;
 	}
